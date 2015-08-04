@@ -1,0 +1,10 @@
+## Interface: 10900
+## Title: VCB - Handler by |cFFFF8080Shino|r
+## Notes: Sums up all general buffs into one frame
+## Author: Shino <Synced> - Kronos
+## SavedVariables: VCB.lua
+## SavedVariablesPerCharacter:
+## OptionalDeps: 
+## Dependencies:
+VCB.lua
+
