@@ -2,9 +2,10 @@
 ## Title: VCB - Handler by |cFFFF8080Shino|r
 ## Notes: Sums up all general buffs into one frame
 ## Author: Shino <Synced> - Kronos
-## SavedVariables: VCB.lua
+## SavedVariables:
 ## SavedVariablesPerCharacter:
 ## OptionalDeps: 
 ## Dependencies:
 VCB.lua
+VCB.xml
 

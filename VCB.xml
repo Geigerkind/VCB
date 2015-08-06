@@ -1,0 +1,1954 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+    ..\..\..\FrameXML\UI.xsd">
+	
+	---------------------------------GENERAL FRAMES----------------------------------------------------------------
+	
+	<GameTooltip name="VCB_Tooltip" frameStrata="TOOLTIP" hidden="false" parent="UIParent" inherits="GameTooltipTemplate">
+		<Anchors>
+			<Anchor point="BOTTOM" relativePoint="TOP">
+				<Offset><AbsDimension x="0" y="100"/></Offset>
+			</Anchor>
+		</Anchors>
+	</GameTooltip>
+	
+	<Slider name="VCB_BF_SliderTemplate" inherits="OptionsSliderTemplate" virtual="true">
+		<Scripts>
+			<OnEnter>
+				GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+				GameTooltip:SetText(this.aide, nil, nil, nil, nil, 1)
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide()
+			</OnLeave>
+		</Scripts>
+	</Slider>
+	
+	<CheckButton name="VCB_BF_CheckTemplate" inherits="OptionsCheckButtonTemplate" virtual="true">
+		<HitRectInsets>
+			<AbsInset left="0" right="0" top="0" bottom="0"/>
+		</HitRectInsets>
+	</CheckButton>
+	
+	<Button name = "VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE" virtual="true">
+		<Size>
+			<AbsDimension x="350" y="40" />
+		</Size>
+		<Scripts>
+			<OnClick>
+				VCB_CONSOLIDATED_SCROLLFRAME_ENTRY(this)
+			</OnClick>
+		</Scripts>
+		<NormalFont style="GameFontHighlightLeft"/>
+		<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+		<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+		<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+	</Button>
+	
+	<Button name = "VCB_BANNED_BUFFS_ENTRY_TEMPLATE" virtual="true">
+		<Size>
+			<AbsDimension x="350" y="40" />
+		</Size>
+		<Scripts>
+			<OnClick>
+				VCB_BANNED_SCROLLFRAME_ENTRY(this)
+			</OnClick>
+		</Scripts>
+		<NormalFont style="GameFontHighlightLeft"/>
+		<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+		<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+		<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+	</Button>
+	
+	---------------------------------MAIN CONFIG FRAME----------------------------------------------------------------
+	
+	<Frame name="VCB_BF_ConfigFrame" movable="true" parent="UIParent" frameStrata="HIGH" hidden="true" enableMouse="true" enableKeyboard="true">
+		<Size>
+          <AbsDimension x="800" y="515" />
+        </Size>
+		<Anchors>
+          <Anchor point="CENTER" relativeTo="UIParent">
+           <Offset>
+            <AbsDimension x="0" y="50" />
+           </Offset>
+          </Anchor>
+        </Anchors>
+		-- Border of the main frame
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+          <BackgroundInsets>
+           <AbsInset left="11" right="12" top="12" bottom="11" />
+          </BackgroundInsets>
+          <TileSize>
+           <AbsValue val="32" />
+          </TileSize>
+          <EdgeSize>
+           <AbsValue val="32" />
+          </EdgeSize>
+        </Backdrop>
+		<Scripts>
+			<OnMouseDown>
+				this:StartMoving()
+			</OnMouseDown>
+			<OnMouseUp>
+				this:StopMovingOrSizing()
+			</OnMouseUp>
+			<OnShow>
+				PlaySound("igCharacterInfoOpen")
+			</OnShow>
+			<OnHide>
+				PlaySound("igCharacterInfoClose")
+			</OnHide>
+			<OnLoad>
+				VCB_OnLoad()
+			</OnLoad>
+		</Scripts>
+		-- Title block
+		<Layers>
+		  <Layer>
+			<Texture file="Interface\DialogFrame\UI-DialogBox-Header">
+	          <Size>
+		        <AbsDimension x="285" y="32" />
+			  </Size>
+	          <Anchors>
+		        <Anchor point="TOP">
+			      <Offset>
+				    <AbsDimension x="0" y="8" />
+	              </Offset>
+		        </Anchor>
+			  </Anchors>
+	          <TexCoords left="0.2" right="0.8" top="0" bottom="0.6" />
+		    </Texture>
+			-- Title text		
+			<FontString name="VCB_BF_Header" inherits="GameFontNormalSmall" text="Vanilla Consolidated Buff-Frames v2.4">
+		      <Size>
+			    <AbsDimension x="285" y="0" />
+	          </Size>
+		      <Anchors>
+			    <Anchor point="TOP">
+				  <Offset>
+					<AbsDimension x="0" y="-3" />
+	              </Offset>
+		        </Anchor>
+			  </Anchors>
+	        </FontString>
+	      </Layer>
+		</Layers>
+		<Frames>
+			-- Close button
+			<Button name="VCB_BF_CloseButton">
+				<Size>
+					<AbsDimension x="30" y="30"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativeTo="VCB_BF_ConfigFrame" relativePoint="TOPRIGHT">
+						<Offset>
+							<AbsDimension x="-8" y="-8"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						getglobal("VCB_BF_ConfigFrame"):Hide()
+						PlaySound("igMainMenuOptionCheckBoxOff")
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+						GameTooltip:SetText("Close configuration frame", nil, nil, nil, nil, 1)
+						GameTooltip:Show()
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide()
+					</OnLeave>
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Up"/>
+				<PushedTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Down"/>
+				<HighlightTexture file="Interface\Buttons\UI-Panel-MinimizeButton-Highlight" alphaMode="ADD"/>
+			</Button>
+			-- Lock button
+			<Button name="VCB_BF_LockButton">
+				<Size>
+					<AbsDimension x="20" y="20"/>
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="VCB_BF_CloseButton" relativePoint="LEFT">
+						<Offset>
+							<AbsDimension x="5" y="1"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						VCB_BF_ToggleLock()
+						PlaySound("igMainMenuOptionCheckBoxOff")
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+						GameTooltip:SetText("Lock VCB", nil, nil, nil, nil, 1)
+						GameTooltip:Show()
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide()
+					</OnLeave>
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-GroupLoot-Pass-Up"/>
+				<PushedTexture file="Interface\Buttons\UI-GroupLoot-Pass-Down"/>
+				<HighlightTexture file="Interface\Buttons\UI-GroupLoot-Pass-Highlight" alphaMode="ADD"/>
+			</Button>
+			-- Minimap button
+			<Button name="VCB_BF_MiniMapButton">
+				<Size>
+					<AbsDimension x="20" y="20"/>
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="VCB_BF_LockButton" relativePoint="LEFT">
+						<Offset>
+							<AbsDimension x="0" y="-1"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						PlaySound("igMainMenuOptionCheckBoxOff")
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+						GameTooltip:SetText("Toggle MiniMap button", nil, nil, nil, nil, 1)
+						GameTooltip:Show()
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide()
+					</OnLeave>
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-GroupLoot-Dice-Up"/>
+				<PushedTexture file="Interface\Buttons\UI-GroupLoot-Dice-Down"/>
+				<HighlightTexture file="Interface\Buttons\UI-GroupLoot-Dice-Highlight" alphaMode="ADD"/>
+			</Button>
+			-- Menu Head
+			<Frame name="VCB_BF_MENU_HEAD">
+				<Size>
+					<AbsDimension x="160" y="60"/>
+				</Size>
+				<Anchors>
+					<Anchor point="LEFT">
+						<Offset>
+							<AbsDimension x="15" y="215"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+				<Layers>
+					<Layer>
+						-- Menu Head title
+						<FontString name="VCB_BF_MENU_TITLE" inherits="GameFontNormalLarge" text="MENU">
+							<Size>
+								<AbsDimension x="160" y="60" />
+							</Size>
+							<Anchors>
+								<Anchor point="CENTER">
+									<Offset>
+										<AbsDimension x="0" y="0" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</Frame>
+			-- Menu body
+			<Frame name="VCB_BF_MENU_BODY">
+				<Size>
+					<AbsDimension x="160" y="435"/>
+				</Size>
+				<Anchors>
+					<Anchor point="TOP" relativeTo="VCB_BF_MENU_HEAD" relativePoint="BOTTOM">
+						<Offset>
+							<AbsDimension x="0" y="5"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+				<Frames>
+					-- Button 1
+					<Button name="VCB_BF_MENU_BUTTON1">
+						<Size>
+							<AbsDimension x="130" y="40"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP">
+								<Offset>
+									<AbsDimension x="0" y="-15"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_OPTIONS_HIDE_ALL()
+								VCB_OPTIONS_SHOW("VCB_BF_CONSOLIDATED_FRAME", "Consolidated Buffs")
+							</OnClick>
+						</Scripts>
+						<Layers>
+							<Layer>
+								-- Button Title
+								<FontString name="VCB_BF_MENU_TITLE1" inherits="GameFontNormalSmall" text="Consolidated Buffs">
+									<Size>
+										<AbsDimension x="130" y="40" />
+									</Size>
+									<Anchors>
+										<Anchor point="CENTER">
+											<Offset>
+												<AbsDimension x="0" y="7" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+					</Button>
+					-- Button 2
+					<Button name="VCB_BF_MENU_BUTTON2">
+						<Size>
+							<AbsDimension x="130" y="40"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_MENU_BUTTON1" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_OPTIONS_HIDE_ALL()
+								VCB_OPTIONS_SHOW("VCB_BF_BANNED_FRAME", "Banned Buffs")
+							</OnClick>
+						</Scripts>
+						<Layers>
+							<Layer>
+								-- Button Title
+								<FontString name="VCB_BF_MENU_TITLE2" inherits="GameFontNormalSmall" text="Banned Buffs">
+									<Size>
+										<AbsDimension x="130" y="40" />
+									</Size>
+									<Anchors>
+										<Anchor point="CENTER">
+											<Offset>
+												<AbsDimension x="0" y="7" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+					</Button>
+					-- Button 3
+					<Button name="VCB_BF_MENU_BUTTON3">
+						<Size>
+							<AbsDimension x="130" y="40"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_MENU_BUTTON2" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_OPTIONS_HIDE_ALL()
+								VCB_OPTIONS_SHOW("VCB_BF_TIMER_FRAME", "Timer")
+							</OnClick>
+						</Scripts>
+						<Layers>
+							<Layer>
+								-- Button Title
+								<FontString name="VCB_BF_MENU_TITLE3" inherits="GameFontNormalSmall" text="Timer">
+									<Size>
+										<AbsDimension x="130" y="40" />
+									</Size>
+									<Anchors>
+										<Anchor point="CENTER">
+											<Offset>
+												<AbsDimension x="0" y="7" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+					</Button>
+					-- Button 4
+					<Button name="VCB_BF_MENU_BUTTON4">
+						<Size>
+							<AbsDimension x="130" y="40"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_MENU_BUTTON3" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_OPTIONS_HIDE_ALL()
+								VCB_OPTIONS_SHOW("VCB_BF_CF_FRAME", "Consolidated Frame")
+							</OnClick>
+						</Scripts>
+						<Layers>
+							<Layer>
+								-- Button Title
+								<FontString name="VCB_BF_MENU_TITLE4" inherits="GameFontNormalSmall" text="Consolidated Frame">
+									<Size>
+										<AbsDimension x="130" y="40" />
+									</Size>
+									<Anchors>
+										<Anchor point="CENTER">
+											<Offset>
+												<AbsDimension x="0" y="7" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+					</Button>
+					-- Button 5
+					<Button name="VCB_BF_MENU_BUTTON5">
+						<Size>
+							<AbsDimension x="130" y="40"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_MENU_BUTTON4" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_OPTIONS_HIDE_ALL()
+								VCB_OPTIONS_SHOW("VCB_BF_CF_COLOR_FRAME", "Consolidated Frames - Color Settings")
+							</OnClick>
+						</Scripts>
+						<Layers>
+							<Layer>
+								-- Button Title
+								<FontString name="VCB_BF_MENU_TITLE5" inherits="GameFontNormalSmall" text="- Color Settings">
+									<Size>
+										<AbsDimension x="130" y="40" />
+									</Size>
+									<Anchors>
+										<Anchor point="CENTER">
+											<Offset>
+												<AbsDimension x="0" y="7" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+					</Button>
+					-- Button 6
+					<Button name="VCB_BF_MENU_BUTTON6">
+						<Size>
+							<AbsDimension x="130" y="40"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_MENU_BUTTON5" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_OPTIONS_HIDE_ALL()
+								VCB_OPTIONS_SHOW("VCB_BF_BF_FRAME", "Buff Frame")
+							</OnClick>
+						</Scripts>
+						<Layers>
+							<Layer>
+								-- Button Title
+								<FontString name="VCB_BF_MENU_TITLE6" inherits="GameFontNormalSmall" text="Buff Frame">
+									<Size>
+										<AbsDimension x="130" y="40" />
+									</Size>
+									<Anchors>
+										<Anchor point="CENTER">
+											<Offset>
+												<AbsDimension x="0" y="7" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+					</Button>
+					-- Button 7
+					<Button name="VCB_BF_MENU_BUTTON7">
+						<Size>
+							<AbsDimension x="130" y="40"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_MENU_BUTTON6" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_OPTIONS_HIDE_ALL()
+								VCB_OPTIONS_SHOW("VCB_BF_BF_COLOR_FRAME", "Buff Frame - Color Settings")
+							</OnClick>
+						</Scripts>
+						<Layers>
+							<Layer>
+								-- Button Title
+								<FontString name="VCB_BF_MENU_TITLE7" inherits="GameFontNormalSmall" text="- Color Settings">
+									<Size>
+										<AbsDimension x="130" y="40" />
+									</Size>
+									<Anchors>
+										<Anchor point="CENTER">
+											<Offset>
+												<AbsDimension x="0" y="7" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+					</Button>
+					-- Button 8
+					<Button name="VCB_BF_MENU_BUTTON8">
+						<Size>
+							<AbsDimension x="130" y="40"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_MENU_BUTTON7" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_OPTIONS_HIDE_ALL()
+								VCB_OPTIONS_SHOW("VCB_BF_DBF_FRAME", "Debuff Frame")
+							</OnClick>
+						</Scripts>
+						<Layers>
+							<Layer>
+								-- Button Title
+								<FontString name="VCB_BF_MENU_TITLE8" inherits="GameFontNormalSmall" text="Debuff Frame">
+									<Size>
+										<AbsDimension x="130" y="40" />
+									</Size>
+									<Anchors>
+										<Anchor point="CENTER">
+											<Offset>
+												<AbsDimension x="0" y="7" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+					</Button>
+					-- Button 9
+					<Button name="VCB_BF_MENU_BUTTON9">
+						<Size>
+							<AbsDimension x="130" y="40"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_MENU_BUTTON8" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_OPTIONS_HIDE_ALL()
+								VCB_OPTIONS_SHOW("VCB_BF_DBF_COLOR_FRAME", "Debuff Frames - Color Settings")
+							</OnClick>
+						</Scripts>
+						<Layers>
+							<Layer>
+								-- Button Title
+								<FontString name="VCB_BF_MENU_TITLE9" inherits="GameFontNormalSmall" text="- Color Settings">
+									<Size>
+										<AbsDimension x="130" y="40" />
+									</Size>
+									<Anchors>
+										<Anchor point="CENTER">
+											<Offset>
+												<AbsDimension x="0" y="7" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+					</Button>
+					-- Button 10
+					<Button name="VCB_BF_MENU_BUTTON10">
+						<Size>
+							<AbsDimension x="130" y="40"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_MENU_BUTTON9" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_OPTIONS_HIDE_ALL()
+								VCB_OPTIONS_SHOW("VCB_BF_ABOUT_FRAME", "About VCB")
+							</OnClick>
+						</Scripts>
+						<Layers>
+							<Layer>
+								-- Button Title
+								<FontString name="VCB_BF_MENU_TITLE10" inherits="GameFontNormalSmall" text="About">
+									<Size>
+										<AbsDimension x="130" y="40" />
+									</Size>
+									<Anchors>
+										<Anchor point="CENTER">
+											<Offset>
+												<AbsDimension x="0" y="7" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+					</Button>
+				</Frames>
+			</Frame>
+			-- Title Frame
+			<Frame name="VCB_BF_CONFIG_FRAME_TITLE">
+				<Size>
+					<AbsDimension x="610" y="60"/>
+				</Size>
+				<Anchors>
+					<Anchor point="Left" relativeTo="VCB_BF_MENU_HEAD" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer>
+						<FontString name="VCB_BF_CONFIG_FRAME_TITLE_FONTSTRING" font="Fonts\FRIZQT__.TTF" text="Consolidated Buffs" justifyH="LEFT">
+							<Size>
+								<AbsDimension x="610" y="60" />
+							</Size>
+							<Color r="1.0" g="0.82" b="0"/>
+							<FontHeight val="92"/>
+							<Anchors>
+								<Anchor point="LEFT" relativeTo="VCB_BF_CONFIG_FRAME_TITLE" relativePoint="LEFT">
+									<Offset>
+										<AbsDimension x="5" y="-10" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+			</Frame>
+			-- Consolidated Frame
+			<Frame name="VCB_BF_CONSOLIDATED_FRAME">
+				<Size>
+					<AbsDimension x="610" y="435"/>
+				</Size>
+				<Anchors>
+					<Anchor point="Left" relativeTo="VCB_BF_MENU_BODY" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Frames>
+					<Frame name="VCB_BF_CONSOLIDATED_FRAME_LEFT">
+						<Size>
+							<AbsDimension x="220" y="435"/>
+						</Size>
+						<Anchors>
+							<Anchor point="Left">
+								<Offset>
+									<AbsDimension x="0" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+							<BackgroundInsets>
+								<AbsInset left="11" right="12" top="12" bottom="11" />
+							</BackgroundInsets>
+							<TileSize>
+								<AbsValue val="32" />
+							</TileSize>
+							<EdgeSize>
+								<AbsValue val="32" />
+							</EdgeSize>
+						</Backdrop>
+						<Layers>
+							<Layer>
+								<FontString name="VCB_BF_CONSOLIDATED_FRAME_LEFT_INSERT" font="Fonts\FRIZQT__.TTF" text="Insert a buff name:" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="220" y="60" />
+									</Size>
+									<Color r="1.0" g="0.82" b="0"/>
+									<FontHeight val="20"/>
+									<Anchors>
+										<Anchor point="TOP">
+											<Offset>
+												<AbsDimension x="15" y="5" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="VCB_BF_CONSOLIDATED_FRAME_LEFT_DELETE" font="Fonts\FRIZQT__.TTF" text="Selected aura:" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="220" y="60" />
+									</Size>
+									<Color r="1.0" g="0.82" b="0"/>
+									<FontHeight val="20"/>
+									<Anchors>
+										<Anchor point="TOP" relativeTo="VCB_BF_CONSOLIDATED_FRAME_LEFT_INSERT" relativePoint="BOTTOM">
+											<Offset>
+												<AbsDimension x="0" y="-70" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Frames>
+							<EditBox name="VCB_BF_CONSOLIDATED_FRAME_EditBox" letters="80">
+								<Size x="160" y="40" />
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CONSOLIDATED_FRAME_LEFT_INSERT" relativePoint="BOTTOM">
+										<Offset x="-13" y="15" />
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer level="BACKGROUND">
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Left">
+											<Size x="100" y="40" />
+											<Anchors>
+												<Anchor point="LEFT">
+													<Offset x="-20" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0" right="0.2" top="0" bottom="1.0"/>
+										</Texture>
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Right">
+											<Size x="100" y="40" />
+											<Anchors>
+												<Anchor point="RIGHT">
+													<Offset x="15" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0.7" right="1.0" top="0" bottom="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<FontString inherits="ChatFontNormal" />
+							</EditBox>
+							-- Button ADD
+							<Button name="VCB_BF_CONSOLIDATED_FRAME_ADD_BUTTON">
+								<Size>
+									<AbsDimension x="180" y="40"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CONSOLIDATED_FRAME_EditBox" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+										VCB_CONSOLIDATED_BUFFS_ADD()
+										PlaySound("igMainMenuOptionCheckBoxOff")
+									</OnClick>
+								</Scripts>
+								<Layers>
+									<Layer>
+										-- Button Title
+										<FontString name="VCB_BF_CONSOLIDATED_FRAME_ADD_BUTTON_TITLE" inherits="GameFontNormalSmall" text="ADD">
+											<Size>
+												<AbsDimension x="180" y="40" />
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="7" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+								<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+								<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+								<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+							</Button>
+							<Frame name="VCB_BF_CONSOLIDATED_FRAME_LEFT_DELETE_INBOX">
+								<Size>
+									<AbsDimension x="195" y="40"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CONSOLIDATED_FRAME_LEFT_DELETE" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="-15" y="15" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+									<BackgroundInsets>
+										<AbsInset left="11" right="12" top="12" bottom="11" />
+									</BackgroundInsets>
+									<TileSize>
+										<AbsValue val="32" />
+									</TileSize>
+									<EdgeSize>
+										<AbsValue val="32" />
+									</EdgeSize>
+								</Backdrop>
+								<Layers>
+									<Layer>
+										<FontString name="VCB_BF_CONSOLIDATED_FRAME_LEFT_DELETE_INBOX_TEXT" inherits="GameFontNormalSmall" text="">
+											<Size>
+												<AbsDimension x="195" y="40" />
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="1" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+							</Frame>
+							-- Button DELETE
+							<Button name="VCB_BF_CONSOLIDATED_FRAME_DELETE_BUTTON">
+								<Size>
+									<AbsDimension x="180" y="40"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CONSOLIDATED_FRAME_LEFT_DELETE_INBOX" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+										VCB_CONSOLIDATED_BUFFS_DELETE()
+										PlaySound("igMainMenuOptionCheckBoxOff")
+									</OnClick>
+								</Scripts>
+								<Layers>
+									<Layer>
+										-- Button Title
+										<FontString name="VCB_BF_CONSOLIDATED_FRAME_DELETE_BUTTON_TITLE" inherits="GameFontNormalSmall" text="DELETE">
+											<Size>
+												<AbsDimension x="180" y="40" />
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="7" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+								<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+								<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+								<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+							</Button>
+							-- Button Remove all
+							<Button name="VCB_BF_CONSOLIDATED_FRAME_RA_BUTTON">
+								<Size>
+									<AbsDimension x="180" y="40"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CONSOLIDATED_FRAME_DELETE_BUTTON" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-140"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+										VCB_CONSOLIDATED_BUFFS_REMOVE_ALL()
+										PlaySound("igMainMenuOptionCheckBoxOff")
+									</OnClick>
+								</Scripts>
+								<Layers>
+									<Layer>
+										-- Button Title
+										<FontString name="VCB_BF_CONSOLIDATED_FRAME_RA_BUTTON_TITLE" inherits="GameFontNormalSmall" text="Remove all">
+											<Size>
+												<AbsDimension x="180" y="40" />
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="7" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+								<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+								<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+								<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+							</Button>
+						</Frames>
+					</Frame>
+					<Frame name="VCB_BF_CONSOLIDATED_FRAME_RIGHT">
+						<Size>
+							<AbsDimension x="390" y="435"/>
+						</Size>
+						<Anchors>
+							<Anchor point="Left" relativeTo="VCB_BF_CONSOLIDATED_FRAME_LEFT" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="0" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+							<BackgroundInsets>
+								<AbsInset left="11" right="12" top="12" bottom="11" />
+							</BackgroundInsets>
+							<TileSize>
+								<AbsValue val="32" />
+							</TileSize>
+							<EdgeSize>
+								<AbsValue val="32" />
+							</EdgeSize>
+						</Backdrop>
+						<Frames>
+							<ScrollFrame name="VCB_BF_CONSOLIDATED_FRAME_RIGHT_SCROLLFRAME" inherits="FauxScrollFrameTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-5" />
+										</Offset>
+									</Anchor>
+									<Anchor point="BOTTOMRIGHT">
+										<Offset>
+										  <AbsDimension x="-30" y="8"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnVerticalScroll>
+										FauxScrollFrame_OnVerticalScroll(40, VCB_BF_CONSOLIDATED_FRAME_RIGHT_SCROLLFRAME_Update) 
+									</OnVerticalScroll>
+									<OnShow>
+										VCB_BF_CONSOLIDATED_FRAME_RIGHT_SCROLLFRAME_Update()
+									</OnShow>
+							   </Scripts>
+							</ScrollFrame>
+							<Button name="VCB_CONSOLIDATED_BUFFS_ENTRY1" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_BF_CONSOLIDATED_FRAME_RIGHT_SCROLLFRAME" relativePoint="TOPLEFT">
+								<Offset>
+								  <AbsDimension x="15" y="-15"/>
+								</Offset>
+							   </Anchor>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_CONSOLIDATED_BUFFS_ENTRY_TEXT1" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_CONSOLIDATED_BUFFS_ENTRY2" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_CONSOLIDATED_BUFFS_ENTRY1" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_CONSOLIDATED_BUFFS_ENTRY_TEXT2" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_CONSOLIDATED_BUFFS_ENTRY3" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_CONSOLIDATED_BUFFS_ENTRY2" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_CONSOLIDATED_BUFFS_ENTRY_TEXT3" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_CONSOLIDATED_BUFFS_ENTRY4" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_CONSOLIDATED_BUFFS_ENTRY3" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_CONSOLIDATED_BUFFS_ENTRY_TEXT4" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_CONSOLIDATED_BUFFS_ENTRY5" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_CONSOLIDATED_BUFFS_ENTRY4" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_CONSOLIDATED_BUFFS_ENTRY_TEXT5" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_CONSOLIDATED_BUFFS_ENTRY6" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_CONSOLIDATED_BUFFS_ENTRY5" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_CONSOLIDATED_BUFFS_ENTRY_TEXT6" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_CONSOLIDATED_BUFFS_ENTRY7" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_CONSOLIDATED_BUFFS_ENTRY6" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_CONSOLIDATED_BUFFS_ENTRY_TEXT7" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_CONSOLIDATED_BUFFS_ENTRY8" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_CONSOLIDATED_BUFFS_ENTRY7" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_CONSOLIDATED_BUFFS_ENTRY_TEXT8" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_CONSOLIDATED_BUFFS_ENTRY9" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_CONSOLIDATED_BUFFS_ENTRY8" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_CONSOLIDATED_BUFFS_ENTRY_TEXT9" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_CONSOLIDATED_BUFFS_ENTRY10" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_CONSOLIDATED_BUFFS_ENTRY9" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_CONSOLIDATED_BUFFS_ENTRY_TEXT10" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						</Frames>
+					</Frame>
+				</Frames>
+			</Frame>
+			-- Banned Frame
+			<Frame name="VCB_BF_BANNED_FRAME" hidden="true">
+				<Size>
+					<AbsDimension x="610" y="435"/>
+				</Size>
+				<Anchors>
+					<Anchor point="Left" relativeTo="VCB_BF_MENU_BODY" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Frames>
+					<Frame name="VCB_BF_BANNED_FRAME_LEFT">
+						<Size>
+							<AbsDimension x="220" y="435"/>
+						</Size>
+						<Anchors>
+							<Anchor point="Left">
+								<Offset>
+									<AbsDimension x="0" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+							<BackgroundInsets>
+								<AbsInset left="11" right="12" top="12" bottom="11" />
+							</BackgroundInsets>
+							<TileSize>
+								<AbsValue val="32" />
+							</TileSize>
+							<EdgeSize>
+								<AbsValue val="32" />
+							</EdgeSize>
+						</Backdrop>
+						<Layers>
+							<Layer>
+								<FontString name="VCB_BF_BANNED_FRAME_LEFT_INSERT" font="Fonts\FRIZQT__.TTF" text="Insert a buff name:" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="220" y="60" />
+									</Size>
+									<Color r="1.0" g="0.82" b="0"/>
+									<FontHeight val="20"/>
+									<Anchors>
+										<Anchor point="TOP">
+											<Offset>
+												<AbsDimension x="15" y="5" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="VCB_BF_BANNED_FRAME_LEFT_DELETE" font="Fonts\FRIZQT__.TTF" text="Selected aura:" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="220" y="60" />
+									</Size>
+									<Color r="1.0" g="0.82" b="0"/>
+									<FontHeight val="20"/>
+									<Anchors>
+										<Anchor point="TOP" relativeTo="VCB_BF_BANNED_FRAME_LEFT_INSERT" relativePoint="BOTTOM">
+											<Offset>
+												<AbsDimension x="0" y="-70" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Frames>
+							<EditBox name="VCB_BF_BANNED_FRAME_EditBox" letters="80">
+								<Size x="160" y="40" />
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_BANNED_FRAME_LEFT_INSERT" relativePoint="BOTTOM">
+										<Offset x="-13" y="15" />
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer level="BACKGROUND">
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Left">
+											<Size x="100" y="40" />
+											<Anchors>
+												<Anchor point="LEFT">
+													<Offset x="-20" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0" right="0.2" top="0" bottom="1.0"/>
+										</Texture>
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Right">
+											<Size x="100" y="40" />
+											<Anchors>
+												<Anchor point="RIGHT">
+													<Offset x="15" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0.7" right="1.0" top="0" bottom="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnLoad>
+									</OnLoad>
+								</Scripts>
+								<FontString inherits="ChatFontNormal" />
+							</EditBox>
+							-- Button ADD
+							<Button name="VCB_BF_BANNED_FRAME_ADD_BUTTON">
+								<Size>
+									<AbsDimension x="180" y="40"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_BANNED_FRAME_EditBox" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+										VCB_BANNED_BUFFS_ADD()
+										PlaySound("igMainMenuOptionCheckBoxOff")
+									</OnClick>
+								</Scripts>
+								<Layers>
+									<Layer>
+										-- Button Title
+										<FontString name="VCB_BF_BANNED_FRAME_ADD_BUTTON_TITLE" inherits="GameFontNormalSmall" text="ADD">
+											<Size>
+												<AbsDimension x="180" y="40" />
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="7" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+								<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+								<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+								<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+							</Button>
+							<Frame name="VCB_BF_BANNED_FRAME_LEFT_DELETE_INBOX">
+								<Size>
+									<AbsDimension x="195" y="40"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_BANNED_FRAME_LEFT_DELETE" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="-15" y="15" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+									<BackgroundInsets>
+										<AbsInset left="11" right="12" top="12" bottom="11" />
+									</BackgroundInsets>
+									<TileSize>
+										<AbsValue val="32" />
+									</TileSize>
+									<EdgeSize>
+										<AbsValue val="32" />
+									</EdgeSize>
+								</Backdrop>
+								<Layers>
+									<Layer>
+										<FontString name="VCB_BF_BANNED_FRAME_LEFT_DELETE_INBOX_TEXT" inherits="GameFontNormalSmall" text="">
+											<Size>
+												<AbsDimension x="195" y="40" />
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="1" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+							</Frame>
+							-- Button DELETE
+							<Button name="VCB_BF_BANNED_FRAME_DELETE_BUTTON">
+								<Size>
+									<AbsDimension x="180" y="40"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_BANNED_FRAME_LEFT_DELETE_INBOX" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+										VCB_BANNED_BUFFS_DELETE()
+										PlaySound("igMainMenuOptionCheckBoxOff")
+									</OnClick>
+								</Scripts>
+								<Layers>
+									<Layer>
+										-- Button Title
+										<FontString name="VCB_BF_BANNED_FRAME_DELETE_BUTTON_TITLE" inherits="GameFontNormalSmall" text="DELETE">
+											<Size>
+												<AbsDimension x="180" y="40" />
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="7" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+								<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+								<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+								<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+							</Button>
+							-- Button Remove all
+							<Button name="VCB_BF_BANNED_FRAME_RA_BUTTON">
+								<Size>
+									<AbsDimension x="180" y="40"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_BANNED_FRAME_DELETE_BUTTON" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-140"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnClick>
+										VCB_BANNED_BUFFS_REMOVE_ALL()
+										PlaySound("igMainMenuOptionCheckBoxOff")
+									</OnClick>
+								</Scripts>
+								<Layers>
+									<Layer>
+										-- Button Title
+										<FontString name="VCB_BF_BANNED_FRAME_RA_BUTTON_TITLE" inherits="GameFontNormalSmall" text="Remove all">
+											<Size>
+												<AbsDimension x="180" y="40" />
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="7" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+								<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+								<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+								<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+							</Button>
+						</Frames>
+					</Frame>
+					<Frame name="VCB_BF_BANNED_FRAME_RIGHT">
+						<Size>
+							<AbsDimension x="390" y="435"/>
+						</Size>
+						<Anchors>
+							<Anchor point="Left" relativeTo="VCB_BF_BANNED_FRAME_LEFT" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="0" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+							<BackgroundInsets>
+								<AbsInset left="11" right="12" top="12" bottom="11" />
+							</BackgroundInsets>
+							<TileSize>
+								<AbsValue val="32" />
+							</TileSize>
+							<EdgeSize>
+								<AbsValue val="32" />
+							</EdgeSize>
+						</Backdrop>
+						<Frames>
+							<ScrollFrame name="VCB_BF_BANNED_FRAME_RIGHT_SCROLLFRAME" inherits="FauxScrollFrameTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-5" />
+										</Offset>
+									</Anchor>
+									<Anchor point="BOTTOMRIGHT">
+										<Offset>
+										  <AbsDimension x="-30" y="8"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnVerticalScroll>
+										FauxScrollFrame_OnVerticalScroll(40, VCB_BF_BANNED_FRAME_RIGHT_SCROLLFRAME_Update) 
+									</OnVerticalScroll>
+									<OnShow>
+										VCB_BF_BANNED_FRAME_RIGHT_SCROLLFRAME_Update()
+									</OnShow>
+							   </Scripts>
+							</ScrollFrame>
+							<Button name="VCB_BANNED_BUFFS_ENTRY1" inherits="VCB_BANNED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_BF_BANNED_FRAME_RIGHT_SCROLLFRAME" relativePoint="TOPLEFT">
+								<Offset>
+								  <AbsDimension x="15" y="-15"/>
+								</Offset>
+							   </Anchor>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_BANNED_BUFFS_ENTRY_TEXT1" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_BANNED_BUFFS_ENTRY2" inherits="VCB_BANNED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_BANNED_BUFFS_ENTRY1" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_BANNED_BUFFS_ENTRY_TEXT2" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_BANNED_BUFFS_ENTRY3" inherits="VCB_BANNED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_BANNED_BUFFS_ENTRY2" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_BANNED_BUFFS_ENTRY_TEXT3" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_BANNED_BUFFS_ENTRY4" inherits="VCB_BANNED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_BANNED_BUFFS_ENTRY3" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_BANNED_BUFFS_ENTRY_TEXT4" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_BANNED_BUFFS_ENTRY5" inherits="VCB_BANNED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_BANNED_BUFFS_ENTRY4" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_BANNED_BUFFS_ENTRY_TEXT5" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_BANNED_BUFFS_ENTRY6" inherits="VCB_BANNED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_BANNED_BUFFS_ENTRY5" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_BANNED_BUFFS_ENTRY_TEXT6" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_BANNED_BUFFS_ENTRY7" inherits="VCB_BANNED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_BANNED_BUFFS_ENTRY6" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_BANNED_BUFFS_ENTRY_TEXT7" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_BANNED_BUFFS_ENTRY8" inherits="VCB_BANNED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_BANNED_BUFFS_ENTRY7" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_BANNED_BUFFS_ENTRY_TEXT8" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_BANNED_BUFFS_ENTRY9" inherits="VCB_BANNED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_BANNED_BUFFS_ENTRY8" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_BANNED_BUFFS_ENTRY_TEXT9" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_BANNED_BUFFS_ENTRY10" inherits="VCB_BANNED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_BANNED_BUFFS_ENTRY9" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="VCB_BANNED_BUFFS_ENTRY_TEXT10" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						</Frames>
+					</Frame>
+				</Frames>
+			</Frame>
+			-- Timer Frame
+			<Frame name="VCB_BF_TIMER_FRAME" hidden="true">
+				<Size>
+					<AbsDimension x="610" y="435"/>
+				</Size>
+				<Anchors>
+					<Anchor point="Left" relativeTo="VCB_BF_MENU_BODY" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+			</Frame>
+			-- CF Color Frame
+			<Frame name="VCB_BF_CF_COLOR_FRAME" hidden="true">
+				<Size>
+					<AbsDimension x="610" y="435"/>
+				</Size>
+				<Anchors>
+					<Anchor point="Left" relativeTo="VCB_BF_MENU_BODY" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+			</Frame>
+			-- BF Color Frame
+			<Frame name="VCB_BF_BF_COLOR_FRAME" hidden="true">
+				<Size>
+					<AbsDimension x="610" y="435"/>
+				</Size>
+				<Anchors>
+					<Anchor point="Left" relativeTo="VCB_BF_MENU_BODY" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+			</Frame>
+			-- DBF Color Frame
+			<Frame name="VCB_BF_DBF_COLOR_FRAME" hidden="true">
+				<Size>
+					<AbsDimension x="610" y="435"/>
+				</Size>
+				<Anchors>
+					<Anchor point="Left" relativeTo="VCB_BF_MENU_BODY" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+			</Frame>
+			-- CF Frame
+			<Frame name="VCB_BF_CF_FRAME" hidden="true">
+				<Size>
+					<AbsDimension x="610" y="435"/>
+				</Size>
+				<Anchors>
+					<Anchor point="Left" relativeTo="VCB_BF_MENU_BODY" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+			</Frame>
+			-- BF Frame
+			<Frame name="VCB_BF_BF_FRAME" hidden="true">
+				<Size>
+					<AbsDimension x="610" y="435"/>
+				</Size>
+				<Anchors>
+					<Anchor point="Left" relativeTo="VCB_BF_MENU_BODY" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+			</Frame>
+			-- DBF Frame
+			<Frame name="VCB_BF_DBF_FRAME" hidden="true">
+				<Size>
+					<AbsDimension x="610" y="435"/>
+				</Size>
+				<Anchors>
+					<Anchor point="Left" relativeTo="VCB_BF_MENU_BODY" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+			</Frame>
+			-- About Frame
+			<Frame name="VCB_BF_ABOUT_FRAME" hidden="true">
+				<Size>
+					<AbsDimension x="610" y="435"/>
+				</Size>
+				<Anchors>
+					<Anchor point="Left" relativeTo="VCB_BF_MENU_BODY" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+			</Frame>
+		</Frames>
+	</Frame>
+	
+</Ui>
