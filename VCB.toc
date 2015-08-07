@@ -3,9 +3,11 @@
 ## Notes: Sums up all general buffs into one frame
 ## Author: Shino <Synced> - Kronos
 ## SavedVariables:
-## SavedVariablesPerCharacter:
+## SavedVariablesPerCharacter: Consolidated_Buffs, Banned_Buffs, Scale, VCB_BF_LOCKED
 ## OptionalDeps: 
 ## Dependencies:
 VCB.lua
+VCB_Buffframe.lua
 VCB.xml
+VCB_Buffframe.xml
 

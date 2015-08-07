@@ -109,6 +109,10 @@ function VCB_EmptyTable(t)
 	end
 end
 
+function VCB_SendMessage(msg)
+	DEFAULT_CHAT_FRAME:AddMessage("|cFFFF8080VCB v"..VCB_VERSION..":|r "..msg)
+end
+
 ---------------------------------------OPTION FRAME BEGIN-----------------------------------------------------------------------------------------------------------------
 
 function VCB_OPTIONS_OnShow()
@@ -173,7 +177,7 @@ function VCB_CONSOLIDATED_BUFFS_ADD()
 end
 
 function VCB_CONSOLIDATED_BUFFS_REMOVE_ALL()
-	VCB_BF_RemoveAll()
+	VCB_BF_RemoveAllFromConsolidate()
 	VCB_BF_CONSOLIDATED_FRAME_RIGHT_SCROLLFRAME_Update()
 end
 
@@ -202,17 +206,17 @@ function VCB_BANNED_SCROLLFRAME_ENTRY(button)
 end
 
 function VCB_BANNED_BUFFS_DELETE()
-	VCB_AU:RemoveFromBanned(getglobal("VCB_BF_BANNED_FRAME_LEFT_DELETE_INBOX_TEXT"):GetText())
+	VCB_BF_RemoveFromBanned(getglobal("VCB_BF_BANNED_FRAME_LEFT_DELETE_INBOX_TEXT"):GetText())
 	VCB_BF_BANNED_FRAME_RIGHT_SCROLLFRAME_Update()
 end
 
 function VCB_BANNED_BUFFS_ADD()
-	VCB_AU:AddToBanned(getglobal("VCB_BF_BANNED_FRAME_EditBox"):GetText())
+	VCB_BF_AddToBanned(getglobal("VCB_BF_BANNED_FRAME_EditBox"):GetText())
 	VCB_BF_BANNED_FRAME_RIGHT_SCROLLFRAME_Update()
 end
 
 function VCB_BANNED_BUFFS_REMOVE_ALL()
-	VCB_AU:RemoveAll()
+	VCB_BF_RemoveAllFromBanned()
 	VCB_BF_BANNED_FRAME_RIGHT_SCROLLFRAME_Update()
 end
 

@@ -1,0 +1,340 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+    ..\..\..\FrameXML\UI.xsd">
+	
+	<GameTooltip name="VCB_BF_Tooltip" frameStrata="TOOLTIP" hidden="false" parent="UIParent" inherits="GameTooltipTemplate">
+		<Anchors>
+			<Anchor point="BOTTOM" relativePoint="TOP">
+				<Offset><AbsDimension x="0" y="100"/></Offset>
+			</Anchor>
+		</Anchors>
+	</GameTooltip>
+	
+	<Frame name="VCB_BF_BUFF_FRAME" parent="UIParent" toplevel="true" frameStrata="LOW" hidden="true" movable="true">
+		<Size>
+			<AbsDimension x="50" y="50"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER" relativeTo="UIParent" relativePoint="CENTER">
+				<Offset>
+					<AbsDimension x="-205" y="-13"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+	</Frame>
+	<Frame name="VCB_BF_DEBUFF_FRAME" parent="UIParent" toplevel="true" frameStrata="LOW" hidden="true" movable="true">
+		<Size>
+			<AbsDimension x="50" y="50"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER" relativeTo="UIParent" relativePoint="CENTER">
+				<Offset>
+					<AbsDimension x="-205" y="-13"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+	</Frame>
+	<Frame name="VCB_BF_WEAPON_FRAME" parent="UIParent" toplevel="true" frameStrata="LOW" hidden="true" movable="true">
+		<Size>
+			<AbsDimension x="50" y="50"/>
+		</Size>
+		<Anchors>
+			<Anchor point="CENTER" relativeTo="UIParent" relativePoint="CENTER">
+				<Offset>
+					<AbsDimension x="-205" y="-13"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+	</Frame>
+	<Frame name="VCB_BF_CONSOLIDATED_ICON" parent="VCB_BF_BUFF_FRAME" toplevel="true" frameStrata="LOW">
+		<Size>
+			<AbsDimension x="32" y="32"/>
+		</Size>
+		<Anchors>
+			<Anchor point="TOPRIGHT" relativeTo="VCB_BF_BUFF_FRAME" relativePoint="TOPRIGHT">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Scripts>
+			<OnEnter>
+				VCB_BF_CONSOLIDATED_BUFFFRAME:Show()
+			</OnEnter>
+			<OnLeave>
+				VCB_BF_CONSOLIDATED_BUFFFRAME:Hide()
+			</OnLeave>
+			<OnMouseDown>
+				if (not VCB_BF_LOCKED) then
+					VCB_BF_BUFF_FRAME:StartMoving()
+				end
+			</OnMouseDown>
+			<OnMouseUp>
+				if (not VCB_BF_LOCKED) then
+					VCB_BF_BUFF_FRAME:StopMovingOrSizing()
+				end
+			</OnMouseUp>
+		</Scripts>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentIcon" file="Interface\AddOns\VCB\images\icon.tga" />
+				<FontString name="$parentCount" inherits="NumberFontNormal">
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT">
+							<Offset>
+								<AbsDimension x="-5" y="5"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+	</Frame>
+	<Frame name="VCB_BF_CONSOLIDATED_BUFFFRAME" parent="VCB_BF_CONSOLIDATED_ICON" hidden="true">
+		<Size>
+			<AbsDimension x="60" y="60"/>
+		</Size>
+		<Anchors>
+			<Anchor point="TOP" relativeTo="VCB_BF_CONSOLIDATED_ICON" relativePoint="BOTTOM">
+				<Offset>
+					<AbsDimension x="0" y="0"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="4" right="4" top="4" bottom="4" />
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="16" />
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="16" />
+			</EdgeSize>
+			<Color r="0" g="0" b="0" a="1" />
+		</Backdrop>
+		<Scripts>
+			<OnEnter>
+				this:Show()
+			</OnEnter>
+			<OnLeave>
+				this:Hide()
+			</OnLeave>
+		</Scripts>
+	</Frame>
+	
+	<Button name="VCB_BF_BUTTON_TEMPLATE" virtual="true">
+		<Size>
+			<AbsDimension x="32" y="32"/>
+		</Size>
+		<Scripts>
+			<OnLoad>
+				this.buffFilter = "HELPFUL|HARMFUL"
+				this.timeSinceLastUpdate = 0
+				this:RegisterEvent("PLAYER_AURAS_CHANGED")
+			</OnLoad>
+			<OnEvent>
+				VCB_BF_BUFF_BUTTON_Update(this)
+			</OnEvent>
+			<OnUpdate>
+				VCB_BF_BUFF_BUTTON_OnUpdate(arg1, this)
+			</OnUpdate>
+			<OnClick>
+				VCB_BF_BUFF_BUTTON_OnClick(this)
+			</OnClick>
+			<OnEnter>
+				if this:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
+					VCB_BF_CONSOLIDATED_BUFFFRAME:Show()
+				end
+				GameTooltip:SetOwner(this, "ANCHOR_BOTTOMLEFT")
+				GameTooltip:SetPlayerBuff(this.buffIndex)
+			</OnEnter>
+			<OnLeave>
+				if this:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
+					VCB_BF_CONSOLIDATED_BUFFFRAME:Hide()
+				end
+				GameTooltip:Hide()
+			</OnLeave>
+		</Scripts>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="$parentIcon"/>
+				<FontString name="$parentCount" inherits="NumberFontNormal">
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT">
+							<Offset>
+								<AbsDimension x="-2" y="2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString name="$parentDuration" inherits="GameFontNormalSmall">
+					<Size>
+						<AbsDimension x="0" y="10"/>
+					</Size>
+					<Anchors>
+						<Anchor point = "TOPLEFT" relativePoint="BOTTOMLEFT">
+							<Offset>
+								<AbsDimension x="-2" y="0"/>
+							</Offset>
+						</Anchor>
+						<Anchor point = "TOPRIGHT" relativePoint="BOTTOMRIGHT">
+							<Offset>
+								<AbsDimension x="2" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+			</Layer>
+			<Layer level="OVERLAY">
+				<FontString inherits="GameFontHighlight" name="$parent_Ghost_Label">
+					<Anchors>
+						<Anchor point = "TOPLEFT">
+							<Offset>
+								<AbsDimension x="2" y="2"/>
+							</Offset>
+						</Anchor>
+						<Anchor point = "BOTTOMRIGHT">
+							<Offset>
+								<AbsDimension x="-2" y="-2"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</FontString>
+				<Texture name="$parent_Ghost_Texture" alphaMode="ADD">
+					<Color r="0" g="0" b="0" a="1"/>
+					<Anchors>
+						<Anchor point="TOPRIGHT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+						<Anchor point="BOTTOMLEFT">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+	</Button>
+	
+	<Button name="VCB_BF_BUFF_BUTTON" inherits="VCB_BF_BUTTON_TEMPLATE" virtual="true">
+		<Scripts>
+			<OnMouseDown>
+				if (not VCB_BF_LOCKED) then
+					VCB_BF_BUFF_FRAME:StartMoving()
+				end
+			</OnMouseDown>
+			<OnMouseUp>
+				if (not VCB_BF_LOCKED) then
+					VCB_BF_BUFF_FRAME:StopMovingOrSizing()
+				end
+			</OnMouseUp>
+		</Scripts>
+	</Button>
+	
+	<Button name="VCB_BF_DEBUFF_BUTTON" inherits="VCB_BF_BUTTON_TEMPLATE" virtual="true">
+		<Layers>
+			<Layer level="OVERLAY">
+				<Texture name="$parentBorder" file="Interface\Buttons\UI-Debuff-Overlays">
+					<Size>
+						<AbsDimension x="33" y="32"/>
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<Color r="0" g="0" b="0" a="0"/>
+					<TexCoords left="0.296875" right="0.5703125" top="0" bottom="0.515625"/>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString name="$parentDuration" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="TOP" relativePoint="BOTTOM"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnMouseDown>
+				if (not VCB_BF_LOCKED) then
+					VCB_BF_DEBUFF_FRAME:StartMoving()
+				end
+			</OnMouseDown>
+			<OnMouseUp>
+				if (not VCB_BF_LOCKED) then
+					VCB_BF_DEBUFF_FRAME:StopMovingOrSizing()
+				end
+			</OnMouseUp>
+		</Scripts>
+	</Button>
+	
+	<Button name="VCB_BF_WEAPON_BUTTON" inherits="VCB_BF_BUTTON_TEMPLATE" virtual="true">
+		<Layers>
+			<Layer level="OVERLAY">
+				<Texture name="$parentBorder" file="Interface\Buttons\UI-TempEnchant-Border">
+					<Size>
+						<AbsDimension x="32" y="32"/>
+					</Size>
+					<Anchors>
+						<Anchor point="CENTER">
+							<Offset>
+								<AbsDimension x="0" y="0"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+				</Texture>
+			</Layer>
+			<Layer level="ARTWORK">
+				<FontString name="$parentDuration" inherits="GameFontNormalSmall">
+					<Anchors>
+						<Anchor point="TOP" relativePoint="BOTTOM"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Scripts>
+			<OnUpdate>
+				VCB_BF_WEAPON_BUTTON_OnUpdate(arg1)
+			</OnUpdate>
+			<OnLoad>
+			</OnLoad>
+			<OnEnter>
+				BuffFrame_EnchantButton_OnEnter()
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide()
+			</OnLeave>
+			<OnMouseDown>
+				if (not VCB_BF_LOCKED) then
+					VCB_BF_WEAPON_FRAME:StartMoving()
+				end
+			</OnMouseDown>
+			<OnMouseUp>
+				if (not VCB_BF_LOCKED) then
+					VCB_BF_WEAPON_FRAME:StopMovingOrSizing()
+				end
+			</OnMouseUp>
+		</Scripts>
+	</Button>
+	
+	<Frame hidden="true">
+		<Scripts>
+			<OnLoad>
+				VCB_BF_OnLoad()
+			</OnLoad>
+			<OnEvent>
+				VCB_BF_OnEvent(event)
+			</OnEvent>
+		</Scripts>
+	</Frame>
+</Ui>
