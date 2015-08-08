@@ -60,10 +60,14 @@
 		</Anchors>
 		<Scripts>
 			<OnEnter>
-				VCB_BF_CONSOLIDATED_BUFFFRAME:Show()
+				if (not VCB_BF_CF_FRAME:IsVisible()) then
+					VCB_BF_CONSOLIDATED_BUFFFRAME:Show()
+				end
 			</OnEnter>
 			<OnLeave>
-				VCB_BF_CONSOLIDATED_BUFFFRAME:Hide()
+				if (not VCB_BF_CF_FRAME:IsVisible()) then
+					VCB_BF_CONSOLIDATED_BUFFFRAME:Hide()
+				end
 			</OnLeave>
 			<OnMouseDown>
 				if (not VCB_BF_LOCKED) then
@@ -116,10 +120,14 @@
 		</Backdrop>
 		<Scripts>
 			<OnEnter>
-				this:Show()
+				if (not VCB_BF_CF_FRAME:IsVisible()) then
+					this:Show()
+				end
 			</OnEnter>
 			<OnLeave>
-				this:Hide()
+				if (not VCB_BF_CF_FRAME:IsVisible()) then
+					this:Hide()
+				end
 			</OnLeave>
 		</Scripts>
 	</Frame>
@@ -144,14 +152,14 @@
 				VCB_BF_BUFF_BUTTON_OnClick(this)
 			</OnClick>
 			<OnEnter>
-				if this:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
+				if this:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME and (not VCB_BF_CF_FRAME:IsVisible()) then
 					VCB_BF_CONSOLIDATED_BUFFFRAME:Show()
 				end
 				GameTooltip:SetOwner(this, "ANCHOR_BOTTOMLEFT")
 				GameTooltip:SetPlayerBuff(this.buffIndex)
 			</OnEnter>
 			<OnLeave>
-				if this:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
+				if this:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME and (not VCB_BF_CF_FRAME:IsVisible()) then
 					VCB_BF_CONSOLIDATED_BUFFFRAME:Hide()
 				end
 				GameTooltip:Hide()

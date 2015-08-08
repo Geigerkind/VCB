@@ -2015,7 +2015,7 @@
 							</OnLoad>
 							<OnValueChanged>
 								if VCB_IS_LOADED then
-									VCB_BF_VCB_BF_SizeSlider(this)
+									VCB_BF_TIMER_FRAME_SizeSliderChange(this)
 								end
 							</OnValueChanged>
 						</Scripts>
@@ -2043,7 +2043,7 @@
 							</OnLoad>
 							<OnValueChanged>
 								if VCB_IS_LOADED then
-									VCB_BF_VCB_BF_FontSlider(this)
+									VCB_BF_TIMER_FRAME_FontSliderChange(this)
 								end
 							</OnValueChanged>
 						</Scripts>
@@ -2071,7 +2071,7 @@
 							</OnLoad>
 							<OnValueChanged>
 								if VCB_IS_LOADED then
-									VCB_BF_VCB_BF_AlphaSlider(this)
+									VCB_BF_TIMER_FRAME_AlphaSliderChange(this)
 								end
 							</OnValueChanged>
 						</Scripts>
@@ -2173,6 +2173,121 @@
 						<AbsValue val="32" />
 					</EdgeSize>
 				</Backdrop>
+				<Scripts>
+					<OnShow>
+						VCB_BF_CONSOLIDATED_BUFFFRAME:Show()
+					</OnShow>
+					<OnHide>
+						VCB_BF_CONSOLIDATED_BUFFFRAME:Hide()
+					</OnHide>
+				</Scripts>
+				<Frames>
+					<CheckButton name="VCB_BF_CF_FRAME_CHECKBUTTON1" inherits="VCB_BF_CheckTemplate">
+						<Size>
+							<AbsDimension x="30" y="30"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="VCB_BF_CF_FRAME" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="15" y="-15"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this.tooltipText = "Check this to invert the buff order."
+								getglobal("VCB_BF_CF_FRAME_CHECKBUTTON1Text"):SetText("Invert buff order")
+							</OnLoad>
+							<OnClick>
+								VCB_BF_CF_FRAME_INVERTBUTTON()
+							</OnClick>
+						</Scripts>
+					</CheckButton>
+					<Slider name="VCB_BF_CF_FRAME_AnchorSlider" inherits="VCB_BF_SliderTemplate">
+						<Size>
+							<AbsDimension x="180" y="16"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME" relativePoint="TOP">
+								<Offset>
+									<AbsDimension x="180" y="-30" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this.aide = "Move this to change the anchor."
+								this:SetMinMaxValues(1,4)
+								this:SetValue(1)
+								this:SetValueStep(1)
+								getglobal("VCB_BF_CF_FRAME_AnchorSliderText"):SetText("Anchor")
+								getglobal("VCB_BF_CF_FRAME_AnchorSliderLow"):SetText("1")
+								getglobal("VCB_BF_CF_FRAME_AnchorSliderHigh"):SetText("4")
+							</OnLoad>
+							<OnValueChanged>
+								if VCB_IS_LOADED then
+									VCB_BF_CF_FRAME_AnchorSliderChange(this)
+								end
+							</OnValueChanged>
+						</Scripts>
+					</Slider>
+					<Slider name="VCB_BF_CF_FRAME_ScaleSlider" inherits="VCB_BF_SliderTemplate">
+						<Size>
+							<AbsDimension x="180" y="16"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_AnchorSlider" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-30" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this.aide = "Move this to change the scale."
+								this:SetMinMaxValues(0.1,3.0)
+								this:SetValue(1.0)
+								this:SetValueStep(0.1)
+								getglobal("VCB_BF_CF_FRAME_ScaleSliderText"):SetText("Scale")
+								getglobal("VCB_BF_CF_FRAME_ScaleSliderLow"):SetText("0.1")
+								getglobal("VCB_BF_CF_FRAME_ScaleSliderHigh"):SetText("3.0")
+							</OnLoad>
+							<OnValueChanged>
+								if VCB_IS_LOADED then
+									VCB_BF_CF_FRAME_ScaleSliderChange(this)
+								end
+							</OnValueChanged>
+						</Scripts>
+					</Slider>
+					<Slider name="VCB_BF_CF_FRAME_NumPerRowSlider" inherits="VCB_BF_SliderTemplate">
+						<Size>
+							<AbsDimension x="180" y="16"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_ScaleSlider" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-30" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this.aide = "Move this to change the amount."
+								this:SetMinMaxValues(1,10)
+								this:SetValue(5)
+								this:SetValueStep(1)
+								getglobal("VCB_BF_CF_FRAME_NumPerRowSliderText"):SetText("Buffs per row")
+								getglobal("VCB_BF_CF_FRAME_NumPerRowSliderLow"):SetText("1")
+								getglobal("VCB_BF_CF_FRAME_NumPerRowSliderHigh"):SetText("10")
+							</OnLoad>
+							<OnValueChanged>
+								if VCB_IS_LOADED then
+									VCB_BF_CF_FRAME_NumPerRowSliderChange(this)
+								end
+							</OnValueChanged>
+						</Scripts>
+					</Slider>
+				</Frames>
 			</Frame>
 			-- BF Frame
 			<Frame name="VCB_BF_BF_FRAME" hidden="true">

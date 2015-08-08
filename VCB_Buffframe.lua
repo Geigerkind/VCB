@@ -113,7 +113,6 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 		if (not hackfix) then
 			button:SetParent(VCB_BF_BUFF_FRAME)
 		end
-		VCB_BF_Repositioning()
 		
 		-- Banned Buffs implementation
 		if Banned_Buffs ~= nil then
@@ -173,27 +172,44 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 	
 	if VCB_IS_LOADED then
 		VCB_BF_WEAPON_BUTTON_OnUpdate(2.0)
-		if VCB_SAVE["Timer_border"] then
-			buffDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["Timer_fontsize"], "OUTLINE")
-		else
-			buffDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["Timer_fontsize"])
-		end
+		VCB_BF_RepositioningAndResizing()
 		buffDuration:SetAlpha(VCB_SAVE["Timer_alpha"])
 	end
 end
 
-function VCB_BF_Repositioning()
+function VCB_BF_RepositioningAndResizing()
 	local a = 1
 	local b = 1
 	for i=0, 31 do
 		local button = getglobal("VCB_BF_BUFF_BUTTON"..i)
 		if (button.buffIndex) then
 			local parent = button:GetParent()
+			local buffDuration = getglobal(button:GetName().."Duration");
 			if parent == VCB_BF_BUFF_FRAME then
+				button:ClearAllPoints()
 				button:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", -34*a + floor(a/17)*17*34,-46*floor(a/17)) -- NUM ROWS?
+				button:SetWidth(32)
+				button:SetHeight(32)
+				if VCB_SAVE["Timer_border"] then
+					buffDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["Timer_fontsize"], "OUTLINE")
+				else
+					buffDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["Timer_fontsize"])
+				end
 				a = a + 1
 			else
-				button:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-34*b)+26 + floor(b/6)*5*34,-46*floor(b/6)-8)
+				button:ClearAllPoints()
+				if VCB_SAVE["CF_invert"] then
+					button:SetPoint("TOPLEFT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPLEFT", VCB_SAVE["CF_scale"]*((34*b)-26 - (ceil(b/VCB_SAVE["CF_numperrow"]) - 1)*VCB_SAVE["CF_numperrow"]*34),VCB_SAVE["CF_scale"]*(-46*(ceil(b/VCB_SAVE["CF_numperrow"]) - 1)-8))
+				else
+					button:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", VCB_SAVE["CF_scale"]*((-34*b)+26 + (ceil(b/VCB_SAVE["CF_numperrow"]) - 1)*VCB_SAVE["CF_numperrow"]*34),VCB_SAVE["CF_scale"]*(-46*(ceil(b/VCB_SAVE["CF_numperrow"]) - 1)-8))
+				end
+				button:SetWidth(VCB_SAVE["CF_scale"]*32)
+				button:SetHeight(VCB_SAVE["CF_scale"]*32)
+				if VCB_SAVE["Timer_border"] then
+					buffDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_scale"]*VCB_SAVE["Timer_fontsize"], "OUTLINE")
+				else
+					buffDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_scale"]*VCB_SAVE["Timer_fontsize"])
+				end
 				b = b + 1
 			end
 		else
@@ -206,9 +222,9 @@ end
 
 function VCB_BF_ResizeConsolidatedFrame(i)
 	local p = i
-	if p >= 5 then p = 5 end
-	VCB_BF_CONSOLIDATED_BUFFFRAME:SetWidth(Scale*(14+(p*34)))
-	VCB_BF_CONSOLIDATED_BUFFFRAME:SetHeight(Scale*(14+(ceil(i/5)*44)))
+	if p >= VCB_SAVE["CF_numperrow"] then p = VCB_SAVE["CF_numperrow"] end
+	VCB_BF_CONSOLIDATED_BUFFFRAME:SetWidth(VCB_SAVE["CF_scale"]*(14+(p*34)))
+	VCB_BF_CONSOLIDATED_BUFFFRAME:SetHeight(VCB_SAVE["CF_scale"]*(14+(ceil(i/VCB_SAVE["CF_numperrow"])*46)))
 end
 
 function VCB_BF_BUFF_BUTTON_OnUpdate(elapsed, button)

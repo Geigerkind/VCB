@@ -10,6 +10,11 @@ VCB_FONT_ARRAY[1] = "FRIZQT__.ttf"
 VCB_FONT_ARRAY[2] = "ARIALN.ttf"
 VCB_FONT_ARRAY[3] = "skurri.ttf"
 VCB_FONT_ARRAY[4] = "MORPHEUS.ttf"
+VCB_ANCHOR_ARRAY = {}
+VCB_ANCHOR_ARRAY[1] = "Bottom"
+VCB_ANCHOR_ARRAY[2] = "Right"
+VCB_ANCHOR_ARRAY[3] = "Top"
+VCB_ANCHOR_ARRAY[4] = "Left"
 
 --[[
 -- VCB_OnLoad()
@@ -44,7 +49,11 @@ function VCB_OnEvent(event)
 				Timer_fontsize = 10, 
 				Timer_font = "FRIZQT__.ttf",
 				Timer_alpha = 1.0,
-				Timer_border = false
+				Timer_border = false,
+				CF_anchor = 1,
+				CF_scale = 1.0,
+				CF_invert = false,
+				CF_numperrow = 5,
 			}
 		end
 		if VCB_BF_LOCKED == nil then
@@ -56,11 +65,25 @@ function VCB_OnEvent(event)
 		if Banned_Buffs == nil then
 			Banned_Buffs = {}
 		end
-		if Scale == nil then
-			Scale = 1
+		--VCB_SAVE["Timer_alpha"] = 1.0
+		--VCB_SAVE["Timer_border"] = false
+		--VCB_SAVE["CF_anchor"] = 1
+		--VCB_SAVE["CF_scale"] = 1.0
+		--VCB_SAVE["CF_invert"] = false
+		--VCB_SAVE["CF_numperrow"] = 5
+		
+		VCB_BF_CONSOLIDATED_BUFFFRAME:ClearAllPoints()
+		if VCB_SAVE["CF_anchor"] == 1 then
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetPoint("TOP", VCB_BF_CONSOLIDATED_ICON, "BOTTOM", 0, 0)
+		elseif VCB_SAVE["CF_anchor"] == 2 then
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetPoint("LEFT", VCB_BF_CONSOLIDATED_ICON, "RIGHT", 0, 0)
+		elseif VCB_SAVE["CF_anchor"] == 3 then
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetPoint("BOTTOM", VCB_BF_CONSOLIDATED_ICON, "TOP", 0, 0)
+		else
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetPoint("RIGHT", VCB_BF_CONSOLIDATED_ICON, "LEFT", 0, 0)
 		end
-		VCB_SAVE["Timer_alpha"] = 1.0
-		VCB_SAVE["Timer_border"] = false
+		
+		
 		VCB_BF_Lock(VCB_BF_LOCKED)
 		VCB_IS_LOADED = true
 	end	
@@ -210,6 +233,14 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_TIMER_FRAME_AlphaSlider"):SetValue(VCB_SAVE["Timer_alpha"])
 		getglobal("VCB_BF_TIMER_FRAME_AlphaSliderText"):SetText("Alpha: "..VCB_SAVE["Timer_alpha"]);
 		getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON8"):SetChecked(VCB_SAVE["Timer_border"])
+	elseif frame == "VCB_BF_CF_FRAME" then	
+		getglobal("VCB_BF_CF_FRAME_AnchorSlider"):SetValue(VCB_SAVE["CF_anchor"])
+		getglobal("VCB_BF_CF_FRAME_AnchorSliderText"):SetText("Anchor: "..VCB_ANCHOR_ARRAY[VCB_SAVE["CF_anchor"]]);
+		getglobal("VCB_BF_CF_FRAME_ScaleSlider"):SetValue(VCB_SAVE["CF_scale"])
+		getglobal("VCB_BF_CF_FRAME_ScaleSliderText"):SetText("Scale: "..VCB_SAVE["CF_scale"]);
+		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON1"):SetChecked(VCB_SAVE["CF_invert"])
+		getglobal("VCB_BF_CF_FRAME_NumPerRowSlider"):SetValue(VCB_SAVE["CF_numperrow"])
+		getglobal("VCB_BF_CF_FRAME_NumPerRowSliderText"):SetText("Buffs per row: "..VCB_SAVE["CF_numperrow"]);
 	end
 end
 
@@ -299,7 +330,7 @@ function VCB_BANNED_BUFFS_REMOVE_ALL()
 end
 
 ---------------------------------------END BANNED BUFFS FRAME-----------------------------------------------------------------------------------------------------------------
-
+---------------------------------------START TIMER FRAME-----------------------------------------------------------------------------------------------------------------
 function VCB_BF_CHECKBUTTON_TIMER_HOURS()
 	if not VCB_SAVE["Timer_hours"] then
 		VCB_SAVE["Timer_hours"] = true
@@ -379,27 +410,35 @@ function VCB_BF_CHECKBUTTON_TIMER_BORDER()
 	end
 end
 
-function VCB_BF_VCB_BF_SizeSlider(obj)
+function VCB_BF_TIMER_FRAME_SizeSliderChange(obj)
 	VCB_SAVE["Timer_fontsize"] = obj:GetValue()
 	getglobal("VCB_BF_TIMER_FRAME_SizeSliderText"):SetText("Font size: "..VCB_SAVE["Timer_fontsize"]);
 	for cat, tname in pairs(VCB_BUTTONNAME) do
 		for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
-			getglobal(tname..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["Timer_fontsize"])
+			local p = 1
+			if getglobal(tname..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
+				p = VCB_SAVE["CF_scale"]
+			end
+			getglobal(tname..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], p*VCB_SAVE["Timer_fontsize"])
 		end
 	end
 end
 
-function VCB_BF_VCB_BF_FontSlider(obj)
+function VCB_BF_TIMER_FRAME_FontSliderChange(obj)
 	VCB_SAVE["Timer_font"] = VCB_FONT_ARRAY[obj:GetValue()]
 	getglobal("VCB_BF_TIMER_FRAME_FontSliderText"):SetText("Font: "..VCB_SAVE["Timer_font"]);
 	for cat, tname in pairs(VCB_BUTTONNAME) do
 		for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
-			getglobal(tname..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["Timer_fontsize"])
+			local p = 1
+			if getglobal(tname..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
+				p = VCB_SAVE["CF_scale"]
+			end
+			getglobal(tname..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], p*VCB_SAVE["Timer_fontsize"])
 		end
 	end
 end
 
-function VCB_BF_VCB_BF_AlphaSlider(obj)
+function VCB_BF_TIMER_FRAME_AlphaSliderChange(obj)
 	VCB_SAVE["Timer_alpha"] = string.format("%.1f", obj:GetValue())
 	getglobal("VCB_BF_TIMER_FRAME_AlphaSliderText"):SetText("Alpha: "..VCB_SAVE["Timer_alpha"]);
 	for cat, tname in pairs(VCB_BUTTONNAME) do
@@ -408,3 +447,44 @@ function VCB_BF_VCB_BF_AlphaSlider(obj)
 		end
 	end
 end
+
+---------------------------------------END TIMER FRAME-----------------------------------------------------------------------------------------------------------------
+---------------------------------------START CONSOLIDATED FRAME-----------------------------------------------------------------------------------------------------------------
+
+function VCB_BF_CF_FRAME_AnchorSliderChange(obj)
+	VCB_SAVE["CF_anchor"] = obj:GetValue()
+	getglobal("VCB_BF_CF_FRAME_AnchorSliderText"):SetText("Anchor: "..VCB_ANCHOR_ARRAY[VCB_SAVE["CF_anchor"]]);
+	VCB_BF_CONSOLIDATED_BUFFFRAME:ClearAllPoints()
+	if VCB_SAVE["CF_anchor"] == 1 then
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetPoint("TOP", VCB_BF_CONSOLIDATED_ICON, "BOTTOM", 0, 0)
+	elseif VCB_SAVE["CF_anchor"] == 2 then
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetPoint("LEFT", VCB_BF_CONSOLIDATED_ICON, "RIGHT", 0, 0)
+	elseif VCB_SAVE["CF_anchor"] == 3 then
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetPoint("BOTTOM", VCB_BF_CONSOLIDATED_ICON, "TOP", 0, 0)
+	else
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetPoint("RIGHT", VCB_BF_CONSOLIDATED_ICON, "LEFT", 0, 0)
+	end
+end
+
+function VCB_BF_CF_FRAME_ScaleSliderChange(obj)
+	VCB_SAVE["CF_scale"] = string.format("%.1f", obj:GetValue())
+	getglobal("VCB_BF_CF_FRAME_ScaleSliderText"):SetText("Scale: "..VCB_SAVE["CF_scale"]);
+	VCB_BF_RepositioningAndResizing()
+end
+
+function VCB_BF_CF_FRAME_INVERTBUTTON()
+	if VCB_SAVE["CF_invert"] then
+		VCB_SAVE["CF_invert"] = false
+	else
+		VCB_SAVE["CF_invert"] = true
+	end
+	VCB_BF_RepositioningAndResizing()
+end
+
+function VCB_BF_CF_FRAME_NumPerRowSliderChange(obj)
+	VCB_SAVE["CF_numperrow"] = obj:GetValue()
+	getglobal("VCB_BF_CF_FRAME_NumPerRowSliderText"):SetText("Buffs per row: "..VCB_SAVE["CF_numperrow"]);
+	VCB_BF_RepositioningAndResizing()
+end
+
+---------------------------------------END CONSOLIDATED FRAME-----------------------------------------------------------------------------------------------------------------
