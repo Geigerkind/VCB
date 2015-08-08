@@ -13,18 +13,6 @@
 		</Anchors>
 	</GameTooltip>
 	
-	<Slider name="VCB_BF_SliderTemplate" inherits="OptionsSliderTemplate" virtual="true">
-		<Scripts>
-			<OnEnter>
-				GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
-				GameTooltip:SetText(this.aide, nil, nil, nil, nil, 1)
-			</OnEnter>
-			<OnLeave>
-				GameTooltip:Hide()
-			</OnLeave>
-		</Scripts>
-	</Slider>
-	
 	<CheckButton name="VCB_BF_CheckTemplate" inherits="OptionsCheckButtonTemplate" virtual="true">
 		<HitRectInsets>
 			<AbsInset left="0" right="0" top="0" bottom="0"/>
@@ -60,6 +48,20 @@
 		<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
 		<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
 	</Button>
+	
+	<Slider name="VCB_BF_SliderTemplate" inherits="OptionsSliderTemplate" virtual="true">
+		<Scripts>
+			<OnEnter>
+				if (this.aide) then
+					GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+					GameTooltip:SetText(this.aide, nil, nil, nil, nil, 1)
+				end
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide()
+			</OnLeave>
+		</Scripts>
+	</Slider>
 	
 	---------------------------------MAIN CONFIG FRAME----------------------------------------------------------------
 	
@@ -99,6 +101,9 @@
 			<OnHide>
 				PlaySound("igCharacterInfoClose")
 			</OnHide>
+			<OnEvent>
+				VCB_OnEvent(event)
+			</OnEvent>
 			<OnLoad>
 				VCB_OnLoad()
 			</OnLoad>
@@ -655,13 +660,52 @@
 						<Scripts>
 							<OnClick>
 								VCB_OPTIONS_HIDE_ALL()
+								VCB_OPTIONS_SHOW("VCB_BF_MISC_FRAME", "Miscellaneous")
+							</OnClick>
+						</Scripts>
+						<Layers>
+							<Layer>
+								-- Button Title
+								<FontString name="VCB_BF_MENU_TITLE10" inherits="GameFontNormalSmall" text="Miscellaneous">
+									<Size>
+										<AbsDimension x="130" y="40" />
+									</Size>
+									<Anchors>
+										<Anchor point="CENTER">
+											<Offset>
+												<AbsDimension x="0" y="7" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+					</Button>
+					-- Button 11
+					<Button name="VCB_BF_MENU_BUTTON11">
+						<Size>
+							<AbsDimension x="130" y="40"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_MENU_BUTTON10" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_OPTIONS_HIDE_ALL()
 								VCB_OPTIONS_SHOW("VCB_BF_ABOUT_FRAME", "About VCB")
 							</OnClick>
 						</Scripts>
 						<Layers>
 							<Layer>
 								-- Button Title
-								<FontString name="VCB_BF_MENU_TITLE10" inherits="GameFontNormalSmall" text="About">
+								<FontString name="VCB_BF_MENU_TITLE11" inherits="GameFontNormalSmall" text="About">
 									<Size>
 										<AbsDimension x="130" y="40" />
 									</Size>
@@ -1779,6 +1823,260 @@
 						<AbsValue val="32" />
 					</EdgeSize>
 				</Backdrop>
+				<Frames>
+					<CheckButton name="VCB_BF_TIMER_FRAME_CHECKBUTTON1" inherits="VCB_BF_CheckTemplate">
+						<Size>
+							<AbsDimension x="30" y="30"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="VCB_BF_TIMER_FRAME" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="15" y="-15"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this.tooltipText = "Check this to format the timer to hours if more than 3600s are left."
+								getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON1Text"):SetText("Show hours")
+							</OnLoad>
+							<OnClick>
+								VCB_BF_CHECKBUTTON_TIMER_HOURS()
+							</OnClick>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="VCB_BF_TIMER_FRAME_CHECKBUTTON2" inherits="VCB_BF_CheckTemplate">
+						<Size>
+							<AbsDimension x="30" y="30"/>
+						</Size>
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="VCB_BF_TIMER_FRAME_CHECKBUTTON1" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="80" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this.tooltipText = "Check this to show both hours and minutes. For example: 1:34h."
+								getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON2Text"):SetText("Show hours and minutes (h:m)")
+							</OnLoad>
+							<OnClick>
+								VCB_BF_CHECKBUTTON_TIMER_HOURS_CONVERT()
+							</OnClick>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="VCB_BF_TIMER_FRAME_CHECKBUTTON3" inherits="VCB_BF_CheckTemplate">
+						<Size>
+							<AbsDimension x="30" y="30"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_TIMER_FRAME_CHECKBUTTON1" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this.tooltipText = "Check this to format the timer to minutes if more than 60s are left."
+								getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON3Text"):SetText("Show minutes")
+							</OnLoad>
+							<OnClick>
+								VCB_BF_CHECKBUTTON_TIMER_MINUTES()
+							</OnClick>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="VCB_BF_TIMER_FRAME_CHECKBUTTON4" inherits="VCB_BF_CheckTemplate">
+						<Size>
+							<AbsDimension x="30" y="30"/>
+						</Size>
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="VCB_BF_TIMER_FRAME_CHECKBUTTON3" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="80" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this.tooltipText = "Check this to show both minutes and seconds. For example: 10:24m."
+								getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON4Text"):SetText("Show minutes and seconds (m:s)")
+							</OnLoad>
+							<OnClick>
+								VCB_BF_CHECKBUTTON_TIMER_MINUTES_CONVERT()
+							</OnClick>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="VCB_BF_TIMER_FRAME_CHECKBUTTON5" inherits="VCB_BF_CheckTemplate">
+						<Size>
+							<AbsDimension x="30" y="30"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_TIMER_FRAME_CHECKBUTTON3" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this.tooltipText = "Check this to show tenths. For example: 10:44s."
+								getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON5Text"):SetText("Show tenth the last 60 seconds")
+							</OnLoad>
+							<OnClick>
+								VCB_BF_CHECKBUTTON("Timer_tenth")
+							</OnClick>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="VCB_BF_TIMER_FRAME_CHECKBUTTON6" inherits="VCB_BF_CheckTemplate">
+						<Size>
+							<AbsDimension x="30" y="30"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_TIMER_FRAME_CHECKBUTTON5" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this.tooltipText = "Check this to round down the timer. For example: 70s -> 1m."
+								getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON6Text"):SetText("Round down")
+							</OnLoad>
+							<OnClick>
+								VCB_BF_CHECKBUTTON_ROUND()
+							</OnClick>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="VCB_BF_TIMER_FRAME_CHECKBUTTON7" inherits="VCB_BF_CheckTemplate">
+						<Size>
+							<AbsDimension x="30" y="30"/>
+						</Size>
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="VCB_BF_TIMER_FRAME_CHECKBUTTON6" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="80" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this.tooltipText = "Check this to round up the timer. For example: 70s -> 2m."
+								getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON7Text"):SetText("Round up")
+							</OnLoad>
+							<OnClick>
+								VCB_BF_CHECKBUTTON_ROUND()
+							</OnClick>
+						</Scripts>
+					</CheckButton>
+					<CheckButton name="VCB_BF_TIMER_FRAME_CHECKBUTTON8" inherits="VCB_BF_CheckTemplate">
+						<Size>
+							<AbsDimension x="30" y="30"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_TIMER_FRAME_CHECKBUTTON6" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="0"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this.tooltipText = "Check this to outline the font with a border."
+								getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON8Text"):SetText("Border (color can be changed in the frame settings)")
+							</OnLoad>
+							<OnClick>
+								VCB_BF_CHECKBUTTON_TIMER_BORDER()
+							</OnClick>
+						</Scripts>
+					</CheckButton>
+					<Slider name="VCB_BF_TIMER_FRAME_SizeSlider" inherits="VCB_BF_SliderTemplate">
+						<Size>
+							<AbsDimension x="180" y="16"/>
+						</Size>
+						<Anchors>
+							<Anchor point="LEFT" relativeTo="VCB_BF_TIMER_FRAME_CHECKBUTTON2" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="230" y="-10" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this.aide = "Move this to change the font size."
+								this:SetMinMaxValues(1,24)
+								this:SetValue(12)
+								this:SetValueStep(1)
+								getglobal("VCB_BF_TIMER_FRAME_SizeSliderText"):SetText("Font size")
+								getglobal("VCB_BF_TIMER_FRAME_SizeSliderLow"):SetText("1")
+								getglobal("VCB_BF_TIMER_FRAME_SizeSliderHigh"):SetText("24")
+							</OnLoad>
+							<OnValueChanged>
+								if VCB_IS_LOADED then
+									VCB_BF_VCB_BF_SizeSlider(this)
+								end
+							</OnValueChanged>
+						</Scripts>
+					</Slider>
+					<Slider name="VCB_BF_TIMER_FRAME_FontSlider" inherits="VCB_BF_SliderTemplate">
+						<Size>
+							<AbsDimension x="180" y="16"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_TIMER_FRAME_SizeSlider" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-30" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this.aide = "Move this to change the font."
+								this:SetMinMaxValues(1,4)
+								this:SetValue(1)
+								this:SetValueStep(1)
+								getglobal("VCB_BF_TIMER_FRAME_FontSliderText"):SetText("Font")
+								getglobal("VCB_BF_TIMER_FRAME_FontSliderLow"):SetText("1")
+								getglobal("VCB_BF_TIMER_FRAME_FontSliderHigh"):SetText("4")
+							</OnLoad>
+							<OnValueChanged>
+								if VCB_IS_LOADED then
+									VCB_BF_VCB_BF_FontSlider(this)
+								end
+							</OnValueChanged>
+						</Scripts>
+					</Slider>
+					<Slider name="VCB_BF_TIMER_FRAME_AlphaSlider" inherits="VCB_BF_SliderTemplate">
+						<Size>
+							<AbsDimension x="180" y="16"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_TIMER_FRAME_FontSlider" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-30" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnLoad>
+								this.aide = "Move this to change the opacity."
+								this:SetMinMaxValues(0,1.0)
+								this:SetValue(1.0)
+								this:SetValueStep(0.1)
+								getglobal("VCB_BF_TIMER_FRAME_AlphaSliderText"):SetText("Alpha")
+								getglobal("VCB_BF_TIMER_FRAME_AlphaSliderLow"):SetText("0")
+								getglobal("VCB_BF_TIMER_FRAME_AlphaSliderHigh"):SetText("1.0")
+							</OnLoad>
+							<OnValueChanged>
+								if VCB_IS_LOADED then
+									VCB_BF_VCB_BF_AlphaSlider(this)
+								end
+							</OnValueChanged>
+						</Scripts>
+					</Slider>
+				</Frames>
 			</Frame>
 			-- CF Color Frame
 			<Frame name="VCB_BF_CF_COLOR_FRAME" hidden="true">
@@ -1902,6 +2200,30 @@
 			</Frame>
 			-- DBF Frame
 			<Frame name="VCB_BF_DBF_FRAME" hidden="true">
+				<Size>
+					<AbsDimension x="610" y="435"/>
+				</Size>
+				<Anchors>
+					<Anchor point="Left" relativeTo="VCB_BF_MENU_BODY" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+			</Frame>
+			-- MISC Frame
+			<Frame name="VCB_BF_MISC_FRAME" hidden="true">
 				<Size>
 					<AbsDimension x="610" y="435"/>
 				</Size>

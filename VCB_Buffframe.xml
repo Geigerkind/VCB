@@ -332,9 +332,6 @@
 			<OnLoad>
 				VCB_BF_OnLoad()
 			</OnLoad>
-			<OnEvent>
-				VCB_BF_OnEvent(event)
-			</OnEvent>
 		</Scripts>
 	</Frame>
 </Ui>

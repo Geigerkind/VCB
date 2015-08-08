@@ -1,9 +1,11 @@
 --Global Variables
-local BUTTONNAME = {buff="VCB_BF_BUFF_BUTTON", debuff="VCB_BF_DEBUFF_BUTTON", weapon = "VCB_BF_WEAPON_BUTTON"}
+VCB_BUTTONNAME = {buff="VCB_BF_BUFF_BUTTON", debuff="VCB_BF_DEBUFF_BUTTON", weapon = "VCB_BF_WEAPON_BUTTON"}
+VCB_MININDEX = {buff=0, debuff=0, weapon=0}
+VCB_MAXINDEX = {buff=31, debuff=15, weapon=1}
+
+-- Local Variables
 local BUTTON_TEMPLATE_NAME = {buff="VCB_BF_BUFF_BUTTON", debuff="VCB_BF_DEBUFF_BUTTON", weapon = "VCB_BF_WEAPON_BUTTON"}
 local FRAME_NAME = {buff="VCB_BF_BUFF_FRAME", debuff="VCB_BF_DEBUFF_FRAME", weapon = "VCB_BF_WEAPON_FRAME"}
-local MININDEX = {buff=0, debuff=0, weapon=0}
-local MAXINDEX = {buff=31, debuff=15, weapon=1}
 local TEMPENCHANTGHOSTTEXT = {"MH", "OH"}
 local BUFF, DEBUFF, WEAPON = "buff", "debuff", "weapon" --cats
 local GHOST_COLOR = {	buff =	{r=0.2, g=0.8, b=0.2},
@@ -16,62 +18,29 @@ local UPDATETIME = 0.2
 
 local timeSinceWeaponUpdate = 0
 local timeSinceBuffUpdate = 0
-local VCB_IS_LOADED = false
 
 function VCB_BF_OnLoad()
-	this:RegisterEvent("ADDON_LOADED")
-
 	if (not VCB_BF_BUFF_BUTTON0) then
 		VCB_BF_DisableBlizzardBuffs()
 		VCB_BF_CreateBuffButtons()
 	end
 end
 
-function VCB_BF_OnEvent(event)
-	if event == "ADDON_LOADED" and (not VCB_IS_LOADED) then
-		if VCB_BF_LOCKED == nil then
-			VCB_BF_LOCKED = false
-		end
-		if Consolidated_Buffs == nil then
-			Consolidated_Buffs = {}
-		end
-		if Banned_Buffs == nil then
-			Banned_Buffs = {}
-		end
-		if PosX == nil then
-			PosX = 0
-		end
-		if PosY == nil then
-			PosY = 0
-		end
-		if PointMF == nil then
-			PointMF = "CENTER"
-		end
-		if Scale == nil then
-			Scale = 1
-		end
-		
-		VCB_BF_BUFF_FRAME:SetPoint(PointMF,PosX,PosY)
-		VCB_BF_Lock(VCB_BF_LOCKED)
-		VCB_IS_LOADED = true
-	end
-end
-
 function VCB_BF_ButtonIterator(cat, n)
 	local buttonName, ghostButtonLabel
 	if(not n) then
-		n=MININDEX[cat]
-		buttonName=BUTTONNAME[cat].."0"
-	elseif(MININDEX[cat]<=n and n<MAXINDEX[cat]) then
+		n=VCB_MININDEX[cat]
+		buttonName=VCB_BUTTONNAME[cat].."0"
+	elseif(VCB_MININDEX[cat]<=n and n<VCB_MAXINDEX[cat]) then
 		n=n+1
-		buttonName=BUTTONNAME[cat]..(n-MININDEX[cat])
+		buttonName=VCB_BUTTONNAME[cat]..(n-VCB_MININDEX[cat])
 	else
 		n=nil
 	end
 	if(cat==WEAPON and n) then
 		ghostButtonLabel = TEMPENCHANTGHOSTTEXT[n+1]
 	elseif(n) then
-		ghostButtonLabel = n+1 - MININDEX[cat]
+		ghostButtonLabel = n+1 - VCB_MININDEX[cat]
 	end
 	return n, buttonName, ghostButtonLabel
 end
@@ -159,7 +128,7 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 		end
 	end
 	
-	if ( buffIndex < 0 ) then
+	if ( buffIndex < 0 and VCB_BF_LOCKED) then
 		button:Hide();
 		buffDuration:Hide();
  	else
@@ -204,6 +173,12 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 	
 	if VCB_IS_LOADED then
 		VCB_BF_WEAPON_BUTTON_OnUpdate(2.0)
+		if VCB_SAVE["Timer_border"] then
+			buffDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["Timer_fontsize"], "OUTLINE")
+		else
+			buffDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["Timer_fontsize"])
+		end
+		buffDuration:SetAlpha(VCB_SAVE["Timer_alpha"])
 	end
 end
 
@@ -325,17 +300,123 @@ function VCB_BF_WEAPON_BUTTON_OnUpdate(elapsed)
 	end
 end
 
-function VCB_BF_TEMP_ENCHANT_OnEnter()
-
-end
-
--- Potential for more user configuration
--- Nachommastellen
 function VCB_BF_GetDuration(timeLeft)
-	if timeLeft > 60 then
-		return floor(timeLeft/60).."m"
+	if VCB_IS_LOADED then
+		if VCB_SAVE["Timer_minutes"] and timeLeft > 60 then
+			if VCB_SAVE["Timer_hours"] and timeLeft > 3600 then
+				if VCB_SAVE["Timer_hours_convert"] then
+					if VCB_SAVE["Timer_minutes_convert"] then
+						if VCB_SAVE["Timer_round"] then
+							return floor(timeLeft/3600)..":"..ceil(timeLeft)-3600*ceil(timeLeft/3600)..":"..ceil(timeLeft)-60*ceil(timeLeft/60).."h"
+						else
+							return floor(timeLeft/3600)..":"..floor(timeLeft)-3600*floor(timeLeft/3600)..":"..floor(timeLeft)-60*floor(timeLeft/60).."h"
+						end
+					else
+						if VCB_SAVE["Timer_round"] then
+							return floor(timeLeft/3600)..":"..ceil(timeLeft)-3600*ceil(timeLeft/3600).."h"
+						else
+							return floor(timeLeft/3600)..":"..floor(timeLeft)-3600*floor(timeLeft/3600).."h"
+						end
+					end
+				else
+					if VCB_SAVE["Timer_minutes_convert"] then
+						if VCB_SAVE["Timer_round"] then
+							return floor(timeLeft/60)..":"..ceil(timeLeft)-60*ceil(timeLeft/60).."h"
+						else
+							return floor(timeLeft/60)..":"..floor(timeLeft)-60*floor(timeLeft/60).."h"
+						end
+					else
+						if VCB_SAVE["Timer_round"] then
+							return ceil(timeLeft/3600).."h"
+						else
+							return floor(timeLeft/3600).."h"
+						end
+					end
+				end
+			else
+				if VCB_SAVE["Timer_minutes_convert"] then
+					if VCB_SAVE["Timer_hours_convert"] then
+						if VCB_SAVE["Timer_round"] then
+							return "0:"..ceil(timeLeft/60)..":"..ceil(timeLeft)-60*ceil(timeLeft/60).."h"
+						else
+							return "0:"..floor(timeLeft/60)..":"..floor(timeLeft)-60*floor(timeLeft/60).."h"
+						end
+					else
+						if VCB_SAVE["Timer_round"] then
+							return ceil(timeLeft/60)..":"..ceil(timeLeft)-60*ceil(timeLeft/60).."m"
+						else
+							return floor(timeLeft/60)..":"..floor(timeLeft)-60*floor(timeLeft/60).."m"
+						end
+					end
+				else
+					if VCB_SAVE["Timer_hours_convert"] then
+						if VCB_SAVE["Timer_round"] then
+							return "0:"..ceil(timeLeft/60).."h"
+						else
+							return "0:"..floor(timeLeft/60).."h"
+						end
+					else
+						if VCB_SAVE["Timer_round"] then
+							return ceil(timeLeft/60).."m"
+						else
+							return floor(timeLeft/60).."m"
+						end
+					end
+				end
+			end
+		else
+			if VCB_SAVE["Timer_minutes_convert"] then
+				if timeLeft >=10 then
+					if VCB_SAVE["Timer_tenth"] then
+						if VCB_SAVE["Timer_round"] then
+							return "0:"..ceil(timeLeft)..":"..100*timeLeft-100*floor(timeLeft).."m"
+						else
+							return "0:"..floor(timeLeft)..":"..100*timeLeft-100*floor(timeLeft).."m"
+						end
+					else
+						if VCB_SAVE["Timer_round"] then
+							return "0:"..ceil(timeLeft).."m"
+						else
+							return "0:"..floor(timeLeft).."m"
+						end
+					end
+				else
+					if VCB_SAVE["Timer_tenth"] then
+						if VCB_SAVE["Timer_round"] then
+							return "0:0"..ceil(timeLeft)..":"..ceil(100*timeLeft-100*floor(timeLeft)).."m"
+						else
+							return "0:0"..floor(timeLeft)..":"..floor(100*timeLeft-100*floor(timeLeft)).."m"
+						end
+					else
+						if VCB_SAVE["Timer_round"] then
+							return "0:0"..ceil(timeLeft).."m"
+						else
+							return "0:0"..floor(timeLeft).."m"
+						end
+					end
+				end
+			else
+				if VCB_SAVE["Timer_tenth"] then
+					if VCB_SAVE["Timer_round"] then
+						return ceil(timeLeft)..":"..ceil(100*timeLeft-100*floor(timeLeft)).."s"
+					else
+						return floor(timeLeft)..":"..floor(100*timeLeft-100*floor(timeLeft)).."s"
+					end
+				else
+					if VCB_SAVE["Timer_round"] then
+						return ceil(timeLeft).."s"
+					else
+						return floor(timeLeft).."s"
+					end
+				end
+			end
+		end
 	else
-		return floor(timeLeft).."s"
+		if timeLeft > 60 then
+			return floor(timeLeft/60).."m"
+		else
+			return floor(timeLeft).."s"
+		end
 	end
 end
 
@@ -350,8 +431,8 @@ function VCB_BF_ToggleLock()
 end
 
 function VCB_BF_Lock(lock)
-	for cat, templateName in pairs(BUTTONNAME) do
-		for i=MININDEX[cat], MAXINDEX[cat] do
+	for cat, templateName in pairs(VCB_BUTTONNAME) do
+		for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
 			if (lock) then
 				getglobal(templateName..i.."_Ghost_Label"):Hide()
 				getglobal(templateName..i.."_Ghost_Texture"):Hide()

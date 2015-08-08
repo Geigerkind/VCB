@@ -4,6 +4,12 @@
 -- Global variables
 VCB_NAME = "Vanilla Consolidate Buffs"
 VCB_VERSION = "2.4"
+VCB_IS_LOADED = false
+VCB_FONT_ARRAY = {}
+VCB_FONT_ARRAY[1] = "FRIZQT__.ttf"
+VCB_FONT_ARRAY[2] = "ARIALN.ttf"
+VCB_FONT_ARRAY[3] = "skurri.ttf"
+VCB_FONT_ARRAY[4] = "MORPHEUS.ttf"
 
 --[[
 -- VCB_OnLoad()
@@ -11,6 +17,8 @@ VCB_VERSION = "2.4"
 -- Use: Initialization and registering events
 --]]
 function VCB_OnLoad()
+	this:RegisterEvent("ADDON_LOADED")
+
 	SLASH_VCB1 = "/VanillaConsolidateBuffs"
 	SLASH_VCB2 = "/vanillaconsolidatebuffs"
 	SLASH_VCB3 = "/VCB"
@@ -20,6 +28,42 @@ function VCB_OnLoad()
 	end
 	
 	DEFAULT_CHAT_FRAME:AddMessage("VCB "..VCB_VERSION.." is now loaded! Use the command /vcb to configure VCB!")
+end
+
+function VCB_OnEvent(event)
+	if event == "ADDON_LOADED" and not VCB_IS_LOADED then
+		if VCB_SAVE == nil then
+			VCB_SAVE = {}
+			VCB_SAVE = {
+				Timer_hours = false,
+				Timer_hours_convert = false,
+				Timer_minutes = true,
+				Timer_minutes_convert = false,
+				Timer_tenth = false,
+				Timer_round = false,
+				Timer_fontsize = 10, 
+				Timer_font = "FRIZQT__.ttf",
+				Timer_alpha = 1.0,
+				Timer_border = false
+			}
+		end
+		if VCB_BF_LOCKED == nil then
+			VCB_BF_LOCKED = false
+		end
+		if Consolidated_Buffs == nil then
+			Consolidated_Buffs = {}
+		end
+		if Banned_Buffs == nil then
+			Banned_Buffs = {}
+		end
+		if Scale == nil then
+			Scale = 1
+		end
+		VCB_SAVE["Timer_alpha"] = 1.0
+		VCB_SAVE["Timer_border"] = false
+		VCB_BF_Lock(VCB_BF_LOCKED)
+		VCB_IS_LOADED = true
+	end	
 end
 
 --[[
@@ -134,13 +178,47 @@ function VCB_OPTIONS_HIDE_ALL()
 	getglobal("VCB_BF_CF_FRAME"):Hide()
 	getglobal("VCB_BF_BF_FRAME"):Hide()
 	getglobal("VCB_BF_DBF_FRAME"):Hide()
+	getglobal("VCB_BF_MISC_FRAME"):Hide()
 	getglobal("VCB_BF_ABOUT_FRAME"):Hide()
 end
 
 function VCB_OPTIONS_SHOW(frame, text)
 	getglobal(frame):Show()
 	getglobal("VCB_BF_CONFIG_FRAME_TITLE_FONTSTRING"):SetText(text)
+	VCB_PAGEINIT(frame)
 	PlaySound("igMainMenuOptionCheckBoxOff")
+end
+
+function VCB_PAGEINIT(frame)
+	if frame == "VCB_BF_TIMER_FRAME" then
+		getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON1"):SetChecked(VCB_SAVE["Timer_hours"])
+		getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON2"):SetChecked(VCB_SAVE["Timer_hours_convert"])
+		getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON3"):SetChecked(VCB_SAVE["Timer_minutes"])
+		getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON4"):SetChecked(VCB_SAVE["Timer_minutes_convert"])
+		getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON5"):SetChecked(VCB_SAVE["Timer_tenth"])
+		if VCB_SAVE["Timer_round"] then
+			getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON6"):SetChecked(false)
+			getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON7"):SetChecked(true)
+		else
+			getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON6"):SetChecked(true)
+			getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON7"):SetChecked(false)
+		end
+		getglobal("VCB_BF_TIMER_FRAME_SizeSlider"):SetValue(VCB_SAVE["Timer_fontsize"])
+		getglobal("VCB_BF_TIMER_FRAME_SizeSliderText"):SetText("Font size: "..VCB_SAVE["Timer_fontsize"]);
+		getglobal("VCB_BF_TIMER_FRAME_FontSlider"):SetValue(VCB_Table_GetKeys(VCB_FONT_ARRAY, VCB_SAVE["Timer_font"]))
+		getglobal("VCB_BF_TIMER_FRAME_FontSliderText"):SetText("Font: "..VCB_SAVE["Timer_font"]);
+		getglobal("VCB_BF_TIMER_FRAME_AlphaSlider"):SetValue(VCB_SAVE["Timer_alpha"])
+		getglobal("VCB_BF_TIMER_FRAME_AlphaSliderText"):SetText("Alpha: "..VCB_SAVE["Timer_alpha"]);
+		getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON8"):SetChecked(VCB_SAVE["Timer_border"])
+	end
+end
+
+function VCB_BF_CHECKBUTTON(obj)
+	if (VCB_SAVE[obj]) then
+		VCB_SAVE[obj] = false
+	else
+		VCB_SAVE[obj] = true
+	end
 end
 
 ---------------------------------------START CONSOLIDATED BUFFS FRAME-----------------------------------------------------------------------------------------------------------------
@@ -221,3 +299,112 @@ function VCB_BANNED_BUFFS_REMOVE_ALL()
 end
 
 ---------------------------------------END BANNED BUFFS FRAME-----------------------------------------------------------------------------------------------------------------
+
+function VCB_BF_CHECKBUTTON_TIMER_HOURS()
+	if not VCB_SAVE["Timer_hours"] then
+		VCB_SAVE["Timer_hours"] = true
+		VCB_BF_TIMER_FRAME_CHECKBUTTON3:SetChecked(true)
+		VCB_SAVE["Timer_minutes"] = true
+	else
+		VCB_SAVE["Timer_hours"] = false
+		VCB_BF_TIMER_FRAME_CHECKBUTTON2:SetChecked(false)
+		VCB_SAVE["Timer_hours_convert"] = false
+	end
+end
+
+function VCB_BF_CHECKBUTTON_TIMER_HOURS_CONVERT()
+	if not VCB_SAVE["Timer_hours_convert"] then
+		VCB_SAVE["Timer_hours_convert"] = true
+		VCB_BF_TIMER_FRAME_CHECKBUTTON1:SetChecked(true)
+		VCB_SAVE["Timer_hours"] = true
+		VCB_BF_TIMER_FRAME_CHECKBUTTON3:SetChecked(true)
+		VCB_SAVE["Timer_minutes"] = true
+	else
+		VCB_SAVE["Timer_hours_convert"] = false
+	end
+end
+
+function VCB_BF_CHECKBUTTON_TIMER_MINUTES()
+	if not VCB_SAVE["Timer_minutes"] then
+		VCB_SAVE["Timer_minutes"] = true
+	else
+		VCB_SAVE["Timer_minutes"] = false
+		VCB_BF_TIMER_FRAME_CHECKBUTTON1:SetChecked(false)
+		VCB_SAVE["Timer_hours"] = false
+		VCB_BF_TIMER_FRAME_CHECKBUTTON2:SetChecked(false)
+		VCB_SAVE["Timer_hours_convert"] = false
+		VCB_BF_TIMER_FRAME_CHECKBUTTON4:SetChecked(false)
+		VCB_SAVE["Timer_minutes_convert"] = false
+	end
+end
+
+function VCB_BF_CHECKBUTTON_TIMER_MINUTES_CONVERT()
+	if not VCB_SAVE["Timer_minutes_convert"] then
+		VCB_SAVE["Timer_minutes_convert"] = true
+		VCB_BF_TIMER_FRAME_CHECKBUTTON3:SetChecked(true)
+		VCB_SAVE["Timer_minutes"] = true
+	else
+		VCB_SAVE["Timer_minutes_convert"] = false
+		VCB_BF_TIMER_FRAME_CHECKBUTTON1:SetChecked(false)
+		VCB_SAVE["Timer_hours"] = false
+		VCB_BF_TIMER_FRAME_CHECKBUTTON2:SetChecked(false)
+		VCB_SAVE["Timer_hours_convert"] = false
+	end
+end
+
+function VCB_BF_CHECKBUTTON_ROUND()
+	if VCB_SAVE["Timer_round"] then
+		VCB_SAVE["Timer_round"] = false
+		VCB_BF_TIMER_FRAME_CHECKBUTTON7:SetChecked(false)
+	else
+		VCB_SAVE["Timer_round"] = true
+		VCB_BF_TIMER_FRAME_CHECKBUTTON6:SetChecked(false)
+	end
+end
+
+function VCB_BF_CHECKBUTTON_TIMER_BORDER()
+	if VCB_SAVE["Timer_border"] then
+		VCB_SAVE["Timer_border"] = false
+	else
+		VCB_SAVE["Timer_border"] = true
+	end
+	for cat, tname in pairs(VCB_BUTTONNAME) do
+		for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
+			if VCB_SAVE["Timer_border"] then
+				getglobal(tname..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["Timer_fontsize"], "OUTLINE")
+			else
+				getglobal(tname..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["Timer_fontsize"])
+			end
+		end
+	end
+end
+
+function VCB_BF_VCB_BF_SizeSlider(obj)
+	VCB_SAVE["Timer_fontsize"] = obj:GetValue()
+	getglobal("VCB_BF_TIMER_FRAME_SizeSliderText"):SetText("Font size: "..VCB_SAVE["Timer_fontsize"]);
+	for cat, tname in pairs(VCB_BUTTONNAME) do
+		for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
+			getglobal(tname..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["Timer_fontsize"])
+		end
+	end
+end
+
+function VCB_BF_VCB_BF_FontSlider(obj)
+	VCB_SAVE["Timer_font"] = VCB_FONT_ARRAY[obj:GetValue()]
+	getglobal("VCB_BF_TIMER_FRAME_FontSliderText"):SetText("Font: "..VCB_SAVE["Timer_font"]);
+	for cat, tname in pairs(VCB_BUTTONNAME) do
+		for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
+			getglobal(tname..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["Timer_fontsize"])
+		end
+	end
+end
+
+function VCB_BF_VCB_BF_AlphaSlider(obj)
+	VCB_SAVE["Timer_alpha"] = string.format("%.1f", obj:GetValue())
+	getglobal("VCB_BF_TIMER_FRAME_AlphaSliderText"):SetText("Alpha: "..VCB_SAVE["Timer_alpha"]);
+	for cat, tname in pairs(VCB_BUTTONNAME) do
+		for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
+			getglobal(tname..i.."Duration"):SetAlpha(VCB_SAVE["Timer_alpha"])
+		end
+	end
+end
