@@ -63,6 +63,63 @@
 		</Scripts>
 	</Slider>
 	
+	---------------------------------MINIMAP FRAME----------------------------------------------------------------
+	<Button name="VCB_BF_MINIMAP_FRAME" movable="true" parent="UIParent" enableMouse="true">
+		<Size>
+			<AbsDimension x="21" y="21" />
+        </Size>
+		<Anchors>
+			<Anchor point="LEFT" relativeTo="Minimap" relativePoint="LEFT">
+				<Offset>
+					<AbsDimension x="0" y="0" />
+				</Offset>
+			</Anchor>
+        </Anchors>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture name="ItemRack_IconFrame_Icon" file="Interface\AddOns\VCB\images\icon">
+					<Size>
+						<AbsDimension x="21" y="21"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT">
+							<Offset>
+								<AbsDimension x="7" y="-6"/>
+							</Offset>
+						</Anchor>
+					</Anchors>
+					<TexCoords left="0.075" right="0.925" top="0.075" bottom="0.925"/>
+				</Texture>
+			</Layer>
+			<Layer level="OVERLAY">
+				<Texture file="Interface\Minimap\MiniMap-TrackingBorder">
+					<Size>
+						<AbsDimension x="56" y="56"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+					</Anchors>
+				</Texture>
+			</Layer>
+		</Layers>
+		<HighlightTexture alphaMode="ADD" file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight" />
+		<Scripts>
+			<OnClick>
+				if VCB_BF_ConfigFrame:IsVisible() then
+					VCB_BF_ConfigFrame:Hide()
+				else
+					VCB_BF_ConfigFrame:Show()
+				end
+			</OnClick>
+			<OnMouseDown>
+				this:StartMoving()
+			</OnMouseDown>
+			<OnMouseUp>
+				this:StopMovingOrSizing()
+			</OnMouseUp>
+		</Scripts>
+	</Button>
+	
 	---------------------------------MAIN CONFIG FRAME----------------------------------------------------------------
 	
 	<Frame name="VCB_BF_ConfigFrame" movable="true" parent="UIParent" frameStrata="HIGH" hidden="true" enableMouse="true" enableKeyboard="true">
@@ -214,6 +271,11 @@
 				</Anchors>
 				<Scripts>
 					<OnClick>
+						if VCB_BF_MINIMAP_FRAME:IsVisible() then
+							VCB_BF_MINIMAP_FRAME:Hide()
+						else
+							VCB_BF_MINIMAP_FRAME:Show()
+						end
 						PlaySound("igMainMenuOptionCheckBoxOff")
 					</OnClick>
 					<OnEnter>
@@ -582,13 +644,13 @@
 						<Scripts>
 							<OnClick>
 								VCB_OPTIONS_HIDE_ALL()
-								VCB_OPTIONS_SHOW("VCB_BF_MISC_FRAME", "Miscellaneous")
+								VCB_OPTIONS_SHOW("VCB_BF_OM_FRAME", "Order Manager")
 							</OnClick>
 						</Scripts>
 						<Layers>
 							<Layer>
 								-- Button Title
-								<FontString name="VCB_BF_MENU_TITLE8" inherits="GameFontNormalSmall" text="Miscellaneous">
+								<FontString name="VCB_BF_MENU_TITLE8" inherits="GameFontNormalSmall" text="Order Manager">
 									<Size>
 										<AbsDimension x="130" y="40" />
 									</Size>
@@ -660,13 +722,52 @@
 						<Scripts>
 							<OnClick>
 								VCB_OPTIONS_HIDE_ALL()
+								VCB_OPTIONS_SHOW("VCB_BF_MISC_FRAME", "Miscellaneous")
+							</OnClick>
+						</Scripts>
+						<Layers>
+							<Layer>
+								-- Button Title
+								<FontString name="VCB_BF_MENU_TITLE10" inherits="GameFontNormalSmall" text="Miscellaneous">
+									<Size>
+										<AbsDimension x="130" y="40" />
+									</Size>
+									<Anchors>
+										<Anchor point="CENTER">
+											<Offset>
+												<AbsDimension x="0" y="7" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+					</Button>
+					-- Button 11
+					<Button name="VCB_BF_MENU_BUTTON11">
+						<Size>
+							<AbsDimension x="130" y="40"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_MENU_BUTTON10" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_OPTIONS_HIDE_ALL()
 								VCB_OPTIONS_SHOW("VCB_BF_ABOUT_FRAME", "About VCB")
 							</OnClick>
 						</Scripts>
 						<Layers>
 							<Layer>
 								-- Button Title
-								<FontString name="VCB_BF_MENU_TITLE10" inherits="GameFontNormalSmall" text="About">
+								<FontString name="VCB_BF_MENU_TITLE11" inherits="GameFontNormalSmall" text="About">
 									<Size>
 										<AbsDimension x="130" y="40" />
 									</Size>
@@ -3447,6 +3548,30 @@
 			</Frame>
 			-- Weapon Frame
 			<Frame name="VCB_BF_WEAPON_FRAME" hidden="true">
+				<Size>
+					<AbsDimension x="610" y="435"/>
+				</Size>
+				<Anchors>
+					<Anchor point="Left" relativeTo="VCB_BF_MENU_BODY" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+			</Frame>
+			-- OM Frame
+			<Frame name="VCB_BF_OM_FRAME" hidden="true">
 				<Size>
 					<AbsDimension x="610" y="435"/>
 				</Size>

@@ -193,6 +193,7 @@ function VCB_OPTIONS_HIDE_ALL()
 	getglobal("VCB_BF_WEAPON_FRAME"):Hide()
 	getglobal("VCB_BF_MISC_FRAME"):Hide()
 	getglobal("VCB_BF_PM_FRAME"):Hide()
+	getglobal("VCB_BF_OM_FRAME"):Hide()
 	getglobal("VCB_BF_ABOUT_FRAME"):Hide()
 end
 
@@ -218,20 +219,19 @@ function VCB_PAGEINIT(frame)
 			getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON7"):SetChecked(false)
 		end
 		getglobal("VCB_BF_TIMER_FRAME_SizeSlider"):SetValue(VCB_SAVE["Timer_fontsize"])
-		getglobal("VCB_BF_TIMER_FRAME_SizeSliderText"):SetText("Font size: "..VCB_SAVE["Timer_fontsize"]);
+		getglobal("VCB_BF_TIMER_FRAME_SizeSliderText"):SetText("Font size: "..VCB_SAVE["Timer_fontsize"])
 		getglobal("VCB_BF_TIMER_FRAME_FontSlider"):SetValue(VCB_Table_GetKeys(VCB_FONT_ARRAY, VCB_SAVE["Timer_font"]))
-		getglobal("VCB_BF_TIMER_FRAME_FontSliderText"):SetText("Font: "..VCB_SAVE["Timer_font"]);
+		getglobal("VCB_BF_TIMER_FRAME_FontSliderText"):SetText("Font: "..VCB_SAVE["Timer_font"])
 		getglobal("VCB_BF_TIMER_FRAME_AlphaSlider"):SetValue(VCB_SAVE["Timer_alpha"])
-		getglobal("VCB_BF_TIMER_FRAME_AlphaSliderText"):SetText("Alpha: "..VCB_SAVE["Timer_alpha"]);
-		getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON8"):SetChecked(VCB_SAVE["Timer_border"])
+		getglobal("VCB_BF_TIMER_FRAME_AlphaSliderText"):SetText("Alpha: "..VCB_SAVE["Timer_alpha"])
 	elseif frame == "VCB_BF_CF_FRAME" then	
 		getglobal("VCB_BF_CF_FRAME_AnchorSlider"):SetValue(VCB_SAVE["CF_anchor"])
-		getglobal("VCB_BF_CF_FRAME_AnchorSliderText"):SetText("Anchor: "..VCB_ANCHOR_ARRAY[VCB_SAVE["CF_anchor"]]);
+		getglobal("VCB_BF_CF_FRAME_AnchorSliderText"):SetText("Anchor: "..VCB_ANCHOR_ARRAY[VCB_SAVE["CF_anchor"]])
 		getglobal("VCB_BF_CF_FRAME_ScaleSlider"):SetValue(VCB_SAVE["CF_scale"])
-		getglobal("VCB_BF_CF_FRAME_ScaleSliderText"):SetText("Scale: "..VCB_SAVE["CF_scale"]);
+		getglobal("VCB_BF_CF_FRAME_ScaleSliderText"):SetText("Scale: "..VCB_SAVE["CF_scale"])
 		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON1"):SetChecked(VCB_SAVE["CF_invert"])
 		getglobal("VCB_BF_CF_FRAME_NumPerRowSlider"):SetValue(VCB_SAVE["CF_numperrow"])
-		getglobal("VCB_BF_CF_FRAME_NumPerRowSliderText"):SetText("Buffs per row: "..VCB_SAVE["CF_numperrow"]);
+		getglobal("VCB_BF_CF_FRAME_NumPerRowSliderText"):SetText("Buffs per row: "..VCB_SAVE["CF_numperrow"])
 	end
 end
 
@@ -403,7 +403,7 @@ end
 
 function VCB_BF_TIMER_FRAME_SizeSliderChange(obj)
 	VCB_SAVE["Timer_fontsize"] = obj:GetValue()
-	getglobal("VCB_BF_TIMER_FRAME_SizeSliderText"):SetText("Font size: "..VCB_SAVE["Timer_fontsize"]);
+	getglobal("VCB_BF_TIMER_FRAME_SizeSliderText"):SetText("Font size: "..VCB_SAVE["Timer_fontsize"])
 	for cat, tname in pairs(VCB_BUTTONNAME) do
 		for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
 			local p = 1
@@ -417,7 +417,7 @@ end
 
 function VCB_BF_TIMER_FRAME_FontSliderChange(obj)
 	VCB_SAVE["Timer_font"] = VCB_FONT_ARRAY[obj:GetValue()]
-	getglobal("VCB_BF_TIMER_FRAME_FontSliderText"):SetText("Font: "..VCB_SAVE["Timer_font"]);
+	getglobal("VCB_BF_TIMER_FRAME_FontSliderText"):SetText("Font: "..VCB_SAVE["Timer_font"])
 	for cat, tname in pairs(VCB_BUTTONNAME) do
 		for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
 			local p = 1
@@ -431,7 +431,7 @@ end
 
 function VCB_BF_TIMER_FRAME_AlphaSliderChange(obj)
 	VCB_SAVE["Timer_alpha"] = string.format("%.1f", obj:GetValue())
-	getglobal("VCB_BF_TIMER_FRAME_AlphaSliderText"):SetText("Alpha: "..VCB_SAVE["Timer_alpha"]);
+	getglobal("VCB_BF_TIMER_FRAME_AlphaSliderText"):SetText("Alpha: "..VCB_SAVE["Timer_alpha"])
 	for cat, tname in pairs(VCB_BUTTONNAME) do
 		for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
 			getglobal(tname..i.."Duration"):SetAlpha(VCB_SAVE["Timer_alpha"])
@@ -444,7 +444,7 @@ end
 
 function VCB_BF_CF_FRAME_AnchorSliderChange(obj)
 	VCB_SAVE["CF_anchor"] = obj:GetValue()
-	getglobal("VCB_BF_CF_FRAME_AnchorSliderText"):SetText("Anchor: "..VCB_ANCHOR_ARRAY[VCB_SAVE["CF_anchor"]]);
+	getglobal("VCB_BF_CF_FRAME_AnchorSliderText"):SetText("Anchor: "..VCB_ANCHOR_ARRAY[VCB_SAVE["CF_anchor"]])
 	VCB_BF_CONSOLIDATED_BUFFFRAME:ClearAllPoints()
 	if VCB_SAVE["CF_anchor"] == 1 then
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetPoint("TOP", VCB_BF_CONSOLIDATED_ICON, "BOTTOM", 0, 0)
@@ -459,7 +459,7 @@ end
 
 function VCB_BF_CF_FRAME_ScaleSliderChange(obj)
 	VCB_SAVE["CF_scale"] = string.format("%.1f", obj:GetValue())
-	getglobal("VCB_BF_CF_FRAME_ScaleSliderText"):SetText("Scale: "..VCB_SAVE["CF_scale"]);
+	getglobal("VCB_BF_CF_FRAME_ScaleSliderText"):SetText("Scale: "..VCB_SAVE["CF_scale"])
 	VCB_BF_RepositioningAndResizing()
 end
 
@@ -474,7 +474,7 @@ end
 
 function VCB_BF_CF_FRAME_NumPerRowSliderChange(obj)
 	VCB_SAVE["CF_numperrow"] = obj:GetValue()
-	getglobal("VCB_BF_CF_FRAME_NumPerRowSliderText"):SetText("Buffs per row: "..VCB_SAVE["CF_numperrow"]);
+	getglobal("VCB_BF_CF_FRAME_NumPerRowSliderText"):SetText("Buffs per row: "..VCB_SAVE["CF_numperrow"])
 	VCB_BF_RepositioningAndResizing()
 end
 
