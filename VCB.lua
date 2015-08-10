@@ -108,7 +108,7 @@ function VCB_SlashCommandHandler(msg)
 				VCB_AU:Unbuff(unbuff)
 			end
 		else
-			VCB_OPTIONS_OnShow()
+			VCB_BF_ConfigFrame:Show()
 		end
 	end
 end
@@ -182,26 +182,17 @@ end
 
 ---------------------------------------OPTION FRAME BEGIN-----------------------------------------------------------------------------------------------------------------
 
-function VCB_OPTIONS_OnShow()
-	if getglobal("VCB_BF_CONSOLIDATED_FRAME"):IsVisible() then
-		VCB_BF_CONSOLIDATED_FRAME_RIGHT_SCROLLFRAME_Update()
-	elseif getglobal("VCB_BF_BANNED_FRAME"):IsVisible() then
-		VCB_BF_BANNED_FRAME_RIGHT_SCROLLFRAME_Update()
-	end
-	getglobal("VCB_BF_ConfigFrame"):Show()
-end
-
 function VCB_OPTIONS_HIDE_ALL()
 	getglobal("VCB_BF_CONSOLIDATED_FRAME"):Hide()
 	getglobal("VCB_BF_BANNED_FRAME"):Hide()
 	getglobal("VCB_BF_TIMER_FRAME"):Hide()
-	getglobal("VCB_BF_DBF_COLOR_FRAME"):Hide()
-	getglobal("VCB_BF_CF_COLOR_FRAME"):Hide()
-	getglobal("VCB_BF_BF_COLOR_FRAME"):Hide()
 	getglobal("VCB_BF_CF_FRAME"):Hide()
+	getglobal("VCB_BF_CF_FRAME2"):Hide()
 	getglobal("VCB_BF_BF_FRAME"):Hide()
 	getglobal("VCB_BF_DBF_FRAME"):Hide()
+	getglobal("VCB_BF_WEAPON_FRAME"):Hide()
 	getglobal("VCB_BF_MISC_FRAME"):Hide()
+	getglobal("VCB_BF_PM_FRAME"):Hide()
 	getglobal("VCB_BF_ABOUT_FRAME"):Hide()
 end
 
@@ -485,6 +476,16 @@ function VCB_BF_CF_FRAME_NumPerRowSliderChange(obj)
 	VCB_SAVE["CF_numperrow"] = obj:GetValue()
 	getglobal("VCB_BF_CF_FRAME_NumPerRowSliderText"):SetText("Buffs per row: "..VCB_SAVE["CF_numperrow"]);
 	VCB_BF_RepositioningAndResizing()
+end
+
+function VCB_BF_CF_FRAME_CHANGE_PAGE()
+	if VCB_BF_CF_FRAME:IsVisible() then
+		VCB_OPTIONS_HIDE_ALL()
+		VCB_OPTIONS_SHOW("VCB_BF_CF_FRAME2", "Consolidated Frame -2-")
+	else
+		VCB_OPTIONS_HIDE_ALL()
+		VCB_OPTIONS_SHOW("VCB_BF_CF_FRAME", "Consolidated Frame -1-")
+	end
 end
 
 ---------------------------------------END CONSOLIDATED FRAME-----------------------------------------------------------------------------------------------------------------

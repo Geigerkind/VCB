@@ -315,6 +315,7 @@
 				VCB_BF_WEAPON_BUTTON_OnUpdate(arg1)
 			</OnUpdate>
 			<OnLoad>
+				this:RegisterEvent("UNIT_INVENTORY_CHANGED")
 			</OnLoad>
 			<OnEnter>
 				BuffFrame_EnchantButton_OnEnter()
