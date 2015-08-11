@@ -64,9 +64,9 @@
 	</Slider>
 	
 	---------------------------------MINIMAP FRAME----------------------------------------------------------------
-	<Button name="VCB_BF_MINIMAP_FRAME" movable="true" parent="UIParent" enableMouse="true">
+	<Button name="VCB_BF_MINIMAP_FRAME" movable="true" parent="UIParent" enableMouse="true" toplevel="true" frameStrata="LOW">
 		<Size>
-			<AbsDimension x="21" y="21" />
+			<AbsDimension x="33" y="33" />
         </Size>
 		<Anchors>
 			<Anchor point="LEFT" relativeTo="Minimap" relativePoint="LEFT">
@@ -104,19 +104,32 @@
 		</Layers>
 		<HighlightTexture alphaMode="ADD" file="Interface\Minimap\UI-Minimap-ZoomButton-Highlight" />
 		<Scripts>
-			<OnClick>
-				if VCB_BF_ConfigFrame:IsVisible() then
-					VCB_BF_ConfigFrame:Hide()
-				else
-					VCB_BF_ConfigFrame:Show()
-				end
-			</OnClick>
-			<OnMouseDown>
+			<OnLoad>
+				this:RegisterForClicks("LeftButtonUp","RightButtonUp")
+				this:RegisterForDrag("LeftButton")
+			</OnLoad>
+			<OnDragStart>
+				this:LockHighlight()
 				this:StartMoving()
-			</OnMouseDown>
-			<OnMouseUp>
+			</OnDragStart>
+			<OnDragStop>
+				this:UnlockHighlight()
 				this:StopMovingOrSizing()
-			</OnMouseUp>
+			</OnDragStop>
+			<OnEnter>
+				GameTooltip:SetOwner(this, "ANCHOR_LEFT")
+				GameTooltip:AddLine("Vanilla Consolidate Buff-Frames")
+				GameTooltip:AddLine("LeftClick: Toggle option menu", 0.5, 0.5, 0.5)
+				GameTooltip:AddLine("RightClick: Toggle frame lock", 0.5, 0.5, 0.5)
+				GameTooltip:AddLine("Drag: Move MiniMap icon", 0.5, 0.5, 0.5)
+				GameTooltip:Show()
+			</OnEnter>
+			<OnLeave>
+				GameTooltip:Hide()
+			</OnLeave>
+			<OnClick>
+				VCB_BF_MINIMAP_OnClick(arg1)
+			</OnClick>
 		</Scripts>
 	</Button>
 	
@@ -5005,7 +5018,7 @@
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="VCB_BF_WP_FRAME" relativePoint="TOPLEFT">
 									<Offset>
-										<AbsDimension x="20" y="-150" />
+										<AbsDimension x="20" y="-170" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -5017,7 +5030,7 @@
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="VCB_BF_WP_FRAME" relativePoint="TOPLEFT">
 									<Offset>
-										<AbsDimension x="20" y="-270" />
+										<AbsDimension x="20" y="-290" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -5027,7 +5040,7 @@
 				<Frames>
 					<Frame name="VCB_BF_WP_FRAME_GENERAL">
 						<Size>
-							<AbsDimension x="580" y="110"/>
+							<AbsDimension x="580" y="130"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="VCB_BF_WP_FRAME" relativePoint="TOPLEFT">
@@ -5107,6 +5120,27 @@
 									<OnLoad>
 										this.tooltipText = "Check this to invert the buff order."
 										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON3Text"):SetText("Invert buff order")
+									</OnLoad>
+									<OnClick>
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							-- Checkbutton attach to buff frame
+							<CheckButton name="VCB_BF_WP_FRAME_CHECKBUTTON7" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_WP_FRAME_CHECKBUTTON2" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-30"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = "Check this to invert the buff order."
+										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON7Text"):SetText("Attach to Buff-Frame")
 									</OnLoad>
 									<OnClick>
 									</OnClick>
@@ -5736,6 +5770,9 @@
 						<AbsValue val="32" />
 					</EdgeSize>
 				</Backdrop>
+				<Layers>
+					
+				</Layers>
 			</Frame>
 		</Frames>
 	</Frame>

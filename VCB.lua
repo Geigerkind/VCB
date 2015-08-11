@@ -243,6 +243,18 @@ function VCB_BF_CHECKBUTTON(obj)
 	end
 end
 
+function VCB_BF_MINIMAP_OnClick(arg1)
+	if arg1 == "LeftButton" then
+		if VCB_BF_ConfigFrame:IsVisible() then
+			VCB_BF_ConfigFrame:Hide()
+		else
+			VCB_BF_ConfigFrame:Show()
+		end
+	else
+		VCB_BF_ToggleLock()
+	end
+end
+
 ---------------------------------------START CONSOLIDATED BUFFS FRAME-----------------------------------------------------------------------------------------------------------------
 
 function VCB_BF_CONSOLIDATED_FRAME_RIGHT_SCROLLFRAME_Update()
