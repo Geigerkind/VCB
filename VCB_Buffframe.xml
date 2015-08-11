@@ -141,6 +141,7 @@
 				this.buffFilter = "HELPFUL|HARMFUL"
 				this.timeSinceLastUpdate = 0
 				this:RegisterEvent("PLAYER_AURAS_CHANGED")
+				this:RegisterEvent("UNIT_INVENTORY_CHANGED")
 			</OnLoad>
 			<OnEvent>
 				VCB_BF_BUFF_BUTTON_Update(this)
@@ -314,9 +315,6 @@
 			<OnUpdate>
 				VCB_BF_WEAPON_BUTTON_OnUpdate(arg1)
 			</OnUpdate>
-			<OnLoad>
-				this:RegisterEvent("UNIT_INVENTORY_CHANGED")
-			</OnLoad>
 			<OnEnter>
 				BuffFrame_EnchantButton_OnEnter()
 			</OnEnter>
