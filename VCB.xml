@@ -2488,7 +2488,7 @@
 					</Frame>
 					<Frame name="VCB_BF_CF_FRAME_BF_FRAME">
 						<Size>
-							<AbsDimension x="580" y="147"/>
+							<AbsDimension x="580" y="160"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_CI_FRAME" relativePoint="BOTTOM">
@@ -2674,6 +2674,27 @@
 									<OnLoad>
 										this.tooltipText = "Check this to invert the buff order."
 										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON4Text"):SetText("Use custom border")
+									</OnLoad>
+									<OnClick>
+										VCB_BF_CF_FRAME_INVERTBUTTON()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="VCB_BF_CF_FRAME_CHECKBUTTON_ORDER" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_CHECKBUTTON4" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = "Check this to invert the buff order."
+										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_ORDERText"):SetText("Enable order system")
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CF_FRAME_INVERTBUTTON()
@@ -3612,7 +3633,7 @@
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="VCB_BF_BF_FRAME" relativePoint="TOPLEFT">
 									<Offset>
-										<AbsDimension x="20" y="-190" />
+										<AbsDimension x="20" y="-200" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -3624,7 +3645,7 @@
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="VCB_BF_BF_FRAME" relativePoint="TOPLEFT">
 									<Offset>
-										<AbsDimension x="20" y="-310" />
+										<AbsDimension x="20" y="-320" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -3634,7 +3655,7 @@
 				<Frames>
 					<Frame name="VCB_BF_BF_FRAME_GENERAL">
 						<Size>
-							<AbsDimension x="580" y="150"/>
+							<AbsDimension x="580" y="160"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="VCB_BF_BF_FRAME" relativePoint="TOPLEFT">
@@ -3714,6 +3735,27 @@
 									<OnLoad>
 										this.tooltipText = "Check this to invert the buff order."
 										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON3Text"):SetText("Invert buff order")
+									</OnLoad>
+									<OnClick>
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							-- Checkbutton invert butt order
+							<CheckButton name="VCB_BF_BF_FRAME_CHECKBUTTON_ORDER" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_BF_FRAME_CHECKBUTTON3" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = "Check this to invert the buff order."
+										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON_ORDERText"):SetText("Enable order system")
 									</OnLoad>
 									<OnClick>
 									</OnClick>
@@ -4347,7 +4389,7 @@
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="VCB_BF_BF_FRAME" relativePoint="TOPLEFT">
 									<Offset>
-										<AbsDimension x="20" y="-190" />
+										<AbsDimension x="20" y="-200" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -4359,7 +4401,7 @@
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="VCB_BF_BF_FRAME" relativePoint="TOPLEFT">
 									<Offset>
-										<AbsDimension x="20" y="-290" />
+										<AbsDimension x="20" y="-300" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -4369,7 +4411,7 @@
 				<Frames>
 					<Frame name="VCB_BF_DBF_FRAME_GENERAL">
 						<Size>
-							<AbsDimension x="580" y="150"/>
+							<AbsDimension x="580" y="160"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="VCB_BF_DBF_FRAME" relativePoint="TOPLEFT">
@@ -4449,6 +4491,27 @@
 									<OnLoad>
 										this.tooltipText = "Check this to invert the buff order."
 										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON3Text"):SetText("Invert buff order")
+									</OnLoad>
+									<OnClick>
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							-- Checkbutton enable order system
+							<CheckButton name="VCB_BF_DBF_FRAME_CHECKBUTTON_ORDER" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_DBF_FRAME_CHECKBUTTON3" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = "Check this to invert the buff order."
+										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON_ORDERText"):SetText("Enable order system")
 									</OnLoad>
 									<OnClick>
 									</OnClick>
