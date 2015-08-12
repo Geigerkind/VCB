@@ -5,6 +5,7 @@
 VCB_NAME = "Vanilla Consolidate Buffs"
 VCB_VERSION = "2.4"
 VCB_IS_LOADED = false
+VCB_BF_DUMMY_MODE = false
 VCB_FONT_ARRAY = {}
 VCB_FONT_ARRAY[1] = "FRIZQT__.ttf"
 VCB_FONT_ARRAY[2] = "ARIALN.ttf"

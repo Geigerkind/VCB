@@ -90,6 +90,7 @@ function VCB_BF_CreateBuffButtons()
 end
 
 function VCB_BF_BUFF_BUTTON_Update(button)
+	if (not VCB_BF_DUMMY_MODE) then
 	local hackfix = false
 
 	local buffIndex, untilCancelled = GetPlayerBuff(button:GetID(), button.buffFilter);
@@ -127,7 +128,7 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 		end
 	end
 	
-	if ( buffIndex < 0 and VCB_BF_LOCKED) then
+	if ( buffIndex < 0 and VCB_BF_LOCKED ) then
 		button:Hide();
 		buffDuration:Hide();
  	else
@@ -139,7 +140,7 @@ function VCB_BF_BUFF_BUTTON_Update(button)
  			buffDuration:Hide();
  		end
  	end
-
+	
  	local icon = getglobal(button:GetName().."Icon");
  	icon:SetTexture(GetPlayerBuffTexture(buffIndex));
 
@@ -175,6 +176,7 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 		VCB_BF_RepositioningAndResizing()
 		buffDuration:SetAlpha(VCB_SAVE["Timer_alpha"])
 	end
+	end
 end
 
 function VCB_BF_RepositioningAndResizing()
@@ -182,7 +184,7 @@ function VCB_BF_RepositioningAndResizing()
 	local b = 1
 	for i=0, 31 do
 		local button = getglobal("VCB_BF_BUFF_BUTTON"..i)
-		if (button.buffIndex) then
+		if (button.buffIndex or VCB_BF_DUMMY_MODE) then
 			local parent = button:GetParent()
 			local buffDuration = getglobal(button:GetName().."Duration");
 			if parent == VCB_BF_BUFF_FRAME then
@@ -231,7 +233,7 @@ function VCB_BF_BUFF_BUTTON_OnUpdate(elapsed, button)
 	button.timeSinceLastUpdate = button.timeSinceLastUpdate + elapsed
 	if(button.timeSinceLastUpdate > UPDATETIME) then
 		local buffDuration = getglobal(button:GetName().."Duration");
-		if ( button.untilCancelled == 1 ) then
+		if ( button.untilCancelled == 1 and (not VCB_BF_DUMMY_MODE)) then
 			buffDuration:Hide();
 			return;
 		end
@@ -246,8 +248,12 @@ function VCB_BF_BUFF_BUTTON_OnUpdate(elapsed, button)
 		--end
 	
 		-- Update duration
-		if(timeLeft>0) then
-			buffDuration:SetText(VCB_BF_GetDuration(timeLeft))
+		if (timeLeft>0 or VCB_BF_DUMMY_MODE) then
+			if VCB_BF_DUMMY_MODE then
+				buffDuration:SetText(VCB_BF_GetDuration(random(1,15)+(random(1,99)/100)))
+			else
+				buffDuration:SetText(VCB_BF_GetDuration(timeLeft))
+			end
 			buffDuration:Show()
 		else
 			buffDuration:Hide()
@@ -272,11 +278,16 @@ function VCB_BF_WEAPON_BUTTON_OnUpdate(elapsed)
 	timeSinceWeaponUpdate = timeSinceWeaponUpdate + elapsed
 	if(timeSinceWeaponUpdate > UPDATETIME) then
 		local hasMainHandEnchant, mainHandExpiration, mainHandCharges, hasOffHandEnchant, offHandExpiration, offHandCharges = GetWeaponEnchantInfo();
-		if(hasMainHandEnchant) then
+		if(hasMainHandEnchant or VCB_BF_DUMMY_MODE) then
 			local textureName = GetInventoryItemTexture("player", 16)
-			VCB_BF_WEAPON_BUTTON0Icon:SetTexture(textureName)
+			if (VCB_BF_DUMMY_MODE == false) then
+				VCB_BF_WEAPON_BUTTON0Icon:SetTexture(textureName)
+				VCB_BF_WEAPON_BUTTON0Duration:SetText(VCB_BF_GetDuration(mainHandExpiration/1000))
+			else
+				VCB_BF_WEAPON_BUTTON0Duration:SetText(VCB_BF_GetDuration(random(1,15)+(random(1,99)/100)))
+				mainHandCharges = 100
+			end
 			VCB_BF_WEAPON_BUTTON0Border:SetVertexColor(0.2, 0.2, 0.8, 1)
-			VCB_BF_WEAPON_BUTTON0Duration:SetText(VCB_BF_GetDuration(mainHandExpiration/1000))
 			VCB_BF_WEAPON_BUTTON0Duration:Show()
 			if(mainHandCharges > 0) then
 				VCB_BF_WEAPON_BUTTON0Count:SetText(mainHandCharges)
@@ -286,17 +297,24 @@ function VCB_BF_WEAPON_BUTTON_OnUpdate(elapsed)
 			end
 			VCB_BF_WEAPON_BUTTON0:SetID(16)
 			VCB_BF_WEAPON_BUTTON0:Show()
-		elseif(VCB_BF_LOCKED) then
-			VCB_BF_WEAPON_BUTTON0:Hide()
+		elseif (VCB_BF_LOCKED) then
+			if (VCB_BF_DUMMY_MODE == false) then
+				VCB_BF_WEAPON_BUTTON0:Hide()
+			end
 		else
 			VCB_BF_WEAPON_BUTTON0Icon:SetTexture(nil)
 		end
 
-		if(hasOffHandEnchant) then
+		if(hasOffHandEnchant or VCB_BF_DUMMY_MODE) then
 			local textureName = GetInventoryItemTexture("player", 17)
-			VCB_BF_WEAPON_BUTTON1Icon:SetTexture(textureName)
+			if (VCB_BF_DUMMY_MODE == false) then
+				VCB_BF_WEAPON_BUTTON1Icon:SetTexture(textureName)
+				VCB_BF_WEAPON_BUTTON1Duration:SetText(VCB_BF_GetDuration(offHandExpiration/1000))
+			else
+				VCB_BF_WEAPON_BUTTON1Duration:SetText(VCB_BF_GetDuration(random(1,15)+(random(1,99)/100)))
+				offHandCharges = 100
+			end
 			VCB_BF_WEAPON_BUTTON1Border:SetVertexColor(0.2, 0.2, 0.8, 1)
-			VCB_BF_WEAPON_BUTTON1Duration:SetText(VCB_BF_GetDuration(offHandExpiration/1000))
 			VCB_BF_WEAPON_BUTTON1Duration:Show()
 			if(offHandCharges > 0) then
 				VCB_BF_WEAPON_BUTTON1Count:SetText(offHandCharges)
@@ -307,7 +325,9 @@ function VCB_BF_WEAPON_BUTTON_OnUpdate(elapsed)
 			VCB_BF_WEAPON_BUTTON1:SetID(17)
 			VCB_BF_WEAPON_BUTTON1:Show()
 		elseif(VCB_BF_LOCKED) then
-			VCB_BF_WEAPON_BUTTON1:Hide()
+			if (VCB_BF_DUMMY_MODE == false) then
+				VCB_BF_WEAPON_BUTTON1:Hide()
+			end
 		else
 			VCB_BF_WEAPON_BUTTON1Icon:SetTexture(nil)
 		end
@@ -463,6 +483,35 @@ function VCB_BF_Lock(lock)
 		VCB_SendMessage("Locked the frames!")
 	else
 		VCB_SendMessage("Unlocked the frames!")
+	end
+end
+
+function VCB_BF_DummyConfigMode_Enable()
+	VCB_BF_DUMMY_MODE = true
+	for cat, templateName in pairs(VCB_BUTTONNAME) do
+		for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
+			local button = getglobal(templateName..i)
+			local icon = getglobal(templateName..i.."Icon")
+			local buffDuration = getglobal(templateName..i.."Duration")
+			icon:SetTexture("Interface\\AddOns\\VCB\\images\\dummy.tga")
+			buffDuration:SetText(VCB_BF_GetDuration(10))
+			if i < 7 and cat == "buff" then
+				button:SetParent(VCB_BF_CONSOLIDATED_BUFFFRAME)
+			end
+			VCB_BF_RepositioningAndResizing()
+			button:Show()
+		end
+	end
+end
+
+function VCB_BF_DummyConfigMode_Disable()
+	VCB_BF_DUMMY_MODE = false
+	for cat, templateName in pairs(VCB_BUTTONNAME) do
+		for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
+			local button = getglobal(templateName..i)
+			button:Hide()
+			VCB_BF_BUFF_BUTTON_Update(button)
+		end
 	end
 end
 
