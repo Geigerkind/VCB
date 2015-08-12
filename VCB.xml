@@ -6177,17 +6177,436 @@
 						</Offset>
 					</Anchor>
 				</Anchors>
-				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
-					<BackgroundInsets>
-						<AbsInset left="11" right="12" top="12" bottom="11" />
-					</BackgroundInsets>
-					<TileSize>
-						<AbsValue val="32" />
-					</TileSize>
-					<EdgeSize>
-						<AbsValue val="32" />
-					</EdgeSize>
-				</Backdrop>
+				<Frames>
+					<Frame name="VCB_BF_PM_FRAME_LEFT">
+						<Size>
+							<AbsDimension x="220" y="435"/>
+						</Size>
+						<Anchors>
+							<Anchor point="Left">
+								<Offset>
+									<AbsDimension x="0" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+							<BackgroundInsets>
+								<AbsInset left="11" right="12" top="12" bottom="11" />
+							</BackgroundInsets>
+							<TileSize>
+								<AbsValue val="32" />
+							</TileSize>
+							<EdgeSize>
+								<AbsValue val="32" />
+							</EdgeSize>
+						</Backdrop>
+						<Layers>
+							<Layer>
+								<FontString name="$parent_INSERT" font="Fonts\FRIZQT__.TTF" text="Insert name:" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="220" y="60" />
+									</Size>
+									<Color r="1.0" g="0.82" b="0"/>
+									<FontHeight val="20"/>
+									<Anchors>
+										<Anchor point="TOP">
+											<Offset>
+												<AbsDimension x="15" y="5" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="$parent_SELECT" font="Fonts\FRIZQT__.TTF" text="Selected profile:" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="220" y="60" />
+									</Size>
+									<Color r="1.0" g="0.82" b="0"/>
+									<FontHeight val="20"/>
+									<Anchors>
+										<Anchor point="TOP">
+											<Offset>
+												<AbsDimension x="15" y="-125" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="$parent_CURRENT" font="Fonts\FRIZQT__.TTF" text="Current profile:" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="220" y="60" />
+									</Size>
+									<Color r="1.0" g="0.82" b="0"/>
+									<FontHeight val="20"/>
+									<Anchors>
+										<Anchor point="TOP">
+											<Offset>
+												<AbsDimension x="15" y="-285" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Frames>
+							<EditBox name="VCB_BF_PM_FRAME_EditBox" letters="80">
+								<Size x="160" y="40" />
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_PM_FRAME_LEFT_INSERT" relativePoint="BOTTOM">
+										<Offset x="-15" y="15" />
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer level="BACKGROUND">
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Left">
+											<Size x="100" y="40" />
+											<Anchors>
+												<Anchor point="LEFT">
+													<Offset x="-20" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0" right="0.2" top="0" bottom="1.0"/>
+										</Texture>
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Right">
+											<Size x="100" y="40" />
+											<Anchors>
+												<Anchor point="RIGHT">
+													<Offset x="15" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0.7" right="1.0" top="0" bottom="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<FontString inherits="ChatFontNormal" />
+							</EditBox>
+							<Button name="VCB_PM_FRAME_LEFT_SAVE">
+								<Size>
+									<AbsDimension x="190" y="40"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_PM_FRAME_EditBox" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer>
+										<FontString name="$parent_Text" inherits="GameFontNormalSmall" text="Save">
+											<Size>
+												<AbsDimension x="190" y="40" />
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="7" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+								<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+								<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+								<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+							</Button>
+							<Frame name="VCB_BF_PM_FRAME_LEFT_SELECTED_INBOX">
+								<Size>
+									<AbsDimension x="195" y="40"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_PM_FRAME_LEFT_SAVE" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-50" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+									<BackgroundInsets>
+										<AbsInset left="11" right="12" top="12" bottom="11" />
+									</BackgroundInsets>
+									<TileSize>
+										<AbsValue val="32" />
+									</TileSize>
+									<EdgeSize>
+										<AbsValue val="32" />
+									</EdgeSize>
+								</Backdrop>
+								<Layers>
+									<Layer>
+										<FontString name="$parent_TEXT" inherits="GameFontNormalSmall" text="">
+											<Size>
+												<AbsDimension x="195" y="40" />
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="1" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+							</Frame>
+							<Button name="VCB_PM_FRAME_LEFT_DELETE">
+								<Size>
+									<AbsDimension x="190" y="40"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_PM_FRAME_LEFT_SELECTED_INBOX" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer>
+										<FontString name="$parent_Text" inherits="GameFontNormalSmall" text="Delete">
+											<Size>
+												<AbsDimension x="190" y="40" />
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="7" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+								<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+								<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+								<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+							</Button>
+							<Button name="VCB_PM_FRAME_LEFT_LOAD">
+								<Size>
+									<AbsDimension x="190" y="40"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_PM_FRAME_LEFT_DELETE" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="10" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer>
+										<FontString name="$parent_Text" inherits="GameFontNormalSmall" text="Load">
+											<Size>
+												<AbsDimension x="190" y="40" />
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="7" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+								<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+								<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+								<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+							</Button>
+							<Frame name="VCB_BF_PM_FRAME_LEFT_CURRENT_INBOX">
+								<Size>
+									<AbsDimension x="195" y="40"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_PM_FRAME_LEFT_CURRENT" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="-15" y="15" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+									<BackgroundInsets>
+										<AbsInset left="11" right="12" top="12" bottom="11" />
+									</BackgroundInsets>
+									<TileSize>
+										<AbsValue val="32" />
+									</TileSize>
+									<EdgeSize>
+										<AbsValue val="32" />
+									</EdgeSize>
+								</Backdrop>
+								<Layers>
+									<Layer>
+										<FontString name="$parent_TEXT" inherits="GameFontNormalSmall" text="">
+											<Size>
+												<AbsDimension x="195" y="40" />
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="1" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+							</Frame>
+						</Frames>
+					</Frame>
+					<Frame name="VCB_BF_PM_FRAME_RIGHT">
+						<Size>
+							<AbsDimension x="390" y="435"/>
+						</Size>
+						<Anchors>
+							<Anchor point="Left" relativeTo="VCB_BF_PM_FRAME_LEFT" relativePoint="RIGHT">
+								<Offset>
+									<AbsDimension x="0" y="0" />
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+							<BackgroundInsets>
+								<AbsInset left="11" right="12" top="12" bottom="11" />
+							</BackgroundInsets>
+							<TileSize>
+								<AbsValue val="32" />
+							</TileSize>
+							<EdgeSize>
+								<AbsValue val="32" />
+							</EdgeSize>
+						</Backdrop>
+						<Frames>
+							<ScrollFrame name="VCB_BF_PM_FRAME_RIGHT_SCROLLFRAME" inherits="FauxScrollFrameTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT">
+										<Offset>
+											<AbsDimension x="0" y="-5" />
+										</Offset>
+									</Anchor>
+									<Anchor point="BOTTOMRIGHT">
+										<Offset>
+										  <AbsDimension x="-30" y="8"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnVerticalScroll>
+										FauxScrollFrame_OnVerticalScroll(40, VCB_BF_PM_FRAME_RIGHT_SCROLLFRAME_Update) 
+									</OnVerticalScroll>
+									<OnShow>
+									</OnShow>
+							   </Scripts>
+							</ScrollFrame>
+							<Button name="VCB_PM_ENTRY1" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="VCB_BF_PM_FRAME_RIGHT_SCROLLFRAME" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="15" y="-15" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="$parent_Text" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_PM_ENTRY2" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_PM_ENTRY1" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="$parent_Text" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_PM_ENTRY3" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_PM_ENTRY2" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="$parent_Text" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_PM_ENTRY4" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_PM_ENTRY3" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="$parent_Text" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						  </Button>
+						  <Button name="VCB_PM_ENTRY5" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
+							<Anchors>
+							  <Anchor point="TOPLEFT" relativeTo="VCB_PM_ENTRY4" relativePoint="BOTTOMLEFT"/>
+							</Anchors>
+							<Layers>
+								<Layer>
+									<FontString name="$parent_Text" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
+										<Size>
+											<AbsDimension x="350" y="40" />
+										</Size>
+										<Anchors>
+											<Anchor point="CENTER">
+												<Offset>
+													<AbsDimension x="20" y="7" />
+												</Offset>
+											</Anchor>
+										</Anchors>
+									</FontString>
+								</Layer>
+							</Layers>
+						 </Button>
+						</Frames>
+					</Frame>
+				</Frames>
 			</Frame>
 			-- About Frame
 			<Frame name="VCB_BF_ABOUT_FRAME" hidden="true">
