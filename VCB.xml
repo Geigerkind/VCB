@@ -6141,30 +6141,6 @@
 					</Frame>
 				</Frames>
 			</Frame>
-			-- MISC Frame
-			<Frame name="VCB_BF_MISC_FRAME" hidden="true">
-				<Size>
-					<AbsDimension x="610" y="435"/>
-				</Size>
-				<Anchors>
-					<Anchor point="Left" relativeTo="VCB_BF_MENU_BODY" relativePoint="RIGHT">
-						<Offset>
-							<AbsDimension x="0" y="0" />
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
-					<BackgroundInsets>
-						<AbsInset left="11" right="12" top="12" bottom="11" />
-					</BackgroundInsets>
-					<TileSize>
-						<AbsValue val="32" />
-					</TileSize>
-					<EdgeSize>
-						<AbsValue val="32" />
-					</EdgeSize>
-				</Backdrop>
-			</Frame>
 			-- PM Frame
 			<Frame name="VCB_BF_PM_FRAME" hidden="true">
 				<Size>
@@ -6604,6 +6580,173 @@
 								</Layer>
 							</Layers>
 						 </Button>
+						</Frames>
+					</Frame>
+				</Frames>
+			</Frame>
+			-- MISC Frame
+			<Frame name="VCB_BF_MISC_FRAME" hidden="true">
+				<Size>
+					<AbsDimension x="610" y="435"/>
+				</Size>
+				<Anchors>
+					<Anchor point="Left" relativeTo="VCB_BF_MENU_BODY" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+				<Frames>
+					<Frame name="VCB_BF_MISC_FRAME_GENERAL">
+						<Size>
+							<AbsDimension x="580" y="80"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="VCB_BF_MISC_FRAME" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="15" y="-30"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+							<BackgroundInsets>
+								<AbsInset left="4" right="4" top="4" bottom="4" />
+							</BackgroundInsets>
+							<TileSize>
+								<AbsValue val="16" />
+							</TileSize>
+							<EdgeSize>
+								<AbsValue val="16" />
+							</EdgeSize>
+							<Color r="0" g="0" b="0" a="0.5"/>
+						</Backdrop>
+						<Layers>
+							<Layer>
+								<FontString name="$parent_FONT" inherits="GameFontNormal" text="General" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="580" y="16" />
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="5" y="15" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<Frames>
+							-- Checkbutton Disable Consolidate Mechanic
+							<CheckButton name="VCB_BF_MISC_FRAME_CHECKBUTTON1" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOPLEFT" relativeTo="VCB_BF_MISC_FRAME_GENERAL" relativePoint="TOPLEFT">
+										<Offset>
+											<AbsDimension x="10" y="-10"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = "Check this to invert the buff order."
+										getglobal("VCB_BF_MISC_FRAME_CHECKBUTTON1Text"):SetText("Disable consolidate mechanic")
+									</OnLoad>
+									<OnClick>
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							-- Checkbutton Disable Banning Mechanic
+							<CheckButton name="VCB_BF_MISC_FRAME_CHECKBUTTON2" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_MISC_FRAME_CHECKBUTTON1" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = "Check this to invert the buff order."
+										getglobal("VCB_BF_MISC_FRAME_CHECKBUTTON2Text"):SetText("Disable banning mechanic")
+									</OnLoad>
+									<OnClick>
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							-- Aura Border Slider
+							<Slider name="VCB_BF_MISC_FRAME_ThemeSlider" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="155" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="VCB_BF_MISC_FRAME_CHECKBUTTON1" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="175" y="-15" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = "Move this to change the amount."
+										this:SetMinMaxValues(1,10)
+										this:SetValue(5)
+										this:SetValueStep(1)
+										getglobal("VCB_BF_MISC_FRAME_ThemeSliderText"):SetText("Theme")
+										getglobal("VCB_BF_MISC_FRAME_ThemeSliderLow"):SetText("1")
+										getglobal("VCB_BF_MISC_FRAME_ThemeSliderHigh"):SetText("10")
+									</OnLoad>
+									<OnValueChanged>
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							<Button name="VCB_BF_MISC_FRAME_LOAD">
+								<Size>
+									<AbsDimension x="155" y="40"/>
+								</Size>
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="VCB_BF_MISC_FRAME_ThemeSlider" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="30" y="-5" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer>
+										<FontString name="$parent_Text" inherits="GameFontNormalSmall" text="Load">
+											<Size>
+												<AbsDimension x="190" y="40" />
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="7" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+								</Layers>
+								<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+								<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+								<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+							</Button>
 						</Frames>
 					</Frame>
 				</Frames>
