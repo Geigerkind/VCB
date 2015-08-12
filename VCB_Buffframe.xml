@@ -60,11 +60,15 @@
 		</Anchors>
 		<Scripts>
 			<OnEnter>
+				VCB_BF_CONSOLIDATED_ICONIcon:SetTexture(nil)
+				VCB_BF_CONSOLIDATED_ICONIcon:SetTexture("Interface\\AddOns\\VCB\\images\\"..VCB_SAVE["CF_icon_texture"].."_hover.tga")
 				if (not VCB_BF_CF_FRAME:IsVisible()) then
 					VCB_BF_CONSOLIDATED_BUFFFRAME:Show()
 				end
 			</OnEnter>
 			<OnLeave>
+				VCB_BF_CONSOLIDATED_ICONIcon:SetTexture(nil)
+				VCB_BF_CONSOLIDATED_ICONIcon:SetTexture("Interface\\AddOns\\VCB\\images\\"..VCB_SAVE["CF_icon_texture"]..".tga")
 				if (not VCB_BF_CF_FRAME:IsVisible()) then
 					VCB_BF_CONSOLIDATED_BUFFFRAME:Hide()
 				end
@@ -95,7 +99,7 @@
 			</Layer>
 		</Layers>
 	</Frame>
-	<Frame name="VCB_BF_CONSOLIDATED_BUFFFRAME" parent="VCB_BF_CONSOLIDATED_ICON" hidden="true">
+	<Frame name="VCB_BF_CONSOLIDATED_BUFFFRAME" parent="UIParent" hidden="true">
 		<Size>
 			<AbsDimension x="60" y="60"/>
 		</Size>

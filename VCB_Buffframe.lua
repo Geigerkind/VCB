@@ -250,7 +250,7 @@ function VCB_BF_BUFF_BUTTON_OnUpdate(elapsed, button)
 		-- Update duration
 		if (timeLeft>0 or VCB_BF_DUMMY_MODE) then
 			if VCB_BF_DUMMY_MODE then
-				buffDuration:SetText(VCB_BF_GetDuration(random(1,15)+(random(1,99)/100)))
+				buffDuration:SetText(VCB_BF_GetDuration(random(1,150)+(random(1,99)/100)))
 			else
 				buffDuration:SetText(VCB_BF_GetDuration(timeLeft))
 			end
@@ -284,7 +284,7 @@ function VCB_BF_WEAPON_BUTTON_OnUpdate(elapsed)
 				VCB_BF_WEAPON_BUTTON0Icon:SetTexture(textureName)
 				VCB_BF_WEAPON_BUTTON0Duration:SetText(VCB_BF_GetDuration(mainHandExpiration/1000))
 			else
-				VCB_BF_WEAPON_BUTTON0Duration:SetText(VCB_BF_GetDuration(random(1,15)+(random(1,99)/100)))
+				VCB_BF_WEAPON_BUTTON0Duration:SetText(VCB_BF_GetDuration(random(1,150)+(random(1,99)/100)))
 				mainHandCharges = 100
 			end
 			VCB_BF_WEAPON_BUTTON0Border:SetVertexColor(0.2, 0.2, 0.8, 1)

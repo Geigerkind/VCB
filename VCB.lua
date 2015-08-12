@@ -16,6 +16,12 @@ VCB_ANCHOR_ARRAY[1] = "Bottom"
 VCB_ANCHOR_ARRAY[2] = "Right"
 VCB_ANCHOR_ARRAY[3] = "Top"
 VCB_ANCHOR_ARRAY[4] = "Left"
+VCB_BF_COLOR_OBJ = nil
+VCB_BF_COLOR_VAR = nil
+VCB_BF_COLOR_TAR = nil
+VCB_BF_COLOR_TYPE = nil
+VCB_ICON_ARRAY = {}
+VCB_ICON_ARRAY[1] = "icon"
 
 --[[
 -- VCB_OnLoad()
@@ -55,6 +61,18 @@ function VCB_OnEvent(event)
 				CF_scale = 1.0,
 				CF_invert = false,
 				CF_numperrow = 5,
+				CF_icon_color_r = 1,
+				CF_icon_color_g = 1,
+				CF_icon_color_b = 1,
+				CF_icon_fontsize = 10,
+				CF_icon_font = "FRIZQT__.ttf",
+				CF_icon_opacity = 1.0,
+				CF_icon_fontopacity = 1.0,
+				CF_icon_texture = "icon",
+				CF_icon_bgopacity = 1.0,
+				CF_icon_bgcolor_r = 0,
+				CF_icon_bgcolor_g = 0,
+				CF_icon_bgcolor_b = 0,
 			}
 		end
 		if VCB_BF_LOCKED == nil then
@@ -72,6 +90,16 @@ function VCB_OnEvent(event)
 		--VCB_SAVE["CF_scale"] = 1.0
 		--VCB_SAVE["CF_invert"] = false
 		--VCB_SAVE["CF_numperrow"] = 5
+		--VCB_SAVE["CF_icon_color_r"] = 1
+		--VCB_SAVE["CF_icon_color_g"] = 1
+		--VCB_SAVE["CF_icon_color_b"] = 1
+		--VCB_SAVE["CF_icon_font"] = "FRIZQT__.ttf"
+		--VCB_SAVE["CF_icon_fontopactiy"] = 1
+		--VCB_SAVE["CF_icon_texture"] = "icon"
+		VCB_SAVE["CF_icon_bgopacity"] = 1.0
+		VCB_SAVE["CF_icon_bgcolor_r"] = 0
+		VCB_SAVE["CF_icon_bgcolor_g"] = 0
+		VCB_SAVE["CF_icon_bgcolor_b"] = 0
 		
 		VCB_BF_CONSOLIDATED_BUFFFRAME:ClearAllPoints()
 		if VCB_SAVE["CF_anchor"] == 1 then
@@ -84,7 +112,12 @@ function VCB_OnEvent(event)
 			VCB_BF_CONSOLIDATED_BUFFFRAME:SetPoint("RIGHT", VCB_BF_CONSOLIDATED_ICON, "LEFT", 0, 0)
 		end
 		
-		
+		VCB_BF_CONSOLIDATED_ICON:SetAlpha(VCB_SAVE["CF_icon_opacity"])
+		VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
+		VCB_BF_CONSOLIDATED_ICONCount:SetTextColor(VCB_SAVE["CF_icon_color_r"], VCB_SAVE["CF_icon_color_g"], VCB_SAVE["CF_icon_color_b"], VCB_SAVE["CF_icon_fontopacity"])
+		VCB_BF_CONSOLIDATED_ICONIcon:SetTexture(nil)
+		VCB_BF_CONSOLIDATED_ICONIcon:SetTexture("Interface\\AddOns\\VCB\\images\\"..VCB_SAVE["CF_icon_texture"]..".tga")
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_icon_bgcolor_r"],VCB_SAVE["CF_icon_bgcolor_g"],VCB_SAVE["CF_icon_bgcolor_b"],VCB_SAVE["CF_icon_bgopacity"])
 		VCB_BF_Lock(VCB_BF_LOCKED)
 		VCB_IS_LOADED = true
 	end	
@@ -233,6 +266,22 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON1"):SetChecked(VCB_SAVE["CF_invert"])
 		getglobal("VCB_BF_CF_FRAME_NumPerRowSlider"):SetValue(VCB_SAVE["CF_numperrow"])
 		getglobal("VCB_BF_CF_FRAME_NumPerRowSliderText"):SetText("Buffs per row: "..VCB_SAVE["CF_numperrow"])
+		getglobal("VCB_BF_CF_FRAME_ColorNormalTexture"):SetVertexColor(VCB_SAVE["CF_icon_color_r"], VCB_SAVE["CF_icon_color_g"], VCB_SAVE["CF_icon_color_b"])
+		getglobal("VCB_BF_CF_FRAME_Color_SwatchBg").r = VCB_SAVE["CF_icon_color_r"]
+		getglobal("VCB_BF_CF_FRAME_Color_SwatchBg").g = VCB_SAVE["CF_icon_color_g"]
+		getglobal("VCB_BF_CF_FRAME_Color_SwatchBg").b = VCB_SAVE["CF_icon_color_b"]
+		getglobal("VCB_BF_CF_FRAME_SizeSlider"):SetValue(VCB_SAVE["CF_icon_fontsize"])
+		getglobal("VCB_BF_CF_FRAME_SizeSliderText"):SetText("Font size: "..VCB_SAVE["CF_icon_fontsize"])
+		getglobal("VCB_BF_CF_FRAME_FontSlider"):SetValue(VCB_Table_GetKeys(VCB_FONT_ARRAY, VCB_SAVE["CF_icon_font"]))
+		getglobal("VCB_BF_CF_FRAME_FontSliderText"):SetText("Font: "..VCB_SAVE["CF_icon_font"])
+		getglobal("VCB_BF_CF_FRAME_AlphaSlider"):SetValue(VCB_SAVE["CF_icon_opacity"])
+		getglobal("VCB_BF_CF_FRAME_AlphaSliderText"):SetText("Icon Opacity: "..VCB_SAVE["CF_icon_opacity"])
+		getglobal("VCB_BF_CF_FRAME_FontAlphaSlider"):SetValue(VCB_SAVE["CF_icon_fontopacity"])
+		getglobal("VCB_BF_CF_FRAME_FontAlphaSliderText"):SetText("Font Opacity: "..VCB_SAVE["CF_icon_fontopacity"])
+		getglobal("VCB_BF_CF_FRAME_TextureSlider"):SetValue(VCB_Table_GetKeys(VCB_ICON_ARRAY, VCB_SAVE["CF_icon_texture"]))
+		getglobal("VCB_BF_CF_FRAME_TextureSliderText"):SetText("Texture: "..VCB_SAVE["CF_icon_texture"])
+		getglobal("VCB_BF_CF_FRAME_BGOpaSlider"):SetValue(VCB_SAVE["CF_icon_bgopacity"])
+		getglobal("VCB_BF_CF_FRAME_BGOpaSliderText"):SetText("Background opacity: "..VCB_SAVE["CF_icon_bgopacity"])
 	end
 end
 
@@ -254,6 +303,62 @@ function VCB_BF_MINIMAP_OnClick(arg1)
 	else
 		VCB_BF_ToggleLock()
 	end
+end
+
+function VCB_BF_OptionsFrame_SetColor()
+	local r,g,b = ColorPickerFrame:GetColorRGB();
+	local swatch,frame;
+	swatch = getglobal(VCB_BF_COLOR_OBJ:GetName().."NormalTexture"); -- juste le visuel
+	frame = getglobal(VCB_BF_COLOR_OBJ:GetName().."_SwatchBg");      -- enregistre la couleur
+	swatch:SetVertexColor(r,g,b);
+	frame.r = r;
+	frame.g = g;
+	frame.b = b;
+
+	VCB_SAVE[VCB_BF_COLOR_VAR.."_color_r"] = r;
+	VCB_SAVE[VCB_BF_COLOR_VAR.."_color_g"] = g;
+	VCB_SAVE[VCB_BF_COLOR_VAR.."_color_b"] = b;
+	
+	if VCB_BF_COLOR_TYPE == "font" then
+		getglobal(VCB_BF_COLOR_TAR):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."_fontopacity"]);
+	end
+end
+
+function VCB_BF_OptionsFrame_CancelColor()
+	local r = ColorPickerFrame.previousValues.r;
+	local g = ColorPickerFrame.previousValues.g;
+	local b = ColorPickerFrame.previousValues.b;
+	local swatch,frame;
+	swatch = getglobal(VCB_BF_COLOR_OBJ:GetName().."NormalTexture"); -- juste le visuel
+	frame = getglobal(VCB_BF_COLOR_OBJ:GetName().."_SwatchBg");      -- enregistre la couleur
+	swatch:SetVertexColor(r,g,b);
+	frame.r = r;
+	frame.g = g;
+	frame.b = b;
+
+	if VCB_BF_COLOR_TYPE == "font" then
+		getglobal(VCB_BF_COLOR_TAR):SetTextColor(r,g,b, 1);
+	end
+end
+
+function VCB_BF_OpenColorPicker(obj, var, tar, type)
+	VCB_BF_COLOR_OBJ = obj
+	VCB_BF_COLOR_VAR = var
+	VCB_BF_COLOR_TAR = tar
+	VCB_BF_COLOR_TYPE = type
+	
+	CloseMenus();
+	
+	button = getglobal(obj:GetName().."_SwatchBg");
+
+	ColorPickerFrame.func = VCB_BF_OptionsFrame_SetColor -- button.swatchFunc;
+	ColorPickerFrame:SetColorRGB(button.r, button.g, button.b);
+	ColorPickerFrame.previousValues = {r = button.r, g = button.g, b = button.b, opacity = button.opacity};
+	ColorPickerFrame.cancelFunc = VCB_BF_OptionsFrame_CancelColor
+
+	ColorPickerFrame:SetPoint("TOPLEFT", obj, "TOPRIGHT", 0, 0)
+
+	ColorPickerFrame:Show();
 end
 
 ---------------------------------------START CONSOLIDATED BUFFS FRAME-----------------------------------------------------------------------------------------------------------------
@@ -499,6 +604,43 @@ function VCB_BF_CF_FRAME_CHANGE_PAGE()
 		VCB_OPTIONS_HIDE_ALL()
 		VCB_OPTIONS_SHOW("VCB_BF_CF_FRAME", "Consolidated Frame -1-")
 	end
+end
+
+function VCB_BF_CF_FRAME_SizeSliderChange(obj)
+	VCB_SAVE["CF_icon_fontsize"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Font size: "..VCB_SAVE["CF_icon_fontsize"])
+	VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
+end
+
+function VCB_BF_CF_FRAME_FontSliderChange(obj)
+	VCB_SAVE["CF_icon_font"] = VCB_FONT_ARRAY[obj:GetValue()]
+	getglobal(obj:GetName().."Text"):SetText("Font: "..VCB_FONT_ARRAY[obj:GetValue()])
+	VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
+end
+
+function VCB_BF_CF_FRAME_AlphaSliderChange(obj)
+	VCB_SAVE["CF_icon_opacity"] = string.format("%.1f", obj:GetValue())
+	getglobal(obj:GetName().."Text"):SetText("Icon opacity: "..VCB_SAVE["CF_icon_opacity"])
+	VCB_BF_CONSOLIDATED_ICON:SetAlpha(VCB_SAVE["CF_icon_opacity"])
+end
+
+function VCB_BF_CF_FRAME_FontAlphaSliderChange(obj)
+	VCB_SAVE["CF_icon_fontopacity"] = string.format("%.1f", obj:GetValue())
+	getglobal(obj:GetName().."Text"):SetText("Font opacity: "..VCB_SAVE["CF_icon_fontopacity"])
+	VCB_BF_CONSOLIDATED_ICONCount:SetAlpha(VCB_SAVE["CF_icon_fontopacity"])
+end
+
+function VCB_BF_CF_FRAME_TextureSliderChange(obj)
+	VCB_SAVE["CF_icon_texture"] = VCB_ICON_ARRAY[obj:GetValue()]
+	getglobal(obj:GetName().."Text"):SetText("Texture: "..VCB_SAVE["CF_icon_texture"])
+	VCB_BF_CONSOLIDATED_ICONIcon:SetTexture(nil)
+	VCB_BF_CONSOLIDATED_ICONIcon:SetTexture("Interface\\AddOns\\VCB\\images\\"..VCB_SAVE["CF_icon_texture"]..".tga")
+end
+
+function VCB_BF_CF_FRAME_BGOpaSliderChange(obj)
+	VCB_SAVE["CF_icon_bgopacity"] = string.format("%.1f", obj:GetValue())
+	getglobal(obj:GetName().."Text"):SetText("Background Opacity: "..VCB_SAVE["CF_icon_bgopacity"])
+	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_icon_bgcolor_r"],VCB_SAVE["CF_icon_bgcolor_g"],VCB_SAVE["CF_icon_bgcolor_b"],VCB_SAVE["CF_icon_bgopacity"])
 end
 
 ---------------------------------------END CONSOLIDATED FRAME-----------------------------------------------------------------------------------------------------------------

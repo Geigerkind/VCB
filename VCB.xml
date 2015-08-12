@@ -2230,7 +2230,7 @@
 							<Anchors>
 								<Anchor point="TOPLEFT">
 									<Offset>
-										<AbsDimension x="20" y="-130" />
+										<AbsDimension x="20" y="-180" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -2248,7 +2248,7 @@
 				<Frames>
 					<Frame name="VCB_BF_CF_FRAME_CI_FRAME">
 						<Size>
-							<AbsDimension x="580" y="100"/>
+							<AbsDimension x="580" y="150"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="VCB_BF_CF_FRAME" relativePoint="TOPLEFT">
@@ -2320,12 +2320,12 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										Powa_OpenColorPicker();
+										VCB_BF_OpenColorPicker(this, "CF_icon", "VCB_BF_CONSOLIDATED_ICONCount", "font");
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText("Click here to change the color of the font.", nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -2447,7 +2447,7 @@
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_CF_FRAME_AlphaSliderText"):SetText("Alpha")
+										getglobal("VCB_BF_CF_FRAME_AlphaSliderText"):SetText("Icon Opacity")
 										getglobal("VCB_BF_CF_FRAME_AlphaSliderLow"):SetText("0")
 										getglobal("VCB_BF_CF_FRAME_AlphaSliderHigh"):SetText("1.0")
 									</OnLoad>
@@ -2458,7 +2458,7 @@
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
-							<Slider name="VCB_BF_CF_FRAME_TextureSlider" inherits="VCB_BF_SliderTemplate">
+							<Slider name="VCB_BF_CF_FRAME_FontAlphaSlider" inherits="VCB_BF_SliderTemplate">
 								<Size>
 									<AbsDimension x="155" y="16"/>
 								</Size>
@@ -2475,9 +2475,37 @@
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
+										getglobal("VCB_BF_CF_FRAME_FontAlphaSliderText"):SetText("Font Opacity")
+										getglobal("VCB_BF_CF_FRAME_FontAlphaSliderLow"):SetText("0")
+										getglobal("VCB_BF_CF_FRAME_FontAlphaSliderHigh"):SetText("1.0")
+									</OnLoad>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_CF_FRAME_FontAlphaSliderChange(this)
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							<Slider name="VCB_BF_CF_FRAME_TextureSlider" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="155" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_FontAlphaSlider" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-30" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = "Move this to change the opacity."
+										this:SetMinMaxValues(1,1)
+										this:SetValue(1)
+										this:SetValueStep(1)
 										getglobal("VCB_BF_CF_FRAME_TextureSliderText"):SetText("Texture")
-										getglobal("VCB_BF_CF_FRAME_TextureSliderLow"):SetText("0")
-										getglobal("VCB_BF_CF_FRAME_TextureSliderHigh"):SetText("1.0")
+										getglobal("VCB_BF_CF_FRAME_TextureSliderLow"):SetText("1")
+										getglobal("VCB_BF_CF_FRAME_TextureSliderHigh"):SetText("1")
 									</OnLoad>
 									<OnValueChanged>
 										if VCB_IS_LOADED then
@@ -2562,7 +2590,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										Powa_OpenColorPicker();
+										VCB_BF_OpenColorPicker(this);
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -2626,7 +2654,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										Powa_OpenColorPicker();
+										VCB_BF_OpenColorPicker(this);
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -2801,12 +2829,12 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = "Move this to change the amount."
-										this:SetMinMaxValues(1,10)
-										this:SetValue(5)
-										this:SetValueStep(1)
+										this:SetMinMaxValues(0,1.0)
+										this:SetValue(0.5)
+										this:SetValueStep(0.1)
 										getglobal("VCB_BF_CF_FRAME_BGOpaSliderText"):SetText("Background Opacity")
-										getglobal("VCB_BF_CF_FRAME_BGOpaSliderLow"):SetText("1")
-										getglobal("VCB_BF_CF_FRAME_BGOpaSliderHigh"):SetText("10")
+										getglobal("VCB_BF_CF_FRAME_BGOpaSliderLow"):SetText("0")
+										getglobal("VCB_BF_CF_FRAME_BGOpaSliderHigh"):SetText("1.0")
 									</OnLoad>
 									<OnValueChanged>
 										if VCB_IS_LOADED then
@@ -3142,7 +3170,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										Powa_OpenColorPicker();
+										VCB_BF_OpenColorPicker(this);
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -3206,7 +3234,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										Powa_OpenColorPicker();
+										VCB_BF_OpenColorPicker(this);
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -3451,7 +3479,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										Powa_OpenColorPicker();
+										VCB_BF_OpenColorPicker(this);
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -3515,7 +3543,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										Powa_OpenColorPicker();
+										VCB_BF_OpenColorPicker(this);
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -3813,7 +3841,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										Powa_OpenColorPicker();
+										VCB_BF_OpenColorPicker(this);
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -4081,7 +4109,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										Powa_OpenColorPicker();
+										VCB_BF_OpenColorPicker(this);
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -4265,7 +4293,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										Powa_OpenColorPicker();
+										VCB_BF_OpenColorPicker(this);
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -4329,7 +4357,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										Powa_OpenColorPicker();
+										VCB_BF_OpenColorPicker(this);
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -4569,7 +4597,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										Powa_OpenColorPicker();
+										VCB_BF_OpenColorPicker(this);
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -4957,7 +4985,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										Powa_OpenColorPicker();
+										VCB_BF_OpenColorPicker(this);
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -5021,7 +5049,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										Powa_OpenColorPicker();
+										VCB_BF_OpenColorPicker(this);
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -5261,7 +5289,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										Powa_OpenColorPicker();
+										VCB_BF_OpenColorPicker(this);
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -5532,7 +5560,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										Powa_OpenColorPicker();
+										VCB_BF_OpenColorPicker(this);
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -5716,7 +5744,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										Powa_OpenColorPicker();
+										VCB_BF_OpenColorPicker(this);
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -5780,7 +5808,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										Powa_OpenColorPicker();
+										VCB_BF_OpenColorPicker(this);
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
