@@ -5770,9 +5770,228 @@
 						<AbsValue val="32" />
 					</EdgeSize>
 				</Backdrop>
-				<Layers>
-					
-				</Layers>
+				<Frames>
+					<Frame name="VCB_BF_ABOUT_FRAME1">
+						<Size>
+							<AbsDimension x="580" y="60"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOPLEFT" relativeTo="VCB_BF_ABOUT_FRAME" relativePoint="TOPLEFT">
+								<Offset>
+									<AbsDimension x="15" y="-30"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+							<BackgroundInsets>
+								<AbsInset left="4" right="4" top="4" bottom="4" />
+							</BackgroundInsets>
+							<TileSize>
+								<AbsValue val="16" />
+							</TileSize>
+							<EdgeSize>
+								<AbsValue val="16" />
+							</EdgeSize>
+							<Color r="0" g="0" b="0" a="0.5"/>
+						</Backdrop>
+						<Layers>
+							<Layer>
+								<FontString name="$parent_FONT" inherits="GameFontNormal" text="What is VCB?" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="580" y="16" />
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="5" y="15" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="$parent_FONT2" inherits="GameFontDisable" text="Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. The AddOn provides a lot functions to customize it to your tastes and adds a lot of helpful functions for a better overview, which is its purpose in the first place anyway." justifyH="LEFT">
+									<Size>
+										<AbsDimension x="560" y="50" />
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="10" y="-5" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+					</Frame>
+					<Frame name="VCB_BF_ABOUT_FRAME2">
+						<Size>
+							<AbsDimension x="580" y="50"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_ABOUT_FRAME1" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-30"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+							<BackgroundInsets>
+								<AbsInset left="4" right="4" top="4" bottom="4" />
+							</BackgroundInsets>
+							<TileSize>
+								<AbsValue val="16" />
+							</TileSize>
+							<EdgeSize>
+								<AbsValue val="16" />
+							</EdgeSize>
+							<Color r="0" g="0" b="0" a="0.5"/>
+						</Backdrop>
+						<Layers>
+							<Layer>
+								<FontString name="$parent_FONT" inherits="GameFontNormal" text="Who created VCB?" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="580" y="16" />
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="5" y="15" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="$parent_FONT2" inherits="GameFontDisable" text="VCB was created by Shino (Albea) &lt;Synced&gt; who developed the AddOn on Kronos (Twinstar.cz). He is formally known as Geigerkind in the Twinstar community." justifyH="LEFT">
+									<Size>
+										<AbsDimension x="560" y="40" />
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="10" y="-5" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+					</Frame>
+					<Frame name="VCB_BF_ABOUT_FRAME3">
+						<Size>
+							<AbsDimension x="580" y="60"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_ABOUT_FRAME2" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-30"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+							<BackgroundInsets>
+								<AbsInset left="4" right="4" top="4" bottom="4" />
+							</BackgroundInsets>
+							<TileSize>
+								<AbsValue val="16" />
+							</TileSize>
+							<EdgeSize>
+								<AbsValue val="16" />
+							</EdgeSize>
+							<Color r="0" g="0" b="0" a="0.5"/>
+						</Backdrop>
+						<Layers>
+							<Layer>
+								<FontString name="$parent_FONT" inherits="GameFontNormal" text="Special thanks to:" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="580" y="16" />
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="5" y="15" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="$parent_FONT2" inherits="GameFontDisable" text="Flynn (Twinstar AddOn Master) - Thanks for helping me in the beginning. &#xA;Schaka (Author of Questie) - Thanks for helping me in the beginning. &#xA;Sinsthar (Author of PowerAuras) - You kinda inspired me to create an interface." justifyH="LEFT">
+									<Size>
+										<AbsDimension x="560" y="50" />
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="10" y="-5" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+					</Frame>
+					<Frame name="VCB_BF_ABOUT_FRAME4">
+						<Size>
+							<AbsDimension x="580" y="60"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_ABOUT_FRAME3" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="-30"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Backdrop bgFile="Interface\Tooltips\UI-Tooltip-Background" edgeFile="Interface\Tooltips\UI-Tooltip-Border" tile="true">
+							<BackgroundInsets>
+								<AbsInset left="4" right="4" top="4" bottom="4" />
+							</BackgroundInsets>
+							<TileSize>
+								<AbsValue val="16" />
+							</TileSize>
+							<EdgeSize>
+								<AbsValue val="16" />
+							</EdgeSize>
+							<Color r="0" g="0" b="0" a="0.5"/>
+						</Backdrop>
+						<Layers>
+							<Layer>
+								<FontString name="$parent_FONT" inherits="GameFontNormal" text="Thanks for supporting!" justifyH="LEFT">
+									<Size>
+										<AbsDimension x="580" y="16" />
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="5" y="15" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="$parent_FONT2" inherits="GameFontDisable" text="Moosic &lt;Synced&gt; - Tested the AddOn &#xA;Fender &lt;Synced&gt; - Feedback early on&#xA;Areina &lt;Synced&gt; - Helped phrasing this^^" justifyH="LEFT" justifyV="TOP">
+									<Size>
+										<AbsDimension x="280" y="50" />
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="10" y="-10" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+								<FontString name="$parent_FONT2" inherits="GameFontDisable" text="Dopefish &lt;Arcanum&gt; - Feedback early on &#xA;Helvete &lt;NOPE&gt; - Feedback early on" justifyH="LEFT" justifyV="TOP">
+									<Size>
+										<AbsDimension x="270" y="50" />
+									</Size>
+									<Anchors>
+										<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+											<Offset>
+												<AbsDimension x="290" y="-10" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+					</Frame>
+				</Frames>
 			</Frame>
 		</Frames>
 	</Frame>
