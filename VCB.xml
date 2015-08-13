@@ -2539,7 +2539,7 @@
 					</Frame>
 					<Frame name="VCB_BF_CF_FRAME_BF_FRAME">
 						<Size>
-							<AbsDimension x="580" y="160"/>
+							<AbsDimension x="580" y="195"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_CI_FRAME" relativePoint="BOTTOM">
@@ -2696,14 +2696,14 @@
 								<Anchors>
 									<Anchor point="TOPLEFT" relativeTo="VCB_BF_CF_FRAME_BF_FRAME" relativePoint="TOPLEFT">
 										<Offset>
-											<AbsDimension x="10" y="-65"/>
+											<AbsDimension x="10" y="-62"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
 								<Scripts>
 									<OnLoad>
 										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON1Text"):SetText("Invert buff order")
+										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON1Text"):SetText("Invert order")
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CF_FRAME_INVERTBUTTON()
@@ -2715,9 +2715,9 @@
 									<AbsDimension x="30" y="30"/>
 								</Size>
 								<Anchors>
-									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_CHECKBUTTON1" relativePoint="BOTTOM">
+									<Anchor point="LEFT" relativeTo="VCB_BF_CF_FRAME_CHECKBUTTON1" relativePoint="RIGHT">
 										<Offset>
-											<AbsDimension x="0" y="0"/>
+											<AbsDimension x="60" y="0"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -2731,14 +2731,35 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
+							<CheckButton name="VCB_BF_CF_FRAME_CHECKBUTTON_CBG" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_CHECKBUTTON1" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="3"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = "Check this to invert the buff order."
+										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_CBGText"):SetText("Use custom background")
+									</OnLoad>
+									<OnClick>
+										VCB_BF_CF_FRAME_USE_CUSTOM_BACKGROUND()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
 							<CheckButton name="VCB_BF_CF_FRAME_CHECKBUTTON_ORDER" inherits="VCB_BF_CheckTemplate">
 								<Size>
 									<AbsDimension x="30" y="30"/>
 								</Size>
 								<Anchors>
-									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_CHECKBUTTON4" relativePoint="BOTTOM">
+									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_CHECKBUTTON_CBG" relativePoint="BOTTOM">
 										<Offset>
-											<AbsDimension x="0" y="0"/>
+											<AbsDimension x="0" y="3"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -2832,6 +2853,34 @@
 									<OnValueChanged>
 										if VCB_IS_LOADED then
 											VCB_BF_CF_FRAME_NumPerRowSliderChange(this)
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							<Slider name="VCB_BF_CF_FRAME_BackdropSlider" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="155" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_NumPerRowSlider" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-30" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = "Move this to change the amount."
+										this:SetMinMaxValues(1,3)
+										this:SetValue(1)
+										this:SetValueStep(1)
+										getglobal("VCB_BF_CF_FRAME_BackdropSliderText"):SetText("Background")
+										getglobal("VCB_BF_CF_FRAME_BackdropSliderLow"):SetText("1")
+										getglobal("VCB_BF_CF_FRAME_BackdropSliderHigh"):SetText("3")
+									</OnLoad>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_CF_FRAME_BackdropSliderChange(this)
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -2940,6 +2989,82 @@
 								</Scripts>
 								<FontString inherits="ChatFontNormal" />
 							</EditBox>
+							<EditBox name="VCB_BF_CF_FRAME_EDITBOX_BACKGROUND" letters="200">
+								<Size x="130" y="36" />
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_EDITBOX_BORDER" relativePoint="BOTTOM">
+										<Offset x="0" y="-13" />
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer level="BACKGROUND">
+										<FontString name="$parentFont" inherits="GameFontNormalSmall" text="Custom background path:">
+											<Size>
+												<AbsDimension x="140" y="20" />
+											</Size>
+											<Anchors>
+												<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="TOP">
+													<Offset>
+														<AbsDimension x="0" y="-8" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Left">
+											<Size x="90" y="36" />
+											<Anchors>
+												<Anchor point="LEFT">
+													<Offset x="-20" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0" right="0.2" top="0" bottom="1.0"/>
+										</Texture>
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Right">
+											<Size x="90" y="36" />
+											<Anchors>
+												<Anchor point="RIGHT">
+													<Offset x="15" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0.7" right="1.0" top="0" bottom="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnTextChanged>
+										VCB_BF_CF_FRAME_EDITBOX_BACKGROUND_CHANGE(this)
+									</OnTextChanged>
+								</Scripts>
+								<FontString inherits="ChatFontNormal" />
+							</EditBox>
+							<Slider name="VCB_BF_CF_FRAME_BorderOpaSlider" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="155" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_CHECKBUTTON_ORDER" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="70" y="-14" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = "Move this to change the amount."
+										this:SetMinMaxValues(0,1.0)
+										this:SetValue(0.5)
+										this:SetValueStep(0.1)
+										getglobal("VCB_BF_CF_FRAME_BorderOpaSliderText"):SetText("Border Opacity")
+										getglobal("VCB_BF_CF_FRAME_BorderOpaSliderLow"):SetText("0")
+										getglobal("VCB_BF_CF_FRAME_BorderOpaSliderHigh"):SetText("1.0")
+									</OnLoad>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_CF_FRAME_BorderOpaSliderChange(this)
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
 						</Frames>
 					</Frame>
 					<Button name="VCB_BF_CF_FRAME_previous_page">

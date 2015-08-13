@@ -25,6 +25,10 @@ VCB_ICON_ARRAY[1] = "icon"
 VCB_BORDER_ARRAY = {}
 VCB_BORDER_ARRAY[1] = "Interface\\Tooltips\\UI-Tooltip-Border.tga"
 VCB_BORDER_ARRAY[2] = "Interface\\DialogFrame\\UI-DialogBox-Border.tga"
+VCB_BACKGROUND_ARRAY = {}
+VCB_BACKGROUND_ARRAY[1] = "Interface\\Tooltips\\UI-Tooltip-Background.tga"
+VCB_BACKGROUND_ARRAY[2] = "Interface\\DialogFrame\\UI-DialogBox-Background.tga"
+VCB_BACKGROUND_ARRAY[3] = "Interface\\CHARACTERFRAME\\UI-Party-Background.tga"
 
 --[[
 -- VCB_OnLoad()
@@ -84,6 +88,9 @@ function VCB_OnEvent(event)
 				CF_BF_border = 1,
 				CF_BF_customborder = false,
 				CF_BF_customborderpath = "",
+				CF_BF_background = 1,
+				CF_BF_custombackground = false,
+				CF_BF_custombackgroundpath = "",
 			}
 		end
 		if VCB_BF_LOCKED == nil then
@@ -95,8 +102,9 @@ function VCB_OnEvent(event)
 		if Banned_Buffs == nil then
 			Banned_Buffs = {}
 		end
-
-		--VCB_SAVE["CF_icon_border"] = true
+		
+		--VCB_SAVE["CF_BF_custombackground"] = false
+		--VCB_SAVE["CF_BF_custombackgroundpath"] = ""
 		
 		VCB_BF_CONSOLIDATED_BUFFFRAME:ClearAllPoints()
 		if VCB_SAVE["CF_BF_anchor"] == 1 then
@@ -120,9 +128,17 @@ function VCB_OnEvent(event)
 		VCB_BF_CONSOLIDATED_ICONIcon:SetTexture("Interface\\AddOns\\VCB\\images\\"..VCB_SAVE["CF_icon_texture"]..".tga")
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop(nil)
 		if VCB_SAVE["CF_BF_customborder"] then
-			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background.tga", edgeFile=VCB_SAVE["CF_BF_customborderpath"], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+			if VCB_SAVE["CF_BF_custombackground"] then
+				VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_SAVE["CF_BF_custombackgroundpath"], edgeFile=VCB_SAVE["CF_BF_customborderpath"], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+			else
+				VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_BACKGROUND_ARRAY[VCB_SAVE["CF_BF_background"]], edgeFile=VCB_SAVE["CF_BF_customborderpath"], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+			end
 		else
-			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background.tga", edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+			if VCB_SAVE["CF_BF_custombackground"] then
+				VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_SAVE["CF_BF_custombackgroundpath"], edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+			else
+				VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_BACKGROUND_ARRAY[VCB_SAVE["CF_BF_background"]], edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+			end
 		end
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
@@ -303,6 +319,12 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON4"):SetChecked(VCB_SAVE["CF_BF_customborder"])
 		getglobal("VCB_BF_CF_FRAME_EDITBOX_BORDER"):SetText(VCB_SAVE["CF_BF_customborderpath"])
 		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_BORDER"):SetChecked(VCB_SAVE["CF_icon_border"])
+		getglobal("VCB_BF_CF_FRAME_BackdropSlider"):SetValue(VCB_SAVE["CF_BF_background"])
+		getglobal("VCB_BF_CF_FRAME_BackdropSliderText"):SetText("Background: "..VCB_SAVE["CF_BF_background"])
+		getglobal("VCB_BF_CF_FRAME_BorderOpaSlider"):SetValue(VCB_SAVE["CF_BF_borderopacity"])
+		getglobal("VCB_BF_CF_FRAME_BorderOpaSliderText"):SetText("Border opacity: "..VCB_SAVE["CF_BF_borderopacity"])
+		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_CBG"):SetChecked(VCB_SAVE["CF_BF_custombackground"])
+		getglobal("VCB_BF_CF_FRAME_EDITBOX_BACKGROUND"):SetText(VCB_SAVE["CF_BF_custombackgroundpath"])
 	end
 end
 
@@ -693,20 +715,55 @@ end
 function VCB_BF_CF_FRAME_BFBorderSliderChange(obj)
 	VCB_SAVE["CF_BF_border"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText("Border: "..VCB_SAVE["CF_BF_border"])
-	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop(nil)
-	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background.tga", edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
-	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
-	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
+	if VCB_SAVE["CF_BF_customborder"] == false then
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop(nil)
+		if VCB_SAVE["CF_BF_custombackground"] then
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_SAVE["CF_BF_custombackgroundpath"], edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		else
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_BACKGROUND_ARRAY[VCB_SAVE["CF_BF_background"]], edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		end
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
+	end
 end
 
 function VCB_BF_CF_FRAME_USE_CUSTOM_BORDER()
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop(nil)
 	if VCB_SAVE["CF_BF_customborder"] then
 		VCB_SAVE["CF_BF_customborder"] = false
-		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background.tga", edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		if VCB_SAVE["CF_BF_custombackground"] then
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_SAVE["CF_BF_custombackgroundpath"], edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		else
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_BACKGROUND_ARRAY[VCB_SAVE["CF_BF_background"]], edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		end
 	else
 		VCB_SAVE["CF_BF_customborder"] = true
-		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background.tga", edgeFile=VCB_SAVE["CF_BF_customborderpath"], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		if VCB_SAVE["CF_BF_custombackground"] then
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_SAVE["CF_BF_custombackgroundpath"], edgeFile=VCB_SAVE["CF_BF_customborderpath"], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		else
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_BACKGROUND_ARRAY[VCB_SAVE["CF_BF_background"]], edgeFile=VCB_SAVE["CF_BF_customborderpath"], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		end
+	end
+	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
+	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
+end
+
+function VCB_BF_CF_FRAME_USE_CUSTOM_BACKGROUND()
+	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop(nil)
+	if VCB_SAVE["CF_BF_custombackground"] then
+		VCB_SAVE["CF_BF_custombackground"] = false
+		if VCB_SAVE["CF_BF_customborder"] then
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_BACKGROUND_ARRAY[VCB_SAVE["CF_BF_background"]], edgeFile=VCB_SAVE["CF_BF_customborderpath"], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		else
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_BACKGROUND_ARRAY[VCB_SAVE["CF_BF_background"]], edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		end
+	else
+		VCB_SAVE["CF_BF_custombackground"] = true
+		if VCB_SAVE["CF_BF_customborder"] then
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_SAVE["CF_BF_custombackgroundpath"], edgeFile=VCB_SAVE["CF_BF_customborderpath"], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		else
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_SAVE["CF_BF_custombackgroundpath"], edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		end
 	end
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
@@ -716,7 +773,60 @@ function VCB_BF_CF_FRAME_EDITBOX_BORDER_CHANGE(obj)
 	VCB_SAVE["CF_BF_customborderpath"] = obj:GetText()
 	if VCB_SAVE["CF_BF_customborder"] then
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop(nil)
-		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background.tga", edgeFile=VCB_SAVE["CF_BF_customborderpath"], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		if VCB_SAVE["CF_BF_custombackground"] then
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_SAVE["CF_BF_custombackgroundpath"], edgeFile=VCB_SAVE["CF_BF_customborderpath"], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		else
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_BACKGROUND_ARRAY[VCB_SAVE["CF_BF_background"]], edgeFile=VCB_SAVE["CF_BF_customborderpath"], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		end
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
+	end
+end
+
+function VCB_BF_CF_FRAME_EDITBOX_BACKGROUND_CHANGE(obj)
+	VCB_SAVE["CF_BF_customborderpath"] = obj:GetText()
+	if VCB_SAVE["CF_BF_custombackground"] then
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop(nil)
+		if VCB_SAVE["CF_BF_customborder"] then
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_SAVE["CF_BF_custombackgroundpath"], edgeFile=VCB_SAVE["CF_BF_customborderpath"], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		else
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_SAVE["CF_BF_custombackgroundpath"], edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		end
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
+	end
+end
+
+function VCB_BF_CF_FRAME_BackdropSliderChange(obj)
+	VCB_SAVE["CF_BF_background"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Background: "..VCB_SAVE["CF_BF_background"])
+	if VCB_SAVE["CF_BF_custombackground"] == false then
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop(nil)
+		if VCB_SAVE["CF_BF_customborder"] then
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_BACKGROUND_ARRAY[VCB_SAVE["CF_BF_background"]], edgeFile=VCB_SAVE["CF_BF_customborderpath"], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		else
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_BACKGROUND_ARRAY[VCB_SAVE["CF_BF_background"]], edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		end
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
+	end
+end
+
+function VCB_BF_CF_FRAME_BorderOpaSliderChange(obj)
+	VCB_SAVE["CF_BF_borderopacity"] = string.format("%.1f", obj:GetValue())
+	getglobal(obj:GetName().."Text"):SetText("Border opacity: "..VCB_SAVE["CF_BF_borderopacity"])
+	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
+end
+
+function VCB_BF_CF_FRAME_EDITBOX_BACKGROUND_CHANGE(obj)
+	VCB_SAVE["CF_BF_custombackgroundpath"] = obj:GetText()
+	if VCB_SAVE["CF_BF_custombackground"] then
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop(nil)
+		if VCB_SAVE["CF_BF_customborder"] then
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_SAVE["CF_BF_custombackgroundpath"], edgeFile=VCB_SAVE["CF_BF_customborderpath"], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		else
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_SAVE["CF_BF_custombackgroundpath"], edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		end
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
 	end
