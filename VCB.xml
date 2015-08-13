@@ -2320,7 +2320,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										VCB_BF_OpenColorPicker(this, "CF_icon", "VCB_BF_CONSOLIDATED_ICONCount", "font");
+										VCB_BF_OpenColorPicker(this, "CF_icon_", "VCB_BF_CONSOLIDATED_ICONCount", "font");
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -2590,7 +2590,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										VCB_BF_OpenColorPicker(this);
+										VCB_BF_OpenColorPicker(this, "CF_BF_border", "VCB_BF_CONSOLIDATED_BUFFFRAME", "border");
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -2654,12 +2654,12 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										VCB_BF_OpenColorPicker(this);
+										VCB_BF_OpenColorPicker(this, "CF_BF_bg", "VCB_BF_CONSOLIDATED_BUFFFRAME", "bg");
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText("Test", nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -2706,7 +2706,7 @@
 										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON4Text"):SetText("Use custom border")
 									</OnLoad>
 									<OnClick>
-										VCB_BF_CF_FRAME_INVERTBUTTON()
+										VCB_BF_CF_FRAME_USE_CUSTOM_BORDER()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -2857,16 +2857,16 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = "Move this to change the amount."
-										this:SetMinMaxValues(1,10)
+										this:SetMinMaxValues(1,2)
 										this:SetValue(5)
 										this:SetValueStep(1)
 										getglobal("VCB_BF_CF_FRAME_BFBorderSliderText"):SetText("Border")
 										getglobal("VCB_BF_CF_FRAME_BFBorderSliderLow"):SetText("1")
-										getglobal("VCB_BF_CF_FRAME_BFBorderSliderHigh"):SetText("10")
+										getglobal("VCB_BF_CF_FRAME_BFBorderSliderHigh"):SetText("2")
 									</OnLoad>
 									<OnValueChanged>
 										if VCB_IS_LOADED then
-											VCB_BF_CF_FRAME_BGOpaSliderChange(this)
+											VCB_BF_CF_FRAME_BFBorderSliderChange(this)
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -2879,8 +2879,8 @@
 									</Anchor>
 								</Anchors>
 								<Layers>
-									<Layer>
-										<FontString name="VCB_BF_CF_FRAME_FONT4" inherits="GameFontNormalSmall" text="Custom border path:">
+									<Layer level="BACKGROUND">
+										<FontString name="VCB_BF_CF_FRAME_EDITBOX_BORDER_FONT4" inherits="GameFontNormalSmall" text="Custom border path:">
 											<Size>
 												<AbsDimension x="130" y="20" />
 											</Size>
@@ -2892,8 +2892,6 @@
 												</Anchor>
 											</Anchors>
 										</FontString>
-									</Layer>
-									<Layer level="BACKGROUND">
 										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Left">
 											<Size x="90" y="36" />
 											<Anchors>
@@ -2914,6 +2912,11 @@
 										</Texture>
 									</Layer>
 								</Layers>
+								<Scripts>
+									<OnTextChanged>
+										VCB_BF_CF_FRAME_EDITBOX_BORDER_CHANGE(this)
+									</OnTextChanged>
+								</Scripts>
 								<FontString inherits="ChatFontNormal" />
 							</EditBox>
 						</Frames>

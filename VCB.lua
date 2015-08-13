@@ -22,6 +22,9 @@ VCB_BF_COLOR_TAR = nil
 VCB_BF_COLOR_TYPE = nil
 VCB_ICON_ARRAY = {}
 VCB_ICON_ARRAY[1] = "icon"
+VCB_BORDER_ARRAY = {}
+VCB_BORDER_ARRAY[1] = "Interface\\Tooltips\\UI-Tooltip-Border.tga"
+VCB_BORDER_ARRAY[2] = "Interface\\DialogFrame\\UI-DialogBox-Border.tga"
 
 --[[
 -- VCB_OnLoad()
@@ -57,22 +60,29 @@ function VCB_OnEvent(event)
 				Timer_font = "FRIZQT__.ttf",
 				Timer_alpha = 1.0,
 				Timer_border = false,
-				CF_anchor = 1,
-				CF_scale = 1.0,
-				CF_invert = false,
-				CF_numperrow = 5,
 				CF_icon_color_r = 1,
 				CF_icon_color_g = 1,
 				CF_icon_color_b = 1,
-				CF_icon_fontsize = 10,
+				CF_icon_fontsize = 13,
 				CF_icon_font = "FRIZQT__.ttf",
 				CF_icon_opacity = 1.0,
 				CF_icon_fontopacity = 1.0,
 				CF_icon_texture = "icon",
-				CF_icon_bgopacity = 1.0,
-				CF_icon_bgcolor_r = 0,
-				CF_icon_bgcolor_g = 0,
-				CF_icon_bgcolor_b = 0,
+				CF_BF_anchor = 1,
+				CF_BF_scale = 1.0,
+				CF_BF_invert = false,
+				CF_BF_numperrow = 5,
+				CF_BF_bgopacity = 1.0,
+				CF_BF_bgcolor_r = 0,
+				CF_BF_bgcolor_g = 0,
+				CF_BF_bgcolor_b = 0,
+				CF_BF_borderopacity = 1.0,
+				CF_BF_bordercolor_r = 1,
+				CF_BF_bordercolor_g = 1,
+				CF_BF_bordercolor_b = 1,
+				CF_BF_border = 1,
+				CF_BF_customborder = false,
+				CF_BF_customborderpath = "",
 			}
 		end
 		if VCB_BF_LOCKED == nil then
@@ -84,29 +94,15 @@ function VCB_OnEvent(event)
 		if Banned_Buffs == nil then
 			Banned_Buffs = {}
 		end
-		--VCB_SAVE["Timer_alpha"] = 1.0
-		--VCB_SAVE["Timer_border"] = false
-		--VCB_SAVE["CF_anchor"] = 1
-		--VCB_SAVE["CF_scale"] = 1.0
-		--VCB_SAVE["CF_invert"] = false
-		--VCB_SAVE["CF_numperrow"] = 5
-		--VCB_SAVE["CF_icon_color_r"] = 1
-		--VCB_SAVE["CF_icon_color_g"] = 1
-		--VCB_SAVE["CF_icon_color_b"] = 1
-		--VCB_SAVE["CF_icon_font"] = "FRIZQT__.ttf"
-		--VCB_SAVE["CF_icon_fontopactiy"] = 1
-		--VCB_SAVE["CF_icon_texture"] = "icon"
-		VCB_SAVE["CF_icon_bgopacity"] = 1.0
-		VCB_SAVE["CF_icon_bgcolor_r"] = 0
-		VCB_SAVE["CF_icon_bgcolor_g"] = 0
-		VCB_SAVE["CF_icon_bgcolor_b"] = 0
+		--VCB_SAVE["CF_BF_customborder"] = false
+		--VCB_SAVE["CF_BF_customborderpath"] = ""
 		
 		VCB_BF_CONSOLIDATED_BUFFFRAME:ClearAllPoints()
-		if VCB_SAVE["CF_anchor"] == 1 then
+		if VCB_SAVE["CF_BF_anchor"] == 1 then
 			VCB_BF_CONSOLIDATED_BUFFFRAME:SetPoint("TOP", VCB_BF_CONSOLIDATED_ICON, "BOTTOM", 0, 0)
-		elseif VCB_SAVE["CF_anchor"] == 2 then
+		elseif VCB_SAVE["CF_BF_anchor"] == 2 then
 			VCB_BF_CONSOLIDATED_BUFFFRAME:SetPoint("LEFT", VCB_BF_CONSOLIDATED_ICON, "RIGHT", 0, 0)
-		elseif VCB_SAVE["CF_anchor"] == 3 then
+		elseif VCB_SAVE["CF_BF_anchor"] == 3 then
 			VCB_BF_CONSOLIDATED_BUFFFRAME:SetPoint("BOTTOM", VCB_BF_CONSOLIDATED_ICON, "TOP", 0, 0)
 		else
 			VCB_BF_CONSOLIDATED_BUFFFRAME:SetPoint("RIGHT", VCB_BF_CONSOLIDATED_ICON, "LEFT", 0, 0)
@@ -117,7 +113,14 @@ function VCB_OnEvent(event)
 		VCB_BF_CONSOLIDATED_ICONCount:SetTextColor(VCB_SAVE["CF_icon_color_r"], VCB_SAVE["CF_icon_color_g"], VCB_SAVE["CF_icon_color_b"], VCB_SAVE["CF_icon_fontopacity"])
 		VCB_BF_CONSOLIDATED_ICONIcon:SetTexture(nil)
 		VCB_BF_CONSOLIDATED_ICONIcon:SetTexture("Interface\\AddOns\\VCB\\images\\"..VCB_SAVE["CF_icon_texture"]..".tga")
-		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_icon_bgcolor_r"],VCB_SAVE["CF_icon_bgcolor_g"],VCB_SAVE["CF_icon_bgcolor_b"],VCB_SAVE["CF_icon_bgopacity"])
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop(nil)
+		if VCB_SAVE["CF_BF_customborder"] then
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background.tga", edgeFile=VCB_SAVE["CF_BF_customborderpath"], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		else
+			VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background.tga", edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		end
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
 		VCB_BF_Lock(VCB_BF_LOCKED)
 		VCB_IS_LOADED = true
 	end	
@@ -259,13 +262,13 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_TIMER_FRAME_AlphaSlider"):SetValue(VCB_SAVE["Timer_alpha"])
 		getglobal("VCB_BF_TIMER_FRAME_AlphaSliderText"):SetText("Alpha: "..VCB_SAVE["Timer_alpha"])
 	elseif frame == "VCB_BF_CF_FRAME" then	
-		getglobal("VCB_BF_CF_FRAME_AnchorSlider"):SetValue(VCB_SAVE["CF_anchor"])
-		getglobal("VCB_BF_CF_FRAME_AnchorSliderText"):SetText("Anchor: "..VCB_ANCHOR_ARRAY[VCB_SAVE["CF_anchor"]])
-		getglobal("VCB_BF_CF_FRAME_ScaleSlider"):SetValue(VCB_SAVE["CF_scale"])
-		getglobal("VCB_BF_CF_FRAME_ScaleSliderText"):SetText("Scale: "..VCB_SAVE["CF_scale"])
-		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON1"):SetChecked(VCB_SAVE["CF_invert"])
-		getglobal("VCB_BF_CF_FRAME_NumPerRowSlider"):SetValue(VCB_SAVE["CF_numperrow"])
-		getglobal("VCB_BF_CF_FRAME_NumPerRowSliderText"):SetText("Buffs per row: "..VCB_SAVE["CF_numperrow"])
+		getglobal("VCB_BF_CF_FRAME_AnchorSlider"):SetValue(VCB_SAVE["CF_BF_anchor"])
+		getglobal("VCB_BF_CF_FRAME_AnchorSliderText"):SetText("Anchor: "..VCB_ANCHOR_ARRAY[VCB_SAVE["CF_BF_anchor"]])
+		getglobal("VCB_BF_CF_FRAME_ScaleSlider"):SetValue(VCB_SAVE["CF_BF_scale"])
+		getglobal("VCB_BF_CF_FRAME_ScaleSliderText"):SetText("Scale: "..VCB_SAVE["CF_BF_scale"])
+		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON1"):SetChecked(VCB_SAVE["CF_BF_invert"])
+		getglobal("VCB_BF_CF_FRAME_NumPerRowSlider"):SetValue(VCB_SAVE["CF_BF_numperrow"])
+		getglobal("VCB_BF_CF_FRAME_NumPerRowSliderText"):SetText("Buffs per row: "..VCB_SAVE["CF_BF_numperrow"])
 		getglobal("VCB_BF_CF_FRAME_ColorNormalTexture"):SetVertexColor(VCB_SAVE["CF_icon_color_r"], VCB_SAVE["CF_icon_color_g"], VCB_SAVE["CF_icon_color_b"])
 		getglobal("VCB_BF_CF_FRAME_Color_SwatchBg").r = VCB_SAVE["CF_icon_color_r"]
 		getglobal("VCB_BF_CF_FRAME_Color_SwatchBg").g = VCB_SAVE["CF_icon_color_g"]
@@ -280,8 +283,20 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_CF_FRAME_FontAlphaSliderText"):SetText("Font Opacity: "..VCB_SAVE["CF_icon_fontopacity"])
 		getglobal("VCB_BF_CF_FRAME_TextureSlider"):SetValue(VCB_Table_GetKeys(VCB_ICON_ARRAY, VCB_SAVE["CF_icon_texture"]))
 		getglobal("VCB_BF_CF_FRAME_TextureSliderText"):SetText("Texture: "..VCB_SAVE["CF_icon_texture"])
-		getglobal("VCB_BF_CF_FRAME_BGOpaSlider"):SetValue(VCB_SAVE["CF_icon_bgopacity"])
-		getglobal("VCB_BF_CF_FRAME_BGOpaSliderText"):SetText("Background opacity: "..VCB_SAVE["CF_icon_bgopacity"])
+		getglobal("VCB_BF_CF_FRAME_BGOpaSlider"):SetValue(VCB_SAVE["CF_BF_bgopacity"])
+		getglobal("VCB_BF_CF_FRAME_BGOpaSliderText"):SetText("Background opacity: "..VCB_SAVE["CF_BF_bgopacity"])
+		getglobal("VCB_BF_CF_FRAME_Color3NormalTexture"):SetVertexColor(VCB_SAVE["CF_BF_bgcolor_r"], VCB_SAVE["CF_BF_bgcolor_g"], VCB_SAVE["CF_BF_bgcolor_b"])
+		getglobal("VCB_BF_CF_FRAME_Color3_SwatchBg").r = VCB_SAVE["CF_BF_bgcolor_r"]
+		getglobal("VCB_BF_CF_FRAME_Color3_SwatchBg").g = VCB_SAVE["CF_BF_bgcolor_g"]
+		getglobal("VCB_BF_CF_FRAME_Color3_SwatchBg").b = VCB_SAVE["CF_BF_bgcolor_b"]
+		getglobal("VCB_BF_CF_FRAME_Color2NormalTexture"):SetVertexColor(VCB_SAVE["CF_BF_bordercolor_r"], VCB_SAVE["CF_BF_bordercolor_g"], VCB_SAVE["CF_BF_bordercolor_b"])
+		getglobal("VCB_BF_CF_FRAME_Color2_SwatchBg").r = VCB_SAVE["CF_BF_bordercolor_r"]
+		getglobal("VCB_BF_CF_FRAME_Color2_SwatchBg").g = VCB_SAVE["CF_BF_bordercolor_g"]
+		getglobal("VCB_BF_CF_FRAME_Color2_SwatchBg").b = VCB_SAVE["CF_BF_bordercolor_b"]
+		getglobal("VCB_BF_CF_FRAME_BFBorderSlider"):SetValue(VCB_SAVE["CF_BF_border"])
+		getglobal("VCB_BF_CF_FRAME_BFBorderSliderText"):SetText("Border: "..VCB_SAVE["CF_BF_border"])
+		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON4"):SetChecked(VCB_SAVE["CF_BF_customborder"])
+		getglobal("VCB_BF_CF_FRAME_EDITBOX_BORDER"):SetText(VCB_SAVE["CF_BF_customborderpath"])
 	end
 end
 
@@ -315,12 +330,16 @@ function VCB_BF_OptionsFrame_SetColor()
 	frame.g = g;
 	frame.b = b;
 
-	VCB_SAVE[VCB_BF_COLOR_VAR.."_color_r"] = r;
-	VCB_SAVE[VCB_BF_COLOR_VAR.."_color_g"] = g;
-	VCB_SAVE[VCB_BF_COLOR_VAR.."_color_b"] = b;
+	VCB_SAVE[VCB_BF_COLOR_VAR.."color_r"] = r;
+	VCB_SAVE[VCB_BF_COLOR_VAR.."color_g"] = g;
+	VCB_SAVE[VCB_BF_COLOR_VAR.."color_b"] = b;
 	
 	if VCB_BF_COLOR_TYPE == "font" then
-		getglobal(VCB_BF_COLOR_TAR):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."_fontopacity"]);
+		getglobal(VCB_BF_COLOR_TAR):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."fontopacity"]);
+	elseif VCB_BF_COLOR_TYPE=="bg" then
+		getglobal(VCB_BF_COLOR_TAR):SetBackdropColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opacity"])
+	elseif VCB_BF_COLOR_TYPE=="border" then
+		getglobal(VCB_BF_COLOR_TAR):SetBackdropBorderColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opacity"])
 	end
 end
 
@@ -337,7 +356,11 @@ function VCB_BF_OptionsFrame_CancelColor()
 	frame.b = b;
 
 	if VCB_BF_COLOR_TYPE == "font" then
-		getglobal(VCB_BF_COLOR_TAR):SetTextColor(r,g,b, 1);
+		getglobal(VCB_BF_COLOR_TAR):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."fontopacity"]);
+	elseif VCB_BF_COLOR_TYPE=="bg" then
+		getglobal(VCB_BF_COLOR_TAR):SetBackdropColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opacity"])
+	elseif VCB_BF_COLOR_TYPE=="border" then
+		getglobal(VCB_BF_COLOR_TAR):SetBackdropBorderColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opacity"])
 	end
 end
 
@@ -526,7 +549,7 @@ function VCB_BF_TIMER_FRAME_SizeSliderChange(obj)
 		for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
 			local p = 1
 			if getglobal(tname..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
-				p = VCB_SAVE["CF_scale"]
+				p = VCB_SAVE["CF_BF_scale"]
 			end
 			getglobal(tname..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], p*VCB_SAVE["Timer_fontsize"])
 		end
@@ -561,14 +584,14 @@ end
 ---------------------------------------START CONSOLIDATED FRAME-----------------------------------------------------------------------------------------------------------------
 
 function VCB_BF_CF_FRAME_AnchorSliderChange(obj)
-	VCB_SAVE["CF_anchor"] = obj:GetValue()
-	getglobal("VCB_BF_CF_FRAME_AnchorSliderText"):SetText("Anchor: "..VCB_ANCHOR_ARRAY[VCB_SAVE["CF_anchor"]])
+	VCB_SAVE["CF_BF_anchor"] = obj:GetValue()
+	getglobal("VCB_BF_CF_FRAME_AnchorSliderText"):SetText("Anchor: "..VCB_ANCHOR_ARRAY[VCB_SAVE["CF_BF_anchor"]])
 	VCB_BF_CONSOLIDATED_BUFFFRAME:ClearAllPoints()
-	if VCB_SAVE["CF_anchor"] == 1 then
+	if VCB_SAVE["CF_BF_anchor"] == 1 then
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetPoint("TOP", VCB_BF_CONSOLIDATED_ICON, "BOTTOM", 0, 0)
-	elseif VCB_SAVE["CF_anchor"] == 2 then
+	elseif VCB_SAVE["CF_BF_anchor"] == 2 then
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetPoint("LEFT", VCB_BF_CONSOLIDATED_ICON, "RIGHT", 0, 0)
-	elseif VCB_SAVE["CF_anchor"] == 3 then
+	elseif VCB_SAVE["CF_BF_anchor"] == 3 then
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetPoint("BOTTOM", VCB_BF_CONSOLIDATED_ICON, "TOP", 0, 0)
 	else
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetPoint("RIGHT", VCB_BF_CONSOLIDATED_ICON, "LEFT", 0, 0)
@@ -576,23 +599,23 @@ function VCB_BF_CF_FRAME_AnchorSliderChange(obj)
 end
 
 function VCB_BF_CF_FRAME_ScaleSliderChange(obj)
-	VCB_SAVE["CF_scale"] = string.format("%.1f", obj:GetValue())
-	getglobal("VCB_BF_CF_FRAME_ScaleSliderText"):SetText("Scale: "..VCB_SAVE["CF_scale"])
+	VCB_SAVE["CF_BF_scale"] = string.format("%.1f", obj:GetValue())
+	getglobal("VCB_BF_CF_FRAME_ScaleSliderText"):SetText("Scale: "..VCB_SAVE["CF_BF_scale"])
 	VCB_BF_RepositioningAndResizing()
 end
 
 function VCB_BF_CF_FRAME_INVERTBUTTON()
-	if VCB_SAVE["CF_invert"] then
-		VCB_SAVE["CF_invert"] = false
+	if VCB_SAVE["CF_BF_invert"] then
+		VCB_SAVE["CF_BF_invert"] = false
 	else
-		VCB_SAVE["CF_invert"] = true
+		VCB_SAVE["CF_BF_invert"] = true
 	end
 	VCB_BF_RepositioningAndResizing()
 end
 
 function VCB_BF_CF_FRAME_NumPerRowSliderChange(obj)
-	VCB_SAVE["CF_numperrow"] = obj:GetValue()
-	getglobal("VCB_BF_CF_FRAME_NumPerRowSliderText"):SetText("Buffs per row: "..VCB_SAVE["CF_numperrow"])
+	VCB_SAVE["CF_BF_numperrow"] = obj:GetValue()
+	getglobal("VCB_BF_CF_FRAME_NumPerRowSliderText"):SetText("Buffs per row: "..VCB_SAVE["CF_BF_numperrow"])
 	VCB_BF_RepositioningAndResizing()
 end
 
@@ -638,9 +661,41 @@ function VCB_BF_CF_FRAME_TextureSliderChange(obj)
 end
 
 function VCB_BF_CF_FRAME_BGOpaSliderChange(obj)
-	VCB_SAVE["CF_icon_bgopacity"] = string.format("%.1f", obj:GetValue())
-	getglobal(obj:GetName().."Text"):SetText("Background Opacity: "..VCB_SAVE["CF_icon_bgopacity"])
-	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_icon_bgcolor_r"],VCB_SAVE["CF_icon_bgcolor_g"],VCB_SAVE["CF_icon_bgcolor_b"],VCB_SAVE["CF_icon_bgopacity"])
+	VCB_SAVE["CF_BF_bgopacity"] = string.format("%.1f", obj:GetValue())
+	getglobal(obj:GetName().."Text"):SetText("Background Opacity: "..VCB_SAVE["CF_BF_bgopacity"])
+	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
+end
+
+function VCB_BF_CF_FRAME_BFBorderSliderChange(obj)
+	VCB_SAVE["CF_BF_border"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Border: "..VCB_SAVE["CF_BF_border"])
+	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop(nil)
+	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background.tga", edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
+	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
+end
+
+function VCB_BF_CF_FRAME_USE_CUSTOM_BORDER()
+	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop(nil)
+	if VCB_SAVE["CF_BF_customborder"] then
+		VCB_SAVE["CF_BF_customborder"] = false
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background.tga", edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+	else
+		VCB_SAVE["CF_BF_customborder"] = true
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background.tga", edgeFile=VCB_SAVE["CF_BF_customborderpath"], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+	end
+	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
+	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
+end
+
+function VCB_BF_CF_FRAME_EDITBOX_BORDER_CHANGE(obj)
+	VCB_SAVE["CF_BF_customborderpath"] = obj:GetText()
+	if VCB_SAVE["CF_BF_customborder"] then
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop(nil)
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile="Interface\\Tooltips\\UI-Tooltip-Background.tga", edgeFile=VCB_SAVE["CF_BF_customborderpath"], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
+	end
 end
 
 ---------------------------------------END CONSOLIDATED FRAME-----------------------------------------------------------------------------------------------------------------
