@@ -68,6 +68,7 @@ function VCB_OnEvent(event)
 				CF_icon_opacity = 1.0,
 				CF_icon_fontopacity = 1.0,
 				CF_icon_texture = "icon",
+				CF_icon_border = true,
 				CF_BF_anchor = 1,
 				CF_BF_scale = 1.0,
 				CF_BF_invert = false,
@@ -94,8 +95,8 @@ function VCB_OnEvent(event)
 		if Banned_Buffs == nil then
 			Banned_Buffs = {}
 		end
-		--VCB_SAVE["CF_BF_customborder"] = false
-		--VCB_SAVE["CF_BF_customborderpath"] = ""
+
+		--VCB_SAVE["CF_icon_border"] = true
 		
 		VCB_BF_CONSOLIDATED_BUFFFRAME:ClearAllPoints()
 		if VCB_SAVE["CF_BF_anchor"] == 1 then
@@ -109,7 +110,11 @@ function VCB_OnEvent(event)
 		end
 		
 		VCB_BF_CONSOLIDATED_ICON:SetAlpha(VCB_SAVE["CF_icon_opacity"])
-		VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
+		if VCB_SAVE["CF_icon_border"] then
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"], "OUTLINE")
+		else
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
+		end
 		VCB_BF_CONSOLIDATED_ICONCount:SetTextColor(VCB_SAVE["CF_icon_color_r"], VCB_SAVE["CF_icon_color_g"], VCB_SAVE["CF_icon_color_b"], VCB_SAVE["CF_icon_fontopacity"])
 		VCB_BF_CONSOLIDATED_ICONIcon:SetTexture(nil)
 		VCB_BF_CONSOLIDATED_ICONIcon:SetTexture("Interface\\AddOns\\VCB\\images\\"..VCB_SAVE["CF_icon_texture"]..".tga")
@@ -297,6 +302,7 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_CF_FRAME_BFBorderSliderText"):SetText("Border: "..VCB_SAVE["CF_BF_border"])
 		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON4"):SetChecked(VCB_SAVE["CF_BF_customborder"])
 		getglobal("VCB_BF_CF_FRAME_EDITBOX_BORDER"):SetText(VCB_SAVE["CF_BF_customborderpath"])
+		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_BORDER"):SetChecked(VCB_SAVE["CF_icon_border"])
 	end
 end
 
@@ -632,13 +638,31 @@ end
 function VCB_BF_CF_FRAME_SizeSliderChange(obj)
 	VCB_SAVE["CF_icon_fontsize"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText("Font size: "..VCB_SAVE["CF_icon_fontsize"])
-	VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
+	if VCB_SAVE["CF_icon_border"] then
+		VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"], "OUTLINE")
+	else
+		VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
+	end
 end
 
 function VCB_BF_CF_FRAME_FontSliderChange(obj)
 	VCB_SAVE["CF_icon_font"] = VCB_FONT_ARRAY[obj:GetValue()]
 	getglobal(obj:GetName().."Text"):SetText("Font: "..VCB_FONT_ARRAY[obj:GetValue()])
-	VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
+	if VCB_SAVE["CF_icon_border"] then
+		VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"], "OUTLINE")
+	else
+		VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
+	end
+end
+
+function VCB_BF_CF_FRAME_CHECKBUTTON_BORDER_CLICK()
+	if VCB_SAVE["CF_icon_border"] then
+		VCB_SAVE["CF_icon_border"] = false
+		VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
+	else
+		VCB_SAVE["CF_icon_border"] = true
+		VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"], "OUTLINE")
+	end
 end
 
 function VCB_BF_CF_FRAME_AlphaSliderChange(obj)

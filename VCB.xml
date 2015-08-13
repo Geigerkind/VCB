@@ -2374,6 +2374,27 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
+							<CheckButton name="VCB_BF_CF_FRAME_CHECKBUTTON_BORDER" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_CHECKBUTTON3" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = "Check this to invert the buff order."
+										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_BORDERText"):SetText("Enable font border")
+									</OnLoad>
+									<OnClick>
+										VCB_BF_CF_FRAME_CHECKBUTTON_BORDER_CLICK()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
 							<Slider name="VCB_BF_CF_FRAME_SizeSlider" inherits="VCB_BF_SliderTemplate">
 								<Size>
 									<AbsDimension x="155" y="16"/>
