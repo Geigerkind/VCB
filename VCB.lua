@@ -203,9 +203,9 @@ function VCB_OnEvent(event)
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon"):SetVertexColor(1,1,1)
 				end
 				if VCB_SAVE["CF_TIMER_border"] then
-					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_BF_scale"]*VCB_SAVE["CF_TIMER_fontsize"], "OUTLINE")
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"], "OUTLINE")
 				else
-					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_BF_scale"]*VCB_SAVE["CF_TIMER_fontsize"])
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"])
 				end
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetTextColor(VCB_SAVE["CF_TIMER_fontcolor_r"],VCB_SAVE["CF_TIMER_fontcolor_g"],VCB_SAVE["CF_TIMER_fontcolor_b"],VCB_SAVE["CF_TIMER_fontopacity"])
 			else
@@ -710,7 +710,7 @@ function VCB_BF_TIMER_FRAME_FontSliderChange(obj)
 	for cat, tname in pairs(VCB_BUTTONNAME) do
 		for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
 			if getglobal(tname..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
-				getglobal(tname..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_BF_scale"]*VCB_SAVE["CF_TIMER_fontsize"])
+				getglobal(tname..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"])
 			else
 				getglobal(tname..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"])
 			end
@@ -1067,7 +1067,7 @@ function VCB_BF_CF_FRAME_AuraTimerFontSizeSliderChange(obj)
 	getglobal(obj:GetName().."Text"):SetText("Font size: "..VCB_SAVE["CF_TIMER_fontsize"])
 	for i=0,31 do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
-			getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_BF_scale"]*VCB_SAVE["CF_TIMER_fontsize"])
+			getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"])
 		end
 	end
 end
