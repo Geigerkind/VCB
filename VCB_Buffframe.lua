@@ -181,7 +181,6 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 	if VCB_IS_LOADED then
 		VCB_BF_WEAPON_BUTTON_OnUpdate(2.0)
 		VCB_BF_RepositioningAndResizing()
-		buffDuration:SetAlpha(VCB_SAVE["Timer_alpha"])
 	end
 	end
 end
@@ -193,17 +192,15 @@ function VCB_BF_RepositioningAndResizing()
 		local button = getglobal("VCB_BF_BUFF_BUTTON"..i)
 		if (button.buffIndex or VCB_BF_DUMMY_MODE) then
 			local parent = button:GetParent()
-			local buffDuration = getglobal(button:GetName().."Duration");
+			local buttonDuration = getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration")
+			local buttonBorder = getglobal("VCB_BF_BUFF_BUTTON"..i.."Border")
+			local buttonIcon = getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon")
 			if parent == VCB_BF_BUFF_FRAME then
 				button:ClearAllPoints()
 				button:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", -34*a + floor(a/17)*17*34,-46*floor(a/17)) -- NUM ROWS?
 				button:SetWidth(32)
 				button:SetHeight(32)
-				if VCB_SAVE["Timer_border"] then
-					buffDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["Timer_fontsize"], "OUTLINE")
-				else
-					buffDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["Timer_fontsize"])
-				end
+				buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"])
 				a = a + 1
 			else
 				button:ClearAllPoints()
@@ -214,11 +211,32 @@ function VCB_BF_RepositioningAndResizing()
 				end
 				button:SetWidth(VCB_SAVE["CF_BF_scale"]*32)
 				button:SetHeight(VCB_SAVE["CF_BF_scale"]*32)
-				if VCB_SAVE["Timer_border"] then
-					buffDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_BF_scale"]*VCB_SAVE["Timer_fontsize"], "OUTLINE")
+				if VCB_SAVE["CF_TIMER_border"] then
+					buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_BF_scale"]*VCB_SAVE["CF_TIMER_fontsize"], "OUTLINE")
 				else
-					buffDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_BF_scale"]*VCB_SAVE["Timer_fontsize"])
+					buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_BF_scale"]*VCB_SAVE["CF_TIMER_fontsize"])
 				end
+				if VCB_SAVE["CF_AURA_enableborder"] then
+					if VCB_SAVE["CF_AURA_customborder"] then
+						buttonBorder:SetTexture(VCB_SAVE["CF_AURA_customborderpath"])
+					else
+						buttonBorder:SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["CF_AURA_border"]])
+					end
+				else
+					buttonBorder:SetTexture(nil)
+				end
+				buttonBorder:SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopactiy"])
+				if VCB_SAVE["CF_AURA_enablebgcolor"] then
+					buttonIcon:SetVertexColor(VCB_SAVE["CF_AURA_bgcolor_r"],VCB_SAVE["CF_AURA_bgcolor_g"],VCB_SAVE["CF_AURA_bgcolor_b"])
+				else
+					buttonIcon:SetVertexColor(1,1,1)
+				end
+				if VCB_SAVE["CF_TIMER_border"] then
+					buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_BF_scale"]*VCB_SAVE["CF_TIMER_fontsize"], "OUTLINE")
+				else
+					buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_BF_scale"]*VCB_SAVE["CF_TIMER_fontsize"])
+				end
+				buttonDuration:SetTextColor(VCB_SAVE["CF_TIMER_fontcolor_r"],VCB_SAVE["CF_TIMER_fontcolor_g"],VCB_SAVE["CF_TIMER_fontcolor_b"],VCB_SAVE["CF_TIMER_fontopacity"])
 				b = b + 1
 			end
 		else
