@@ -90,7 +90,7 @@ function VCB_BF_CreateBuffButtons()
 end
 
 function VCB_BF_BUFF_BUTTON_Update(button)
-	if (not VCB_BF_DUMMY_MODE) then
+	if (VCB_BF_DUMMY_MODE == false) then
 	local hackfix = false
 
 	local buffIndex, untilCancelled = GetPlayerBuff(button:GetID(), button.buffFilter);
@@ -153,9 +153,16 @@ function VCB_BF_BUFF_BUTTON_Update(button)
  		color.a=1
  	elseif(buffIndex >= 0) then
  		color = DebuffTypeColor["none"];
+		if VCB_IS_LOADED then
+			if VCB_SAVE["CF_AURA_enableborder"] and button.cat == "buff" then
+				color.r = VCB_SAVE["CF_AURA_bordercolor_r"]
+				color.g = VCB_SAVE["CF_AURA_bordercolor_g"]
+				color.b = VCB_SAVE["CF_AURA_bordercolor_b"]
+			end
+		end
  		color.a=1
  	else
- 		color = {r=0, g=0, b=0, a=0}
+		color = {r=0, g=0, b=0, a=0}
  	end
  	if ( debuffSlot ) then
  		debuffSlot:SetVertexColor(color.r, color.g, color.b, color.a);
@@ -493,8 +500,12 @@ function VCB_BF_DummyConfigMode_Enable()
 			local button = getglobal(templateName..i)
 			local icon = getglobal(templateName..i.."Icon")
 			local buffDuration = getglobal(templateName..i.."Duration")
+			local border = getglobal(templateName..i.."Border")
 			icon:SetTexture("Interface\\AddOns\\VCB\\images\\dummy.tga")
 			buffDuration:SetText(VCB_BF_GetDuration(10))
+			if cat == "buff" then
+				border:SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopacity"])
+			end
 			if i < 7 and cat == "buff" then
 				button:SetParent(VCB_BF_CONSOLIDATED_BUFFFRAME)
 			end

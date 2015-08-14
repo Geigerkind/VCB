@@ -3178,6 +3178,14 @@
 						</FontString>
 					</Layer>
 				</Layers>
+				<Scripts>
+					<OnShow>
+						VCB_BF_CONSOLIDATED_BUFFFRAME:Show()
+					</OnShow>
+					<OnHide>
+						VCB_BF_CONSOLIDATED_BUFFFRAME:Hide()
+					</OnHide>
+				</Scripts>
 				<Frames>
 					<Frame name="VCB_BF_CF_FRAME2_BUFF_FRAME">
 						<Size>
@@ -3221,7 +3229,7 @@
 										getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON1Text"):SetText("Enable border")
 									</OnLoad>
 									<OnClick>
-										VCB_BF_CF_FRAME_INVERTBUTTON()
+										VCB_BF_CF_FRAME2_ENABLEBORDER()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3319,7 +3327,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										VCB_BF_OpenColorPicker(this);
+										VCB_BF_OpenColorPicker(this, "CF_AURA_border", nil, "buffsborder");
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);

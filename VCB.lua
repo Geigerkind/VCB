@@ -62,26 +62,26 @@ function VCB_OnEvent(event)
 				Timer_round = false,
 				Timer_fontsize = 10, 
 				Timer_font = "FRIZQT__.ttf",
-				Timer_alpha = 1.0,
+				Timer_alpha = 1,
 				Timer_border = false,
 				CF_icon_color_r = 1,
 				CF_icon_color_g = 1,
 				CF_icon_color_b = 1,
 				CF_icon_fontsize = 13,
 				CF_icon_font = "FRIZQT__.ttf",
-				CF_icon_opacity = 1.0,
-				CF_icon_fontopacity = 1.0,
+				CF_icon_opacity = 1,
+				CF_icon_fontopacity = 1,
 				CF_icon_texture = "icon",
 				CF_icon_border = true,
 				CF_BF_anchor = 1,
-				CF_BF_scale = 1.0,
+				CF_BF_scale = 1,
 				CF_BF_invert = false,
 				CF_BF_numperrow = 5,
-				CF_BF_bgopacity = 1.0,
+				CF_BF_bgopacity = 1,
 				CF_BF_bgcolor_r = 0,
 				CF_BF_bgcolor_g = 0,
 				CF_BF_bgcolor_b = 0,
-				CF_BF_borderopacity = 1.0,
+				CF_BF_borderopacity = 1,
 				CF_BF_bordercolor_r = 1,
 				CF_BF_bordercolor_g = 1,
 				CF_BF_bordercolor_b = 1,
@@ -91,6 +91,11 @@ function VCB_OnEvent(event)
 				CF_BF_background = 1,
 				CF_BF_custombackground = false,
 				CF_BF_custombackgroundpath = "",
+				CF_AURA_enableborder = false,
+				CF_AURA_borderopacity = 1,
+				CF_AURA_bordercolor_r = 1,
+				CF_AURA_bordercolor_g = 1,
+				CF_AURA_bordercolor_b = 1,
 			}
 		end
 		if VCB_BF_LOCKED == nil then
@@ -105,6 +110,11 @@ function VCB_OnEvent(event)
 		
 		--VCB_SAVE["CF_BF_custombackground"] = false
 		--VCB_SAVE["CF_BF_custombackgroundpath"] = ""
+		--VCB_SAVE["CF_AURA_enableborder"] = false
+		--VCB_SAVE["CF_AURA_borderopacity"] = 1
+		--VCB_SAVE["CF_AURA_bordercolor_r"] = 1
+		--VCB_SAVE["CF_AURA_bordercolor_g"] = 1
+		--VCB_SAVE["CF_AURA_bordercolor_b"] = 1
 		
 		VCB_BF_CONSOLIDATED_BUFFFRAME:ClearAllPoints()
 		if VCB_SAVE["CF_BF_anchor"] == 1 then
@@ -138,6 +148,17 @@ function VCB_OnEvent(event)
 				VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_SAVE["CF_BF_custombackgroundpath"], edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
 			else
 				VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_BACKGROUND_ARRAY[VCB_SAVE["CF_BF_background"]], edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
+			end
+		end
+		if VCB_SAVE["CF_AURA_enableborder"] then
+			for i=0,31 do
+				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture("Interface\\Buttons\\UI-Debuff-Overlays.tga")
+				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopactiy"])
+			end
+		else
+			for i=0,31 do
+				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
+				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopactiy"])
 			end
 		end
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
@@ -325,6 +346,12 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_CF_FRAME_BorderOpaSliderText"):SetText("Border opacity: "..VCB_SAVE["CF_BF_borderopacity"])
 		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_CBG"):SetChecked(VCB_SAVE["CF_BF_custombackground"])
 		getglobal("VCB_BF_CF_FRAME_EDITBOX_BACKGROUND"):SetText(VCB_SAVE["CF_BF_custombackgroundpath"])
+	elseif frame == "VCB_BF_CF_FRAME2" then
+		getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON1"):SetChecked(VCB_SAVE["CF_AURA_enableborder"])
+		getglobal("VCB_BF_CF_FRAME2_ColorNormalTexture"):SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"], VCB_SAVE["CF_AURA_bordercolor_g"], VCB_SAVE["CF_AURA_bordercolor_b"])
+		getglobal("VCB_BF_CF_FRAME2_Color_SwatchBg").r = VCB_SAVE["CF_AURA_bordercolor_r"]
+		getglobal("VCB_BF_CF_FRAME2_Color_SwatchBg").g = VCB_SAVE["CF_AURA_bordercolor_g"]
+		getglobal("VCB_BF_CF_FRAME2_Color_SwatchBg").b = VCB_SAVE["CF_AURA_bordercolor_b"]
 	end
 end
 
@@ -368,6 +395,10 @@ function VCB_BF_OptionsFrame_SetColor()
 		getglobal(VCB_BF_COLOR_TAR):SetBackdropColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opacity"])
 	elseif VCB_BF_COLOR_TYPE=="border" then
 		getglobal(VCB_BF_COLOR_TAR):SetBackdropBorderColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opacity"])
+	elseif VCB_BF_COLOR_TYPE=="buffsborder" then
+		for i=0,31 do
+			getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
+		end
 	end
 end
 
@@ -389,6 +420,10 @@ function VCB_BF_OptionsFrame_CancelColor()
 		getglobal(VCB_BF_COLOR_TAR):SetBackdropColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opacity"])
 	elseif VCB_BF_COLOR_TYPE=="border" then
 		getglobal(VCB_BF_COLOR_TAR):SetBackdropBorderColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opacity"])
+	elseif VCB_BF_COLOR_TYPE=="buffsborder" then
+		for i=0,31 do
+			getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
+		end
 	end
 end
 
@@ -829,6 +864,22 @@ function VCB_BF_CF_FRAME_EDITBOX_BACKGROUND_CHANGE(obj)
 		end
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
+	end
+end
+
+function VCB_BF_CF_FRAME2_ENABLEBORDER()
+	if VCB_SAVE["CF_AURA_enableborder"] then
+		VCB_SAVE["CF_AURA_enableborder"] = false
+		for i=0,31 do
+			getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
+			getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopactiy"])
+		end
+	else
+		VCB_SAVE["CF_AURA_enableborder"] = true
+		for i=0,31 do
+			getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture("Interface\\Buttons\\UI-Debuff-Overlays.tga")
+			getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopactiy"])
+		end
 	end
 end
 
