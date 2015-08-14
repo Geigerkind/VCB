@@ -208,9 +208,9 @@ function VCB_BF_RepositioningAndResizing()
 			else
 				button:ClearAllPoints()
 				if VCB_SAVE["CF_BF_invert"] then
-					button:SetPoint("TOPLEFT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPLEFT", VCB_SAVE["CF_BF_scale"]*((34*b)-26 - (ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*34),VCB_SAVE["CF_BF_scale"]*(-46*(ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)-8))
+					button:SetPoint("TOPLEFT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPLEFT", VCB_SAVE["CF_BF_scale"]*(((32+VCB_SAVE["CF_AURA_padding_h"])*b)-(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) - (ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"])),VCB_SAVE["CF_BF_scale"]*(-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"])))
 				else
-					button:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", VCB_SAVE["CF_BF_scale"]*((-34*b)+26 + (ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*34),VCB_SAVE["CF_BF_scale"]*(-46*(ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)-8))
+					button:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", VCB_SAVE["CF_BF_scale"]*((-(32+VCB_SAVE["CF_AURA_padding_h"])*b)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"])),VCB_SAVE["CF_BF_scale"]*(-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"])))
 				end
 				button:SetWidth(VCB_SAVE["CF_BF_scale"]*32)
 				button:SetHeight(VCB_SAVE["CF_BF_scale"]*32)
@@ -232,8 +232,8 @@ end
 function VCB_BF_ResizeConsolidatedFrame(i)
 	local p = i
 	if p >= VCB_SAVE["CF_BF_numperrow"] then p = VCB_SAVE["CF_BF_numperrow"] end
-	VCB_BF_CONSOLIDATED_BUFFFRAME:SetWidth(VCB_SAVE["CF_BF_scale"]*(14+(p*34)))
-	VCB_BF_CONSOLIDATED_BUFFFRAME:SetHeight(VCB_SAVE["CF_BF_scale"]*(14+(ceil(i/VCB_SAVE["CF_BF_numperrow"])*46)))
+	VCB_BF_CONSOLIDATED_BUFFFRAME:SetWidth(VCB_SAVE["CF_BF_scale"]*(16+2*VCB_SAVE["CF_AURA_padding_h"]+(p*(32+VCB_SAVE["CF_AURA_padding_h"]))))
+	VCB_BF_CONSOLIDATED_BUFFFRAME:SetHeight(VCB_SAVE["CF_BF_scale"]*(10+2*VCB_SAVE["CF_AURA_padding_v"]+(ceil(i/VCB_SAVE["CF_BF_numperrow"])*(44+VCB_SAVE["CF_AURA_padding_v"]))))
 end
 
 function VCB_BF_BUFF_BUTTON_OnUpdate(elapsed, button)

@@ -3273,7 +3273,7 @@
 										getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON3Text"):SetText("Use custom border")
 									</OnLoad>
 									<OnClick>
-										VCB_BF_CF_FRAME_INVERTBUTTON()
+										VCB_BF_CF_FRAME2_USE_CUSTOMBORDER()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3421,7 +3421,7 @@
 									<OnLoad>
 										this.aide = "Move this to change the amount."
 										this:SetMinMaxValues(1,10)
-										this:SetValue(5)
+										this:SetValue(2)
 										this:SetValueStep(1)
 										getglobal("VCB_BF_CF_FRAME2_AuraPaddingHSliderText"):SetText("Padding H")
 										getglobal("VCB_BF_CF_FRAME2_AuraPaddingHSliderLow"):SetText("1")
@@ -3429,13 +3429,13 @@
 									</OnLoad>
 									<OnValueChanged>
 										if VCB_IS_LOADED then
-											VCB_BF_CF_FRAME_BGOpaSliderChange(this)
+											VCB_BF_CF_FRAME2_AuraPaddingHSliderChange(this)
 										end
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
 							-- Aura padding Y Slider
-							<Slider name="VCB_BF_CF_FRAME2_AuraPaddingYSlider" inherits="VCB_BF_SliderTemplate">
+							<Slider name="VCB_BF_CF_FRAME2_AuraPaddingVSlider" inherits="VCB_BF_SliderTemplate">
 								<Size>
 									<AbsDimension x="155" y="16"/>
 								</Size>
@@ -3450,15 +3450,15 @@
 									<OnLoad>
 										this.aide = "Move this to change the amount."
 										this:SetMinMaxValues(1,10)
-										this:SetValue(5)
+										this:SetValue(2)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_CF_FRAME2_AuraPaddingYSliderText"):SetText("Padding Y")
-										getglobal("VCB_BF_CF_FRAME2_AuraPaddingYSliderLow"):SetText("1")
-										getglobal("VCB_BF_CF_FRAME2_AuraPaddingYSliderHigh"):SetText("10")
+										getglobal("VCB_BF_CF_FRAME2_AuraPaddingVSliderText"):SetText("Padding Y")
+										getglobal("VCB_BF_CF_FRAME2_AuraPaddingVSliderLow"):SetText("1")
+										getglobal("VCB_BF_CF_FRAME2_AuraPaddingVSliderHigh"):SetText("10")
 									</OnLoad>
 									<OnValueChanged>
 										if VCB_IS_LOADED then
-											VCB_BF_CF_FRAME_BGOpaSliderChange(this)
+											VCB_BF_CF_FRAME2_AuraPaddingVSliderChange(this)
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -3478,16 +3478,16 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = "Move this to change the amount."
-										this:SetMinMaxValues(1,10)
-										this:SetValue(5)
+										this:SetMinMaxValues(1,1)
+										this:SetValue(1)
 										this:SetValueStep(1)
 										getglobal("VCB_BF_CF_FRAME2_AuraBorderSliderText"):SetText("Border")
 										getglobal("VCB_BF_CF_FRAME2_AuraBorderSliderLow"):SetText("1")
-										getglobal("VCB_BF_CF_FRAME2_AuraBorderSliderHigh"):SetText("10")
+										getglobal("VCB_BF_CF_FRAME2_AuraBorderSliderHigh"):SetText("1")
 									</OnLoad>
 									<OnValueChanged>
 										if VCB_IS_LOADED then
-											VCB_BF_CF_FRAME_BGOpaSliderChange(this)
+											VCB_BF_CF_FRAME_AuraBorderSliderChange(this)
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -3537,6 +3537,11 @@
 									</Layer>
 								</Layers>
 								<FontString inherits="ChatFontNormal" />
+								<Scripts>
+									<OnTextChanged>
+										VCB_BF_CF_FRAME2_EDITBOX_BORDER_CHANGE(this)
+									</OnTextChanged>
+								</Scripts>
 							</EditBox>
 						</Frames>
 					</Frame>

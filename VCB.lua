@@ -25,6 +25,8 @@ VCB_ICON_ARRAY[1] = "icon"
 VCB_BORDER_ARRAY = {}
 VCB_BORDER_ARRAY[1] = "Interface\\Tooltips\\UI-Tooltip-Border.tga"
 VCB_BORDER_ARRAY[2] = "Interface\\DialogFrame\\UI-DialogBox-Border.tga"
+VCB_AURABORDER_ARRAY = {}
+VCB_AURABORDER_ARRAY[1] = "Interface\\Buttons\\UI-Debuff-Overlays.tga"
 VCB_BACKGROUND_ARRAY = {}
 VCB_BACKGROUND_ARRAY[1] = "Interface\\Tooltips\\UI-Tooltip-Background.tga"
 VCB_BACKGROUND_ARRAY[2] = "Interface\\DialogFrame\\UI-DialogBox-Background.tga"
@@ -96,6 +98,11 @@ function VCB_OnEvent(event)
 				CF_AURA_bordercolor_r = 1,
 				CF_AURA_bordercolor_g = 1,
 				CF_AURA_bordercolor_b = 1,
+				CF_AURA_padding_h = 2,
+				CF_AURA_padding_v = 2,
+				CF_AURA_border = 1,
+				CF_AURA_customborder = false,
+				CF_AURA_customborderpath = "",
 			}
 		end
 		if VCB_BF_LOCKED == nil then
@@ -115,6 +122,11 @@ function VCB_OnEvent(event)
 		--VCB_SAVE["CF_AURA_bordercolor_r"] = 1
 		--VCB_SAVE["CF_AURA_bordercolor_g"] = 1
 		--VCB_SAVE["CF_AURA_bordercolor_b"] = 1
+		--VCB_SAVE["CF_AURA_padding_h"] = 2
+		--VCB_SAVE["CF_AURA_padding_v"] = 2
+		--VCB_SAVE["CF_AURA_border"] = 1
+		--VCB_SAVE["CF_AURA_customborder"] = false
+		VCB_SAVE["CF_AURA_customborderpath"] = ""
 		
 		VCB_BF_CONSOLIDATED_BUFFFRAME:ClearAllPoints()
 		if VCB_SAVE["CF_BF_anchor"] == 1 then
@@ -150,19 +162,27 @@ function VCB_OnEvent(event)
 				VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdrop({bgFile=VCB_BACKGROUND_ARRAY[VCB_SAVE["CF_BF_background"]], edgeFile=VCB_BORDER_ARRAY[VCB_SAVE["CF_BF_border"]], tile=true, tileSize=16, edgeSize=16, insets={left=4,right=4,top=4,bottom=4}})
 			end
 		end
-		if VCB_SAVE["CF_AURA_enableborder"] then
-			for i=0,31 do
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture("Interface\\Buttons\\UI-Debuff-Overlays.tga")
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopactiy"])
-			end
-		else
-			for i=0,31 do
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopactiy"])
-			end
-		end
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
+		for i=0,31 do
+			if VCB_SAVE["CF_AURA_enableborder"] then
+				if VCB_SAVE["CF_AURA_customborder"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_SAVE["CF_AURA_customborderpath"])
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["CF_AURA_border"]])
+				end
+			else
+				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
+			end
+			getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopactiy"])
+			getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetAlpha(VCB_SAVE["Timer_alpha"])
+		end
+		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetAlpha(VCB_SAVE["Timer_alpha"])
+		end
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetAlpha(VCB_SAVE["Timer_alpha"])
+		end
 		VCB_BF_Lock(VCB_BF_LOCKED)
 		VCB_IS_LOADED = true
 	end	
@@ -352,6 +372,14 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_CF_FRAME2_Color_SwatchBg").r = VCB_SAVE["CF_AURA_bordercolor_r"]
 		getglobal("VCB_BF_CF_FRAME2_Color_SwatchBg").g = VCB_SAVE["CF_AURA_bordercolor_g"]
 		getglobal("VCB_BF_CF_FRAME2_Color_SwatchBg").b = VCB_SAVE["CF_AURA_bordercolor_b"]
+		getglobal("VCB_BF_CF_FRAME2_AuraPaddingHSlider"):SetValue(VCB_SAVE["CF_AURA_padding_h"])
+		getglobal("VCB_BF_CF_FRAME2_AuraPaddingHSliderText"):SetText("Padding H: "..VCB_SAVE["CF_AURA_padding_h"])
+		getglobal("VCB_BF_CF_FRAME2_AuraPaddingVSlider"):SetValue(VCB_SAVE["CF_AURA_padding_v"])
+		getglobal("VCB_BF_CF_FRAME2_AuraPaddingVSliderText"):SetText("Padding V: "..VCB_SAVE["CF_AURA_padding_v"])
+		getglobal("VCB_BF_CF_FRAME2_AuraBorderSlider"):SetValue(VCB_SAVE["CF_AURA_border"])
+		getglobal("VCB_BF_CF_FRAME2_AuraBorderSliderText"):SetText("Border: "..VCB_SAVE["CF_AURA_border"])
+		getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON3"):SetChecked(VCB_SAVE["CF_AURA_customborder"])
+		getglobal("VCB_BF_CF_FRAME2_EDITBOX_BORDER"):SetText(VCB_SAVE["CF_AURA_customborderpath"])
 	end
 end
 
@@ -877,8 +905,64 @@ function VCB_BF_CF_FRAME2_ENABLEBORDER()
 	else
 		VCB_SAVE["CF_AURA_enableborder"] = true
 		for i=0,31 do
-			getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture("Interface\\Buttons\\UI-Debuff-Overlays.tga")
+			if VCB_SAVE["CF_AURA_customborder"] then
+				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_SAVE["CF_AURA_customborderpath"])
+			else
+				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["CF_AURA_border"]])
+			end
 			getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopactiy"])
+		end
+	end
+end
+
+function VCB_BF_CF_FRAME2_AuraPaddingHSliderChange(obj)
+	VCB_SAVE["CF_AURA_padding_h"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Padding H: "..VCB_SAVE["CF_AURA_padding_h"])
+	VCB_BF_RepositioningAndResizing()
+end
+
+function VCB_BF_CF_FRAME2_AuraPaddingVSliderChange(obj)
+	VCB_SAVE["CF_AURA_padding_v"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Padding V: "..VCB_SAVE["CF_AURA_padding_v"])
+	VCB_BF_RepositioningAndResizing()
+end
+
+function VCB_BF_CF_FRAME_AuraBorderSliderChange(obj)
+	VCB_SAVE["CF_AURA_border"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Border: "..VCB_SAVE["CF_AURA_border"])
+	if VCB_SAVE["CF_AURA_customborder"] == false and VCB_SAVE["CF_AURA_enableborder"] then
+		for i=0,31 do
+			getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
+			getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["CF_AURA_border"]])
+			getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopactiy"])
+		end
+	end
+end
+
+function VCB_BF_CF_FRAME2_USE_CUSTOMBORDER()
+	if VCB_SAVE["CF_AURA_enableborder"] then
+		if VCB_SAVE["CF_AURA_customborder"] then
+			VCB_SAVE["CF_AURA_customborder"] = false
+			for i=0,31 do
+				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
+				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["CF_AURA_border"]])
+			end
+		else
+			VCB_SAVE["CF_AURA_customborder"] = true
+			for i=0,31 do
+				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
+				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_SAVE["CF_AURA_customborderpath"])
+			end
+		end
+	end
+end
+
+function VCB_BF_CF_FRAME2_EDITBOX_BORDER_CHANGE(obj)
+	VCB_SAVE["CF_AURA_customborderpath"] = obj:GetText()
+	if VCB_SAVE["CF_AURA_enableborder"] and VCB_SAVE["CF_AURA_customborder"] then
+		for i=0,31 do
+			getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
+			getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_SAVE["CF_AURA_customborderpath"])
 		end
 	end
 end
