@@ -361,13 +361,21 @@
 				GameTooltip:Hide()
 			</OnLeave>
 			<OnMouseDown>
-				if (not VCB_BF_LOCKED) then
-					VCB_BF_WEAPON_FRAME:StartMoving()
+				if (not VCB_BF_LOCKED) and (VCB_IS_LOADED) then
+					if (not VCB_SAVE["WP_GENERAL_attach"]) then
+						VCB_BF_WEAPON_FRAME:StartMoving()
+					else
+						VCB_BF_BUFF_FRAME:StartMoving()
+					end
 				end
 			</OnMouseDown>
 			<OnMouseUp>
-				if (not VCB_BF_LOCKED) then
-					VCB_BF_WEAPON_FRAME:StopMovingOrSizing()
+				if (not VCB_BF_LOCKED) and (VCB_IS_LOADED) then
+					if (not VCB_SAVE["WP_GENERAL_attach"]) then
+						VCB_BF_WEAPON_FRAME:StopMovingOrSizing()
+					else
+						VCB_BF_BUFF_FRAME:StopMovingOrSizing()
+					end
 				end
 			</OnMouseUp>
 		</Scripts>

@@ -71,12 +71,8 @@ function VCB_BF_CreateBuffButtons()
 			button.cat=cat
 			if(cat ~= "weapon") then
 				button:SetID(i)
-				if cat == "buff" then
-					button:SetPoint("TOPRIGHT", -36*i-36+(floor(i/16) * 17*36), -46*(floor(i/16)))
-				end
 			else
 				button:SetID(i+16)
-				button:SetPoint("TOPRIGHT", -34*i, 0)
 			end
 			button.buffFilter=BUFF_FILTER[cat]
 			button:RegisterForClicks("RightButtonUp")
@@ -194,10 +190,27 @@ function VCB_BF_RepositioningAndResizing()
 			local buttonIcon = getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon")
 			if parent == VCB_BF_BUFF_FRAME then
 				button:ClearAllPoints()
+				local u = 0
+				local o = 0
+				if VCB_SAVE["WP_GENERAL_attach"] then
+					if VCB_BF_DUMMY_MODE then
+						u = 2
+					else
+						local hasMainHandEnchant, mainHandExpiration, mainHandCharges, hasOffHandEnchant, offHandExpiration, offHandCharges = GetWeaponEnchantInfo()
+						if hasMainHandEnchant then u = u + 1 end
+						if hasOffHandEnchant then u = u + 1 end
+					end
+					VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
+					if a <= (VCB_SAVE["BF_GENERAL_numperrow"]-3) then
+						o = u
+					end
+				end
 				if VCB_SAVE["BF_GENERAL_verticalmode"] then
-					button:SetPoint("TOP", VCB_BF_BUFF_FRAME, "BOTTOM", -(36+VCB_SAVE["BF_GENERAL_padding_h"])*floor(a/(VCB_SAVE["BF_GENERAL_numperrow"]+1)) + 10,-(44+VCB_SAVE["BF_GENERAL_padding_v"])*a + floor(a/(VCB_SAVE["BF_GENERAL_numperrow"]+1))*(VCB_SAVE["BF_GENERAL_numperrow"]+1)*(44+VCB_SAVE["BF_GENERAL_padding_v"]) + 50)
+					VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*u)
+					button:SetPoint("TOP", VCB_BF_BUFF_FRAME, "BOTTOM", -(36+VCB_SAVE["BF_GENERAL_padding_h"])*floor((a+u-o)/(VCB_SAVE["BF_GENERAL_numperrow"])) + 10,-(44+VCB_SAVE["BF_GENERAL_padding_v"])*(a+u) + floor((a+u)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(44+VCB_SAVE["BF_GENERAL_padding_v"]) + 50)
 				else
-					button:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*a + floor(a/(VCB_SAVE["BF_GENERAL_numperrow"]+1))*(VCB_SAVE["BF_GENERAL_numperrow"]+1)*(32+VCB_SAVE["BF_GENERAL_padding_h"]),-(44+VCB_SAVE["BF_GENERAL_padding_v"])*floor(a/(VCB_SAVE["BF_GENERAL_numperrow"]+1))) -- NUM ROWS?
+					VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
+					button:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*(a+u) + floor((a+u)/(VCB_SAVE["BF_GENERAL_numperrow"]))*VCB_SAVE["BF_GENERAL_numperrow"]*(32+VCB_SAVE["BF_GENERAL_padding_h"]),-(44+VCB_SAVE["BF_GENERAL_padding_v"])*floor((a+u-o)/(VCB_SAVE["BF_GENERAL_numperrow"]-o)))
 				end
 				if VCB_SAVE["BF_TIMER_border"] then
 					buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"], "OUTLINE")
@@ -321,6 +334,25 @@ function VCB_BF_WEAPON_BUTTON_OnUpdate(elapsed)
 	timeSinceWeaponUpdate = timeSinceWeaponUpdate + elapsed
 	if(timeSinceWeaponUpdate > UPDATETIME) then
 		local hasMainHandEnchant, mainHandExpiration, mainHandCharges, hasOffHandEnchant, offHandExpiration, offHandCharges = GetWeaponEnchantInfo();
+		if (not hasMainHandEnchant) and hasOffHandEnchant and VCB_IS_LOADED then -- Performance (?)
+			VCB_BF_WEAPON_BUTTON0:ClearAllPoints()
+			VCB_BF_WEAPON_BUTTON1:ClearAllPoints()
+			if VCB_SAVE["WP_GENERAL_attach"] then
+				VCB_BF_WEAPON_BUTTON0:SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
+			else
+				VCB_BF_WEAPON_BUTTON0:SetPoint("TOPRIGHT", -(32+VCB_SAVE["WP_GENERAL_padding_h"]), 0)
+			end
+			VCB_BF_WEAPON_BUTTON1:SetPoint("TOPRIGHT", 0, 0)
+		else
+			VCB_BF_WEAPON_BUTTON0:ClearAllPoints()
+			VCB_BF_WEAPON_BUTTON1:ClearAllPoints()
+			if VCB_SAVE["WP_GENERAL_attach"] then
+				VCB_BF_WEAPON_BUTTON1:SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
+			else
+				VCB_BF_WEAPON_BUTTON1:SetPoint("TOPRIGHT", -(32+VCB_SAVE["WP_GENERAL_padding_h"]), 0)
+			end
+			VCB_BF_WEAPON_BUTTON0:SetPoint("TOPRIGHT", 0, 0)
+		end
 		if(hasMainHandEnchant or VCB_BF_DUMMY_MODE) then
 			local textureName = GetInventoryItemTexture("player", 16)
 			if (VCB_BF_DUMMY_MODE == false) then

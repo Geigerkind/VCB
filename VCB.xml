@@ -5334,6 +5334,7 @@
 										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON1Text"):SetText("Vertical mode")
 									</OnLoad>
 									<OnClick>
+										VCB_BF_WP_FRAME_VERTICAL_MODE()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -5355,6 +5356,7 @@
 										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON2Text"):SetText("Enable background color")
 									</OnLoad>
 									<OnClick>
+										VCB_BF_WP_FRAME_ENABLEBGCOLOR()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -5397,6 +5399,7 @@
 										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON7Text"):SetText("Attach to Buff-Frame")
 									</OnLoad>
 									<OnClick>
+										VCB_BF_WP_FRAME_ATTACH()
 									</OnClick>
 								</Scripts>
 							</CheckButton>

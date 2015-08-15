@@ -39,6 +39,7 @@ VCB_BACKGROUND_ARRAY[3] = "Interface\\CHARACTERFRAME\\UI-Party-Background.tga"
 --]]
 function VCB_OnLoad()
 	this:RegisterEvent("ADDON_LOADED")
+	this:RegisterEvent("PLAYER_ENTERING_WORLD")
 
 	SLASH_VCB1 = "/VanillaConsolidateBuffs"
 	SLASH_VCB2 = "/vanillaconsolidatebuffs"
@@ -156,6 +157,37 @@ function VCB_OnEvent(event)
 				DBF_TIMER_fontcolor_b = 0,
 				DBF_TIMER_fontsize = 10,
 				DBF_TIMER_fontopacity = 1,
+				WP_GENERAL_verticalmode = false,
+				WP_GENERAL_invertorder = false,
+				WP_GENERAL_enablebgcolor = false,
+				WP_GENERAL_bgcolor_r = 1,
+				WP_GENERAL_bgcolor_g = 1,
+				WP_GENERAL_bgcolor_b = 1,
+				WP_GENERAL_attach = false,
+				WP_GENERAL_padding_h = 2,
+				WP_GENERAL_padding_v = 2,
+				WP_GENERAL_fontsize = 10,
+				WP_GENERAL_fontopacity = 1,
+				WP_GENERAL_fontcolor_r = 1,
+				WP_GENERAL_fontcolor_g = 1,
+				WP_GENERAL_fontcolor_b = 1,
+				WP_GENERAL_bgopacity = 1,
+				WP_GENERAL_scale = 1,
+				WP_GENERAL_font = "FRIZQT__.ttf",
+				WP_BORDER_enableborder = true,
+				WP_BORDER_usecustomborder = false,
+				WP_BORDER_bordercolor_r = 0.2,
+				WP_BORDER_bordercolor_g = 0.2,
+				WP_BORDER_bordercolor_b = 0.8,
+				WP_BORDER_borderopacity = 1,
+				WP_BORDER_border = 1,
+				WP_BORDER_customborderpath = "",
+				WP_TIMER_enableborder = false,
+				WP_TIMER_fontcolor_r = 1,
+				WP_TIMER_fontcolor_g = 0.82,
+				WP_TIMER_fontcolor_b = 0,
+				WP_TIMER_fontopacity = 1,
+				WP_TIMER_fontsize = 10,
 			}
 		end
 		if VCB_BF_LOCKED == nil then
@@ -168,40 +200,10 @@ function VCB_OnEvent(event)
 			Banned_Buffs = {}
 		end
 		
-		--VCB_SAVE["BF_BORDER_enableborder"] = false
-		--VCB_SAVE["BF_BORDER_bordercolor_r"] = 1
-		--VCB_SAVE["BF_BORDER_bordercolor_g"] = 1
-		--VCB_SAVE["BF_BORDER_bordercolor_b"] = 1
-		--VCB_SAVE["BF_BORDER_borderopacity"] = 1
-		--VCB_SAVE["BF_BORDER_border"] = 1
-		--VCB_SAVE["BF_BORDER_usecustomborder"] = false
-		--VCB_SAVE["BF_BORDER_customborderpath"] = ""
-		--VCB_SAVE["BF_TIMER_border"] = false
-		--VCB_SAVE["BF_TIMER_fontcolor_r"] = 1
-		--VCB_SAVE["BF_TIMER_fontcolor_g"] = 0.82
-		--VCB_SAVE["BF_TIMER_fontcolor_b"] = 0
-		--VCB_SAVE["BF_TIMER_fontopacity"] = 1
-		--VCB_SAVE["BF_TIMER_fontsize"] = 10
-		--VCB_SAVE["DBF_GENERAL_numperrow"] = 16
-		--VCB_SAVE["DBF_GENERAL_padding_h"] = 2
-		--VCB_SAVE["DBF_GENERAL_padding_v"] = 2
-		--VCB_SAVE["DBF_GENERAL_bgopacity"] = 1
-		--VCB_SAVE["DBF_GENERAL_scale"] = 1
-		--VCB_SAVE["DBF_GENERAL_enablebgcolor"] = false
-		--VCB_SAVE["DBF_GENERAL_bgcolor_r"] = 1
-		--VCB_SAVE["DBF_GENERAL_bgcolor_g"] = 1
-		--VCB_SAVE["DBF_GENERAL_bgcolor_b"] = 1
-		--VCB_SAVE["DBF_BORDER_enableborder"] = false
-		--VCB_SAVE["DBF_BORDER_usecustomborder"] = false
-		--VCB_SAVE["DBF_BORDER_customborderpath"] = ""
-		--VCB_SAVE["DBF_BORDER_border"] = 1
-		--VCB_SAVE["DBF_TIMER_enableborder"] = false
-		--VCB_SAVE["DBF_TIMER_fontcolor_r"] = 1
-		--VCB_SAVE["DBF_TIMER_fontcolor_g"] = 0.82
-		--VCB_SAVE["DBF_TIMER_fontcolor_b"] = 0
-		--VCB_SAVE["DBF_TIMER_fontsize"] = 10
-		--VCB_SAVE["DBF_TIMER_fontopacity"] = 1
-	
+		--VCB_SAVE["WP_TIMER_fontsize"] = 10
+		
+		VCB_IS_LOADED = true
+	elseif event == "PLAYER_ENTERING_WORLD" then
 		VCB_BF_CONSOLIDATED_BUFFFRAME:ClearAllPoints()
 		if VCB_SAVE["CF_BF_anchor"] == 1 then
 			VCB_BF_CONSOLIDATED_BUFFFRAME:SetPoint("TOP", VCB_BF_CONSOLIDATED_ICON, "BOTTOM", 0, 0)
@@ -287,6 +289,7 @@ function VCB_OnEvent(event)
 			end
 		end
 		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
 			if VCB_SAVE["DBF_GENERAL_verticalmode"] then
 				getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
 			else
@@ -313,13 +316,34 @@ function VCB_OnEvent(event)
 			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetTextColor(VCB_SAVE["DBF_TIMER_fontcolor_r"],VCB_SAVE["DBF_TIMER_fontcolor_g"],VCB_SAVE["DBF_TIMER_fontcolor_b"],VCB_SAVE["DBF_TIMER_fontopacity"])
 		end
 		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i):ClearAllPoints()
+			if VCB_SAVE["WP_GENERAL_verticalmode"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i):SetPoint("TOPRIGHT", 0, -(44+VCB_SAVE["WP_GENERAL_padding_v"])*i)
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["WP_GENERAL_padding_h"])*i, 0)
+			end
+			if VCB_SAVE["WP_GENERAL_enablebgcolor"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Icon"):SetVertexColor(VCB_SAVE["WP_GENERAL_bgcolor_r"],VCB_SAVE["WP_GENERAL_bgcolor_g"],VCB_SAVE["WP_GENERAL_bgcolor_b"],VCB_SAVE["WP_GENERAL_bgopacity"])
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Icon"):SetVertexColor(1,1,1,VCB_SAVE["WP_GENERAL_bgopacity"])
+			end
 			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetAlpha(VCB_SAVE["Timer_alpha"])
+		end
+		VCB_BF_WEAPON_FRAME:ClearAllPoints()
+		VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
+		if VCB_SAVE["WP_GENERAL_attach"] then
+			VCB_BF_WEAPON_FRAME:SetParent(VCB_BF_BUFF_FRAME)
+			VCB_BF_WEAPON_FRAME:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", 0, 0)
+			VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -2*(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
+		else
+			VCB_BF_WEAPON_FRAME:SetParent(UIParent)
+			VCB_BF_WEAPON_FRAME:SetPoint("CENTER", 0, 0)
+			VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", 0, 0)
 		end
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetScale(VCB_SAVE["CF_BF_scale"])
 		VCB_BF_BUFF_FRAME:SetScale(VCB_SAVE["BF_GENERAL_scale"])
 		VCB_BF_DEBUFF_FRAME:SetScale(VCB_SAVE["DBF_GENERAL_scale"])
 		VCB_BF_Lock(VCB_BF_LOCKED)
-		VCB_IS_LOADED = true
 	end	
 end
 
@@ -591,6 +615,10 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_DBF_FRAME_FontSizeSliderText"):SetText("Font size: "..VCB_SAVE["DBF_TIMER_fontsize"])
 		getglobal("VCB_BF_DBF_FRAME_FontOpacitySlider"):SetValue(VCB_SAVE["DBF_TIMER_fontopacity"])
 		getglobal("VCB_BF_DBF_FRAME_FontOpacitySliderText"):SetText("Font opacity: "..VCB_SAVE["DBF_TIMER_fontopacity"])
+	elseif frame == "VCB_BF_WP_FRAME" then
+		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON1"):SetChecked(VCB_SAVE["WP_GENERAL_verticalmode"])
+		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON2"):SetChecked(VCB_SAVE["WP_GENERAL_enablebgcolor"])
+		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON7"):SetChecked(VCB_SAVE["WP_GENERAL_attach"])
 	end
 end
 
@@ -1504,11 +1532,13 @@ function VCB_BF_DBF_FRAME_VERTICAL_MODE()
 	if VCB_SAVE["DBF_GENERAL_verticalmode"] then
 		VCB_SAVE["DBF_GENERAL_verticalmode"] = false
 		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
 			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
 		end
 	else
 		VCB_SAVE["DBF_GENERAL_verticalmode"] = true
 		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
 			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
 		end
 	end
@@ -1518,6 +1548,7 @@ function VCB_BF_DBF_FRAME_NumPerRowSliderChange(obj)
 	VCB_SAVE["DBF_GENERAL_numperrow"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText("Buffs per row: "..VCB_SAVE["DBF_GENERAL_numperrow"])
 	for i=0,15 do
+		getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
 		if VCB_SAVE["DBF_GENERAL_verticalmode"] then
 			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
 		else
@@ -1530,6 +1561,7 @@ function VCB_BF_DBF_FRAME_AuraPaddingHSliderChange(obj)
 	VCB_SAVE["DBF_GENERAL_padding_h"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText("Padding H: "..VCB_SAVE["DBF_GENERAL_padding_h"])
 	for i=0,15 do
+		getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
 		if VCB_SAVE["DBF_GENERAL_verticalmode"] then
 			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
 		else
@@ -1542,6 +1574,7 @@ function VCB_BF_DBF_FRAME_AuraPaddingVSliderChange(obj)
 	VCB_SAVE["DBF_GENERAL_padding_v"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText("Padding V: "..VCB_SAVE["DBF_GENERAL_padding_v"])
 	for i=0,15 do
+		getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
 		if VCB_SAVE["DBF_GENERAL_verticalmode"] then
 			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
 		else
@@ -1673,3 +1706,63 @@ function VCB_BF_DBF_FRAME_FontOpacitySliderChange(obj)
 end
 
 ---------------------------------------END DEBUFF FRAME-----------------------------------------------------------------------------------------------------------------
+---------------------------------------START WP FRAME-----------------------------------------------------------------------------------------------------------------
+function VCB_BF_WP_FRAME_VERTICAL_MODE()
+	if VCB_SAVE["WP_GENERAL_verticalmode"] then
+		VCB_SAVE["WP_GENERAL_verticalmode"] = false
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i):ClearAllPoints()
+			getglobal("VCB_BF_WEAPON_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["WP_GENERAL_padding_h"])*i, 0)
+		end
+		if (VCB_SAVE["BF_GENERAL_verticalmode"]) and VCB_SAVE["WP_GENERAL_attach"] then
+			VCB_BF_BF_FRAME_VERTICAL_MODE()
+		end
+	else
+		VCB_SAVE["WP_GENERAL_verticalmode"] = true
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i):ClearAllPoints()
+			getglobal("VCB_BF_WEAPON_BUTTON"..i):SetPoint("TOPRIGHT", 0, -(44+VCB_SAVE["WP_GENERAL_padding_v"])*i)
+		end
+		if (not VCB_SAVE["BF_GENERAL_verticalmode"]) and VCB_SAVE["WP_GENERAL_attach"] then
+			VCB_BF_BF_FRAME_VERTICAL_MODE()
+		end
+	end
+end
+
+function VCB_BF_WP_FRAME_ENABLEBGCOLOR()
+	if VCB_SAVE["WP_GENERAL_enablebgcolor"] then
+		VCB_SAVE["WP_GENERAL_enablebgcolor"] = false
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Icon"):SetVertexColor(1,1,1, VCB_SAVE["WP_GENERAL_bgopacity"])
+		end
+	else
+		VCB_SAVE["WP_GENERAL_enablebgcolor"] = true
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Icon"):SetVertexColor(VCB_SAVE["WP_GENERAL_bgcolor_r"],VCB_SAVE["WP_GENERAL_bgcolor_g"],VCB_SAVE["WP_GENERAL_bgcolor_b"],VCB_SAVE["WP_GENERAL_bgopacity"])
+		end
+	end
+end
+
+function VCB_BF_WP_FRAME_ATTACH()
+	if VCB_SAVE["WP_GENERAL_attach"] then
+		VCB_SAVE["WP_GENERAL_attach"] = false
+		VCB_BF_WEAPON_FRAME:ClearAllPoints()
+		VCB_BF_WEAPON_FRAME:SetParent(UIParent)
+		VCB_BF_WEAPON_FRAME:SetPoint("CENTER", 0, 0)
+		VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
+		VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", 0, 0)
+	else
+		VCB_SAVE["WP_GENERAL_attach"] = true
+		VCB_BF_WEAPON_FRAME:ClearAllPoints()
+		VCB_BF_WEAPON_FRAME:SetParent(VCB_BF_BUFF_FRAME)
+		VCB_BF_WEAPON_FRAME:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", 0, 0)
+		VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
+		VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -2*(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
+		if (VCB_SAVE["BF_GENERAL_verticalmode"] and (not VCB_SAVE["WP_GENERAL_verticalmode"])) or ((not VCB_SAVE["BF_GENERAL_verticalmode"]) and (VCB_SAVE["WP_GENERAL_verticalmode"])) then
+			VCB_BF_BF_FRAME_VERTICAL_MODE()
+		end
+	end
+	VCB_BF_RepositioningAndResizing()
+end
+
+---------------------------------------END WP FRAME-----------------------------------------------------------------------------------------------------------------
