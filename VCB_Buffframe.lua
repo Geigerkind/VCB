@@ -73,8 +73,6 @@ function VCB_BF_CreateBuffButtons()
 				button:SetID(i)
 				if cat == "buff" then
 					button:SetPoint("TOPRIGHT", -36*i-36+(floor(i/16) * 17*36), -46*(floor(i/16)))
-				else
-					button:SetPoint("TOPRIGHT", -34*i, 0)
 				end
 			else
 				button:SetID(i+16)

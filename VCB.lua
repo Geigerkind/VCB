@@ -136,6 +136,26 @@ function VCB_OnEvent(event)
 				BF_TIMER_fontcolor_r = 0,
 				BF_TIMER_fontopacity = 1,
 				BF_TIMER_fontsize = 10,
+				DBF_GENERAL_verticalmode = false,
+				DBF_GENERAL_numperrow = 16,
+				DBF_GENERAL_padding_h = 2,
+				DBF_GENERAL_padding_v = 2,
+				DBF_GENERAL_bgopacity = 1,
+				DBF_GENERAL_scale = 1,
+				DBF_GENERAL_enablebgcolor = false,
+				DBF_GENERAL_bgcolor_r = 1,
+				DBF_GENERAL_bgcolor_g = 1,
+				DBF_GENERAL_bgcolor_b = 1,
+				DBF_BORDER_enableborder = true,
+				DBF_BORDER_usecustomborder = false,
+				DBF_BORDER_customborderpath = "",
+				DBF_BORDER_border = 1,
+				DBF_TIMER_enableborder = false,
+				DBF_TIMER_fontcolor_r = 1,
+				DBF_TIMER_fontcolor_g = 0.82,
+				DBF_TIMER_fontcolor_b = 0,
+				DBF_TIMER_fontsize = 10,
+				DBF_TIMER_fontopacity = 1,
 			}
 		end
 		if VCB_BF_LOCKED == nil then
@@ -162,6 +182,25 @@ function VCB_OnEvent(event)
 		--VCB_SAVE["BF_TIMER_fontcolor_b"] = 0
 		--VCB_SAVE["BF_TIMER_fontopacity"] = 1
 		--VCB_SAVE["BF_TIMER_fontsize"] = 10
+		--VCB_SAVE["DBF_GENERAL_numperrow"] = 16
+		--VCB_SAVE["DBF_GENERAL_padding_h"] = 2
+		--VCB_SAVE["DBF_GENERAL_padding_v"] = 2
+		--VCB_SAVE["DBF_GENERAL_bgopacity"] = 1
+		--VCB_SAVE["DBF_GENERAL_scale"] = 1
+		--VCB_SAVE["DBF_GENERAL_enablebgcolor"] = false
+		--VCB_SAVE["DBF_GENERAL_bgcolor_r"] = 1
+		--VCB_SAVE["DBF_GENERAL_bgcolor_g"] = 1
+		--VCB_SAVE["DBF_GENERAL_bgcolor_b"] = 1
+		--VCB_SAVE["DBF_BORDER_enableborder"] = false
+		--VCB_SAVE["DBF_BORDER_usecustomborder"] = false
+		--VCB_SAVE["DBF_BORDER_customborderpath"] = ""
+		--VCB_SAVE["DBF_BORDER_border"] = 1
+		--VCB_SAVE["DBF_TIMER_enableborder"] = false
+		--VCB_SAVE["DBF_TIMER_fontcolor_r"] = 1
+		--VCB_SAVE["DBF_TIMER_fontcolor_g"] = 0.82
+		--VCB_SAVE["DBF_TIMER_fontcolor_b"] = 0
+		--VCB_SAVE["DBF_TIMER_fontsize"] = 10
+		--VCB_SAVE["DBF_TIMER_fontopacity"] = 1
 	
 		VCB_BF_CONSOLIDATED_BUFFFRAME:ClearAllPoints()
 		if VCB_SAVE["CF_BF_anchor"] == 1 then
@@ -248,13 +287,37 @@ function VCB_OnEvent(event)
 			end
 		end
 		for i=0,15 do
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetAlpha(VCB_SAVE["Timer_alpha"])
+			if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+			end
+			if VCB_SAVE["DBF_GENERAL_enablebgcolor"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Icon"):SetVertexColor(VCB_SAVE["DBF_GENERAL_bgcolor_r"],VCB_SAVE["DBF_GENERAL_bgcolor_g"],VCB_SAVE["DBF_GENERAL_bgcolor_b"],VCB_SAVE["DBF_GENERAL_bgopacity"])
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Icon"):SetVertexColor(1,1,1,VCB_SAVE["DBF_GENERAL_bgopacity"])
+			end
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetTexture(nil)
+			if VCB_SAVE["DBF_BORDER_enableborder"] then
+				if VCB_SAVE["DBF_BORDER_usecustomborder"] then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetTexture(VCB_SAVE["DBF_BORDER_customborderpath"])
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["DBF_BORDER_border"]])
+				end
+			end
+			if VCB_SAVE["DBF_TIMER_enableborder"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"])
+			end
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetTextColor(VCB_SAVE["DBF_TIMER_fontcolor_r"],VCB_SAVE["DBF_TIMER_fontcolor_g"],VCB_SAVE["DBF_TIMER_fontcolor_b"],VCB_SAVE["DBF_TIMER_fontopacity"])
 		end
 		for i=0,1 do
 			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetAlpha(VCB_SAVE["Timer_alpha"])
 		end
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetScale(VCB_SAVE["CF_BF_scale"])
 		VCB_BF_BUFF_FRAME:SetScale(VCB_SAVE["BF_GENERAL_scale"])
+		VCB_BF_DEBUFF_FRAME:SetScale(VCB_SAVE["DBF_GENERAL_scale"])
 		VCB_BF_Lock(VCB_BF_LOCKED)
 		VCB_IS_LOADED = true
 	end	
@@ -497,6 +560,37 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_BF_FRAME_Color2_SwatchBg").r = VCB_SAVE["BF_TIMER_fontcolor_r"]
 		getglobal("VCB_BF_BF_FRAME_Color2_SwatchBg").g = VCB_SAVE["BF_TIMER_fontcolor_g"]
 		getglobal("VCB_BF_BF_FRAME_Color2_SwatchBg").b = VCB_SAVE["BF_TIMER_fontcolor_b"]
+	elseif frame == "VCB_BF_DBF_FRAME" then
+		getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON1"):SetChecked(VCB_SAVE["DBF_GENERAL_verticalmode"])
+		getglobal("VCB_BF_DBF_FRAME_NumPerRowSlider"):SetValue(VCB_SAVE["DBF_GENERAL_numperrow"])
+		getglobal("VCB_BF_DBF_FRAME_NumPerRowSliderText"):SetText("Buffs per row: "..VCB_SAVE["DBF_GENERAL_numperrow"])
+		getglobal("VCB_BF_DBF_FRAME_AuraPaddingHSlider"):SetValue(VCB_SAVE["DBF_GENERAL_padding_h"])
+		getglobal("VCB_BF_DBF_FRAME_AuraPaddingHSliderText"):SetText("Padding H: "..VCB_SAVE["DBF_GENERAL_padding_h"])
+		getglobal("VCB_BF_DBF_FRAME_AuraPaddingVSlider"):SetValue(VCB_SAVE["DBF_GENERAL_padding_v"])
+		getglobal("VCB_BF_DBF_FRAME_AuraPaddingVSliderText"):SetText("Padding V: "..VCB_SAVE["DBF_GENERAL_padding_v"])
+		getglobal("VCB_BF_DBF_FRAME_BGOpaSlider"):SetValue(VCB_SAVE["DBF_GENERAL_bgopacity"])
+		getglobal("VCB_BF_DBF_FRAME_BGOpaSliderText"):SetText("Background Opacity: "..VCB_SAVE["DBF_GENERAL_bgopacity"])
+		getglobal("VCB_BF_DBF_FRAME_ScaleSlider"):SetValue(VCB_SAVE["DBF_GENERAL_scale"])
+		getglobal("VCB_BF_DBF_FRAME_ScaleSliderText"):SetText("Scale: "..VCB_SAVE["DBF_GENERAL_scale"])
+		getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON2"):SetChecked(VCB_SAVE["DBF_GENERAL_enablebgcolor"])
+		getglobal("VCB_BF_DBF_FRAME_Color1NormalTexture"):SetVertexColor(VCB_SAVE["DBF_GENERAL_bgcolor_r"], VCB_SAVE["DBF_GENERAL_bgcolor_g"], VCB_SAVE["DBF_GENERAL_bgcolor_b"])
+		getglobal("VCB_BF_DBF_FRAME_Color1_SwatchBg").r = VCB_SAVE["DBF_GENERAL_bgcolor_r"]
+		getglobal("VCB_BF_DBF_FRAME_Color1_SwatchBg").g = VCB_SAVE["DBF_GENERAL_bgcolor_g"]
+		getglobal("VCB_BF_DBF_FRAME_Color1_SwatchBg").b = VCB_SAVE["DBF_GENERAL_bgcolor_b"]
+		getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON5"):SetChecked(VCB_SAVE["DBF_BORDER_enableborder"])
+		getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON6"):SetChecked(VCB_SAVE["DBF_BORDER_usecustomborder"])
+		getglobal("VCB_BF_DBF_FRAME_EDITBOX_BORDER"):SetText(VCB_SAVE["DBF_BORDER_customborderpath"])
+		getglobal("VCB_BF_DBF_FRAME_BorderSlider"):SetValue(VCB_SAVE["DBF_BORDER_border"])
+		getglobal("VCB_BF_DBF_FRAME_BorderSliderText"):SetText("Border: "..VCB_SAVE["DBF_BORDER_border"])
+		getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON4"):SetChecked(VCB_SAVE["DBF_TIMER_enableborder"])
+		getglobal("VCB_BF_DBF_FRAME_Color2NormalTexture"):SetVertexColor(VCB_SAVE["DBF_TIMER_fontcolor_r"], VCB_SAVE["DBF_TIMER_fontcolor_g"], VCB_SAVE["DBF_TIMER_fontcolor_b"])
+		getglobal("VCB_BF_DBF_FRAME_Color2_SwatchBg").r = VCB_SAVE["DBF_TIMER_fontcolor_r"]
+		getglobal("VCB_BF_DBF_FRAME_Color2_SwatchBg").g = VCB_SAVE["DBF_TIMER_fontcolor_g"]
+		getglobal("VCB_BF_DBF_FRAME_Color2_SwatchBg").b = VCB_SAVE["DBF_TIMER_fontcolor_b"]
+		getglobal("VCB_BF_DBF_FRAME_FontSizeSlider"):SetValue(VCB_SAVE["DBF_TIMER_fontsize"])
+		getglobal("VCB_BF_DBF_FRAME_FontSizeSliderText"):SetText("Font size: "..VCB_SAVE["DBF_TIMER_fontsize"])
+		getglobal("VCB_BF_DBF_FRAME_FontOpacitySlider"):SetValue(VCB_SAVE["DBF_TIMER_fontopacity"])
+		getglobal("VCB_BF_DBF_FRAME_FontOpacitySliderText"):SetText("Font opacity: "..VCB_SAVE["DBF_TIMER_fontopacity"])
 	end
 end
 
@@ -576,6 +670,16 @@ function VCB_BF_OptionsFrame_SetColor()
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
 		end
+	elseif VCB_BF_COLOR_TYPE=="DebuffBG" then
+		for i=0,15 do
+			if VCB_SAVE[VCB_BF_COLOR_TAR] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Icon"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
+			end
+		end
+	elseif VCB_BF_COLOR_TYPE=="DebuffFont" then
+		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
+		end
 	end
 end
 
@@ -632,6 +736,16 @@ function VCB_BF_OptionsFrame_CancelColor()
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
+		end
+	elseif VCB_BF_COLOR_TYPE=="DebuffBG" then
+		for i=0,15 do
+			if VCB_SAVE[VCB_BF_COLOR_TAR] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Icon"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
+			end
+		end
+	elseif VCB_BF_COLOR_TYPE=="DebuffFont" then
+		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 		end
 	end
 end
@@ -1384,3 +1498,178 @@ function VCB_BF_BF_FRAME_FontOpacityChange(obj)
 end
 
 ---------------------------------------END BUFF FRAME-----------------------------------------------------------------------------------------------------------------
+---------------------------------------START DEBUFF FRAME-----------------------------------------------------------------------------------------------------------------
+
+function VCB_BF_DBF_FRAME_VERTICAL_MODE()
+	if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+		VCB_SAVE["DBF_GENERAL_verticalmode"] = false
+		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+		end
+	else
+		VCB_SAVE["DBF_GENERAL_verticalmode"] = true
+		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+		end
+	end
+end
+
+function VCB_BF_DBF_FRAME_NumPerRowSliderChange(obj)
+	VCB_SAVE["DBF_GENERAL_numperrow"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Buffs per row: "..VCB_SAVE["DBF_GENERAL_numperrow"])
+	for i=0,15 do
+		if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+		else
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+		end
+	end
+end
+
+function VCB_BF_DBF_FRAME_AuraPaddingHSliderChange(obj)
+	VCB_SAVE["DBF_GENERAL_padding_h"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Padding H: "..VCB_SAVE["DBF_GENERAL_padding_h"])
+	for i=0,15 do
+		if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+		else
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+		end
+	end
+end
+
+function VCB_BF_DBF_FRAME_AuraPaddingVSliderChange(obj)
+	VCB_SAVE["DBF_GENERAL_padding_v"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Padding V: "..VCB_SAVE["DBF_GENERAL_padding_v"])
+	for i=0,15 do
+		if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+		else
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+		end
+	end
+end
+
+function VCB_BF_DBF_FRAME_BGOpaSliderChange(obj)
+	VCB_SAVE["DBF_GENERAL_bgopacity"] = string.format("%.1f", obj:GetValue())
+	getglobal(obj:GetName().."Text"):SetText("Background Opacity: "..VCB_SAVE["DBF_GENERAL_bgopacity"])
+	for i=0,15 do
+		getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetAlpha(VCB_SAVE["DBF_GENERAL_bgopacity"])
+	end
+end
+
+function VCB_BF_DBF_FRAME_ScaleSliderChange(obj)
+	VCB_SAVE["DBF_GENERAL_scale"] = string.format("%.1f", obj:GetValue())
+	getglobal(obj:GetName().."Text"):SetText("Scale: "..VCB_SAVE["DBF_GENERAL_scale"])
+	VCB_BF_DEBUFF_FRAME:SetScale(VCB_SAVE["DBF_GENERAL_scale"])
+end
+
+function VCB_BF_DBF_FRAME_ENABLE_BGCOLOR()
+	if VCB_SAVE["DBF_GENERAL_enablebgcolor"] then
+		VCB_SAVE["DBF_GENERAL_enablebgcolor"] = false
+		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Icon"):SetVertexColor(1,1,1,VCB_SAVE["DBF_GENERAL_bgopacity"])
+		end
+	else
+		VCB_SAVE["DBF_GENERAL_enablebgcolor"] = true
+		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Icon"):SetVertexColor(VCB_SAVE["DBF_GENERAL_bgcolor_r"],VCB_SAVE["DBF_GENERAL_bgcolor_g"],VCB_SAVE["DBF_GENERAL_bgcolor_b"],VCB_SAVE["DBF_GENERAL_bgopacity"])
+		end
+	end
+end
+
+function VCB_BF_DBF_FRAME_ENABLE_BORDER()
+	if VCB_SAVE["DBF_BORDER_enableborder"] then
+		VCB_SAVE["DBF_BORDER_enableborder"] = false
+		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetTexture(nil)
+		end
+	else
+		VCB_SAVE["DBF_BORDER_enableborder"] = true
+		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetTexture(nil)
+			if VCB_SAVE["DBF_BORDER_usecustomborder"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetTexture(VCB_SAVE["DBF_BORDER_customborderpath"])
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["DBF_BORDER_border"]])
+			end
+		end
+	end
+end
+
+function VCB_BF_DBF_FRAME_USE_CUSTOM_BORDER()
+	if VCB_SAVE["DBF_BORDER_usecustomborder"] then
+		VCB_SAVE["DBF_BORDER_usecustomborder"] = false
+		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetTexture(nil)
+			if VCB_SAVE["DBF_BORDER_enableborder"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["DBF_BORDER_border"]])
+			end
+		end
+	else
+		VCB_SAVE["DBF_BORDER_usecustomborder"] = true
+		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetTexture(nil)
+			if VCB_SAVE["DBF_BORDER_enableborder"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetTexture(VCB_SAVE["DBF_BORDER_customborderpath"])
+			end
+		end
+	end
+end
+
+function VCB_BF_DBF_FRAME_EDITBOX_BORDER_CHANGE(obj)
+	VCB_SAVE["DBF_BORDER_customborderpath"] = obj:GetText()
+	if VCB_SAVE["DBF_BORDER_enableborder"] and VCB_SAVE["DBF_BORDER_usecustomborder"] then
+		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetTexture(nil)
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetTexture(VCB_SAVE["DBF_BORDER_customborderpath"])
+		end
+	end
+end
+
+function VCB_BF_DBF_FRAME_BorderSliderChange(obj)
+	VCB_SAVE["DBF_BORDER_border"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Border: "..VCB_SAVE["DBF_BORDER_border"])
+	if VCB_SAVE["DBF_BORDER_enableborder"] and (not VCB_SAVE["DBF_BORDER_usecustomborder"]) then
+		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetTexture(nil)
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["DBF_BORDER_border"]])
+		end
+	end
+end
+
+function VCB_BF_DBF_FRAME_ENABLE_FONTBORDER()
+	if VCB_SAVE["DBF_TIMER_enableborder"] then
+		VCB_SAVE["DBF_TIMER_enableborder"] = false
+		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"])
+		end
+	else
+		VCB_SAVE["DBF_TIMER_enableborder"] = true
+		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"], "OUTLINE")
+		end
+	end
+end
+
+function VCB_BF_DBF_FRAME_FontSizeSliderChange(obj)
+	VCB_SAVE["DBF_TIMER_fontsize"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Font size: "..VCB_SAVE["DBF_TIMER_fontsize"])
+	for i=0,15 do
+		if VCB_SAVE["DBF_TIMER_enableborder"] then
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"], "OUTLINE")
+		else
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"])
+		end
+	end
+end
+
+function VCB_BF_DBF_FRAME_FontOpacitySliderChange(obj)
+	VCB_SAVE["DBF_TIMER_fontopacity"] = string.format("%.1f", obj:GetValue())
+	getglobal(obj:GetName().."Text"):SetText("Font opacity: "..VCB_SAVE["DBF_TIMER_fontopacity"])
+	for i=0,15 do
+		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetAlpha(VCB_SAVE["DBF_TIMER_fontopacity"])
+	end
+end
+
+---------------------------------------END DEBUFF FRAME-----------------------------------------------------------------------------------------------------------------
