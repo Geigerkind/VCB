@@ -368,6 +368,9 @@ function VCB_OnEvent(event)
 		else
 			VCB_BF_WEAPON_FRAME:SetScale(VCB_SAVE["WP_GENERAL_scale"])
 		end
+		if VCB_SAVE["MISC_disable_CF"] then
+			VCB_BF_CONSOLIDATED_ICON:Hide()
+		end
 		VCB_BF_Lock(VCB_BF_LOCKED)
 	end	
 end
@@ -676,6 +679,9 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_WP_FRAME_TIMER_FontSizeSliderText"):SetText("Font size: "..VCB_SAVE["WP_TIMER_fontsize"])
 		getglobal("VCB_BF_WP_FRAME_TIMER_FontOpacitySlider"):SetValue(VCB_SAVE["WP_TIMER_fontopacity"])
 		getglobal("VCB_BF_WP_FRAME_TIMER_FontOpacitySliderText"):SetText("Font opacity: "..VCB_SAVE["WP_TIMER_fontopacity"])
+	elseif frame == "VCB_BF_MISC_FRAME" then
+		getglobal("VCB_BF_MISC_FRAME_CHECKBUTTON1"):SetChecked(VCB_SAVE["MISC_disable_CF"])
+		getglobal("VCB_BF_MISC_FRAME_CHECKBUTTON2"):SetChecked(VCB_SAVE["MISC_disable_BB"])
 	end
 end
 
@@ -2012,7 +2018,23 @@ function VCB_BF_WP_FRAME_TIMER_FontOpacitySliderChange(obj)
 end
 
 function VCB_BF_MISC_FRAME_DISABLE_CF()
-
+	if VCB_SAVE["MISC_disable_CF"] then
+		VCB_SAVE["MISC_disable_CF"] = false
+		VCB_BF_CONSOLIDATED_ICON:Show()
+		VCB_BF_CONSOLIDATED_BUFFFRAME:Show()
+		VCB_BF_CONSOLIDATED_BUFFFRAME:Hide()
+		for i=0, 6 do
+			getglobal("VCB_BF_BUFF_BUTTON"..i):SetParent(VCB_BF_CONSOLIDATED_BUFFFRAME)
+		end
+	else
+		VCB_SAVE["MISC_disable_CF"] = true
+		VCB_BF_CONSOLIDATED_ICON:Hide()
+		for i=0, 6 do
+			getglobal("VCB_BF_BUFF_BUTTON"..i):SetParent(VCB_BF_BUFF_FRAME)
+			getglobal("VCB_BF_BUFF_BUTTON"..i):Show()
+		end
+	end
+	VCB_BF_RepositioningAndResizing()
 end
 
 ---------------------------------------END WP FRAME-----------------------------------------------------------------------------------------------------------------

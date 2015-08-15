@@ -85,32 +85,34 @@ end
 
 function VCB_BF_BUFF_BUTTON_Update(button)
 	if (VCB_BF_DUMMY_MODE == false) then
-	local hackfix = false
+		local hackfix = false
 
-	local buffIndex, untilCancelled = GetPlayerBuff(button:GetID(), button.buffFilter);
- 	button.buffIndex = buffIndex;
- 	button.untilCancelled = untilCancelled;
- 	local timeLeft = GetPlayerBuffTimeLeft(buffIndex)
- 	local buffDuration = getglobal(button:GetName().."Duration");
- 	buffDuration:SetText(VCB_BF_GetDuration(timeLeft))
-	
-	if Consolidated_Buffs ~= nil and button:GetParent() ~= VCB_BF_DEBUFF_FRAME then
+		local buffIndex, untilCancelled = GetPlayerBuff(button:GetID(), button.buffFilter);
+		button.buffIndex = buffIndex;
+		button.untilCancelled = untilCancelled;
+		local timeLeft = GetPlayerBuffTimeLeft(buffIndex)
+		local buffDuration = getglobal(button:GetName().."Duration");
+		buffDuration:SetText(VCB_BF_GetDuration(timeLeft))
+		
 		GameTooltip:SetOwner(button)
 		GameTooltip:SetPlayerBuff(buffIndex)
 		local name = GameTooltipTextLeft1:GetText()
-		for e = 1, VCB_tablelength(Consolidated_Buffs) do
-			if not Consolidated_Buffs[e] or name == nil then break end
-			if strfind(strlower(Consolidated_Buffs[e]), strlower(name)) then
-				button:SetParent(VCB_BF_CONSOLIDATED_BUFFFRAME)
-				hackfix = true
+		
+		if Consolidated_Buffs ~= nil and button:GetParent() ~= VCB_BF_DEBUFF_FRAME and (not VCB_SAVE["MISC_disable_CF"]) then
+			for e = 1, VCB_tablelength(Consolidated_Buffs) do
+				if not Consolidated_Buffs[e] or name == nil then break end
+				if strfind(strlower(Consolidated_Buffs[e]), strlower(name)) then
+					button:SetParent(VCB_BF_CONSOLIDATED_BUFFFRAME)
+					hackfix = true
+				end
 			end
-		end
-		if (not hackfix) then
-			button:SetParent(VCB_BF_BUFF_FRAME)
+			if (not hackfix) then
+				button:SetParent(VCB_BF_BUFF_FRAME)
+			end
 		end
 		
 		-- Banned Buffs implementation
-		if Banned_Buffs ~= nil then
+		if Banned_Buffs ~= nil and (not VCB_SAVE["MISC_disable_BB"]) then
 			for p = 1, VCB_tablelength(Banned_Buffs) do
 				if not Banned_Buffs[p] or name == nil then break end
 				if ( strfind(strlower(Banned_Buffs[p]), strlower(name)) ) then
@@ -120,61 +122,60 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 				end
 			end
 		end
-	end
-	
-	if ( buffIndex < 0 and VCB_BF_LOCKED ) then
-		button:Hide();
-		buffDuration:Hide();
- 	else
- 		button:SetAlpha(1.0);
- 		button:Show();
- 		if ( SHOW_BUFF_DURATIONS == "1" and timeLeft > 0) then
- 			buffDuration:Show();
- 		else
- 			buffDuration:Hide();
- 		end
- 	end
-	
- 	local icon = getglobal(button:GetName().."Icon");
- 	icon:SetTexture(GetPlayerBuffTexture(buffIndex));
-
- 	-- Set color of debuff border based on dispel class.
- 	local color;
- 	local debuffType = GetPlayerBuffDispelType(GetPlayerBuff(button:GetID(), "HARMFUL"));
- 	local debuffSlot = getglobal(button:GetName().."Border");
- 	if ( debuffType ) then
- 		color = DebuffTypeColor[debuffType];
- 		color.a=1
- 	elseif(buffIndex >= 0) then
- 		color = DebuffTypeColor["none"];
-		if VCB_IS_LOADED and button.cat == "buff" then
-			if VCB_SAVE["CF_AURA_enableborder"] and button:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
-				color = {r=VCB_SAVE["CF_AURA_bordercolor_r"], g=VCB_SAVE["CF_AURA_bordercolor_r"], b=VCB_SAVE["CF_AURA_bordercolor_r"], a=VCB_SAVE["CF_AURA_borderopacity"]}
-			elseif VCB_SAVE["BF_BORDER_enableborder"] and button:GetParent() == VCB_BF_BUFF_FRAME then
-				color = {r=VCB_SAVE["BF_BORDER_bordercolor_r"], g=VCB_SAVE["BF_BORDER_bordercolor_g"], b=VCB_SAVE["BF_BORDER_bordercolor_b"], a=VCB_SAVE["BF_BORDER_borderopacity"]}
+		
+		if ( buffIndex < 0 and VCB_BF_LOCKED ) then
+			button:Hide();
+			buffDuration:Hide();
+		else
+			button:SetAlpha(1.0);
+			button:Show();
+			if ( SHOW_BUFF_DURATIONS == "1" and timeLeft > 0) then
+				buffDuration:Show();
+			else
+				buffDuration:Hide();
 			end
 		end
- 	else
-		color = {r=0, g=0, b=0, a=0}
- 	end
- 	if ( debuffSlot ) then
- 		debuffSlot:SetVertexColor(color.r, color.g, color.b, color.a);
- 	end
+		
+		local icon = getglobal(button:GetName().."Icon");
+		icon:SetTexture(GetPlayerBuffTexture(buffIndex));
 
-	-- Set the number of applications of an aura if its a debuff
-	local buffCount = getglobal(button:GetName().."Count");
-	local count = GetPlayerBuffApplications(buffIndex);
-	if ( count > 1 ) then
-		buffCount:SetText(count);
-		buffCount:Show();
-	else
-		buffCount:Hide();
-	end
-	
-	if VCB_IS_LOADED then
-		VCB_BF_WEAPON_BUTTON_OnUpdate(2.0)
-		VCB_BF_RepositioningAndResizing()
-	end
+		-- Set color of debuff border based on dispel class.
+		local color;
+		local debuffType = GetPlayerBuffDispelType(GetPlayerBuff(button:GetID(), "HARMFUL"));
+		local debuffSlot = getglobal(button:GetName().."Border");
+		if ( debuffType ) then
+			color = DebuffTypeColor[debuffType];
+			color.a=1
+		elseif(buffIndex >= 0) then
+			color = DebuffTypeColor["none"];
+			if VCB_IS_LOADED and button.cat == "buff" then
+				if VCB_SAVE["CF_AURA_enableborder"] and button:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
+					color = {r=VCB_SAVE["CF_AURA_bordercolor_r"], g=VCB_SAVE["CF_AURA_bordercolor_r"], b=VCB_SAVE["CF_AURA_bordercolor_r"], a=VCB_SAVE["CF_AURA_borderopacity"]}
+				elseif VCB_SAVE["BF_BORDER_enableborder"] and button:GetParent() == VCB_BF_BUFF_FRAME then
+					color = {r=VCB_SAVE["BF_BORDER_bordercolor_r"], g=VCB_SAVE["BF_BORDER_bordercolor_g"], b=VCB_SAVE["BF_BORDER_bordercolor_b"], a=VCB_SAVE["BF_BORDER_borderopacity"]}
+				end
+			end
+		else
+			color = {r=0, g=0, b=0, a=0}
+		end
+		if ( debuffSlot ) then
+			debuffSlot:SetVertexColor(color.r, color.g, color.b, color.a);
+		end
+
+		-- Set the number of applications of an aura if its a debuff
+		local buffCount = getglobal(button:GetName().."Count");
+		local count = GetPlayerBuffApplications(buffIndex);
+		if ( count > 1 ) then
+			buffCount:SetText(count);
+			buffCount:Show();
+		else
+			buffCount:Hide();
+		end
+		
+		if VCB_IS_LOADED then
+			VCB_BF_WEAPON_BUTTON_OnUpdate(2.0)
+			VCB_BF_RepositioningAndResizing()
+		end
 	end
 end
 
@@ -188,6 +189,13 @@ function VCB_BF_RepositioningAndResizing()
 			local buttonDuration = getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration")
 			local buttonBorder = getglobal("VCB_BF_BUFF_BUTTON"..i.."Border")
 			local buttonIcon = getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon")
+			
+			local CF = 0
+			if VCB_SAVE["MISC_disable_CF"] then
+				button:SetParent(VCB_BF_BUFF_FRAME)
+				CF = 1
+			end
+			
 			if parent == VCB_BF_BUFF_FRAME then
 				button:ClearAllPoints()
 				local u = 0
@@ -201,7 +209,7 @@ function VCB_BF_RepositioningAndResizing()
 						if hasOffHandEnchant then u = u + 1 end
 					end
 					VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
-					if a <= (VCB_SAVE["BF_GENERAL_numperrow"]-3) then
+					if a <= (VCB_SAVE["BF_GENERAL_numperrow"]-(3-CF)) then
 						o = u
 					end
 				end
@@ -210,7 +218,7 @@ function VCB_BF_RepositioningAndResizing()
 					button:SetPoint("TOP", VCB_BF_BUFF_FRAME, "BOTTOM", -(36+VCB_SAVE["BF_GENERAL_padding_h"])*floor((a+u-o)/(VCB_SAVE["BF_GENERAL_numperrow"])) + 10,-(44+VCB_SAVE["BF_GENERAL_padding_v"])*(a+u) + floor((a+u)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(44+VCB_SAVE["BF_GENERAL_padding_v"]) + 50)
 				else
 					VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
-					button:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*(a+u) + floor((a+u)/(VCB_SAVE["BF_GENERAL_numperrow"]))*VCB_SAVE["BF_GENERAL_numperrow"]*(32+VCB_SAVE["BF_GENERAL_padding_h"]),-(44+VCB_SAVE["BF_GENERAL_padding_v"])*floor((a+u-o)/(VCB_SAVE["BF_GENERAL_numperrow"]-o)))
+					button:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*(a+u) + floor((a+u-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(32+VCB_SAVE["BF_GENERAL_padding_h"]) + (32+VCB_SAVE["BF_GENERAL_padding_h"])*CF,-(44+VCB_SAVE["BF_GENERAL_padding_v"])*floor((a+u-o-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]-o)))
 				end
 				if VCB_SAVE["BF_TIMER_border"] then
 					buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"], "OUTLINE")
@@ -578,7 +586,7 @@ function VCB_BF_DummyConfigMode_Enable()
 			local border = getglobal(templateName..i.."Border")
 			icon:SetTexture("Interface\\AddOns\\VCB\\images\\dummy.tga")
 			buffDuration:SetText(VCB_BF_GetDuration(10))
-			if i < 7 and cat == "buff" then
+			if i < 7 and cat == "buff" and (not VCB_SAVE["MISC_disable_CF"]) then
 				button:SetParent(VCB_BF_CONSOLIDATED_BUFFFRAME)
 			end
 			if cat == "buff" then

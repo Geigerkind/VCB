@@ -7013,6 +7013,7 @@
 										getglobal("VCB_BF_MISC_FRAME_CHECKBUTTON2Text"):SetText("Disable banning mechanic")
 									</OnLoad>
 									<OnClick>
+										VCB_BF_CHECKBUTTON("MISC_disable_BB")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
