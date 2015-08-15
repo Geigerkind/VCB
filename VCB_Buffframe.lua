@@ -100,7 +100,7 @@ function VCB_BF_BUFF_BUTTON_Update(button)
  	local buffDuration = getglobal(button:GetName().."Duration");
  	buffDuration:SetText(VCB_BF_GetDuration(timeLeft))
 	
-	if Consolidated_Buffs ~= nil then
+	if Consolidated_Buffs ~= nil and button:GetParent() ~= VCB_BF_DEBUFF_FRAME then
 		GameTooltip:SetOwner(button)
 		GameTooltip:SetPlayerBuff(buffIndex)
 		local name = GameTooltipTextLeft1:GetText()
@@ -153,14 +153,13 @@ function VCB_BF_BUFF_BUTTON_Update(button)
  		color.a=1
  	elseif(buffIndex >= 0) then
  		color = DebuffTypeColor["none"];
-		if VCB_IS_LOADED then
-			if VCB_SAVE["CF_AURA_enableborder"] and button.cat == "buff" then
-				color.r = VCB_SAVE["CF_AURA_bordercolor_r"]
-				color.g = VCB_SAVE["CF_AURA_bordercolor_g"]
-				color.b = VCB_SAVE["CF_AURA_bordercolor_b"]
+		if VCB_IS_LOADED and button.cat == "buff" then
+			if VCB_SAVE["CF_AURA_enableborder"] and button:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
+				color = {r=VCB_SAVE["CF_AURA_bordercolor_r"], g=VCB_SAVE["CF_AURA_bordercolor_r"], b=VCB_SAVE["CF_AURA_bordercolor_r"], a=VCB_SAVE["CF_AURA_borderopacity"]}
+			elseif VCB_SAVE["BF_BORDER_enableborder"] and button:GetParent() == VCB_BF_BUFF_FRAME then
+				color = {r=VCB_SAVE["BF_BORDER_bordercolor_r"], g=VCB_SAVE["BF_BORDER_bordercolor_g"], b=VCB_SAVE["BF_BORDER_bordercolor_b"], a=VCB_SAVE["BF_BORDER_borderopacity"]}
 			end
 		end
- 		color.a=1
  	else
 		color = {r=0, g=0, b=0, a=0}
  	end
@@ -197,10 +196,33 @@ function VCB_BF_RepositioningAndResizing()
 			local buttonIcon = getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon")
 			if parent == VCB_BF_BUFF_FRAME then
 				button:ClearAllPoints()
-				button:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", -34*a + floor(a/17)*17*34,-46*floor(a/17)) -- NUM ROWS?
-				button:SetWidth(32)
-				button:SetHeight(32)
-				buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"])
+				if VCB_SAVE["BF_GENERAL_verticalmode"] then
+					button:SetPoint("TOP", VCB_BF_BUFF_FRAME, "BOTTOM", -(36+VCB_SAVE["BF_GENERAL_padding_h"])*floor(a/(VCB_SAVE["BF_GENERAL_numperrow"]+1)) + 10,-(44+VCB_SAVE["BF_GENERAL_padding_v"])*a + floor(a/(VCB_SAVE["BF_GENERAL_numperrow"]+1))*(VCB_SAVE["BF_GENERAL_numperrow"]+1)*(44+VCB_SAVE["BF_GENERAL_padding_v"]) + 50)
+				else
+					button:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*a + floor(a/(VCB_SAVE["BF_GENERAL_numperrow"]+1))*(VCB_SAVE["BF_GENERAL_numperrow"]+1)*(32+VCB_SAVE["BF_GENERAL_padding_h"]),-(44+VCB_SAVE["BF_GENERAL_padding_v"])*floor(a/(VCB_SAVE["BF_GENERAL_numperrow"]+1))) -- NUM ROWS?
+				end
+				if VCB_SAVE["BF_TIMER_border"] then
+					buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"], "OUTLINE")
+				else
+					buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"])
+				end
+				buttonDuration:SetTextColor(VCB_SAVE["BF_TIMER_fontcolor_r"],VCB_SAVE["BF_TIMER_fontcolor_g"],VCB_SAVE["BF_TIMER_fontcolor_b"],VCB_SAVE["BF_TIMER_fontopacity"])
+				if VCB_SAVE["BF_GENERAL_enablebgcolor"] then
+					buttonIcon:SetVertexColor(VCB_SAVE["BF_GENERAL_bgcolor_r"],VCB_SAVE["BF_GENERAL_bgcolor_g"],VCB_SAVE["BF_GENERAL_bgcolor_b"],VCB_SAVE["BF_GENERAL_bgopacity"])
+				else
+					buttonIcon:SetVertexColor(1,1,1,VCB_SAVE["BF_GENERAL_bgopacity"])
+				end
+				if VCB_SAVE["BF_BORDER_enableborder"] then
+					buttonBorder:SetTexture(nil)
+					if VCB_SAVE["BF_BORDER_usecustomborder"] then
+						buttonBorder:SetTexture(VCB_SAVE["BF_BORDER_customborderpath"])
+					else
+						buttonBorder:SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["BF_BORDER_border"]])
+					end
+					buttonBorder:SetVertexColor(VCB_SAVE["BF_BORDER_bordercolor_r"],VCB_SAVE["BF_BORDER_bordercolor_g"],VCB_SAVE["BF_BORDER_bordercolor_b"],VCB_SAVE["BF_BORDER_borderopacity"])
+				else
+					buttonBorder:SetTexture(nil)
+				end
 				a = a + 1
 			else
 				button:ClearAllPoints()
@@ -250,7 +272,6 @@ function VCB_BF_ResizeConsolidatedFrame(i)
 	if p >= VCB_SAVE["CF_BF_numperrow"] then p = VCB_SAVE["CF_BF_numperrow"] end
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetWidth(16+2*VCB_SAVE["CF_AURA_padding_h"]+(p*(32+VCB_SAVE["CF_AURA_padding_h"])))
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetHeight(10+2*VCB_SAVE["CF_AURA_padding_v"]+(ceil(i/VCB_SAVE["CF_BF_numperrow"])*(44+VCB_SAVE["CF_AURA_padding_v"])))
-	VCB_BF_CONSOLIDATED_BUFFFRAME:SetScale(VCB_SAVE["CF_BF_scale"])
 end
 
 function VCB_BF_BUFF_BUTTON_OnUpdate(elapsed, button)
@@ -521,7 +542,11 @@ function VCB_BF_DummyConfigMode_Enable()
 			icon:SetTexture("Interface\\AddOns\\VCB\\images\\dummy.tga")
 			buffDuration:SetText(VCB_BF_GetDuration(10))
 			if cat == "buff" then
-				border:SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopacity"])
+				if button:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
+					border:SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopacity"])
+				elseif button:GetParent() == VCB_BF_BUFF_FRAME then
+					border:SetVertexColor(VCB_SAVE["BF_BORDER_bordercolor_r"],VCB_SAVE["BF_BORDER_bordercolor_g"],VCB_SAVE["BF_BORDER_bordercolor_b"],VCB_SAVE["BF_BORDER_borderopacity"])
+				end
 			end
 			if i < 7 and cat == "buff" then
 				button:SetParent(VCB_BF_CONSOLIDATED_BUFFFRAME)

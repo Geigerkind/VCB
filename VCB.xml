@@ -107,6 +107,7 @@
 			<OnLoad>
 				this:RegisterForClicks("LeftButtonUp","RightButtonUp")
 				this:RegisterForDrag("LeftButton")
+				this:SetClampedToScreen(true)
 			</OnLoad>
 			<OnDragStart>
 				this:LockHighlight()
@@ -178,6 +179,7 @@
 			</OnEvent>
 			<OnLoad>
 				VCB_OnLoad()
+				this:SetClampedToScreen(true)
 			</OnLoad>
 		</Scripts>
 		-- Title block
@@ -3775,7 +3777,7 @@
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="VCB_BF_BF_FRAME" relativePoint="TOPLEFT">
 									<Offset>
-										<AbsDimension x="20" y="-320" />
+										<AbsDimension x="20" y="-330" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -3825,6 +3827,7 @@
 										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON1Text"):SetText("Vertical mode")
 									</OnLoad>
 									<OnClick>
+										VCB_BF_BF_FRAME_VERTICAL_MODE()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3846,6 +3849,7 @@
 										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON2Text"):SetText("Enable background color")
 									</OnLoad>
 									<OnClick>
+										VCB_BF_BF_FRAME_ENABLE_BGCOLOR()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3941,7 +3945,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										VCB_BF_OpenColorPicker(this);
+										VCB_BF_OpenColorPicker(this, "BF_GENERAL_bg", "BF_GENERAL_enablebgcolor", "BFbg");
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -3970,14 +3974,17 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = "Move this to change the amount."
-										this:SetMinMaxValues(1,10)
-										this:SetValue(5)
+										this:SetMinMaxValues(5,32)
+										this:SetValue(16)
 										this:SetValueStep(1)
 										getglobal("VCB_BF_BF_FRAME_NumPerRowSliderText"):SetText("Buffs per row")
-										getglobal("VCB_BF_BF_FRAME_NumPerRowSliderLow"):SetText("1")
-										getglobal("VCB_BF_BF_FRAME_NumPerRowSliderHigh"):SetText("10")
+										getglobal("VCB_BF_BF_FRAME_NumPerRowSliderLow"):SetText("5")
+										getglobal("VCB_BF_BF_FRAME_NumPerRowSliderHigh"):SetText("32")
 									</OnLoad>
 									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_BF_FRAME_NumPerRowSlider_CHANGE(this)
+										end
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -4005,13 +4012,13 @@
 									</OnLoad>
 									<OnValueChanged>
 										if VCB_IS_LOADED then
-											VCB_BF_CF_FRAME_BGOpaSliderChange(this)
+											VCB_BF_BF_FRAME_AuraPaddingHChange(this)
 										end
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
 							-- Aura padding Slider
-							<Slider name="VCB_BF_BF_FRAME_AuraPaddingYSlider" inherits="VCB_BF_SliderTemplate">
+							<Slider name="VCB_BF_BF_FRAME_AuraPaddingVSlider" inherits="VCB_BF_SliderTemplate">
 								<Size>
 									<AbsDimension x="155" y="16"/>
 								</Size>
@@ -4028,13 +4035,13 @@
 										this:SetMinMaxValues(1,10)
 										this:SetValue(5)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_BF_FRAME_AuraPaddingYSliderText"):SetText("Padding Y")
-										getglobal("VCB_BF_BF_FRAME_AuraPaddingYSliderLow"):SetText("1")
-										getglobal("VCB_BF_BF_FRAME_AuraPaddingYSliderHigh"):SetText("10")
+										getglobal("VCB_BF_BF_FRAME_AuraPaddingVSliderText"):SetText("Padding Y")
+										getglobal("VCB_BF_BF_FRAME_AuraPaddingVSliderLow"):SetText("1")
+										getglobal("VCB_BF_BF_FRAME_AuraPaddingVSliderHigh"):SetText("10")
 									</OnLoad>
 									<OnValueChanged>
 										if VCB_IS_LOADED then
-											VCB_BF_CF_FRAME_BGOpaSliderChange(this)
+											VCB_BF_BF_FRAME_AuraPaddingVChange(this)
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -4054,14 +4061,17 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = "Move this to change the amount."
-										this:SetMinMaxValues(1,10)
-										this:SetValue(5)
-										this:SetValueStep(1)
-										getglobal("VCB_BF_BF_FRAME_BGOpaSliderText"):SetText("Background Opacity")
-										getglobal("VCB_BF_BF_FRAME_BGOpaSliderLow"):SetText("1")
-										getglobal("VCB_BF_BF_FRAME_BGOpaSliderHigh"):SetText("10")
+										this:SetMinMaxValues(0,1.0)
+										this:SetValue(1.0)
+										this:SetValueStep(0.1)
+										getglobal("VCB_BF_BF_FRAME_BGOpaSliderText"):SetText("Opacity")
+										getglobal("VCB_BF_BF_FRAME_BGOpaSliderLow"):SetText("0")
+										getglobal("VCB_BF_BF_FRAME_BGOpaSliderHigh"):SetText("1.0")
 									</OnLoad>
 									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_BF_FRAME_BGOpaSliderChange(this)
+										end
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -4080,14 +4090,17 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = "Move this to change the amount."
-										this:SetMinMaxValues(1,10)
-										this:SetValue(5)
-										this:SetValueStep(1)
+										this:SetMinMaxValues(0.5,3.0)
+										this:SetValue(1.0)
+										this:SetValueStep(0.1)
 										getglobal("VCB_BF_BF_FRAME_ScaleSliderText"):SetText("Scale")
-										getglobal("VCB_BF_BF_FRAME_ScaleSliderLow"):SetText("1")
-										getglobal("VCB_BF_BF_FRAME_ScaleSliderHigh"):SetText("10")
+										getglobal("VCB_BF_BF_FRAME_ScaleSliderLow"):SetText("0.5")
+										getglobal("VCB_BF_BF_FRAME_ScaleSliderHigh"):SetText("3.0")
 									</OnLoad>
 									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_BF_FRAME_ScaleSliderChange(this)
+										end
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -4095,7 +4108,7 @@
 					</Frame>
 					<Frame name="VCB_BF_BF_FRAME_BORDER">
 						<Size>
-							<AbsDimension x="580" y="90"/>
+							<AbsDimension x="580" y="100"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOP" relativeTo="VCB_BF_BF_FRAME_GENERAL" relativePoint="BOTTOM">
@@ -4135,10 +4148,11 @@
 										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON5Text"):SetText("Enable border")
 									</OnLoad>
 									<OnClick>
+										VCB_BF_BF_FRAME_ENABLE_BORDER()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
-							-- Checkbutton bg color
+							-- Checkbutton use custom border
 							<CheckButton name="VCB_BF_BF_FRAME_CHECKBUTTON6" inherits="VCB_BF_CheckTemplate">
 								<Size>
 									<AbsDimension x="30" y="30"/>
@@ -4156,6 +4170,7 @@
 										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON6Text"):SetText("Use custom border")
 									</OnLoad>
 									<OnClick>
+										VCB_BF_BF_FRAME_USE_CUSTOM_BORDER()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -4209,7 +4224,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										VCB_BF_OpenColorPicker(this);
+										VCB_BF_OpenColorPicker(this, "BF_BORDER_border", "BF_BORDER_enableborder", "BFborder");
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -4268,30 +4283,67 @@
 									</Layer>
 								</Layers>
 								<FontString inherits="ChatFontNormal" />
+								<Scripts>
+									<OnTextChanged>
+										VCB_BF_BF_FRAME_EDITBOX_BORDERCHANGE(this)
+									</OnTextChanged>
+								</Scripts>
 							</EditBox>
-							-- Aura Border Slider
-							<Slider name="VCB_BF_BF_FRAME_BorderSlider" inherits="VCB_BF_SliderTemplate">
+							-- Aura Border opacity Slider
+							<Slider name="VCB_BF_BF_FRAME_BorderOpacitySlider" inherits="VCB_BF_SliderTemplate">
 								<Size>
 									<AbsDimension x="155" y="16"/>
 								</Size>
 								<Anchors>
 									<Anchor point="LEFT" relativeTo="VCB_BF_BF_FRAME_Color4" relativePoint="RIGHT">
 										<Offset>
-											<AbsDimension x="175" y="-28" />
+											<AbsDimension x="175" y="-10" />
 										</Offset>
 									</Anchor>
 								</Anchors>
 								<Scripts>
 									<OnLoad>
 										this.aide = "Move this to change the amount."
-										this:SetMinMaxValues(1,10)
-										this:SetValue(5)
+										this:SetMinMaxValues(0,1.0)
+										this:SetValue(1.0)
+										this:SetValueStep(0.1)
+										getglobal("VCB_BF_BF_FRAME_BorderOpacitySliderText"):SetText("Border Opacity")
+										getglobal("VCB_BF_BF_FRAME_BorderOpacitySliderLow"):SetText("0")
+										getglobal("VCB_BF_BF_FRAME_BorderOpacitySliderHigh"):SetText("1.0")
+									</OnLoad>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_BF_FRAME_BorderOpacityChange(this)
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							-- Aura Border Slider
+							<Slider name="VCB_BF_BF_FRAME_BorderSlider" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="155" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_BF_FRAME_BorderOpacitySlider" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-30" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = "Move this to change the amount."
+										this:SetMinMaxValues(1,1)
+										this:SetValue(1)
 										this:SetValueStep(1)
 										getglobal("VCB_BF_BF_FRAME_BorderSliderText"):SetText("Border")
 										getglobal("VCB_BF_BF_FRAME_BorderSliderLow"):SetText("1")
-										getglobal("VCB_BF_BF_FRAME_BorderSliderHigh"):SetText("10")
+										getglobal("VCB_BF_BF_FRAME_BorderSliderHigh"):SetText("1")
 									</OnLoad>
 									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_BF_FRAME_BorderChange(this)
+										end
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -4299,7 +4351,7 @@
 					</Frame>
 					<Frame name="VCB_BF_BF_FRAME_TIMER">
 						<Size>
-							<AbsDimension x="580" y="50"/>
+							<AbsDimension x="580" y="70"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOP" relativeTo="VCB_BF_BF_FRAME_BORDER" relativePoint="BOTTOM">
@@ -4339,7 +4391,7 @@
 										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON4Text"):SetText("Enable border")
 									</OnLoad>
 									<OnClick>
-										VCB_BF_CF_FRAME_INVERTBUTTON()
+										VCB_BF_BF_FRAME_TIMER_ENABLE_BORDER()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -4349,9 +4401,9 @@
 									<AbsDimension x="16" y="16"/>
 								</Size>
 								<Anchors>
-									<Anchor point="LEFT" relativeTo="VCB_BF_BF_FRAME_CHECKBUTTON4" relativePoint="RIGHT">
+									<Anchor point="TOP" relativeTo="VCB_BF_BF_FRAME_CHECKBUTTON4" relativePoint="BOTTOM">
 										<Offset>
-											<AbsDimension x="165" y="0"/>
+											<AbsDimension x="0" y="-2"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -4393,7 +4445,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										VCB_BF_OpenColorPicker(this);
+										VCB_BF_OpenColorPicker(this, "BF_TIMER_font", nil, "BFfont");
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -4407,70 +4459,64 @@
 								</Scripts>
 								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
 							</Button>
-							-- COLOR PICKER
-							<Button name="VCB_BF_BF_FRAME_Color3">
+							-- Aura Font Size Slider
+							<Slider name="VCB_BF_BF_FRAME_FontSizeSlider" inherits="VCB_BF_SliderTemplate">
 								<Size>
-									<AbsDimension x="16" y="16"/>
+									<AbsDimension x="155" y="16"/>
 								</Size>
 								<Anchors>
-									<Anchor point="LEFT" relativeTo="VCB_BF_BF_FRAME_Color2" relativePoint="RIGHT">
+									<Anchor point="LEFT" relativeTo="VCB_BF_BF_FRAME_CHECKBUTTON4" relativePoint="RIGHT">
 										<Offset>
-											<AbsDimension x="175" y="0"/>
+											<AbsDimension x="165" y="-15" />
 										</Offset>
 									</Anchor>
 								</Anchors>
-								<Layers>
-									<Layer>
-										<FontString name="VCB_BF_BF_FRAME_FONT7" inherits="GameFontNormalSmall" text="Select font color" justifyH="LEFT">
-											<Size>
-												<AbsDimension x="200" y="16" />
-											</Size>
-											<Anchors>
-												<Anchor point="LEFT" relativeTo="VCB_BF_BF_FRAME_Color3" relativePoint="RIGHT">
-													<Offset>
-														<AbsDimension x="5" y="0" />
-													</Offset>
-												</Anchor>
-											</Anchors>
-										</FontString>
-									</Layer>
-									<Layer level="BACKGROUND">
-										<Texture name="$parent_SwatchBg">
-											<Size>
-												<AbsDimension x="14" y="14"/>
-											</Size>
-											<Anchors>
-												<Anchor point="CENTER">
-													<Offset>
-														<AbsDimension x="0" y="0"/>
-													</Offset>
-												</Anchor>
-											</Anchors>
-											<Color r="1.0" g="1.0" b="1.0"/>
-										</Texture>
-									</Layer>
-								</Layers>
 								<Scripts>
 									<OnLoad>
-										getglobal(this:GetName().."_SwatchBg").r = 1.0;
-										getglobal(this:GetName().."_SwatchBg").g = 1.0;
-										getglobal(this:GetName().."_SwatchBg").b = 1.0;
+										this.aide = "Move this to change the amount."
+										this:SetMinMaxValues(1,24)
+										this:SetValue(10)
+										this:SetValueStep(1)
+										getglobal("VCB_BF_BF_FRAME_FontSizeSliderText"):SetText("Font Size")
+										getglobal("VCB_BF_BF_FRAME_FontSizeSliderLow"):SetText("1")
+										getglobal("VCB_BF_BF_FRAME_FontSizeSliderHigh"):SetText("24")
 									</OnLoad>
-									<OnClick>
-										VCB_BF_OpenColorPicker(this);
-									</OnClick>
-									<OnEnter>
-										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
-										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
-									</OnEnter>
-									<OnLeave>
-										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
-										GameTooltip:Hide();
-									</OnLeave>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_BF_FRAME_FontSizeChange(this)
+										end
+									</OnValueChanged>
 								</Scripts>
-								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
-							</Button>
+							</Slider>
+							-- Aura Font opacity Slider
+							<Slider name="VCB_BF_BF_FRAME_FontOpacitySlider" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="155" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="VCB_BF_BF_FRAME_FontSizeSlider" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="38" y="0" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = "Move this to change the amount."
+										this:SetMinMaxValues(0,1.0)
+										this:SetValue(1.0)
+										this:SetValueStep(0.1)
+										getglobal("VCB_BF_BF_FRAME_FontOpacitySliderText"):SetText("Font Opacity")
+										getglobal("VCB_BF_BF_FRAME_FontOpacitySliderLow"):SetText("0")
+										getglobal("VCB_BF_BF_FRAME_FontOpacitySliderHigh"):SetText("1.0")
+									</OnLoad>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_BF_FRAME_FontOpacityChange(this)
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
 						</Frames>
 					</Frame>
 				</Frames>

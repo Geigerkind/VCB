@@ -22,6 +22,11 @@
 				</Offset>
 			</Anchor>
 		</Anchors>
+		<Scripts>
+			<OnLoad>
+				this:SetClampedToScreen(true)
+			</OnLoad>
+		</Scripts>
 	</Frame>
 	<Frame name="VCB_BF_DEBUFF_FRAME" parent="UIParent" toplevel="true" frameStrata="LOW" hidden="true" movable="true">
 		<Size>
@@ -34,6 +39,11 @@
 				</Offset>
 			</Anchor>
 		</Anchors>
+		<Scripts>
+			<OnLoad>
+				this:SetClampedToScreen(true)
+			</OnLoad>
+		</Scripts>
 	</Frame>
 	<Frame name="VCB_BF_WEAPON_FRAME" parent="UIParent" toplevel="true" frameStrata="LOW" hidden="true" movable="true">
 		<Size>
@@ -46,6 +56,11 @@
 				</Offset>
 			</Anchor>
 		</Anchors>
+		<Scripts>
+			<OnLoad>
+				this:SetClampedToScreen(true)
+			</OnLoad>
+		</Scripts>
 	</Frame>
 	<Frame name="VCB_BF_CONSOLIDATED_ICON" parent="VCB_BF_BUFF_FRAME" toplevel="true" frameStrata="LOW">
 		<Size>
@@ -62,14 +77,14 @@
 			<OnEnter>
 				VCB_BF_CONSOLIDATED_ICONIcon:SetTexture(nil)
 				VCB_BF_CONSOLIDATED_ICONIcon:SetTexture("Interface\\AddOns\\VCB\\images\\"..VCB_SAVE["CF_icon_texture"].."_hover.tga")
-				if (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) then
+				if (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) and (VCB_BF_LOCKED) then
 					VCB_BF_CONSOLIDATED_BUFFFRAME:Show()
 				end
 			</OnEnter>
 			<OnLeave>
 				VCB_BF_CONSOLIDATED_ICONIcon:SetTexture(nil)
 				VCB_BF_CONSOLIDATED_ICONIcon:SetTexture("Interface\\AddOns\\VCB\\images\\"..VCB_SAVE["CF_icon_texture"]..".tga")
-				if (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) then
+				if (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) and (VCB_BF_LOCKED) then
 					VCB_BF_CONSOLIDATED_BUFFFRAME:Hide()
 				end
 			</OnLeave>
@@ -124,12 +139,12 @@
 		</Backdrop>
 		<Scripts>
 			<OnEnter>
-				if (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) then
+				if (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) and (VCB_BF_LOCKED) then
 					this:Show()
 				end
 			</OnEnter>
 			<OnLeave>
-				if (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) then
+				if (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) and (VCB_BF_LOCKED) then
 					this:Hide()
 				end
 			</OnLeave>
@@ -156,14 +171,14 @@
 				VCB_BF_BUFF_BUTTON_OnClick(this)
 			</OnClick>
 			<OnEnter>
-				if this:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME and (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) then
+				if this:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME and (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) and (VCB_BF_LOCKED) then
 					VCB_BF_CONSOLIDATED_BUFFFRAME:Show()
 				end
 				GameTooltip:SetOwner(this, "ANCHOR_BOTTOMLEFT")
 				GameTooltip:SetPlayerBuff(this.buffIndex)
 			</OnEnter>
 			<OnLeave>
-				if this:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME and (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) then
+				if this:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME and (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) and (VCB_BF_LOCKED) then
 					VCB_BF_CONSOLIDATED_BUFFFRAME:Hide()
 				end
 				GameTooltip:Hide()
