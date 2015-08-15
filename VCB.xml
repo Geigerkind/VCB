@@ -5453,7 +5453,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										VCB_BF_OpenColorPicker(this);
+										VCB_BF_OpenColorPicker(this, "WP_GENERAL_bg", "WP_GENERAL_enablebgcolor", "WeaponBG");
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -5491,7 +5491,7 @@
 									</OnLoad>
 									<OnValueChanged>
 										if VCB_IS_LOADED then
-											VCB_BF_CF_FRAME_BGOpaSliderChange(this)
+											VCB_BF_WP_FRAME_AuraPaddingHSliderChange(this)
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -5511,16 +5511,16 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = "Move this to change the amount."
-										this:SetMinMaxValues(1,10)
-										this:SetValue(5)
+										this:SetMinMaxValues(1,24)
+										this:SetValue(10)
 										this:SetValueStep(1)
 										getglobal("VCB_BF_WP_FRAME_FontSizeSliderText"):SetText("Font size")
 										getglobal("VCB_BF_WP_FRAME_FontSizeSliderLow"):SetText("1")
-										getglobal("VCB_BF_WP_FRAME_FontSizeSliderHigh"):SetText("10")
+										getglobal("VCB_BF_WP_FRAME_FontSizeSliderHigh"):SetText("24")
 									</OnLoad>
 									<OnValueChanged>
 										if VCB_IS_LOADED then
-											VCB_BF_CF_FRAME_BGOpaSliderChange(this)
+											VCB_BF_WP_FRAME_FontSizeSliderChange(this)
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -5540,14 +5540,17 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = "Move this to change the amount."
-										this:SetMinMaxValues(1,10)
-										this:SetValue(5)
-										this:SetValueStep(1)
+										this:SetMinMaxValues(0,1.0)
+										this:SetValue(1.0)
+										this:SetValueStep(0.1)
 										getglobal("VCB_BF_WP_FRAME_BGOpaSliderText"):SetText("Background Opacity")
-										getglobal("VCB_BF_WP_FRAME_BGOpaSliderLow"):SetText("1")
-										getglobal("VCB_BF_WP_FRAME_BGOpaSliderHigh"):SetText("10")
+										getglobal("VCB_BF_WP_FRAME_BGOpaSliderLow"):SetText("0")
+										getglobal("VCB_BF_WP_FRAME_BGOpaSliderHigh"):SetText("1.0")
 									</OnLoad>
 									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_WP_FRAME_BGOpaSliderChange(this)
+										end
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -5566,14 +5569,17 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = "Move this to change the amount."
-										this:SetMinMaxValues(1,10)
-										this:SetValue(5)
-										this:SetValueStep(1)
+										this:SetMinMaxValues(0.5,2.0)
+										this:SetValue(1.0)
+										this:SetValueStep(0.1)
 										getglobal("VCB_BF_WP_FRAME_ScaleSliderText"):SetText("Scale")
-										getglobal("VCB_BF_WP_FRAME_ScaleSliderLow"):SetText("1")
-										getglobal("VCB_BF_WP_FRAME_ScaleSliderHigh"):SetText("10")
+										getglobal("VCB_BF_WP_FRAME_ScaleSliderLow"):SetText("0.5")
+										getglobal("VCB_BF_WP_FRAME_ScaleSliderHigh"):SetText("2.0")
 									</OnLoad>
 									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_WP_FRAME_ScaleSliderChange(this)
+										end
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -5592,16 +5598,16 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = "Move this to change the amount."
-										this:SetMinMaxValues(1,10)
-										this:SetValue(5)
+										this:SetMinMaxValues(1,4)
+										this:SetValue(1)
 										this:SetValueStep(1)
 										getglobal("VCB_BF_WP_FRAME_FontSliderText"):SetText("Font")
 										getglobal("VCB_BF_WP_FRAME_FontSliderLow"):SetText("1")
-										getglobal("VCB_BF_WP_FRAME_FontSliderHigh"):SetText("10")
+										getglobal("VCB_BF_WP_FRAME_FontSliderHigh"):SetText("4")
 									</OnLoad>
 									<OnValueChanged>
 										if VCB_IS_LOADED then
-											VCB_BF_CF_FRAME_BGOpaSliderChange(this)
+											VCB_BF_WP_FRAME_FontSliderChange(this)
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -5650,10 +5656,11 @@
 										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON5Text"):SetText("Enable border")
 									</OnLoad>
 									<OnClick>
+										VCB_BF_WP_FRAME_ENABLE_BORDER()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
-							-- Checkbutton bg color
+							-- Checkbutton use custom border
 							<CheckButton name="VCB_BF_WP_FRAME_CHECKBUTTON6" inherits="VCB_BF_CheckTemplate">
 								<Size>
 									<AbsDimension x="30" y="30"/>
@@ -5671,6 +5678,7 @@
 										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON6Text"):SetText("Use custom border")
 									</OnLoad>
 									<OnClick>
+										VCB_BF_WP_FRAME_USE_CUSTOM_BORDER()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -5724,7 +5732,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										VCB_BF_OpenColorPicker(this);
+										VCB_BF_OpenColorPicker(this, "WP_BORDER_border", "WP_BORDER_enableborder", "WPBorder");
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -5783,6 +5791,11 @@
 									</Layer>
 								</Layers>
 								<FontString inherits="ChatFontNormal" />
+								<Scripts>
+									<OnTextChanged>
+										VCB_BF_WP_FRAME_EDITBOX_BORDER_CHANGE(this)
+									</OnTextChanged>
+								</Scripts>
 							</EditBox>
 							-- Aura Border Slider
 							<Slider name="VCB_BF_WP_FRAME_BorderSlider" inherits="VCB_BF_SliderTemplate">
@@ -5799,14 +5812,17 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = "Move this to change the amount."
-										this:SetMinMaxValues(1,10)
-										this:SetValue(5)
+										this:SetMinMaxValues(1,1)
+										this:SetValue(1)
 										this:SetValueStep(1)
 										getglobal("VCB_BF_WP_FRAME_BorderSliderText"):SetText("Border")
 										getglobal("VCB_BF_WP_FRAME_BorderSliderLow"):SetText("1")
-										getglobal("VCB_BF_WP_FRAME_BorderSliderHigh"):SetText("10")
+										getglobal("VCB_BF_WP_FRAME_BorderSliderHigh"):SetText("1")
 									</OnLoad>
 									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_WP_FRAME_BorderSliderChange(this)
+										end
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -5814,7 +5830,7 @@
 					</Frame>
 					<Frame name="VCB_BF_WP_FRAME_TIMER">
 						<Size>
-							<AbsDimension x="580" y="50"/>
+							<AbsDimension x="580" y="70"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOP" relativeTo="VCB_BF_WP_FRAME_BORDER" relativePoint="BOTTOM">
@@ -5854,7 +5870,7 @@
 										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON4Text"):SetText("Enable border")
 									</OnLoad>
 									<OnClick>
-										VCB_BF_CF_FRAME_INVERTBUTTON()
+										VCB_BF_WP_FRAME_TIMER_ENABLE_BORDER()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -5864,9 +5880,9 @@
 									<AbsDimension x="16" y="16"/>
 								</Size>
 								<Anchors>
-									<Anchor point="LEFT" relativeTo="VCB_BF_WP_FRAME_CHECKBUTTON4" relativePoint="RIGHT">
+									<Anchor point="TOP" relativeTo="VCB_BF_WP_FRAME_CHECKBUTTON4" relativePoint="BOTTOM">
 										<Offset>
-											<AbsDimension x="165" y="0"/>
+											<AbsDimension x="0" y="-3"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -5908,7 +5924,7 @@
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
 									</OnLoad>
 									<OnClick>
-										VCB_BF_OpenColorPicker(this);
+										VCB_BF_OpenColorPicker(this, "WP_TIMER_font", nil, "WPTimer");
 									</OnClick>
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
@@ -5922,70 +5938,64 @@
 								</Scripts>
 								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
 							</Button>
-							-- COLOR PICKER
-							<Button name="VCB_BF_WP_FRAME_Color3">
+							-- Aura Font size Slider
+							<Slider name="VCB_BF_WP_FRAME_TIMER_FontSizeSlider" inherits="VCB_BF_SliderTemplate">
 								<Size>
-									<AbsDimension x="16" y="16"/>
+									<AbsDimension x="155" y="16"/>
 								</Size>
 								<Anchors>
-									<Anchor point="LEFT" relativeTo="VCB_BF_WP_FRAME_Color2" relativePoint="RIGHT">
+									<Anchor point="LEFT" relativeTo="VCB_BF_WP_FRAME_CHECKBUTTON4" relativePoint="RIGHT">
 										<Offset>
-											<AbsDimension x="175" y="0"/>
+											<AbsDimension x="165" y="-15" />
 										</Offset>
 									</Anchor>
 								</Anchors>
-								<Layers>
-									<Layer>
-										<FontString name="VCB_BF_WP_FRAME_FONT7" inherits="GameFontNormalSmall" text="Select font color" justifyH="LEFT">
-											<Size>
-												<AbsDimension x="200" y="16" />
-											</Size>
-											<Anchors>
-												<Anchor point="LEFT" relativeTo="VCB_BF_WP_FRAME_Color3" relativePoint="RIGHT">
-													<Offset>
-														<AbsDimension x="5" y="0" />
-													</Offset>
-												</Anchor>
-											</Anchors>
-										</FontString>
-									</Layer>
-									<Layer level="BACKGROUND">
-										<Texture name="$parent_SwatchBg">
-											<Size>
-												<AbsDimension x="14" y="14"/>
-											</Size>
-											<Anchors>
-												<Anchor point="CENTER">
-													<Offset>
-														<AbsDimension x="0" y="0"/>
-													</Offset>
-												</Anchor>
-											</Anchors>
-											<Color r="1.0" g="1.0" b="1.0"/>
-										</Texture>
-									</Layer>
-								</Layers>
 								<Scripts>
 									<OnLoad>
-										getglobal(this:GetName().."_SwatchBg").r = 1.0;
-										getglobal(this:GetName().."_SwatchBg").g = 1.0;
-										getglobal(this:GetName().."_SwatchBg").b = 1.0;
+										this.aide = "Move this to change the amount."
+										this:SetMinMaxValues(1,24)
+										this:SetValue(1)
+										this:SetValueStep(1)
+										getglobal("VCB_BF_WP_FRAME_TIMER_FontSizeSliderText"):SetText("Font size")
+										getglobal("VCB_BF_WP_FRAME_TIMER_FontSizeSliderLow"):SetText("1")
+										getglobal("VCB_BF_WP_FRAME_TIMER_FontSizeSliderHigh"):SetText("24")
 									</OnLoad>
-									<OnClick>
-										VCB_BF_OpenColorPicker(this);
-									</OnClick>
-									<OnEnter>
-										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
-										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
-									</OnEnter>
-									<OnLeave>
-										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
-										GameTooltip:Hide();
-									</OnLeave>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_WP_FRAME_TIMER_FontSizeSliderChange(this)
+										end
+									</OnValueChanged>
 								</Scripts>
-								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
-							</Button>
+							</Slider>
+							-- Aura Font opacity Slider
+							<Slider name="VCB_BF_WP_FRAME_TIMER_FontOpacitySlider" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="155" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="VCB_BF_WP_FRAME_TIMER_FontSizeSlider" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="40" y="0" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = "Move this to change the amount."
+										this:SetMinMaxValues(0,1.0)
+										this:SetValue(1.0)
+										this:SetValueStep(0.1)
+										getglobal("VCB_BF_WP_FRAME_TIMER_FontOpacitySliderText"):SetText("Font opacity")
+										getglobal("VCB_BF_WP_FRAME_TIMER_FontOpacitySliderLow"):SetText("0")
+										getglobal("VCB_BF_WP_FRAME_TIMER_FontOpacitySliderHigh"):SetText("1.0")
+									</OnLoad>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_WP_FRAME_TIMER_FontOpacitySliderChange(this)
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
 						</Frames>
 					</Frame>
 				</Frames>
@@ -6981,6 +6991,7 @@
 										getglobal("VCB_BF_MISC_FRAME_CHECKBUTTON1Text"):SetText("Disable consolidate mechanic")
 									</OnLoad>
 									<OnClick>
+										VCB_BF_MISC_FRAME_DISABLE_CF()
 									</OnClick>
 								</Scripts>
 							</CheckButton>

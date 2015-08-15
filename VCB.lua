@@ -27,6 +27,8 @@ VCB_BORDER_ARRAY[1] = "Interface\\Tooltips\\UI-Tooltip-Border.tga"
 VCB_BORDER_ARRAY[2] = "Interface\\DialogFrame\\UI-DialogBox-Border.tga"
 VCB_AURABORDER_ARRAY = {}
 VCB_AURABORDER_ARRAY[1] = "Interface\\Buttons\\UI-Debuff-Overlays.tga"
+VCB_WEAPONBORDER_ARRAY = {}
+VCB_WEAPONBORDER_ARRAY[1] = "Interface\\Buttons\\UI-TempEnchant-Border.tga"
 VCB_BACKGROUND_ARRAY = {}
 VCB_BACKGROUND_ARRAY[1] = "Interface\\Tooltips\\UI-Tooltip-Background.tga"
 VCB_BACKGROUND_ARRAY[2] = "Interface\\DialogFrame\\UI-DialogBox-Background.tga"
@@ -63,9 +65,7 @@ function VCB_OnEvent(event)
 				Timer_minutes_convert = false,
 				Timer_tenth = false,
 				Timer_round = false,
-				Timer_fontsize = 10, 
 				Timer_font = "FRIZQT__.ttf",
-				Timer_alpha = 1,
 				CF_icon_color_r = 1,
 				CF_icon_color_g = 1,
 				CF_icon_color_b = 1,
@@ -188,6 +188,8 @@ function VCB_OnEvent(event)
 				WP_TIMER_fontcolor_b = 0,
 				WP_TIMER_fontopacity = 1,
 				WP_TIMER_fontsize = 10,
+				MISC_disable_CF = false,
+				MISC_disable_BB = false,
 			}
 		end
 		if VCB_BF_LOCKED == nil then
@@ -201,6 +203,8 @@ function VCB_OnEvent(event)
 		end
 		
 		--VCB_SAVE["WP_TIMER_fontsize"] = 10
+		--VCB_SAVE["MISC_disable_CF"] = false
+		--VCB_SAVE["MISC_disable_BB"] = false
 		
 		VCB_IS_LOADED = true
 	elseif event == "PLAYER_ENTERING_WORLD" then
@@ -327,7 +331,22 @@ function VCB_OnEvent(event)
 			else
 				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Icon"):SetVertexColor(1,1,1,VCB_SAVE["WP_GENERAL_bgopacity"])
 			end
-			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetAlpha(VCB_SAVE["Timer_alpha"])
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"])
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetTexture(nil)
+			if VCB_SAVE["WP_BORDER_enableborder"] then
+				if VCB_SAVE["WP_BORDER_usecustomborder"] then
+					getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetTexture(VCB_SAVE["WP_BORDER_customborderpath"])
+				else
+					getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetTexture(VCB_WEAPONBORDER_ARRAY[VCB_SAVE["WP_BORDER_border"]]) -- why does the debuff border not work :/
+				end
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["WP_BORDER_bordercolor_r"],VCB_SAVE["WP_BORDER_bordercolor_g"],VCB_SAVE["WP_BORDER_bordercolor_b"],VCB_SAVE["WP_BORDER_borderopacity"])
+			end
+			if VCB_SAVE["WP_TIMER_enableborder"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"])
+			end
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetTextColor(VCB_SAVE["WP_TIMER_fontcolor_r"],VCB_SAVE["WP_TIMER_fontcolor_g"],VCB_SAVE["WP_TIMER_fontcolor_b"],VCB_SAVE["WP_TIMER_fontopacity"])
 		end
 		VCB_BF_WEAPON_FRAME:ClearAllPoints()
 		VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
@@ -337,12 +356,18 @@ function VCB_OnEvent(event)
 			VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -2*(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
 		else
 			VCB_BF_WEAPON_FRAME:SetParent(UIParent)
-			VCB_BF_WEAPON_FRAME:SetPoint("CENTER", 0, 0)
+			VCB_BF_WEAPON_FRAME:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
 			VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", 0, 0)
 		end
+		VCB_BF_WEAPON_BUTTON_OnEvent(false)
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetScale(VCB_SAVE["CF_BF_scale"])
 		VCB_BF_BUFF_FRAME:SetScale(VCB_SAVE["BF_GENERAL_scale"])
 		VCB_BF_DEBUFF_FRAME:SetScale(VCB_SAVE["DBF_GENERAL_scale"])
+		if VCB_SAVE["WP_GENERAL_attach"] then
+			VCB_BF_WEAPON_FRAME:SetScale(1)
+		else
+			VCB_BF_WEAPON_FRAME:SetScale(VCB_SAVE["WP_GENERAL_scale"])
+		end
 		VCB_BF_Lock(VCB_BF_LOCKED)
 	end	
 end
@@ -619,6 +644,38 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON1"):SetChecked(VCB_SAVE["WP_GENERAL_verticalmode"])
 		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON2"):SetChecked(VCB_SAVE["WP_GENERAL_enablebgcolor"])
 		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON7"):SetChecked(VCB_SAVE["WP_GENERAL_attach"])
+		getglobal("VCB_BF_WP_FRAME_Color1NormalTexture"):SetVertexColor(VCB_SAVE["WP_GENERAL_bgcolor_r"], VCB_SAVE["WP_GENERAL_bgcolor_g"], VCB_SAVE["WP_GENERAL_bgcolor_b"])
+		getglobal("VCB_BF_WP_FRAME_Color1_SwatchBg").r = VCB_SAVE["WP_GENERAL_bgcolor_r"]
+		getglobal("VCB_BF_WP_FRAME_Color1_SwatchBg").g = VCB_SAVE["WP_GENERAL_bgcolor_g"]
+		getglobal("VCB_BF_WP_FRAME_Color1_SwatchBg").b = VCB_SAVE["WP_GENERAL_bgcolor_b"]
+		getglobal("VCB_BF_WP_FRAME_AuraPaddingHSlider"):SetValue(VCB_SAVE["WP_GENERAL_padding_h"])
+		getglobal("VCB_BF_WP_FRAME_AuraPaddingHSliderText"):SetText("Padding H: "..VCB_SAVE["WP_GENERAL_padding_h"])
+		getglobal("VCB_BF_WP_FRAME_FontSizeSlider"):SetValue(VCB_SAVE["WP_GENERAL_fontsize"])
+		getglobal("VCB_BF_WP_FRAME_FontSizeSliderText"):SetText("Font size: "..VCB_SAVE["WP_GENERAL_fontsize"])
+		getglobal("VCB_BF_WP_FRAME_BGOpaSlider"):SetValue(VCB_SAVE["WP_GENERAL_bgopacity"])
+		getglobal("VCB_BF_WP_FRAME_BGOpaSliderText"):SetText("Background opacity: "..VCB_SAVE["WP_GENERAL_bgopacity"])
+		getglobal("VCB_BF_WP_FRAME_ScaleSlider"):SetValue(VCB_SAVE["WP_GENERAL_scale"])
+		getglobal("VCB_BF_WP_FRAME_ScaleSliderText"):SetText("Scale: "..VCB_SAVE["WP_GENERAL_scale"])
+		getglobal("VCB_BF_WP_FRAME_FontSlider"):SetValue(VCB_Table_GetKeys(VCB_FONT_ARRAY, VCB_SAVE["WP_GENERAL_font"]))
+		getglobal("VCB_BF_WP_FRAME_FontSliderText"):SetText("Font: "..VCB_SAVE["WP_GENERAL_font"])
+		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON5"):SetChecked(VCB_SAVE["WP_BORDER_enableborder"])
+		getglobal("VCB_BF_WP_FRAME_Color4NormalTexture"):SetVertexColor(VCB_SAVE["WP_BORDER_bordercolor_r"], VCB_SAVE["WP_BORDER_bordercolor_g"], VCB_SAVE["WP_BORDER_bordercolor_b"])
+		getglobal("VCB_BF_WP_FRAME_Color4_SwatchBg").r = VCB_SAVE["WP_BORDER_bordercolor_r"]
+		getglobal("VCB_BF_WP_FRAME_Color4_SwatchBg").g = VCB_SAVE["WP_BORDER_bordercolor_g"]
+		getglobal("VCB_BF_WP_FRAME_Color4_SwatchBg").b = VCB_SAVE["WP_BORDER_bordercolor_b"]
+		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON6"):SetChecked(VCB_SAVE["WP_BORDER_usecustomborder"])
+		getglobal("VCB_BF_WP_FRAME_EDITBOX_BORDER"):SetText(VCB_SAVE["WP_BORDER_customborderpath"])
+		getglobal("VCB_BF_WP_FRAME_BorderSlider"):SetValue(VCB_SAVE["WP_BORDER_border"])
+		getglobal("VCB_BF_WP_FRAME_BorderSliderText"):SetText("Border: "..VCB_SAVE["WP_BORDER_border"])
+		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON4"):SetChecked(VCB_SAVE["WP_TIMER_enableborder"])
+		getglobal("VCB_BF_WP_FRAME_Color2NormalTexture"):SetVertexColor(VCB_SAVE["WP_TIMER_fontcolor_r"], VCB_SAVE["WP_TIMER_fontcolor_g"], VCB_SAVE["WP_TIMER_fontcolor_b"])
+		getglobal("VCB_BF_WP_FRAME_Color2_SwatchBg").r = VCB_SAVE["WP_TIMER_fontcolor_r"]
+		getglobal("VCB_BF_WP_FRAME_Color2_SwatchBg").g = VCB_SAVE["WP_TIMER_fontcolor_g"]
+		getglobal("VCB_BF_WP_FRAME_Color2_SwatchBg").b = VCB_SAVE["WP_TIMER_fontcolor_b"]
+		getglobal("VCB_BF_WP_FRAME_TIMER_FontSizeSlider"):SetValue(VCB_SAVE["WP_TIMER_fontsize"])
+		getglobal("VCB_BF_WP_FRAME_TIMER_FontSizeSliderText"):SetText("Font size: "..VCB_SAVE["WP_TIMER_fontsize"])
+		getglobal("VCB_BF_WP_FRAME_TIMER_FontOpacitySlider"):SetValue(VCB_SAVE["WP_TIMER_fontopacity"])
+		getglobal("VCB_BF_WP_FRAME_TIMER_FontOpacitySliderText"):SetText("Font opacity: "..VCB_SAVE["WP_TIMER_fontopacity"])
 	end
 end
 
@@ -708,6 +765,22 @@ function VCB_BF_OptionsFrame_SetColor()
 		for i=0,15 do
 			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 		end
+	elseif VCB_BF_COLOR_TYPE=="WeaponBG" then
+		for i=0,1 do
+			if VCB_SAVE[VCB_BF_COLOR_TAR] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Icon"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
+			end
+		end
+	elseif VCB_BF_COLOR_TYPE=="WPBorder" then
+		for i=0,1 do
+			if VCB_SAVE[VCB_BF_COLOR_TAR] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
+			end
+		end
+	elseif VCB_BF_COLOR_TYPE=="WPTimer" then
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
+		end
 	end
 end
 
@@ -774,6 +847,22 @@ function VCB_BF_OptionsFrame_CancelColor()
 	elseif VCB_BF_COLOR_TYPE=="DebuffFont" then
 		for i=0,15 do
 			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
+		end
+	elseif VCB_BF_COLOR_TYPE=="WeaponBG" then
+		for i=0,1 do
+			if VCB_SAVE[VCB_BF_COLOR_TAR] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Icon"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
+			end
+		end
+	elseif VCB_BF_COLOR_TYPE=="WPBorder" then
+		for i=0,1 do
+			if VCB_SAVE[VCB_BF_COLOR_TAR] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
+			end
+		end
+	elseif VCB_BF_COLOR_TYPE=="WPTimer" then
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 		end
 	end
 end
@@ -1335,13 +1424,19 @@ function VCB_BF_CF_FRAME_AuraTimerOpacitySliderChange(obj)
 end
 
 ---------------------------------------END CONSOLIDATED FRAME-----------------------------------------------------------------------------------------------------------------
----------------------------------------STAR BUFF FRAME-----------------------------------------------------------------------------------------------------------------
+---------------------------------------START BUFF FRAME-----------------------------------------------------------------------------------------------------------------
 
 function VCB_BF_BF_FRAME_VERTICAL_MODE()
 	if VCB_SAVE["BF_GENERAL_verticalmode"] then
 		VCB_SAVE["BF_GENERAL_verticalmode"] = false
+		if VCB_SAVE["WP_GENERAL_attach"] and VCB_SAVE["WP_GENERAL_verticalmode"] then
+			VCB_BF_WP_FRAME_VERTICAL_MODE()
+		end
 	else
 		VCB_SAVE["BF_GENERAL_verticalmode"] = true
+		if VCB_SAVE["WP_GENERAL_attach"] and (not VCB_SAVE["WP_GENERAL_verticalmode"]) then
+			VCB_BF_WP_FRAME_VERTICAL_MODE()
+		end
 	end
 	VCB_BF_RepositioningAndResizing()
 end
@@ -1355,12 +1450,24 @@ end
 function VCB_BF_BF_FRAME_AuraPaddingHChange(obj)
 	VCB_SAVE["BF_GENERAL_padding_h"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText("Padding H: "..VCB_SAVE["BF_GENERAL_padding_h"])
+	if VCB_SAVE["WP_GENERAL_attach"] and (not VCB_SAVE["WP_GENERAL_verticalmode"]) then
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i):ClearAllPoints()
+			getglobal("VCB_BF_WEAPON_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*i, 0)
+		end
+	end
 	VCB_BF_RepositioningAndResizing()
 end
 
 function VCB_BF_BF_FRAME_AuraPaddingVChange(obj)
 	VCB_SAVE["BF_GENERAL_padding_v"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText("Padding V: "..VCB_SAVE["BF_GENERAL_padding_v"])
+	if VCB_SAVE["WP_GENERAL_attach"] and VCB_SAVE["WP_GENERAL_verticalmode"] then
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i):ClearAllPoints()
+			getglobal("VCB_BF_WEAPON_BUTTON"..i):SetPoint("TOPRIGHT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*i)
+		end
+	end
 	VCB_BF_RepositioningAndResizing()
 end
 
@@ -1748,9 +1855,10 @@ function VCB_BF_WP_FRAME_ATTACH()
 		VCB_SAVE["WP_GENERAL_attach"] = false
 		VCB_BF_WEAPON_FRAME:ClearAllPoints()
 		VCB_BF_WEAPON_FRAME:SetParent(UIParent)
-		VCB_BF_WEAPON_FRAME:SetPoint("CENTER", 0, 0)
+		VCB_BF_WEAPON_FRAME:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
 		VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
 		VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", 0, 0)
+		VCB_BF_WEAPON_FRAME:SetScale(VCB_SAVE["WP_GENERAL_scale"])
 	else
 		VCB_SAVE["WP_GENERAL_attach"] = true
 		VCB_BF_WEAPON_FRAME:ClearAllPoints()
@@ -1761,8 +1869,150 @@ function VCB_BF_WP_FRAME_ATTACH()
 		if (VCB_SAVE["BF_GENERAL_verticalmode"] and (not VCB_SAVE["WP_GENERAL_verticalmode"])) or ((not VCB_SAVE["BF_GENERAL_verticalmode"]) and (VCB_SAVE["WP_GENERAL_verticalmode"])) then
 			VCB_BF_BF_FRAME_VERTICAL_MODE()
 		end
+		VCB_BF_WEAPON_FRAME:SetScale(1)
 	end
+	VCB_BF_WEAPON_BUTTON_OnEvent(false)
 	VCB_BF_RepositioningAndResizing()
+end
+
+function VCB_BF_WP_FRAME_AuraPaddingHSliderChange(obj)
+	VCB_SAVE["WP_GENERAL_padding_h"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Padding H: "..VCB_SAVE["WP_GENERAL_padding_h"])
+	if (not VCB_SAVE["WP_GENERAL_attach"]) and (not VCB_SAVE["WP_GENERAL_verticalmode"]) then
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i):ClearAllPoints()
+			getglobal("VCB_BF_WEAPON_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["WP_GENERAL_padding_h"])*i, 0)
+		end
+	end
+end
+
+function VCB_BF_WP_FRAME_FontSizeSliderChange(obj)
+	VCB_SAVE["WP_GENERAL_fontsize"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Font size: "..VCB_SAVE["WP_GENERAL_fontsize"])
+	for i=0,1 do
+		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"])
+	end
+end
+
+function VCB_BF_WP_FRAME_BGOpaSliderChange(obj)
+	VCB_SAVE["WP_GENERAL_bgopacity"] = string.format("%.1f", obj:GetValue())
+	getglobal(obj:GetName().."Text"):SetText("Background opacity: "..VCB_SAVE["WP_GENERAL_bgopacity"])
+	for i=0,1 do
+		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Icon"):SetAlpha(VCB_SAVE["WP_GENERAL_bgopacity"])
+	end
+end
+
+function VCB_BF_WP_FRAME_ScaleSliderChange(obj)
+	VCB_SAVE["WP_GENERAL_scale"] = string.format("%.1f", obj:GetValue())
+	getglobal(obj:GetName().."Text"):SetText("Scale: "..VCB_SAVE["WP_GENERAL_scale"])
+	if (not VCB_SAVE["WP_GENERAL_attach"]) then
+		VCB_BF_WEAPON_FRAME:SetScale(VCB_SAVE["WP_GENERAL_scale"])
+	end
+end
+
+function VCB_BF_WP_FRAME_FontSliderChange(obj)
+	VCB_SAVE["WP_GENERAL_font"] = VCB_FONT_ARRAY[obj:GetValue()]
+	getglobal(obj:GetName().."Text"):SetText("Font: "..VCB_SAVE["WP_GENERAL_font"])
+	for i=0,1 do
+		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"])
+	end
+end
+
+function VCB_BF_WP_FRAME_ENABLE_BORDER()
+	if VCB_SAVE["WP_BORDER_enableborder"] then
+		VCB_SAVE["WP_BORDER_enableborder"] = false
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetTexture(nil)
+		end
+	else
+		VCB_SAVE["WP_BORDER_enableborder"] = true
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetTexture(nil)
+			if VCB_SAVE["WP_BORDER_usecustomborder"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetTexture(VCB_SAVE["WP_BORDER_customborderpath"])
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetTexture(VCB_WEAPONBORDER_ARRAY[VCB_SAVE["WP_BORDER_border"]])
+			end
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["WP_BORDER_bordercolor_r"],VCB_SAVE["WP_BORDER_bordercolor_g"],VCB_SAVE["WP_BORDER_bordercolor_b"],VCB_SAVE["WP_BORDER_borderopacity"])
+		end
+	end
+end
+
+function VCB_BF_WP_FRAME_USE_CUSTOM_BORDER()
+	if VCB_SAVE["WP_BORDER_usecustomborder"] then
+		VCB_SAVE["WP_BORDER_usecustomborder"] = false
+		if VCB_SAVE["WP_BORDER_enableborder"] then
+			for i=0,1 do
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetTexture(VCB_WEAPONBORDER_ARRAY[VCB_SAVE["WP_BORDER_border"]])
+			end
+		end
+	else
+		VCB_SAVE["WP_BORDER_usecustomborder"] = true
+		if VCB_SAVE["WP_BORDER_enableborder"] then
+			for i=0,1 do
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetTexture(VCB_SAVE["WP_BORDER_customborderpath"])
+			end
+		end
+	end
+end
+
+function VCB_BF_WP_FRAME_EDITBOX_BORDER_CHANGE(obj)
+	VCB_SAVE["WP_BORDER_customborderpath"] = obj:GetText()
+	if VCB_SAVE["WP_BORDER_enableborder"] and VCB_SAVE["WP_BORDER_usecustomborder"] then
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetTexture(nil)
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetTexture(VCB_SAVE["WP_BORDER_customborderpath"])
+		end
+	end
+end
+
+function VCB_BF_WP_FRAME_BorderSliderChange(obj)
+	VCB_SAVE["WP_BORDER_border"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Border: "..VCB_SAVE["WP_BORDER_border"])
+	if VCB_SAVE["WP_BORDER_enableborder"] and (not VCB_SAVE["WP_BORDER_usecustomborder"]) then
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetTexture(nil)
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetTexture(VCB_WEAPONBORDER_ARRAY[VCB_SAVE["WP_BORDER_border"]])
+		end
+	end
+end
+
+function VCB_BF_WP_FRAME_TIMER_ENABLE_BORDER()
+	if VCB_SAVE["WP_TIMER_enableborder"] then
+		VCB_SAVE["WP_TIMER_enableborder"] = false
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"])
+		end
+	else
+		VCB_SAVE["WP_TIMER_enableborder"] = true
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"], "OUTLINE")
+		end
+	end
+end
+
+function VCB_BF_WP_FRAME_TIMER_FontSizeSliderChange(obj)
+	VCB_SAVE["WP_TIMER_fontsize"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Font size: "..VCB_SAVE["WP_TIMER_fontsize"])
+	for i=0,1 do
+		if VCB_SAVE["WP_TIMER_enableborder"] then
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"], "OUTLINE")
+		else
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"])
+		end
+	end
+end
+
+function VCB_BF_WP_FRAME_TIMER_FontOpacitySliderChange(obj)
+	VCB_SAVE["WP_TIMER_fontopacity"] = string.format("%.1f", obj:GetValue())
+	getglobal(obj:GetName().."Text"):SetText("Font opacity: "..VCB_SAVE["WP_TIMER_fontopacity"])
+	for i=0,1 do
+		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetAlpha(VCB_SAVE["WP_TIMER_fontopacity"])
+	end
+end
+
+function VCB_BF_MISC_FRAME_DISABLE_CF()
+
 end
 
 ---------------------------------------END WP FRAME-----------------------------------------------------------------------------------------------------------------

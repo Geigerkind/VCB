@@ -330,29 +330,36 @@ function VCB_BF_BUFF_BUTTON_OnClick(button)
 	end
 end
 
+function VCB_BF_WEAPON_BUTTON_OnEvent(bool)
+	local hasMainHandEnchant, mainHandExpiration, mainHandCharges, hasOffHandEnchant, offHandExpiration, offHandCharges = GetWeaponEnchantInfo();
+	if (not hasMainHandEnchant) and hasOffHandEnchant then -- Performance (?)
+		VCB_BF_WEAPON_BUTTON0:ClearAllPoints()
+		VCB_BF_WEAPON_BUTTON1:ClearAllPoints()
+		if VCB_SAVE["WP_GENERAL_attach"] then
+			VCB_BF_WEAPON_BUTTON0:SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT",-(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
+		else
+			VCB_BF_WEAPON_BUTTON0:SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT",-(32+VCB_SAVE["WP_GENERAL_padding_h"]), 0)
+		end
+		VCB_BF_WEAPON_BUTTON1:SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT", 0, 0)
+	else
+		VCB_BF_WEAPON_BUTTON0:ClearAllPoints()
+		VCB_BF_WEAPON_BUTTON1:ClearAllPoints()
+		if VCB_SAVE["WP_GENERAL_attach"] then
+			VCB_BF_WEAPON_BUTTON1:SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT",-(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
+		else
+			VCB_BF_WEAPON_BUTTON1:SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT", -(32+VCB_SAVE["WP_GENERAL_padding_h"]), 0)
+		end
+		VCB_BF_WEAPON_BUTTON0:SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT", 0, 0)
+	end
+	if VCB_SAVE["WP_GENERAL_attach"] and (bool) then
+		VCB_BF_RepositioningAndResizing()
+	end
+end
+
 function VCB_BF_WEAPON_BUTTON_OnUpdate(elapsed)
 	timeSinceWeaponUpdate = timeSinceWeaponUpdate + elapsed
 	if(timeSinceWeaponUpdate > UPDATETIME) then
 		local hasMainHandEnchant, mainHandExpiration, mainHandCharges, hasOffHandEnchant, offHandExpiration, offHandCharges = GetWeaponEnchantInfo();
-		if (not hasMainHandEnchant) and hasOffHandEnchant and VCB_IS_LOADED then -- Performance (?)
-			VCB_BF_WEAPON_BUTTON0:ClearAllPoints()
-			VCB_BF_WEAPON_BUTTON1:ClearAllPoints()
-			if VCB_SAVE["WP_GENERAL_attach"] then
-				VCB_BF_WEAPON_BUTTON0:SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
-			else
-				VCB_BF_WEAPON_BUTTON0:SetPoint("TOPRIGHT", -(32+VCB_SAVE["WP_GENERAL_padding_h"]), 0)
-			end
-			VCB_BF_WEAPON_BUTTON1:SetPoint("TOPRIGHT", 0, 0)
-		else
-			VCB_BF_WEAPON_BUTTON0:ClearAllPoints()
-			VCB_BF_WEAPON_BUTTON1:ClearAllPoints()
-			if VCB_SAVE["WP_GENERAL_attach"] then
-				VCB_BF_WEAPON_BUTTON1:SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
-			else
-				VCB_BF_WEAPON_BUTTON1:SetPoint("TOPRIGHT", -(32+VCB_SAVE["WP_GENERAL_padding_h"]), 0)
-			end
-			VCB_BF_WEAPON_BUTTON0:SetPoint("TOPRIGHT", 0, 0)
-		end
 		if(hasMainHandEnchant or VCB_BF_DUMMY_MODE) then
 			local textureName = GetInventoryItemTexture("player", 16)
 			if (VCB_BF_DUMMY_MODE == false) then
@@ -362,7 +369,7 @@ function VCB_BF_WEAPON_BUTTON_OnUpdate(elapsed)
 				VCB_BF_WEAPON_BUTTON0Duration:SetText(VCB_BF_GetDuration(random(1,150)+(random(1,99)/100)))
 				mainHandCharges = 100
 			end
-			VCB_BF_WEAPON_BUTTON0Border:SetVertexColor(0.2, 0.2, 0.8, 1)
+			VCB_BF_WEAPON_BUTTON0Border:SetVertexColor(VCB_SAVE["WP_BORDER_bordercolor_r"],VCB_SAVE["WP_BORDER_bordercolor_g"],VCB_SAVE["WP_BORDER_bordercolor_b"],VCB_SAVE["WP_BORDER_borderopacity"])
 			VCB_BF_WEAPON_BUTTON0Duration:Show()
 			if(mainHandCharges > 0) then
 				VCB_BF_WEAPON_BUTTON0Count:SetText(mainHandCharges)
@@ -389,7 +396,7 @@ function VCB_BF_WEAPON_BUTTON_OnUpdate(elapsed)
 				VCB_BF_WEAPON_BUTTON1Duration:SetText(VCB_BF_GetDuration(random(1,15)+(random(1,99)/100)))
 				offHandCharges = 100
 			end
-			VCB_BF_WEAPON_BUTTON1Border:SetVertexColor(0.2, 0.2, 0.8, 1)
+			VCB_BF_WEAPON_BUTTON1Border:SetVertexColor(VCB_SAVE["WP_BORDER_bordercolor_r"],VCB_SAVE["WP_BORDER_bordercolor_g"],VCB_SAVE["WP_BORDER_bordercolor_b"],VCB_SAVE["WP_BORDER_borderopacity"])
 			VCB_BF_WEAPON_BUTTON1Duration:Show()
 			if(offHandCharges > 0) then
 				VCB_BF_WEAPON_BUTTON1Count:SetText(offHandCharges)
@@ -571,6 +578,9 @@ function VCB_BF_DummyConfigMode_Enable()
 			local border = getglobal(templateName..i.."Border")
 			icon:SetTexture("Interface\\AddOns\\VCB\\images\\dummy.tga")
 			buffDuration:SetText(VCB_BF_GetDuration(10))
+			if i < 7 and cat == "buff" then
+				button:SetParent(VCB_BF_CONSOLIDATED_BUFFFRAME)
+			end
 			if cat == "buff" then
 				if button:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 					border:SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopacity"])
@@ -578,24 +588,20 @@ function VCB_BF_DummyConfigMode_Enable()
 					border:SetVertexColor(VCB_SAVE["BF_BORDER_bordercolor_r"],VCB_SAVE["BF_BORDER_bordercolor_g"],VCB_SAVE["BF_BORDER_bordercolor_b"],VCB_SAVE["BF_BORDER_borderopacity"])
 				end
 			end
-			if i < 7 and cat == "buff" then
-				button:SetParent(VCB_BF_CONSOLIDATED_BUFFFRAME)
-			end
-			VCB_BF_RepositioningAndResizing()
 			button:Show()
 		end
 	end
+	VCB_BF_RepositioningAndResizing()
 end
 
 function VCB_BF_DummyConfigMode_Disable()
 	VCB_BF_DUMMY_MODE = false
 	for cat, templateName in pairs(VCB_BUTTONNAME) do
 		for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
-			local button = getglobal(templateName..i)
-			button:Hide()
-			VCB_BF_BUFF_BUTTON_Update(button)
+			VCB_BF_BUFF_BUTTON_Update(getglobal(templateName..i))
 		end
 	end
+	VCB_BF_WEAPON_BUTTON_OnEvent(false)
 end
 
 --[[

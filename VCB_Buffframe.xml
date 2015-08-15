@@ -191,7 +191,7 @@
 					<Anchors>
 						<Anchor point="BOTTOMRIGHT">
 							<Offset>
-								<AbsDimension x="-2" y="2"/>
+								<AbsDimension x="-5" y="5"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -326,9 +326,9 @@
 	<Button name="VCB_BF_WEAPON_BUTTON" inherits="VCB_BF_BUTTON_TEMPLATE" virtual="true">
 		<Layers>
 			<Layer level="OVERLAY">
-				<Texture name="$parentBorder" file="Interface\Buttons\UI-TempEnchant-Border">
+				<Texture name="$parentBorder" file="">
 					<Size>
-						<AbsDimension x="32" y="32"/>
+						<AbsDimension x="33" y="32"/>
 					</Size>
 					<Anchors>
 						<Anchor point="CENTER">
@@ -338,6 +338,8 @@
 						</Anchor>
 					</Anchors>
 				</Texture>
+				<Color r="0" g="0" b="0" a="0"/>
+				<TexCoords left="0.296875" right="0.5703125" top="0" bottom="0.515625"/>
 			</Layer>
 			<Layer level="ARTWORK">
 				<FontString name="$parentDuration" inherits="GameFontNormalSmall">
@@ -378,6 +380,11 @@
 					end
 				end
 			</OnMouseUp>
+			<OnEvent>
+				if VCB_IS_LOADED then
+					VCB_BF_WEAPON_BUTTON_OnEvent(true)
+				end
+			</OnEvent>
 		</Scripts>
 	</Button>
 	
