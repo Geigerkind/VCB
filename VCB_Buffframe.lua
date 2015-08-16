@@ -143,11 +143,11 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 		local color;
 		local debuffType = GetPlayerBuffDispelType(GetPlayerBuff(button:GetID(), "HARMFUL"));
 		local debuffSlot = getglobal(button:GetName().."Border");
-		if ( debuffType ) then
-			color = DebuffTypeColor[debuffType];
+		if ( debuffType ) or VCB_BF_DUMMY_MODE then
+			color = {r=VCB_SAVE["DBF_BORDER_"..strlower(debuffType).."color_r"],g=VCB_SAVE["DBF_BORDER_"..strlower(debuffType).."color_g"],b=VCB_SAVE["DBF_BORDER_"..strlower(debuffType).."color_b"]}
 			color.a=1
 		elseif(buffIndex >= 0) then
-			color = DebuffTypeColor["none"];
+			color = {r=VCB_SAVE["DBF_BORDER_nonecolor_r"],g=VCB_SAVE["DBF_BORDER_nonecolor_g"],b=VCB_SAVE["DBF_BORDER_nonecolor_b"]}
 			if VCB_IS_LOADED and button.cat == "buff" then
 				if VCB_SAVE["CF_AURA_enableborder"] and button:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 					color = {r=VCB_SAVE["CF_AURA_bordercolor_r"], g=VCB_SAVE["CF_AURA_bordercolor_r"], b=VCB_SAVE["CF_AURA_bordercolor_r"], a=VCB_SAVE["CF_AURA_borderopacity"]}
@@ -158,7 +158,7 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 		else
 			color = {r=0, g=0, b=0, a=0}
 		end
-		if ( debuffSlot ) then
+		if ( debuffSlot ) or VCB_BF_DUMMY_MODE then
 			debuffSlot:SetVertexColor(color.r, color.g, color.b, color.a);
 		end
 
@@ -594,6 +594,18 @@ function VCB_BF_DummyConfigMode_Enable()
 					border:SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopacity"])
 				elseif button:GetParent() == VCB_BF_BUFF_FRAME then
 					border:SetVertexColor(VCB_SAVE["BF_BORDER_bordercolor_r"],VCB_SAVE["BF_BORDER_bordercolor_g"],VCB_SAVE["BF_BORDER_bordercolor_b"],VCB_SAVE["BF_BORDER_borderopacity"])
+				end
+			elseif cat == "debuff" and VCB_SAVE["DBF_BORDER_enableborder"] then
+				if i < 3 then
+					border:SetVertexColor(VCB_SAVE["DBF_BORDER_nonecolor_r"],VCB_SAVE["DBF_BORDER_nonecolor_g"],VCB_SAVE["DBF_BORDER_nonecolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
+				elseif i >= 3 and i < 6 then
+					border:SetVertexColor(VCB_SAVE["DBF_BORDER_poisoncolor_r"],VCB_SAVE["DBF_BORDER_poisoncolor_g"],VCB_SAVE["DBF_BORDER_poisoncolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
+				elseif i >= 6 and i < 9 then
+					border:SetVertexColor(VCB_SAVE["DBF_BORDER_magiccolor_r"],VCB_SAVE["DBF_BORDER_magiccolor_g"],VCB_SAVE["DBF_BORDER_magiccolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
+				elseif i >= 9 and i < 12 then
+					border:SetVertexColor(VCB_SAVE["DBF_BORDER_cursecolor_r"],VCB_SAVE["DBF_BORDER_cursecolor_g"],VCB_SAVE["DBF_BORDER_cursecolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
+				else
+					border:SetVertexColor(VCB_SAVE["DBF_BORDER_diseasecolor_r"],VCB_SAVE["DBF_BORDER_diseasecolor_g"],VCB_SAVE["DBF_BORDER_diseasecolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
 				end
 			end
 			button:Show()

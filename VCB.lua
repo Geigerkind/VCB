@@ -151,6 +151,22 @@ function VCB_OnEvent(event)
 				DBF_BORDER_usecustomborder = false,
 				DBF_BORDER_customborderpath = "",
 				DBF_BORDER_border = 1,
+				DBF_BORDER_borderopacity = 1,
+				DBF_BORDER_nonecolor_r = 0.8,
+				DBF_BORDER_nonecolor_g = 0,
+				DBF_BORDER_nonecolor_b = 0,
+				DBF_BORDER_poisoncolor_r = 0,
+				DBF_BORDER_poisoncolor_g = 0.6,
+				DBF_BORDER_poisoncolor_b = 0,
+				DBF_BORDER_magiccolor_r = 0.2,
+				DBF_BORDER_magiccolor_g = 0.6,
+				DBF_BORDER_magiccolor_b = 1,
+				DBF_BORDER_cursecolor_r = 0.6,
+				DBF_BORDER_cursecolor_g = 0,
+				DBF_BORDER_cursecolor_b = 1,
+				DBF_BORDER_diseasecolor_r = 0.6,
+				DBF_BORDER_diseasecolor_g = 0.4,
+				DBF_BORDER_diseasecolor_b = 0,
 				DBF_TIMER_enableborder = false,
 				DBF_TIMER_fontcolor_r = 1,
 				DBF_TIMER_fontcolor_g = 0.82,
@@ -201,10 +217,6 @@ function VCB_OnEvent(event)
 		if Banned_Buffs == nil then
 			Banned_Buffs = {}
 		end
-		
-		--VCB_SAVE["WP_TIMER_fontsize"] = 10
-		--VCB_SAVE["MISC_disable_CF"] = false
-		--VCB_SAVE["MISC_disable_BB"] = false
 		
 		VCB_IS_LOADED = true
 	elseif event == "PLAYER_ENTERING_WORLD" then
@@ -312,6 +324,7 @@ function VCB_OnEvent(event)
 					getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["DBF_BORDER_border"]])
 				end
 			end
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetAlpha(VCB_SAVE["DBF_BORDER_borderopacity"]) -- Need colors
 			if VCB_SAVE["DBF_TIMER_enableborder"] then
 				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"], "OUTLINE")
 			else
@@ -643,6 +656,28 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_DBF_FRAME_FontSizeSliderText"):SetText("Font size: "..VCB_SAVE["DBF_TIMER_fontsize"])
 		getglobal("VCB_BF_DBF_FRAME_FontOpacitySlider"):SetValue(VCB_SAVE["DBF_TIMER_fontopacity"])
 		getglobal("VCB_BF_DBF_FRAME_FontOpacitySliderText"):SetText("Font opacity: "..VCB_SAVE["DBF_TIMER_fontopacity"])
+		getglobal("VCB_BF_DBF_FRAME_BorderOpacitySlider"):SetValue(VCB_SAVE["DBF_BORDER_borderopacity"])
+		getglobal("VCB_BF_DBF_FRAME_BorderOpacitySliderText"):SetText("Border opacity: "..VCB_SAVE["DBF_BORDER_borderopacity"])
+		getglobal("VCB_BF_DBF_FRAME_Color_NONENormalTexture"):SetVertexColor(VCB_SAVE["DBF_BORDER_nonecolor_r"], VCB_SAVE["DBF_BORDER_nonecolor_g"], VCB_SAVE["DBF_BORDER_nonecolor_b"])
+		getglobal("VCB_BF_DBF_FRAME_Color_NONE_SwatchBg").r = VCB_SAVE["DBF_BORDER_nonecolor_r"]
+		getglobal("VCB_BF_DBF_FRAME_Color_NONE_SwatchBg").g = VCB_SAVE["DBF_BORDER_nonecolor_g"]
+		getglobal("VCB_BF_DBF_FRAME_Color_NONE_SwatchBg").b = VCB_SAVE["DBF_BORDER_nonecolor_b"]
+		getglobal("VCB_BF_DBF_FRAME_Color_POISONNormalTexture"):SetVertexColor(VCB_SAVE["DBF_BORDER_poisoncolor_r"], VCB_SAVE["DBF_BORDER_poisoncolor_g"], VCB_SAVE["DBF_BORDER_poisoncolor_b"])
+		getglobal("VCB_BF_DBF_FRAME_Color_POISON_SwatchBg").r = VCB_SAVE["DBF_BORDER_poisoncolor_r"]
+		getglobal("VCB_BF_DBF_FRAME_Color_POISON_SwatchBg").g = VCB_SAVE["DBF_BORDER_poisoncolor_g"]
+		getglobal("VCB_BF_DBF_FRAME_Color_POISON_SwatchBg").b = VCB_SAVE["DBF_BORDER_poisoncolor_b"]
+		getglobal("VCB_BF_DBF_FRAME_Color_MAGICNormalTexture"):SetVertexColor(VCB_SAVE["DBF_BORDER_magiccolor_r"], VCB_SAVE["DBF_BORDER_magiccolor_g"], VCB_SAVE["DBF_BORDER_magiccolor_b"])
+		getglobal("VCB_BF_DBF_FRAME_Color_MAGIC_SwatchBg").r = VCB_SAVE["DBF_BORDER_magiccolor_r"]
+		getglobal("VCB_BF_DBF_FRAME_Color_MAGIC_SwatchBg").g = VCB_SAVE["DBF_BORDER_magiccolor_g"]
+		getglobal("VCB_BF_DBF_FRAME_Color_MAGIC_SwatchBg").b = VCB_SAVE["DBF_BORDER_magiccolor_b"]
+		getglobal("VCB_BF_DBF_FRAME_Color_CURSENormalTexture"):SetVertexColor(VCB_SAVE["DBF_BORDER_cursecolor_r"], VCB_SAVE["DBF_BORDER_cursecolor_g"], VCB_SAVE["DBF_BORDER_cursecolor_b"])
+		getglobal("VCB_BF_DBF_FRAME_Color_CURSE_SwatchBg").r = VCB_SAVE["DBF_BORDER_cursecolor_r"]
+		getglobal("VCB_BF_DBF_FRAME_Color_CURSE_SwatchBg").g = VCB_SAVE["DBF_BORDER_cursecolor_g"]
+		getglobal("VCB_BF_DBF_FRAME_Color_CURSE_SwatchBg").b = VCB_SAVE["DBF_BORDER_cursecolor_b"]
+		getglobal("VCB_BF_DBF_FRAME_Color_DISEASENormalTexture"):SetVertexColor(VCB_SAVE["DBF_BORDER_diseasecolor_r"], VCB_SAVE["DBF_BORDER_diseasecolor_g"], VCB_SAVE["DBF_BORDER_diseasecolor_b"])
+		getglobal("VCB_BF_DBF_FRAME_Color_DISEASE_SwatchBg").r = VCB_SAVE["DBF_BORDER_diseasecolor_r"]
+		getglobal("VCB_BF_DBF_FRAME_Color_DISEASE_SwatchBg").g = VCB_SAVE["DBF_BORDER_diseasecolor_g"]
+		getglobal("VCB_BF_DBF_FRAME_Color_DISEASE_SwatchBg").b = VCB_SAVE["DBF_BORDER_diseasecolor_b"]
 	elseif frame == "VCB_BF_WP_FRAME" then
 		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON1"):SetChecked(VCB_SAVE["WP_GENERAL_verticalmode"])
 		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON2"):SetChecked(VCB_SAVE["WP_GENERAL_enablebgcolor"])
@@ -787,6 +822,22 @@ function VCB_BF_OptionsFrame_SetColor()
 		for i=0,1 do
 			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 		end
+	elseif VCB_BF_COLOR_TYPE=="DebuffBorderColor" then
+		for i=0,15 do
+			if VCB_SAVE[VCB_BF_COLOR_TAR] then
+				if i < 3 then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["DBF_BORDER_nonecolor_r"],VCB_SAVE["DBF_BORDER_nonecolor_g"],VCB_SAVE["DBF_BORDER_nonecolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
+				elseif i >= 3 and i < 6 then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["DBF_BORDER_poisoncolor_r"],VCB_SAVE["DBF_BORDER_poisoncolor_g"],VCB_SAVE["DBF_BORDER_poisoncolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
+				elseif i >= 6 and i < 9 then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["DBF_BORDER_magiccolor_r"],VCB_SAVE["DBF_BORDER_magiccolor_g"],VCB_SAVE["DBF_BORDER_magiccolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
+				elseif i >= 9 and i < 12 then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["DBF_BORDER_cursecolor_r"],VCB_SAVE["DBF_BORDER_cursecolor_g"],VCB_SAVE["DBF_BORDER_cursecolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["DBF_BORDER_diseasecolor_r"],VCB_SAVE["DBF_BORDER_diseasecolor_g"],VCB_SAVE["DBF_BORDER_diseasecolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
+				end
+			end
+		end
 	end
 end
 
@@ -869,6 +920,22 @@ function VCB_BF_OptionsFrame_CancelColor()
 	elseif VCB_BF_COLOR_TYPE=="WPTimer" then
 		for i=0,1 do
 			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
+		end
+	elseif VCB_BF_COLOR_TYPE=="DebuffBorderColor" then
+		for i=0,15 do
+			if VCB_SAVE[VCB_BF_COLOR_TAR] then
+				if i < 3 then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["DBF_BORDER_nonecolor_r"],VCB_SAVE["DBF_BORDER_nonecolor_g"],VCB_SAVE["DBF_BORDER_nonecolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
+				elseif i >= 3 and i < 6 then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["DBF_BORDER_poisoncolor_r"],VCB_SAVE["DBF_BORDER_poisoncolor_g"],VCB_SAVE["DBF_BORDER_poisoncolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
+				elseif i >= 6 and i < 9 then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["DBF_BORDER_magiccolor_r"],VCB_SAVE["DBF_BORDER_magiccolor_g"],VCB_SAVE["DBF_BORDER_magiccolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
+				elseif i >= 9 and i < 12 then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["DBF_BORDER_cursecolor_r"],VCB_SAVE["DBF_BORDER_cursecolor_g"],VCB_SAVE["DBF_BORDER_cursecolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["DBF_BORDER_diseasecolor_r"],VCB_SAVE["DBF_BORDER_diseasecolor_g"],VCB_SAVE["DBF_BORDER_diseasecolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
+				end
+			end
 		end
 	end
 end
@@ -1739,6 +1806,17 @@ function VCB_BF_DBF_FRAME_ENABLE_BORDER()
 			else
 				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["DBF_BORDER_border"]])
 			end
+			if i < 3 then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["DBF_BORDER_nonecolor_r"],VCB_SAVE["DBF_BORDER_nonecolor_g"],VCB_SAVE["DBF_BORDER_nonecolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
+			elseif i >= 3 and i < 6 then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["DBF_BORDER_poisoncolor_r"],VCB_SAVE["DBF_BORDER_poisoncolor_g"],VCB_SAVE["DBF_BORDER_poisoncolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
+			elseif i >= 6 and i < 9 then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["DBF_BORDER_magiccolor_r"],VCB_SAVE["DBF_BORDER_magiccolor_g"],VCB_SAVE["DBF_BORDER_magiccolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
+			elseif i >= 9 and i < 12 then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["DBF_BORDER_cursecolor_r"],VCB_SAVE["DBF_BORDER_cursecolor_g"],VCB_SAVE["DBF_BORDER_cursecolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["DBF_BORDER_diseasecolor_r"],VCB_SAVE["DBF_BORDER_diseasecolor_g"],VCB_SAVE["DBF_BORDER_diseasecolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
+			end
 		end
 	end
 end
@@ -1815,6 +1893,14 @@ function VCB_BF_DBF_FRAME_FontOpacitySliderChange(obj)
 	getglobal(obj:GetName().."Text"):SetText("Font opacity: "..VCB_SAVE["DBF_TIMER_fontopacity"])
 	for i=0,15 do
 		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetAlpha(VCB_SAVE["DBF_TIMER_fontopacity"])
+	end
+end
+
+function VCB_BF_DBF_FRAME_BorderOpacitySliderChange(obj)
+	VCB_SAVE["DBF_BORDER_borderopacity"] = string.format("%.1f", obj:GetValue())
+	getglobal(obj:GetName().."Text"):SetText("Border opacity: "..VCB_SAVE["DBF_BORDER_borderopacity"])
+	for i=0,15 do
+		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetAlpha(VCB_SAVE["DBF_BORDER_borderopacity"])
 	end
 end
 
@@ -2017,6 +2103,9 @@ function VCB_BF_WP_FRAME_TIMER_FontOpacitySliderChange(obj)
 	end
 end
 
+---------------------------------------END WP FRAME-----------------------------------------------------------------------------------------------------------------
+---------------------------------------START MISC FRAME-----------------------------------------------------------------------------------------------------------------
+
 function VCB_BF_MISC_FRAME_DISABLE_CF()
 	if VCB_SAVE["MISC_disable_CF"] then
 		VCB_SAVE["MISC_disable_CF"] = false
@@ -2037,4 +2126,4 @@ function VCB_BF_MISC_FRAME_DISABLE_CF()
 	VCB_BF_RepositioningAndResizing()
 end
 
----------------------------------------END WP FRAME-----------------------------------------------------------------------------------------------------------------
+---------------------------------------END MISC FRAME-----------------------------------------------------------------------------------------------------------------

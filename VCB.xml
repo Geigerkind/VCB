@@ -308,6 +308,40 @@
 				<PushedTexture file="Interface\Buttons\UI-GroupLoot-Dice-Down"/>
 				<HighlightTexture file="Interface\Buttons\UI-GroupLoot-Dice-Highlight" alphaMode="ADD"/>
 			</Button>
+			-- dummy button
+			<Button name="VCB_BF_DummyButton">
+				<Size>
+					<AbsDimension x="20" y="20"/>
+				</Size>
+				<Anchors>
+					<Anchor point="RIGHT" relativeTo="VCB_BF_MiniMapButton" relativePoint="LEFT">
+						<Offset>
+							<AbsDimension x="0" y="-2"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						if VCB_BF_DUMMY_MODE then
+							VCB_BF_DummyConfigMode_Disable()
+						else
+							VCB_BF_DummyConfigMode_Enable()
+						end
+						PlaySound("igMainMenuOptionCheckBoxOff")
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
+						GameTooltip:SetText("Toggle Dummy Mode", nil, nil, nil, nil, 1)
+						GameTooltip:Show()
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide()
+					</OnLeave>
+				</Scripts>
+				<NormalTexture file="Interface\Buttons\UI-GroupLoot-Coin-Up"/>
+				<PushedTexture file="Interface\Buttons\UI-GroupLoot-Coin-Down"/>
+				<HighlightTexture file="Interface\Buttons\UI-GroupLoot-Coin-Highlight" alphaMode="ADD"/>
+			</Button>
 			-- Menu Head
 			<Frame name="VCB_BF_MENU_HEAD">
 				<Size>
@@ -4577,7 +4611,7 @@
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="VCB_BF_BF_FRAME" relativePoint="TOPLEFT">
 									<Offset>
-										<AbsDimension x="20" y="-300" />
+										<AbsDimension x="20" y="-330" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -4908,7 +4942,7 @@
 					</Frame>
 					<Frame name="VCB_BF_DBF_FRAME_BORDER">
 						<Size>
-							<AbsDimension x="580" y="70"/>
+							<AbsDimension x="580" y="100"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOP" relativeTo="VCB_BF_DBF_FRAME_GENERAL" relativePoint="BOTTOM">
@@ -5033,7 +5067,7 @@
 								<Anchors>
 									<Anchor point="LEFT" relativeTo="VCB_BF_DBF_FRAME_EDITBOX_BORDER" relativePoint="RIGHT">
 										<Offset>
-											<AbsDimension x="50" y="0" />
+											<AbsDimension x="50" y="10" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -5054,6 +5088,355 @@
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
+							-- Aura Border opacity Slider
+							<Slider name="VCB_BF_DBF_FRAME_BorderOpacitySlider" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="155" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_DBF_FRAME_BorderSlider" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-25" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = "Move this to change the amount."
+										this:SetMinMaxValues(0,1.0)
+										this:SetValue(1.0)
+										this:SetValueStep(0.1)
+										getglobal("VCB_BF_DBF_FRAME_BorderOpacitySliderText"):SetText("Border opacity")
+										getglobal("VCB_BF_DBF_FRAME_BorderOpacitySliderLow"):SetText("0")
+										getglobal("VCB_BF_DBF_FRAME_BorderOpacitySliderHigh"):SetText("1.0")
+									</OnLoad>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_DBF_FRAME_BorderOpacitySliderChange(this)
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							-- COLOR PICKER NONE
+							<Button name="VCB_BF_DBF_FRAME_Color_NONE">
+								<Size>
+									<AbsDimension x="16" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_DBF_FRAME_CHECKBUTTON6" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-3"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer>
+										<FontString name="$parentFont" inherits="GameFontNormalSmall" text="None" justifyH="LEFT">
+											<Size>
+												<AbsDimension x="200" y="16" />
+											</Size>
+											<Anchors>
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+													<Offset>
+														<AbsDimension x="5" y="0" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+									<Layer level="BACKGROUND">
+										<Texture name="$parent_SwatchBg">
+											<Size>
+												<AbsDimension x="14" y="14"/>
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="0"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+											<Color r="1.0" g="1.0" b="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnLoad>
+										getglobal(this:GetName().."_SwatchBg").r = 1.0;
+										getglobal(this:GetName().."_SwatchBg").g = 1.0;
+										getglobal(this:GetName().."_SwatchBg").b = 1.0;
+									</OnLoad>
+									<OnClick>
+										VCB_BF_OpenColorPicker(this, "DBF_BORDER_none", "DBF_BORDER_enableborder", "DebuffBorderColor");
+									</OnClick>
+									<OnEnter>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+									</OnEnter>
+									<OnLeave>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
+										GameTooltip:Hide();
+									</OnLeave>
+								</Scripts>
+								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
+							</Button>
+							-- COLOR PICKER POISON
+							<Button name="VCB_BF_DBF_FRAME_Color_POISON">
+								<Size>
+									<AbsDimension x="16" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="VCB_BF_DBF_FRAME_Color_NONE" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="55" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer>
+										<FontString name="$parentFont" inherits="GameFontNormalSmall" text="Poison" justifyH="LEFT">
+											<Size>
+												<AbsDimension x="200" y="16" />
+											</Size>
+											<Anchors>
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+													<Offset>
+														<AbsDimension x="5" y="0" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+									<Layer level="BACKGROUND">
+										<Texture name="$parent_SwatchBg">
+											<Size>
+												<AbsDimension x="14" y="14"/>
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="0"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+											<Color r="1.0" g="1.0" b="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnLoad>
+										getglobal(this:GetName().."_SwatchBg").r = 1.0;
+										getglobal(this:GetName().."_SwatchBg").g = 1.0;
+										getglobal(this:GetName().."_SwatchBg").b = 1.0;
+									</OnLoad>
+									<OnClick>
+										VCB_BF_OpenColorPicker(this, "DBF_BORDER_poison", "DBF_BORDER_enableborder", "DebuffBorderColor");
+									</OnClick>
+									<OnEnter>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+									</OnEnter>
+									<OnLeave>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
+										GameTooltip:Hide();
+									</OnLeave>
+								</Scripts>
+								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
+							</Button>
+							-- COLOR PICKER MAGIC
+							<Button name="VCB_BF_DBF_FRAME_Color_MAGIC">
+								<Size>
+									<AbsDimension x="16" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="VCB_BF_DBF_FRAME_Color_POISON" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="55" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer>
+										<FontString name="$parentFont" inherits="GameFontNormalSmall" text="Magic" justifyH="LEFT">
+											<Size>
+												<AbsDimension x="200" y="16" />
+											</Size>
+											<Anchors>
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+													<Offset>
+														<AbsDimension x="5" y="0" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+									<Layer level="BACKGROUND">
+										<Texture name="$parent_SwatchBg">
+											<Size>
+												<AbsDimension x="14" y="14"/>
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="0"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+											<Color r="1.0" g="1.0" b="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnLoad>
+										getglobal(this:GetName().."_SwatchBg").r = 1.0;
+										getglobal(this:GetName().."_SwatchBg").g = 1.0;
+										getglobal(this:GetName().."_SwatchBg").b = 1.0;
+									</OnLoad>
+									<OnClick>
+										VCB_BF_OpenColorPicker(this, "DBF_BORDER_magic", "DBF_BORDER_enableborder", "DebuffBorderColor");
+									</OnClick>
+									<OnEnter>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+									</OnEnter>
+									<OnLeave>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
+										GameTooltip:Hide();
+									</OnLeave>
+								</Scripts>
+								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
+							</Button>
+							-- COLOR PICKER CURSE
+							<Button name="VCB_BF_DBF_FRAME_Color_CURSE">
+								<Size>
+									<AbsDimension x="16" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="VCB_BF_DBF_FRAME_Color_MAGIC" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="55" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer>
+										<FontString name="$parentFont" inherits="GameFontNormalSmall" text="Curse" justifyH="LEFT">
+											<Size>
+												<AbsDimension x="200" y="16" />
+											</Size>
+											<Anchors>
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+													<Offset>
+														<AbsDimension x="5" y="0" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+									<Layer level="BACKGROUND">
+										<Texture name="$parent_SwatchBg">
+											<Size>
+												<AbsDimension x="14" y="14"/>
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="0"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+											<Color r="1.0" g="1.0" b="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnLoad>
+										getglobal(this:GetName().."_SwatchBg").r = 1.0;
+										getglobal(this:GetName().."_SwatchBg").g = 1.0;
+										getglobal(this:GetName().."_SwatchBg").b = 1.0;
+									</OnLoad>
+									<OnClick>
+										VCB_BF_OpenColorPicker(this, "DBF_BORDER_curse", "DBF_BORDER_enableborder", "DebuffBorderColor");
+									</OnClick>
+									<OnEnter>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+									</OnEnter>
+									<OnLeave>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
+										GameTooltip:Hide();
+									</OnLeave>
+								</Scripts>
+								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
+							</Button>
+							-- COLOR PICKER DISEASE
+							<Button name="VCB_BF_DBF_FRAME_Color_DISEASE">
+								<Size>
+									<AbsDimension x="16" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="VCB_BF_DBF_FRAME_Color_CURSE" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="55" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer>
+										<FontString name="$parentFont" inherits="GameFontNormalSmall" text="Disease" justifyH="LEFT">
+											<Size>
+												<AbsDimension x="200" y="16" />
+											</Size>
+											<Anchors>
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+													<Offset>
+														<AbsDimension x="5" y="0" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+									<Layer level="BACKGROUND">
+										<Texture name="$parent_SwatchBg">
+											<Size>
+												<AbsDimension x="14" y="14"/>
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="0"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+											<Color r="1.0" g="1.0" b="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnLoad>
+										getglobal(this:GetName().."_SwatchBg").r = 1.0;
+										getglobal(this:GetName().."_SwatchBg").g = 1.0;
+										getglobal(this:GetName().."_SwatchBg").b = 1.0;
+									</OnLoad>
+									<OnClick>
+										VCB_BF_OpenColorPicker(this, "DBF_BORDER_disease", "DBF_BORDER_enableborder", "DebuffBorderColor");
+									</OnClick>
+									<OnEnter>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+									</OnEnter>
+									<OnLeave>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
+										GameTooltip:Hide();
+									</OnLeave>
+								</Scripts>
+								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
+							</Button>
 						</Frames>
 					</Frame>
 					<Frame name="VCB_BF_DBF_FRAME_TIMER">
@@ -5116,12 +5499,12 @@
 								</Anchors>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_DBF_FRAME_FONT6" inherits="GameFontNormalSmall" text="Select font color" justifyH="LEFT">
+										<FontString name="$parentFont" inherits="GameFontNormalSmall" text="Select font color" justifyH="LEFT">
 											<Size>
 												<AbsDimension x="200" y="16" />
 											</Size>
 											<Anchors>
-												<Anchor point="LEFT" relativeTo="VCB_BF_DBF_FRAME_Color2" relativePoint="RIGHT">
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
 													<Offset>
 														<AbsDimension x="5" y="0" />
 													</Offset>
