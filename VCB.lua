@@ -427,6 +427,31 @@ function VCB_OnEvent(event)
 		end
 		if Consolidated_Buffs == nil then
 			Consolidated_Buffs = {}
+			Consolidated_Buffs = {
+				-- Druid Buffs
+				[1] = "Mark of the Wild",
+				[2] = "Gift of the Wild",
+				-- Priest Buffs
+				[3] = "Power Word: Fortitude",
+				[4] = "Prayer of Fortitude",
+				[5] = "Divine Spirit",
+				[6] = "Prayer of Spirit",
+				[7] = "Shadow Protection",
+				[8] = "Prayer of Shadow Protection",
+				-- Mage Buffs
+				[9] = "Arcane Intellect",
+				[10] = "Arcane Brilliance",
+				-- Paladin Buffs
+				[11] = "Greater Blessing of Sanctuary",
+				[12] = "Greater Blessing of Kings",
+				[13] = "Greater Blessing of Might",
+				[14] = "Greater Blessing of Salvation",
+				[15] = "Greater Blessing of Wisdom",
+				[16] = "Greater Blessing of Light",
+				-- Hunter
+				[18] = "Trueshot Aura",
+				-- Warlock, Rogue and Warrior left out
+			}
 		end
 		if Banned_Buffs == nil then
 			Banned_Buffs = {}
@@ -440,8 +465,6 @@ function VCB_OnEvent(event)
 		if VCB_CUR_PROFILE == nil then
 			VCB_CUR_PROFILE = "Unknown"
 		end
-		
-		--VCB_SAVE["DBF_GENERAL_invert"] = false
 		
 		VCB_IS_LOADED = true
 	elseif event == "PLAYER_ENTERING_WORLD" then
