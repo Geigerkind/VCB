@@ -147,6 +147,15 @@ function VCB_OnEvent(event)
 				DBF_GENERAL_bgcolor_r = 1,
 				DBF_GENERAL_bgcolor_g = 1,
 				DBF_GENERAL_bgcolor_b = 1,
+				DBF_GENERAL_enableborder = true,
+				DBF_GENERAL_fontcolor_r = 1,
+				DBF_GENERAL_fontcolor_g = 1,
+				DBF_GENERAL_fontcolor_b = 1,
+				DBF_GENERAL_font = "FRIZQT__.ttf",
+				DBF_GENERAL_fontopacity = 1,
+				DBF_GENERAL_fontsize = 13,
+				DBF_GENERAL_fontoffset_x = -5,
+				DBF_GENERAL_fontoffset_y = 5,
 				DBF_BORDER_enableborder = true,
 				DBF_BORDER_usecustomborder = false,
 				DBF_BORDER_customborderpath = "",
@@ -176,13 +185,14 @@ function VCB_OnEvent(event)
 				WP_GENERAL_verticalmode = false,
 				WP_GENERAL_invertorder = false,
 				WP_GENERAL_enablebgcolor = false,
+				WP_GENERAL_enableborder = true,
 				WP_GENERAL_bgcolor_r = 1,
 				WP_GENERAL_bgcolor_g = 1,
 				WP_GENERAL_bgcolor_b = 1,
 				WP_GENERAL_attach = false,
 				WP_GENERAL_padding_h = 2,
 				WP_GENERAL_padding_v = 2,
-				WP_GENERAL_fontsize = 10,
+				WP_GENERAL_fontsize = 13,
 				WP_GENERAL_fontopacity = 1,
 				WP_GENERAL_fontcolor_r = 1,
 				WP_GENERAL_fontcolor_g = 1,
@@ -190,6 +200,8 @@ function VCB_OnEvent(event)
 				WP_GENERAL_bgopacity = 1,
 				WP_GENERAL_scale = 1,
 				WP_GENERAL_font = "FRIZQT__.ttf",
+				WP_GENERAL_offset_x = -2,
+				WP_GENERAL_offset_y = 2,
 				WP_BORDER_enableborder = true,
 				WP_BORDER_usecustomborder = false,
 				WP_BORDER_bordercolor_r = 0.2,
@@ -217,6 +229,16 @@ function VCB_OnEvent(event)
 		if Banned_Buffs == nil then
 			Banned_Buffs = {}
 		end
+		
+		--VCB_SAVE["DBF_GENERAL_enableborder"] = false
+		--VCB_SAVE["DBF_GENERAL_fontoffset_x"] = -2
+		--VCB_SAVE["DBF_GENERAL_fontoffset_y"] = 2
+		--VCB_SAVE["DBF_GENERAL_fontcolor_r"] = 1
+		--VCB_SAVE["DBF_GENERAL_fontcolor_g"] = 1
+		--VCB_SAVE["DBF_GENERAL_fontcolor_b"] = 1
+		--VCB_SAVE["DBF_GENERAL_font"] = "FRIZQT__.ttf"
+		--VCB_SAVE["DBF_GENERAL_fontopacity"] = 1
+		--VCB_SAVE["DBF_GENERAL_fontsize"] = 13
 		
 		VCB_IS_LOADED = true
 	elseif event == "PLAYER_ENTERING_WORLD" then
@@ -330,6 +352,14 @@ function VCB_OnEvent(event)
 			else
 				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"])
 			end
+			if VCB_SAVE["DBF_GENERAL_enableborder"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"])
+			end
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetVertexColor(VCB_SAVE["DBF_GENERAL_fontcolor_r"],VCB_SAVE["DBF_GENERAL_fontcolor_g"],VCB_SAVE["DBF_GENERAL_fontcolor_b"],VCB_SAVE["DBF_GENERAL_fontopacity"])
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):ClearAllPoints()
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetPoint("BOTTOMRIGHT", VCB_SAVE["DBF_GENERAL_fontoffset_x"], VCB_SAVE["DBF_GENERAL_fontoffset_y"])
 			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetTextColor(VCB_SAVE["DBF_TIMER_fontcolor_r"],VCB_SAVE["DBF_TIMER_fontcolor_g"],VCB_SAVE["DBF_TIMER_fontcolor_b"],VCB_SAVE["DBF_TIMER_fontopacity"])
 		end
 		for i=0,1 do
@@ -344,7 +374,6 @@ function VCB_OnEvent(event)
 			else
 				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Icon"):SetVertexColor(1,1,1,VCB_SAVE["WP_GENERAL_bgopacity"])
 			end
-			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"])
 			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetTexture(nil)
 			if VCB_SAVE["WP_BORDER_enableborder"] then
 				if VCB_SAVE["WP_BORDER_usecustomborder"] then
@@ -359,6 +388,13 @@ function VCB_OnEvent(event)
 			else
 				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"])
 			end
+			if VCB_SAVE["WP_GENERAL_enableborder"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"])
+			end
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetVertexColor(VCB_SAVE["WP_GENERAL_fontcolor_r"],VCB_SAVE["WP_GENERAL_fontcolor_g"],VCB_SAVE["WP_GENERAL_fontcolor_b"],VCB_SAVE["WP_GENERAL_fontopacity"])
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetPoint("BOTTOMRIGHT", VCB_SAVE["WP_GENERAL_offset_x"], VCB_SAVE["WP_GENERAL_offset_y"])
 			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetTextColor(VCB_SAVE["WP_TIMER_fontcolor_r"],VCB_SAVE["WP_TIMER_fontcolor_g"],VCB_SAVE["WP_TIMER_fontcolor_b"],VCB_SAVE["WP_TIMER_fontopacity"])
 		end
 		VCB_BF_WEAPON_FRAME:ClearAllPoints()
@@ -489,6 +525,7 @@ function VCB_OPTIONS_HIDE_ALL()
 	getglobal("VCB_BF_CF_FRAME2"):Hide()
 	getglobal("VCB_BF_BF_FRAME"):Hide()
 	getglobal("VCB_BF_DBF_FRAME"):Hide()
+	getglobal("VCB_BF_DBF_FRAME2"):Hide()
 	getglobal("VCB_BF_WP_FRAME"):Hide()
 	getglobal("VCB_BF_WP_FRAME2"):Hide()
 	getglobal("VCB_BF_MISC_FRAME"):Hide()
@@ -643,6 +680,22 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_DBF_FRAME_Color1_SwatchBg").r = VCB_SAVE["DBF_GENERAL_bgcolor_r"]
 		getglobal("VCB_BF_DBF_FRAME_Color1_SwatchBg").g = VCB_SAVE["DBF_GENERAL_bgcolor_g"]
 		getglobal("VCB_BF_DBF_FRAME_Color1_SwatchBg").b = VCB_SAVE["DBF_GENERAL_bgcolor_b"]
+		getglobal("VCB_BF_DBF_FRAME_GFontSlider"):SetValue(VCB_Table_GetKeys(VCB_FONT_ARRAY, VCB_SAVE["DBF_GENERAL_font"]))
+		getglobal("VCB_BF_DBF_FRAME_GFontSliderText"):SetText("Font: "..VCB_SAVE["DBF_GENERAL_font"])
+		getglobal("VCB_BF_DBF_FRAME_GFontOpacitySlider"):SetValue(VCB_SAVE["DBF_GENERAL_fontopacity"])
+		getglobal("VCB_BF_DBF_FRAME_GFontOpacitySliderText"):SetText("Font opacity: "..VCB_SAVE["DBF_GENERAL_fontopacity"])
+		getglobal("VCB_BF_DBF_FRAME_GFontSizeSlider"):SetValue(VCB_SAVE["DBF_GENERAL_fontsize"])
+		getglobal("VCB_BF_DBF_FRAME_GFontSizeSliderText"):SetText("Font size: "..VCB_SAVE["DBF_GENERAL_fontsize"])
+		getglobal("VCB_BF_DBF_FRAME_GFontOffsetXSlider"):SetValue(VCB_SAVE["DBF_GENERAL_fontoffset_x"])
+		getglobal("VCB_BF_DBF_FRAME_GFontOffsetXSliderText"):SetText("Font offset X: "..VCB_SAVE["DBF_GENERAL_fontoffset_x"])
+		getglobal("VCB_BF_DBF_FRAME_GFontOffsetYSlider"):SetValue(VCB_SAVE["DBF_GENERAL_fontoffset_y"])
+		getglobal("VCB_BF_DBF_FRAME_GFontOffsetYSliderText"):SetText("Font offset Y: "..VCB_SAVE["DBF_GENERAL_fontoffset_y"])
+		getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON_FBorder"):SetChecked(VCB_SAVE["DBF_GENERAL_enableborder"])
+		getglobal("VCB_BF_DBF_FRAME_Color_fontcolorNormalTexture"):SetVertexColor(VCB_SAVE["DBF_GENERAL_fontcolor_r"], VCB_SAVE["DBF_GENERAL_fontcolor_g"], VCB_SAVE["DBF_GENERAL_fontcolor_b"])
+		getglobal("VCB_BF_DBF_FRAME_Color_fontcolor_SwatchBg").r = VCB_SAVE["DBF_GENERAL_fontcolor_r"]
+		getglobal("VCB_BF_DBF_FRAME_Color_fontcolor_SwatchBg").g = VCB_SAVE["DBF_GENERAL_fontcolor_g"]
+		getglobal("VCB_BF_DBF_FRAME_Color_fontcolor_SwatchBg").b = VCB_SAVE["DBF_GENERAL_fontcolor_b"]
+	elseif frame == "VCB_BF_DBF_FRAME2" then
 		getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON5"):SetChecked(VCB_SAVE["DBF_BORDER_enableborder"])
 		getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON6"):SetChecked(VCB_SAVE["DBF_BORDER_usecustomborder"])
 		getglobal("VCB_BF_DBF_FRAME_EDITBOX_BORDER"):SetText(VCB_SAVE["DBF_BORDER_customborderpath"])
@@ -697,6 +750,19 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_WP_FRAME_ScaleSliderText"):SetText("Scale: "..VCB_SAVE["WP_GENERAL_scale"])
 		getglobal("VCB_BF_WP_FRAME_FontSlider"):SetValue(VCB_Table_GetKeys(VCB_FONT_ARRAY, VCB_SAVE["WP_GENERAL_font"]))
 		getglobal("VCB_BF_WP_FRAME_FontSliderText"):SetText("Font: "..VCB_SAVE["WP_GENERAL_font"])
+		getglobal("VCB_BF_WP_FRAME_FontOpacitySlider"):SetValue(VCB_SAVE["WP_GENERAL_fontopacity"])
+		getglobal("VCB_BF_WP_FRAME_FontOpacitySliderText"):SetText("Font opacity: "..VCB_SAVE["WP_GENERAL_fontopacity"])
+		getglobal("VCB_BF_WP_FRAME_AuraPaddingVSlider"):SetValue(VCB_SAVE["WP_GENERAL_padding_v"])
+		getglobal("VCB_BF_WP_FRAME_AuraPaddingVSliderText"):SetText("Padding V: "..VCB_SAVE["WP_GENERAL_padding_v"])
+		getglobal("VCB_BF_WP_FRAME_Color5NormalTexture"):SetVertexColor(VCB_SAVE["WP_GENERAL_fontcolor_r"], VCB_SAVE["WP_GENERAL_fontcolor_g"], VCB_SAVE["WP_GENERAL_fontcolor_b"])
+		getglobal("VCB_BF_WP_FRAME_Color5_SwatchBg").r = VCB_SAVE["WP_GENERAL_fontcolor_r"]
+		getglobal("VCB_BF_WP_FRAME_Color5_SwatchBg").g = VCB_SAVE["WP_GENERAL_fontcolor_g"]
+		getglobal("VCB_BF_WP_FRAME_Color5_SwatchBg").b = VCB_SAVE["WP_GENERAL_fontcolor_b"]
+		getglobal("VCB_BF_WP_FRAME_OffsetXSlider"):SetValue(VCB_SAVE["WP_GENERAL_offset_x"])
+		getglobal("VCB_BF_WP_FRAME_OffsetXSliderText"):SetText("Font offset X: "..VCB_SAVE["WP_GENERAL_offset_x"])
+		getglobal("VCB_BF_WP_FRAME_OffsetYSlider"):SetValue(VCB_SAVE["WP_GENERAL_offset_y"])
+		getglobal("VCB_BF_WP_FRAME_OffsetYSliderText"):SetText("Font offset Y: "..VCB_SAVE["WP_GENERAL_offset_y"])
+		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON8"):SetChecked(VCB_SAVE["WP_GENERAL_enableborder"])
 	elseif frame == "VCB_BF_WP_FRAME2" then
 		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON5"):SetChecked(VCB_SAVE["WP_BORDER_enableborder"])
 		getglobal("VCB_BF_WP_FRAME_Color4NormalTexture"):SetVertexColor(VCB_SAVE["WP_BORDER_bordercolor_r"], VCB_SAVE["WP_BORDER_bordercolor_g"], VCB_SAVE["WP_BORDER_bordercolor_b"])
@@ -716,6 +782,8 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_WP_FRAME_TIMER_FontSizeSliderText"):SetText("Font size: "..VCB_SAVE["WP_TIMER_fontsize"])
 		getglobal("VCB_BF_WP_FRAME_TIMER_FontOpacitySlider"):SetValue(VCB_SAVE["WP_TIMER_fontopacity"])
 		getglobal("VCB_BF_WP_FRAME_TIMER_FontOpacitySliderText"):SetText("Font opacity: "..VCB_SAVE["WP_TIMER_fontopacity"])
+		getglobal("VCB_BF_WP_FRAME_BorderOpacitySlider"):SetValue(VCB_SAVE["WP_BORDER_borderopacity"])
+		getglobal("VCB_BF_WP_FRAME_BorderOpacitySliderText"):SetText("Border opacity: "..VCB_SAVE["WP_BORDER_borderopacity"])
 	elseif frame == "VCB_BF_MISC_FRAME" then
 		getglobal("VCB_BF_MISC_FRAME_CHECKBUTTON1"):SetChecked(VCB_SAVE["MISC_disable_CF"])
 		getglobal("VCB_BF_MISC_FRAME_CHECKBUTTON2"):SetChecked(VCB_SAVE["MISC_disable_BB"])
@@ -808,11 +876,19 @@ function VCB_BF_OptionsFrame_SetColor()
 		for i=0,15 do
 			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 		end
+	elseif VCB_BF_COLOR_TYPE=="DebuffGFont" then
+		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
+		end
 	elseif VCB_BF_COLOR_TYPE=="WeaponBG" then
 		for i=0,1 do
 			if VCB_SAVE[VCB_BF_COLOR_TAR] then
 				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Icon"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
+		end
+	elseif VCB_BF_COLOR_TYPE=="WPFont" then
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 		end
 	elseif VCB_BF_COLOR_TYPE=="WPBorder" then
 		for i=0,1 do
@@ -907,11 +983,19 @@ function VCB_BF_OptionsFrame_CancelColor()
 		for i=0,15 do
 			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 		end
+	elseif VCB_BF_COLOR_TYPE=="DebuffGFont" then
+		for i=0,15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
+		end
 	elseif VCB_BF_COLOR_TYPE=="WeaponBG" then
 		for i=0,1 do
 			if VCB_SAVE[VCB_BF_COLOR_TAR] then
 				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Icon"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
+		end
+	elseif VCB_BF_COLOR_TYPE=="WPFont" then
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 		end
 	elseif VCB_BF_COLOR_TYPE=="WPBorder" then
 		for i=0,1 do
@@ -1906,7 +1990,79 @@ function VCB_BF_DBF_FRAME_BorderOpacitySliderChange(obj)
 	end
 end
 
+function VCB_BF_DBF_FRAME_CHANGE_PAGE()
+	if VCB_BF_DBF_FRAME:IsVisible() then
+		VCB_OPTIONS_HIDE_ALL()
+		VCB_OPTIONS_SHOW("VCB_BF_DBF_FRAME2", "Debuff Frame -2-")
+	else
+		VCB_OPTIONS_HIDE_ALL()
+		VCB_OPTIONS_SHOW("VCB_BF_DBF_FRAME", "Debuff Frame -1-")
+	end
+end
 
+function VCB_BF_DBF_FRAME_G_ENABLE_BORDER()
+	if VCB_SAVE["DBF_GENERAL_enableborder"] then
+		VCB_SAVE["DBF_GENERAL_enableborder"] = false
+		for i=0, 15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"])
+		end
+	else
+		VCB_SAVE["DBF_GENERAL_enableborder"] = true
+		for i=0, 15 do
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"], "OUTLINE")
+		end
+	end
+end
+
+function VCB_BF_DBF_FRAME_GFontSizeSliderChange(obj)
+	VCB_SAVE["DBF_GENERAL_fontsize"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Font size: "..VCB_SAVE["DBF_GENERAL_fontsize"])
+	for i=0, 15 do
+		if VCB_SAVE["DBF_GENERAL_enableborder"] then
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"], "OUTLINE")
+		else
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"])
+		end
+	end
+end
+
+function VCB_BF_DBF_FRAME_GFontOffsetXSliderChange(obj)
+	VCB_SAVE["DBF_GENERAL_fontoffset_x"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Font offset X: "..VCB_SAVE["DBF_GENERAL_fontoffset_x"])
+	for i=0,15 do
+		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):ClearAllPoints()
+		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetPoint("BOTTOMRIGHT", VCB_SAVE["DBF_GENERAL_fontoffset_x"],VCB_SAVE["DBF_GENERAL_fontoffset_y"])
+	end
+end
+
+function VCB_BF_DBF_FRAME_GFontOffsetYSliderChange(obj)
+	VCB_SAVE["DBF_GENERAL_fontoffset_y"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Font offset Y: "..VCB_SAVE["DBF_GENERAL_fontoffset_y"])
+	for i=0,15 do
+		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):ClearAllPoints()
+		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetPoint("BOTTOMRIGHT", VCB_SAVE["DBF_GENERAL_fontoffset_x"],VCB_SAVE["DBF_GENERAL_fontoffset_y"])
+	end
+end
+
+function VCB_BF_DBF_FRAME_GFontSliderChange(obj)
+	VCB_SAVE["DBF_GENERAL_font"] = VCB_FONT_ARRAY[obj:GetValue()]
+	getglobal(obj:GetName().."Text"):SetText("Font: "..VCB_SAVE["DBF_GENERAL_font"])
+	for i=0, 15 do
+		if VCB_SAVE["DBF_GENERAL_enableborder"] then
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"], "OUTLINE")
+		else
+			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"])
+		end
+	end
+end
+
+function VCB_BF_DBF_FRAME_GFontOpacitySliderChange(obj)
+	VCB_SAVE["DBF_GENERAL_fontopacity"] = string.format("%.1f", obj:GetValue())
+	getglobal(obj:GetName().."Text"):SetText("Font opacity: "..VCB_SAVE["DBF_GENERAL_fontopacity"])
+	for i=0,15 do
+		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetAlpha(VCB_SAVE["DBF_GENERAL_fontopacity"])
+	end
+end
 
 ---------------------------------------END DEBUFF FRAME-----------------------------------------------------------------------------------------------------------------
 ---------------------------------------START WP FRAME-----------------------------------------------------------------------------------------------------------------
@@ -1986,7 +2142,11 @@ function VCB_BF_WP_FRAME_FontSizeSliderChange(obj)
 	VCB_SAVE["WP_GENERAL_fontsize"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText("Font size: "..VCB_SAVE["WP_GENERAL_fontsize"])
 	for i=0,1 do
-		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"])
+		if VCB_SAVE["WP_GENERAL_enableborder"] then
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"], "OUTLINE")
+		else
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"])
+		end
 	end
 end
 
@@ -2010,7 +2170,11 @@ function VCB_BF_WP_FRAME_FontSliderChange(obj)
 	VCB_SAVE["WP_GENERAL_font"] = VCB_FONT_ARRAY[obj:GetValue()]
 	getglobal(obj:GetName().."Text"):SetText("Font: "..VCB_SAVE["WP_GENERAL_font"])
 	for i=0,1 do
-		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"])
+		if VCB_SAVE["WP_GENERAL_enableborder"] then
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"], "OUTLINE")
+		else
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"])
+		end
 	end
 end
 
@@ -2114,6 +2278,63 @@ function VCB_BF_WP_FRAME_CHANGE_PAGE()
 	else
 		VCB_OPTIONS_HIDE_ALL()
 		VCB_OPTIONS_SHOW("VCB_BF_WP_FRAME", "Weapon Frame -1-")
+	end
+end
+
+function VCB_BF_WP_FRAME_BorderOpacitySliderChange(obj)
+	VCB_SAVE["WP_BORDER_borderopacity"] = string.format("%.1f", obj:GetValue())
+	getglobal(obj:GetName().."Text"):SetText("Border opacity: "..VCB_SAVE["WP_BORDER_borderopacity"])
+	for i=0,1 do
+		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetAlpha(VCB_SAVE["WP_BORDER_borderopacity"])
+	end
+end
+
+function VCB_BF_WP_FRAME_FontOpacitySliderChange(obj)
+	VCB_SAVE["WP_GENERAL_fontopacity"] = string.format("%.1f", obj:GetValue())
+	getglobal(obj:GetName().."Text"):SetText("Font opacity: "..VCB_SAVE["WP_GENERAL_fontopacity"])
+	for i=0,1 do
+		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetAlpha(VCB_SAVE["WP_GENERAL_fontopacity"])
+	end
+end
+
+function VCB_BF_WP_FRAME_AuraPaddingVSliderChange(obj)
+	VCB_SAVE["WP_GENERAL_padding_v"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Padding V: "..VCB_SAVE["WP_GENERAL_padding_v"])
+	if VCB_SAVE["WP_GENERAL_verticalmode"] and (not VCB_SAVE["WP_GENERAL_attach"]) then
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i):ClearAllPoints()
+			getglobal("VCB_BF_WEAPON_BUTTON"..i):SetPoint("TOPRIGHT", 0, -(44+VCB_SAVE["WP_GENERAL_padding_v"])*i)
+		end
+	end
+end
+
+function VCB_BF_WP_FRAME_ENABLE_FONT_BORDER()
+	if VCB_SAVE["WP_GENERAL_enableborder"] then
+		VCB_SAVE["WP_GENERAL_enableborder"] = false
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"])
+		end
+	else
+		VCB_SAVE["WP_GENERAL_enableborder"] = true
+		for i=0,1 do
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"], "OUTLINE")
+		end
+	end
+end
+
+function VCB_BF_WP_FRAME_OffsetXSliderChange(obj)
+	VCB_SAVE["WP_GENERAL_offset_x"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Font offset X: "..VCB_SAVE["WP_GENERAL_offset_x"])
+	for i=0,1 do
+		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetPoint("BOTTOMRIGHT", VCB_SAVE["WP_GENERAL_offset_x"], VCB_SAVE["WP_GENERAL_offset_y"])
+	end
+end
+
+function VCB_BF_WP_FRAME_OffsetYSliderChange(obj)
+	VCB_SAVE["WP_GENERAL_offset_y"] = obj:GetValue()
+	getglobal(obj:GetName().."Text"):SetText("Font offset Y: "..VCB_SAVE["WP_GENERAL_offset_y"])
+	for i=0,1 do
+		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetPoint("BOTTOMRIGHT", VCB_SAVE["WP_GENERAL_offset_x"], VCB_SAVE["WP_GENERAL_offset_y"])
 	end
 end
 

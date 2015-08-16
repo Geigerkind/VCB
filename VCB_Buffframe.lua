@@ -172,9 +172,8 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 			buffCount:Hide();
 		end
 		
-		if VCB_IS_LOADED then
-			VCB_BF_WEAPON_BUTTON_OnUpdate(2.0)
-			VCB_BF_RepositioningAndResizing()
+		if VCB_IS_LOADED and button:GetID() == 31 then
+			VCB_BF_RepositioningAndResizing() -- Performance
 		end
 	end
 end
@@ -334,7 +333,7 @@ end
 
 function VCB_BF_BUFF_BUTTON_OnClick(button)
 	if button.cat == "buff" then
-		CancelPlayerBuff(button:GetID())
+		CancelPlayerBuff(button.buffIndex)
 	end
 end
 
@@ -362,6 +361,7 @@ function VCB_BF_WEAPON_BUTTON_OnEvent(bool)
 	if VCB_SAVE["WP_GENERAL_attach"] and (bool) then
 		VCB_BF_RepositioningAndResizing()
 	end
+	VCB_BF_WEAPON_BUTTON_OnUpdate(2.0)
 end
 
 function VCB_BF_WEAPON_BUTTON_OnUpdate(elapsed)
@@ -584,8 +584,8 @@ function VCB_BF_DummyConfigMode_Enable()
 			local icon = getglobal(templateName..i.."Icon")
 			local buffDuration = getglobal(templateName..i.."Duration")
 			local border = getglobal(templateName..i.."Border")
+			local count = getglobal(templateName..i.."Count")
 			icon:SetTexture("Interface\\AddOns\\VCB\\images\\dummy.tga")
-			buffDuration:SetText(VCB_BF_GetDuration(10))
 			if i < 7 and cat == "buff" and (not VCB_SAVE["MISC_disable_CF"]) then
 				button:SetParent(VCB_BF_CONSOLIDATED_BUFFFRAME)
 			end
@@ -596,6 +596,8 @@ function VCB_BF_DummyConfigMode_Enable()
 					border:SetVertexColor(VCB_SAVE["BF_BORDER_bordercolor_r"],VCB_SAVE["BF_BORDER_bordercolor_g"],VCB_SAVE["BF_BORDER_bordercolor_b"],VCB_SAVE["BF_BORDER_borderopacity"])
 				end
 			elseif cat == "debuff" and VCB_SAVE["DBF_BORDER_enableborder"] then
+				count:SetText(5)
+				count:Show()
 				if i < 3 then
 					border:SetVertexColor(VCB_SAVE["DBF_BORDER_nonecolor_r"],VCB_SAVE["DBF_BORDER_nonecolor_g"],VCB_SAVE["DBF_BORDER_nonecolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
 				elseif i >= 3 and i < 6 then

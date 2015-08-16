@@ -578,7 +578,7 @@
 						<Scripts>
 							<OnClick>
 								VCB_OPTIONS_HIDE_ALL()
-								VCB_OPTIONS_SHOW("VCB_BF_BF_FRAME", "Buff Frame")
+								VCB_OPTIONS_SHOW("VCB_BF_BF_FRAME", "Buff Frame -1-")
 							</OnClick>
 						</Scripts>
 						<Layers>
@@ -617,7 +617,7 @@
 						<Scripts>
 							<OnClick>
 								VCB_OPTIONS_HIDE_ALL()
-								VCB_OPTIONS_SHOW("VCB_BF_DBF_FRAME", "Debuff Frame")
+								VCB_OPTIONS_SHOW("VCB_BF_DBF_FRAME", "Debuff Frame -1-")
 							</OnClick>
 						</Scripts>
 						<Layers>
@@ -4597,7 +4597,7 @@
 				<Frames>
 					<Frame name="VCB_BF_DBF_FRAME_GENERAL">
 						<Size>
-							<AbsDimension x="580" y="160"/>
+							<AbsDimension x="580" y="240"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="VCB_BF_DBF_FRAME" relativePoint="TOPLEFT">
@@ -4663,7 +4663,7 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
-							-- Checkbutton invert butt order
+							-- Checkbutton invert buff order
 							<CheckButton name="VCB_BF_DBF_FRAME_CHECKBUTTON3" inherits="VCB_BF_CheckTemplate">
 								<Size>
 									<AbsDimension x="30" y="30"/>
@@ -4684,24 +4684,89 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
-							-- Checkbutton enable order system
-							<CheckButton name="VCB_BF_DBF_FRAME_CHECKBUTTON_ORDER" inherits="VCB_BF_CheckTemplate">
+							-- COLOR PICKER font color
+							<Button name="VCB_BF_DBF_FRAME_Color_fontcolor">
 								<Size>
-									<AbsDimension x="30" y="30"/>
+									<AbsDimension x="16" y="16"/>
 								</Size>
 								<Anchors>
 									<Anchor point="TOP" relativeTo="VCB_BF_DBF_FRAME_CHECKBUTTON3" relativePoint="BOTTOM">
 										<Offset>
-											<AbsDimension x="0" y="0"/>
+											<AbsDimension x="0" y="-5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer>
+										<FontString name="$parentFont" inherits="GameFontNormalSmall" text="Select font color" justifyH="LEFT">
+											<Size>
+												<AbsDimension x="200" y="16" />
+											</Size>
+											<Anchors>
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+													<Offset>
+														<AbsDimension x="5" y="0" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+									<Layer level="BACKGROUND">
+										<Texture name="$parent_SwatchBg">
+											<Size>
+												<AbsDimension x="14" y="14"/>
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="0"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+											<Color r="1.0" g="1.0" b="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnLoad>
+										getglobal(this:GetName().."_SwatchBg").r = 1.0;
+										getglobal(this:GetName().."_SwatchBg").g = 1.0;
+										getglobal(this:GetName().."_SwatchBg").b = 1.0;
+									</OnLoad>
+									<OnClick>
+										VCB_BF_OpenColorPicker(this, "DBF_GENERAL_font", nil, "DebuffGFont");
+									</OnClick>
+									<OnEnter>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+									</OnEnter>
+									<OnLeave>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
+										GameTooltip:Hide();
+									</OnLeave>
+								</Scripts>
+								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
+							</Button>
+							-- Checkbutton enable font border
+							<CheckButton name="VCB_BF_DBF_FRAME_CHECKBUTTON_FBorder" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_DBF_FRAME_Color_fontcolor" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-10"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
 								<Scripts>
 									<OnLoad>
 										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON_ORDERText"):SetText("Enable order system")
+										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON_FBorderText"):SetText("Enable font border")
 									</OnLoad>
 									<OnClick>
+										VCB_BF_DBF_FRAME_G_ENABLE_BORDER()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -4856,6 +4921,64 @@
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
+							-- Aura font size Slider
+							<Slider name="VCB_BF_DBF_FRAME_GFontSizeSlider" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="155" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_DBF_FRAME_AuraPaddingVSlider" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-30" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = "Move this to change the amount."
+										this:SetMinMaxValues(1,24)
+										this:SetValue(13)
+										this:SetValueStep(1)
+										getglobal("VCB_BF_DBF_FRAME_GFontSizeSliderText"):SetText("Font size")
+										getglobal("VCB_BF_DBF_FRAME_GFontSizeSliderLow"):SetText("1")
+										getglobal("VCB_BF_DBF_FRAME_GFontSizeSliderHigh"):SetText("24")
+									</OnLoad>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_DBF_FRAME_GFontSizeSliderChange(this)
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							-- Aura offset X Slider
+							<Slider name="VCB_BF_DBF_FRAME_GFontOffsetXSlider" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="155" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_DBF_FRAME_GFontSizeSlider" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-30" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = "Move this to change the amount."
+										this:SetMinMaxValues(-28,28)
+										this:SetValue(5)
+										this:SetValueStep(1)
+										getglobal("VCB_BF_DBF_FRAME_GFontOffsetXSliderText"):SetText("Font offset Y")
+										getglobal("VCB_BF_DBF_FRAME_GFontOffsetXSliderLow"):SetText("-28")
+										getglobal("VCB_BF_DBF_FRAME_GFontOffsetXSliderHigh"):SetText("28")
+									</OnLoad>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_DBF_FRAME_GFontOffsetXSliderChange(this)
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
 							-- Aura BGOpa Slider
 							<Slider name="VCB_BF_DBF_FRAME_BGOpaSlider" inherits="VCB_BF_SliderTemplate">
 								<Size>
@@ -4914,14 +5037,213 @@
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
+							-- Aura font Slider
+							<Slider name="VCB_BF_DBF_FRAME_GFontSlider" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="155" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_DBF_FRAME_ScaleSlider" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-30" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = "Move this to change the amount."
+										this:SetMinMaxValues(1,4)
+										this:SetValue(1)
+										this:SetValueStep(1)
+										getglobal("VCB_BF_DBF_FRAME_GFontSliderText"):SetText("Font")
+										getglobal("VCB_BF_DBF_FRAME_GFontSliderLow"):SetText("1")
+										getglobal("VCB_BF_DBF_FRAME_GFontSliderHigh"):SetText("4")
+									</OnLoad>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_DBF_FRAME_GFontSliderChange(this)
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							-- Aura font opacity Slider
+							<Slider name="VCB_BF_DBF_FRAME_GFontOpacitySlider" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="155" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_DBF_FRAME_GFontSlider" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-30" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = "Move this to change the amount."
+										this:SetMinMaxValues(0,1.0)
+										this:SetValue(1.0)
+										this:SetValueStep(0.1)
+										getglobal("VCB_BF_DBF_FRAME_GFontOpacitySliderText"):SetText("Font Opacity")
+										getglobal("VCB_BF_DBF_FRAME_GFontOpacitySliderLow"):SetText("0")
+										getglobal("VCB_BF_DBF_FRAME_GFontOpacitySliderHigh"):SetText("1.0")
+									</OnLoad>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_DBF_FRAME_GFontOpacitySliderChange(this)
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							-- Aura offset Y Slider
+							<Slider name="VCB_BF_DBF_FRAME_GFontOffsetYSlider" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="155" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_DBF_FRAME_GFontOpacitySlider" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-30" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = "Move this to change the amount."
+										this:SetMinMaxValues(-28,28)
+										this:SetValue(5)
+										this:SetValueStep(1)
+										getglobal("VCB_BF_DBF_FRAME_GFontOffsetYSliderText"):SetText("Font offset Y")
+										getglobal("VCB_BF_DBF_FRAME_GFontOffsetYSliderLow"):SetText("-28")
+										getglobal("VCB_BF_DBF_FRAME_GFontOffsetYSliderHigh"):SetText("28")
+									</OnLoad>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_DBF_FRAME_GFontOffsetYSliderChange(this)
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
 						</Frames>
 					</Frame>
+					<Button name="VCB_BF_DBF_FRAME_previous_page">
+						<Size>
+							<AbsDimension x="30" y="30"/>
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOM" relativeTo="VCB_BF_DBF_FRAME" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="-50" y="15"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_BF_DBF_FRAME_CHANGE_PAGE()
+								PlaySound("igMainMenuOptionCheckBoxOff");
+							</OnClick>
+						</Scripts>
+						<Layers>
+							<Layer>
+								<FontString name="$parentFont" inherits="GameFontNormalSmall" text="Page 1 of 2">
+									<Size>
+										<AbsDimension x="100" y="30" />
+									</Size>
+									<Anchors>
+										<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+											<Offset>
+												<AbsDimension x="-15" y="0" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD"/>
+					</Button>
+					<Button name="VCB_BF_DBF_FRAME_next_page">
+						<Size>
+							<AbsDimension x="30" y="30"/>
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOM" relativeTo="VCB_BF_DBF_FRAME" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="50" y="15"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_BF_DBF_FRAME_CHANGE_PAGE()
+								PlaySound("igMainMenuOptionCheckBoxOff");
+							</OnClick>
+						</Scripts>
+						<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD"/>
+					</Button>
+				</Frames>
+			</Frame>
+			-- DBF Frame 2
+			<Frame name="VCB_BF_DBF_FRAME2" hidden="true">
+				<Size>
+					<AbsDimension x="610" y="435"/>
+				</Size>
+				<Anchors>
+					<Anchor point="Left" relativeTo="VCB_BF_MENU_BODY" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+				<Layers>
+					<Layer>
+						<FontString name="$parentFont1" inherits="GameFontNormal" text="Border" justifyH="LEFT">
+							<Size>
+								<AbsDimension x="610" y="30" />
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="20" y="-10" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="$parentFont2" inherits="GameFontNormal" text="Aura Timer" justifyH="LEFT">
+							<Size>
+								<AbsDimension x="610" y="30" />
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="20" y="-145" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Frames>
 					<Frame name="VCB_BF_DBF_FRAME_BORDER">
 						<Size>
 							<AbsDimension x="580" y="100"/>
 						</Size>
 						<Anchors>
-							<Anchor point="TOP" relativeTo="VCB_BF_DBF_FRAME_GENERAL" relativePoint="BOTTOM">
+							<Anchor point="TOP" relativeTo="VCB_BF_DBF_FRAME2" relativePoint="TOP">
 								<Offset>
 									<AbsDimension x="0" y="-30"/>
 								</Offset>
@@ -5422,7 +5744,7 @@
 						<Anchors>
 							<Anchor point="TOP" relativeTo="VCB_BF_DBF_FRAME_BORDER" relativePoint="BOTTOM">
 								<Offset>
-									<AbsDimension x="0" y="-30"/>
+									<AbsDimension x="0" y="-35"/>
 								</Offset>
 							</Anchor>
 						</Anchors>
@@ -5585,6 +5907,64 @@
 							</Slider>
 						</Frames>
 					</Frame>
+					<Button name="VCB_BF_DBF_FRAME2_previous_page">
+						<Size>
+							<AbsDimension x="30" y="30"/>
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOM" relativeTo="VCB_BF_DBF_FRAME2" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="-50" y="15"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_BF_DBF_FRAME_CHANGE_PAGE()
+								PlaySound("igMainMenuOptionCheckBoxOff");
+							</OnClick>
+						</Scripts>
+						<Layers>
+							<Layer>
+								<FontString name="$parentFont" inherits="GameFontNormalSmall" text="Page 2 of 2">
+									<Size>
+										<AbsDimension x="100" y="30" />
+									</Size>
+									<Anchors>
+										<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+											<Offset>
+												<AbsDimension x="-15" y="0" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD"/>
+					</Button>
+					<Button name="VCB_BF_DBF_FRAME2_next_page">
+						<Size>
+							<AbsDimension x="30" y="30"/>
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOM" relativeTo="VCB_BF_DBF_FRAME2" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="50" y="15"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_BF_DBF_FRAME_CHANGE_PAGE()
+								PlaySound("igMainMenuOptionCheckBoxOff");
+							</OnClick>
+						</Scripts>
+						<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD"/>
+					</Button>
 				</Frames>
 			</Frame>
 			-- Weapon Frame
@@ -5629,7 +6009,7 @@
 				<Frames>
 					<Frame name="VCB_BF_WP_FRAME_GENERAL">
 						<Size>
-							<AbsDimension x="580" y="150"/>
+							<AbsDimension x="580" y="240"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="VCB_BF_WP_FRAME" relativePoint="TOPLEFT">
@@ -5692,27 +6072,6 @@
 									</OnLoad>
 									<OnClick>
 										VCB_BF_WP_FRAME_ENABLEBGCOLOR()
-									</OnClick>
-								</Scripts>
-							</CheckButton>
-							-- Checkbutton invert butt order
-							<CheckButton name="VCB_BF_WP_FRAME_CHECKBUTTON3" inherits="VCB_BF_CheckTemplate">
-								<Size>
-									<AbsDimension x="30" y="30"/>
-								</Size>
-								<Anchors>
-									<Anchor point="LEFT" relativeTo="VCB_BF_WP_FRAME_CHECKBUTTON1" relativePoint="RIGHT">
-										<Offset>
-											<AbsDimension x="156" y="0"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON3Text"):SetText("Invert buff order")
-									</OnLoad>
-									<OnClick>
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -5802,15 +6161,101 @@
 								</Scripts>
 								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
 							</Button>
+							-- COLOR PICKER
+							<Button name="VCB_BF_WP_FRAME_Color5">
+								<Size>
+									<AbsDimension x="16" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_WP_FRAME_CHECKBUTTON7" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer>
+										<FontString name="$parentFont" inherits="GameFontNormalSmall" text="Select font color" justifyH="LEFT">
+											<Size>
+												<AbsDimension x="200" y="16" />
+											</Size>
+											<Anchors>
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+													<Offset>
+														<AbsDimension x="5" y="0" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+									<Layer level="BACKGROUND">
+										<Texture name="$parent_SwatchBg">
+											<Size>
+												<AbsDimension x="14" y="14"/>
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="0"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+											<Color r="1.0" g="1.0" b="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnLoad>
+										getglobal(this:GetName().."_SwatchBg").r = 1.0;
+										getglobal(this:GetName().."_SwatchBg").g = 1.0;
+										getglobal(this:GetName().."_SwatchBg").b = 1.0;
+									</OnLoad>
+									<OnClick>
+										VCB_BF_OpenColorPicker(this, "WP_GENERAL_font", nil, "WPFont");
+									</OnClick>
+									<OnEnter>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+									</OnEnter>
+									<OnLeave>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
+										GameTooltip:Hide();
+									</OnLeave>
+								</Scripts>
+								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
+							</Button>
+							-- Checkbutton enable font border
+							<CheckButton name="VCB_BF_WP_FRAME_CHECKBUTTON8" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_WP_FRAME_Color5" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-10"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = "Check this to invert the buff order."
+										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON8Text"):SetText("Enable font border")
+									</OnLoad>
+									<OnClick>
+										VCB_BF_WP_FRAME_ENABLE_FONT_BORDER()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
 							-- Aura padding Slider
 							<Slider name="VCB_BF_WP_FRAME_AuraPaddingHSlider" inherits="VCB_BF_SliderTemplate">
 								<Size>
 									<AbsDimension x="155" y="16"/>
 								</Size>
 								<Anchors>
-									<Anchor point="TOP" relativeTo="VCB_BF_WP_FRAME_CHECKBUTTON3" relativePoint="BOTTOM">
+									<Anchor point="LEFT" relativeTo="VCB_BF_WP_FRAME_CHECKBUTTON1" relativePoint="RIGHT">
 										<Offset>
-											<AbsDimension x="66" y="-33" />
+											<AbsDimension x="160" y="-10" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -5831,13 +6276,42 @@
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
+							-- Aura padding V Slider
+							<Slider name="VCB_BF_WP_FRAME_AuraPaddingVSlider" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="155" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_WP_FRAME_AuraPaddingHSlider" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-30" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = "Move this to change the amount."
+										this:SetMinMaxValues(1,10)
+										this:SetValue(5)
+										this:SetValueStep(1)
+										getglobal("VCB_BF_WP_FRAME_AuraPaddingVSliderText"):SetText("Padding H")
+										getglobal("VCB_BF_WP_FRAME_AuraPaddingVSliderLow"):SetText("1")
+										getglobal("VCB_BF_WP_FRAME_AuraPaddingVSliderHigh"):SetText("10")
+									</OnLoad>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_WP_FRAME_AuraPaddingVSliderChange(this)
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
 							-- Aura Fontsize Slider
 							<Slider name="VCB_BF_WP_FRAME_FontSizeSlider" inherits="VCB_BF_SliderTemplate">
 								<Size>
 									<AbsDimension x="155" y="16"/>
 								</Size>
 								<Anchors>
-									<Anchor point="TOP" relativeTo="VCB_BF_WP_FRAME_AuraPaddingHSlider" relativePoint="BOTTOM">
+									<Anchor point="TOP" relativeTo="VCB_BF_WP_FRAME_AuraPaddingVSlider" relativePoint="BOTTOM">
 										<Offset>
 											<AbsDimension x="0" y="-30" />
 										</Offset>
@@ -5860,15 +6334,73 @@
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
+							-- Aura Offset X Slider
+							<Slider name="VCB_BF_WP_FRAME_OffsetXSlider" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="155" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_WP_FRAME_FontSizeSlider" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-30" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = "Move this to change the amount."
+										this:SetMinMaxValues(-28,28)
+										this:SetValue(-5)
+										this:SetValueStep(1)
+										getglobal("VCB_BF_WP_FRAME_OffsetXSliderText"):SetText("Font offset X")
+										getglobal("VCB_BF_WP_FRAME_OffsetXSliderLow"):SetText("-28")
+										getglobal("VCB_BF_WP_FRAME_OffsetXSliderHigh"):SetText("28")
+									</OnLoad>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_WP_FRAME_OffsetXSliderChange(this)
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							-- Aura Offset Y Slider
+							<Slider name="VCB_BF_WP_FRAME_OffsetYSlider" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="155" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_WP_FRAME_OffsetXSlider" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-30" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = "Move this to change the amount."
+										this:SetMinMaxValues(-28,28)
+										this:SetValue(-5)
+										this:SetValueStep(1)
+										getglobal("VCB_BF_WP_FRAME_OffsetYSliderText"):SetText("Font offset Y")
+										getglobal("VCB_BF_WP_FRAME_OffsetYSliderLow"):SetText("-28")
+										getglobal("VCB_BF_WP_FRAME_OffsetYSliderHigh"):SetText("28")
+									</OnLoad>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_WP_FRAME_OffsetYSliderChange(this)
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
 							-- Aura BGOpa Slider
 							<Slider name="VCB_BF_WP_FRAME_BGOpaSlider" inherits="VCB_BF_SliderTemplate">
 								<Size>
 									<AbsDimension x="155" y="16"/>
 								</Size>
 								<Anchors>
-									<Anchor point="LEFT" relativeTo="VCB_BF_WP_FRAME_CHECKBUTTON3" relativePoint="RIGHT">
+									<Anchor point="LEFT" relativeTo="VCB_BF_WP_FRAME_AuraPaddingHSlider" relativePoint="RIGHT">
 										<Offset>
-											<AbsDimension x="169" y="-10" />
+											<AbsDimension x="40" y="0" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -5943,6 +6475,35 @@
 									<OnValueChanged>
 										if VCB_IS_LOADED then
 											VCB_BF_WP_FRAME_FontSliderChange(this)
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							-- Aura Font opacity Slider
+							<Slider name="VCB_BF_WP_FRAME_FontOpacitySlider" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="155" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_WP_FRAME_FontSlider" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-30" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = "Move this to change the amount."
+										this:SetMinMaxValues(0,1.0)
+										this:SetValue(1.0)
+										this:SetValueStep(0.1)
+										getglobal("VCB_BF_WP_FRAME_FontOpacitySliderText"):SetText("Font opacity")
+										getglobal("VCB_BF_WP_FRAME_FontOpacitySliderLow"):SetText("0")
+										getglobal("VCB_BF_WP_FRAME_FontOpacitySliderHigh"):SetText("1.0")
+									</OnLoad>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_WP_FRAME_FontOpacitySliderChange(this)
 										end
 									</OnValueChanged>
 								</Scripts>
@@ -6053,7 +6614,7 @@
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 									<Offset>
-										<AbsDimension x="20" y="-130" />
+										<AbsDimension x="20" y="-145" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -6063,7 +6624,7 @@
 				<Frames>
 					<Frame name="VCB_BF_WP_FRAME_BORDER">
 						<Size>
-							<AbsDimension x="580" y="90"/>
+							<AbsDimension x="580" y="105"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOP" relativeTo="$parent" relativePoint="TOP">
@@ -6252,7 +6813,7 @@
 								<Anchors>
 									<Anchor point="LEFT" relativeTo="VCB_BF_WP_FRAME_Color4" relativePoint="RIGHT">
 										<Offset>
-											<AbsDimension x="175" y="-28" />
+											<AbsDimension x="175" y="-10" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -6269,6 +6830,35 @@
 									<OnValueChanged>
 										if VCB_IS_LOADED then
 											VCB_BF_WP_FRAME_BorderSliderChange(this)
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							-- Aura Border opacity Slider
+							<Slider name="VCB_BF_WP_FRAME_BorderOpacitySlider" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="155" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_WP_FRAME_BorderSlider" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-30" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = "Move this to change the amount."
+										this:SetMinMaxValues(0,1.0)
+										this:SetValue(1.0)
+										this:SetValueStep(0.1)
+										getglobal("VCB_BF_WP_FRAME_BorderOpacitySliderText"):SetText("Border Opacity")
+										getglobal("VCB_BF_WP_FRAME_BorderOpacitySliderLow"):SetText("0")
+										getglobal("VCB_BF_WP_FRAME_BorderOpacitySliderHigh"):SetText("1.0")
+									</OnLoad>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_WP_FRAME_BorderOpacitySliderChange(this)
 										end
 									</OnValueChanged>
 								</Scripts>
