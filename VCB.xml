@@ -656,7 +656,7 @@
 						<Scripts>
 							<OnClick>
 								VCB_OPTIONS_HIDE_ALL()
-								VCB_OPTIONS_SHOW("VCB_BF_WP_FRAME", "Weapon Frame")
+								VCB_OPTIONS_SHOW("VCB_BF_WP_FRAME", "Weapon Frame -1-")
 							</OnClick>
 						</Scripts>
 						<Layers>
@@ -4592,30 +4592,6 @@
 								</Anchor>
 							</Anchors>
 						</FontString>
-						<FontString name="VCB_BF_DBF_FRAME_FONT2" inherits="GameFontNormal" text="Border" justifyH="LEFT">
-							<Size>
-								<AbsDimension x="610" y="30" />
-							</Size>
-							<Anchors>
-								<Anchor point="TOPLEFT" relativeTo="VCB_BF_BF_FRAME" relativePoint="TOPLEFT">
-									<Offset>
-										<AbsDimension x="20" y="-200" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-						<FontString name="VCB_BF_DBF_FRAME_FONT3" inherits="GameFontNormal" text="Aura Timer" justifyH="LEFT">
-							<Size>
-								<AbsDimension x="610" y="30" />
-							</Size>
-							<Anchors>
-								<Anchor point="TOPLEFT" relativeTo="VCB_BF_BF_FRAME" relativePoint="TOPLEFT">
-									<Offset>
-										<AbsDimension x="20" y="-330" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
 					</Layer>
 				</Layers>
 				<Frames>
@@ -5648,30 +5624,6 @@
 								</Anchor>
 							</Anchors>
 						</FontString>
-						<FontString name="VCB_BF_WP_FRAME_FONT2" inherits="GameFontNormal" text="Border" justifyH="LEFT">
-							<Size>
-								<AbsDimension x="610" y="30" />
-							</Size>
-							<Anchors>
-								<Anchor point="TOPLEFT" relativeTo="VCB_BF_WP_FRAME" relativePoint="TOPLEFT">
-									<Offset>
-										<AbsDimension x="20" y="-190" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
-						<FontString name="VCB_BF_WP_FRAME_FONT3" inherits="GameFontNormal" text="Aura Timer" justifyH="LEFT">
-							<Size>
-								<AbsDimension x="610" y="30" />
-							</Size>
-							<Anchors>
-								<Anchor point="TOPLEFT" relativeTo="VCB_BF_WP_FRAME" relativePoint="TOPLEFT">
-									<Offset>
-										<AbsDimension x="20" y="-310" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-						</FontString>
 					</Layer>
 				</Layers>
 				<Frames>
@@ -5997,12 +5949,124 @@
 							</Slider>
 						</Frames>
 					</Frame>
+					<Button name="VCB_BF_WP_FRAME_previous_page">
+						<Size>
+							<AbsDimension x="30" y="30"/>
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOM" relativeTo="VCB_BF_WP_FRAME" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="-50" y="15"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_BF_WP_FRAME_CHANGE_PAGE()
+								PlaySound("igMainMenuOptionCheckBoxOff");
+							</OnClick>
+						</Scripts>
+						<Layers>
+							<Layer>
+								<FontString name="$parentFont" inherits="GameFontNormalSmall" text="Page 1 of 2">
+									<Size>
+										<AbsDimension x="100" y="30" />
+									</Size>
+									<Anchors>
+										<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+											<Offset>
+												<AbsDimension x="-15" y="0" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD"/>
+					</Button>
+					<Button name="VCB_BF_WP_FRAME_next_page">
+						<Size>
+							<AbsDimension x="30" y="30"/>
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOM" relativeTo="VCB_BF_WP_FRAME" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="50" y="15"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_BF_WP_FRAME_CHANGE_PAGE()
+								PlaySound("igMainMenuOptionCheckBoxOff");
+							</OnClick>
+						</Scripts>
+						<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD"/>
+					</Button>
+				</Frames>
+			</Frame>
+			-- Weapon Frame 2
+			<Frame name="VCB_BF_WP_FRAME2" hidden="true">
+				<Size>
+					<AbsDimension x="610" y="435"/>
+				</Size>
+				<Anchors>
+					<Anchor point="Left" relativeTo="VCB_BF_MENU_BODY" relativePoint="RIGHT">
+						<Offset>
+							<AbsDimension x="0" y="0" />
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+					<BackgroundInsets>
+						<AbsInset left="11" right="12" top="12" bottom="11" />
+					</BackgroundInsets>
+					<TileSize>
+						<AbsValue val="32" />
+					</TileSize>
+					<EdgeSize>
+						<AbsValue val="32" />
+					</EdgeSize>
+				</Backdrop>
+				<Layers>
+					<Layer>
+						<FontString name="$parentFont1" inherits="GameFontNormal" text="Border" justifyH="LEFT">
+							<Size>
+								<AbsDimension x="610" y="30" />
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="20" y="-10" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+						<FontString name="$parentFont2" inherits="GameFontNormal" text="Aura Timer" justifyH="LEFT">
+							<Size>
+								<AbsDimension x="610" y="30" />
+							</Size>
+							<Anchors>
+								<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+									<Offset>
+										<AbsDimension x="20" y="-130" />
+									</Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Frames>
 					<Frame name="VCB_BF_WP_FRAME_BORDER">
 						<Size>
 							<AbsDimension x="580" y="90"/>
 						</Size>
 						<Anchors>
-							<Anchor point="TOP" relativeTo="VCB_BF_WP_FRAME_GENERAL" relativePoint="BOTTOM">
+							<Anchor point="TOP" relativeTo="$parent" relativePoint="TOP">
 								<Offset>
 									<AbsDimension x="0" y="-30"/>
 								</Offset>
@@ -6381,6 +6445,64 @@
 							</Slider>
 						</Frames>
 					</Frame>
+					<Button name="VCB_BF_WP_FRAME2_previous_page">
+						<Size>
+							<AbsDimension x="30" y="30"/>
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOM" relativeTo="VCB_BF_WP_FRAME2" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="-50" y="15"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_BF_WP_FRAME_CHANGE_PAGE()
+								PlaySound("igMainMenuOptionCheckBoxOff");
+							</OnClick>
+						</Scripts>
+						<Layers>
+							<Layer>
+								<FontString name="$parentFont" inherits="GameFontNormalSmall" text="Page 2 of 2">
+									<Size>
+										<AbsDimension x="100" y="30" />
+									</Size>
+									<Anchors>
+										<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+											<Offset>
+												<AbsDimension x="-15" y="0" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-SpellbookIcon-PrevPage-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD"/>
+					</Button>
+					<Button name="VCB_BF_WP_FRAME2_next_page">
+						<Size>
+							<AbsDimension x="30" y="30"/>
+						</Size>
+						<Anchors>
+							<Anchor point="BOTTOM" relativeTo="VCB_BF_WP_FRAME2" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="50" y="15"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_BF_WP_FRAME_CHANGE_PAGE()
+								PlaySound("igMainMenuOptionCheckBoxOff");
+							</OnClick>
+						</Scripts>
+						<NormalTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-SpellbookIcon-NextPage-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-Common-MouseHilight" alphaMode="ADD"/>
+					</Button>
 				</Frames>
 			</Frame>
 			-- OM Frame

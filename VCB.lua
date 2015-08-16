@@ -490,6 +490,7 @@ function VCB_OPTIONS_HIDE_ALL()
 	getglobal("VCB_BF_BF_FRAME"):Hide()
 	getglobal("VCB_BF_DBF_FRAME"):Hide()
 	getglobal("VCB_BF_WP_FRAME"):Hide()
+	getglobal("VCB_BF_WP_FRAME2"):Hide()
 	getglobal("VCB_BF_MISC_FRAME"):Hide()
 	getglobal("VCB_BF_PM_FRAME"):Hide()
 	getglobal("VCB_BF_OM_FRAME"):Hide()
@@ -696,6 +697,7 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_WP_FRAME_ScaleSliderText"):SetText("Scale: "..VCB_SAVE["WP_GENERAL_scale"])
 		getglobal("VCB_BF_WP_FRAME_FontSlider"):SetValue(VCB_Table_GetKeys(VCB_FONT_ARRAY, VCB_SAVE["WP_GENERAL_font"]))
 		getglobal("VCB_BF_WP_FRAME_FontSliderText"):SetText("Font: "..VCB_SAVE["WP_GENERAL_font"])
+	elseif frame == "VCB_BF_WP_FRAME2" then
 		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON5"):SetChecked(VCB_SAVE["WP_BORDER_enableborder"])
 		getglobal("VCB_BF_WP_FRAME_Color4NormalTexture"):SetVertexColor(VCB_SAVE["WP_BORDER_bordercolor_r"], VCB_SAVE["WP_BORDER_bordercolor_g"], VCB_SAVE["WP_BORDER_bordercolor_b"])
 		getglobal("VCB_BF_WP_FRAME_Color4_SwatchBg").r = VCB_SAVE["WP_BORDER_bordercolor_r"]
@@ -1904,6 +1906,8 @@ function VCB_BF_DBF_FRAME_BorderOpacitySliderChange(obj)
 	end
 end
 
+
+
 ---------------------------------------END DEBUFF FRAME-----------------------------------------------------------------------------------------------------------------
 ---------------------------------------START WP FRAME-----------------------------------------------------------------------------------------------------------------
 function VCB_BF_WP_FRAME_VERTICAL_MODE()
@@ -2100,6 +2104,16 @@ function VCB_BF_WP_FRAME_TIMER_FontOpacitySliderChange(obj)
 	getglobal(obj:GetName().."Text"):SetText("Font opacity: "..VCB_SAVE["WP_TIMER_fontopacity"])
 	for i=0,1 do
 		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetAlpha(VCB_SAVE["WP_TIMER_fontopacity"])
+	end
+end
+
+function VCB_BF_WP_FRAME_CHANGE_PAGE()
+	if VCB_BF_WP_FRAME:IsVisible() then
+		VCB_OPTIONS_HIDE_ALL()
+		VCB_OPTIONS_SHOW("VCB_BF_WP_FRAME2", "Weapon Frame -2-")
+	else
+		VCB_OPTIONS_HIDE_ALL()
+		VCB_OPTIONS_SHOW("VCB_BF_WP_FRAME", "Weapon Frame -1-")
 	end
 end
 
