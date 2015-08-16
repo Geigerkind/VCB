@@ -4091,6 +4091,7 @@
 										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON3Text"):SetText("Invert buff order")
 									</OnLoad>
 									<OnClick>
+										VCB_BF_BF_FRAME_INVERTBUFFMODE()
 									</OnClick>
 								</Scripts>
 							</CheckButton>

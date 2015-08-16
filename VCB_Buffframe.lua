@@ -85,8 +85,6 @@ end
 
 function VCB_BF_BUFF_BUTTON_Update(button)
 	if (VCB_BF_DUMMY_MODE == false) then
-		local hackfix = false
-
 		local buffIndex, untilCancelled = GetPlayerBuff(button:GetID(), button.buffFilter);
 		button.buffIndex = buffIndex;
 		button.untilCancelled = untilCancelled;
@@ -98,16 +96,13 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 		GameTooltip:SetPlayerBuff(buffIndex)
 		local name = GameTooltipTextLeft1:GetText()
 		
+		if button.cat == "buff" then button:SetParent(VCB_BF_BUFF_FRAME) end
 		if Consolidated_Buffs ~= nil and button:GetParent() ~= VCB_BF_DEBUFF_FRAME and (not VCB_SAVE["MISC_disable_CF"]) then
 			for e = 1, VCB_tablelength(Consolidated_Buffs) do
 				if not Consolidated_Buffs[e] or name == nil then break end
 				if strfind(strlower(Consolidated_Buffs[e]), strlower(name)) then
 					button:SetParent(VCB_BF_CONSOLIDATED_BUFFFRAME)
-					hackfix = true
 				end
-			end
-			if (not hackfix) then
-				button:SetParent(VCB_BF_BUFF_FRAME)
 			end
 		end
 		
@@ -172,7 +167,7 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 			buffCount:Hide();
 		end
 		
-		if VCB_IS_LOADED and button:GetID() == 31 then
+		if VCB_IS_LOADED and button.cat == "buff" and button:GetID() == 31 then
 			VCB_BF_RepositioningAndResizing() -- Performance
 		end
 	end
@@ -183,119 +178,145 @@ function VCB_BF_RepositioningAndResizing()
 	local b = 1
 	for i=0, 31 do
 		local button = getglobal("VCB_BF_BUFF_BUTTON"..i)
-		if (button.buffIndex or VCB_BF_DUMMY_MODE) then
-			local parent = button:GetParent()
-			local buttonDuration = getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration")
-			local buttonBorder = getglobal("VCB_BF_BUFF_BUTTON"..i.."Border")
-			local buttonIcon = getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon")
-			local buttonCount = getglobal("VCB_BF_BUFF_BUTTON"..i.."Count")
-			
-			local CF = 0
-			if VCB_SAVE["MISC_disable_CF"] then
-				button:SetParent(VCB_BF_BUFF_FRAME)
-				CF = 1
+		local parent = button:GetParent()
+		local buttonDuration = getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration")
+		local buttonBorder = getglobal("VCB_BF_BUFF_BUTTON"..i.."Border")
+		local buttonIcon = getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon")
+		local buttonCount = getglobal("VCB_BF_BUFF_BUTTON"..i.."Count")
+		
+		if VCB_SAVE["BF_GENERAL_invert"] then
+			local j = 31-i
+			button = getglobal("VCB_BF_BUFF_BUTTON"..j)
+			parent = button:GetParent()
+			buttonDuration = getglobal("VCB_BF_BUFF_BUTTON"..j.."Duration")
+			buttonBorder = getglobal("VCB_BF_BUFF_BUTTON"..j.."Border")
+			buttonIcon = getglobal("VCB_BF_BUFF_BUTTON"..j.."Icon")
+			buttonCount = getglobal("VCB_BF_BUFF_BUTTON"..j.."Count")
+		end
+		
+		local CF = 0
+		if VCB_SAVE["MISC_disable_CF"] then
+			button:SetParent(VCB_BF_BUFF_FRAME)
+			CF = 1
+		end
+		
+		if parent == VCB_BF_BUFF_FRAME and (button.buffIndex >= 0 or VCB_BF_DUMMY_MODE or (not VCB_BF_LOCKED)) then
+			button:ClearAllPoints()
+			local u = 0
+			local o = 0
+			if VCB_SAVE["WP_GENERAL_attach"] then
+				if VCB_BF_DUMMY_MODE then
+					u = 2
+				else
+					local hasMainHandEnchant, mainHandExpiration, mainHandCharges, hasOffHandEnchant, offHandExpiration, offHandCharges = GetWeaponEnchantInfo()
+					if hasMainHandEnchant then u = u + 1 end
+					if hasOffHandEnchant then u = u + 1 end
+				end
+				VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
+				if a <= (VCB_SAVE["BF_GENERAL_numperrow"]-(3-CF)) then
+					o = u
+				end
 			end
-			
-			if parent == VCB_BF_BUFF_FRAME then
-				button:ClearAllPoints()
-				local u = 0
-				local o = 0
-				if VCB_SAVE["WP_GENERAL_attach"] then
-					if VCB_BF_DUMMY_MODE then
-						u = 2
-					else
-						local hasMainHandEnchant, mainHandExpiration, mainHandCharges, hasOffHandEnchant, offHandExpiration, offHandCharges = GetWeaponEnchantInfo()
-						if hasMainHandEnchant then u = u + 1 end
-						if hasOffHandEnchant then u = u + 1 end
-					end
-					VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
-					if a <= (VCB_SAVE["BF_GENERAL_numperrow"]-(3-CF)) then
-						o = u
-					end
-				end
-				if VCB_SAVE["BF_GENERAL_verticalmode"] then
-					VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*u)
-					button:SetPoint("TOP", VCB_BF_BUFF_FRAME, "BOTTOM", -(36+VCB_SAVE["BF_GENERAL_padding_h"])*floor((a+u-o)/(VCB_SAVE["BF_GENERAL_numperrow"])) + 10,-(44+VCB_SAVE["BF_GENERAL_padding_v"])*(a+u) + floor((a+u)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(44+VCB_SAVE["BF_GENERAL_padding_v"]) + 50)
-				else
-					VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
-					button:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*(a+u) + floor((a+u-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(32+VCB_SAVE["BF_GENERAL_padding_h"]) + (32+VCB_SAVE["BF_GENERAL_padding_h"])*CF,-(44+VCB_SAVE["BF_GENERAL_padding_v"])*floor((a+u-o-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]-o)))
-				end
-				if VCB_SAVE["BF_TIMER_border"] then
-					buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"], "OUTLINE")
-				else
-					buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"])
-				end
-				buttonDuration:SetTextColor(VCB_SAVE["BF_TIMER_fontcolor_r"],VCB_SAVE["BF_TIMER_fontcolor_g"],VCB_SAVE["BF_TIMER_fontcolor_b"],VCB_SAVE["BF_TIMER_fontopacity"])
-				if VCB_SAVE["BF_GENERAL_enablebgcolor"] then
-					buttonIcon:SetVertexColor(VCB_SAVE["BF_GENERAL_bgcolor_r"],VCB_SAVE["BF_GENERAL_bgcolor_g"],VCB_SAVE["BF_GENERAL_bgcolor_b"],VCB_SAVE["BF_GENERAL_bgopacity"])
-				else
-					buttonIcon:SetVertexColor(1,1,1,VCB_SAVE["BF_GENERAL_bgopacity"])
-				end
-				if VCB_SAVE["BF_BORDER_enableborder"] then
-					buttonBorder:SetTexture(nil)
-					if VCB_SAVE["BF_BORDER_usecustomborder"] then
-						buttonBorder:SetTexture(VCB_SAVE["BF_BORDER_customborderpath"])
-					else
-						buttonBorder:SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["BF_BORDER_border"]])
-					end
-					buttonBorder:SetVertexColor(VCB_SAVE["BF_BORDER_bordercolor_r"],VCB_SAVE["BF_BORDER_bordercolor_g"],VCB_SAVE["BF_BORDER_bordercolor_b"],VCB_SAVE["BF_BORDER_borderopacity"])
-				else
-					buttonBorder:SetTexture(nil)
-				end
-				if VCB_SAVE["BF_GENERAL_enableborder"] then
-					buttonCount:SetFont("Fonts\\"..VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")
-				else
-					buttonCount:SetFont("Fonts\\"..VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"])
-				end
-				buttonCount:SetVertexColor(VCB_SAVE["BF_GENERAL_fontcolor_r"],VCB_SAVE["BF_GENERAL_fontcolor_g"],VCB_SAVE["BF_GENERAL_fontcolor_b"],VCB_SAVE["BF_GENERAL_fontopacity"])
-				buttonCount:ClearAllPoints()
-				buttonCount:SetPoint("BOTTOMRIGHT", VCB_SAVE["BF_GENERAL_fontoffset_x"], VCB_SAVE["BF_GENERAL_fontoffset_y"])
-				a = a + 1
+			if VCB_SAVE["BF_GENERAL_verticalmode"] then
+				VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*u)
+				button:SetPoint("TOP", VCB_BF_BUFF_FRAME, "BOTTOM", -(36+VCB_SAVE["BF_GENERAL_padding_h"])*floor((a+u-o)/(VCB_SAVE["BF_GENERAL_numperrow"])) + 10,-(44+VCB_SAVE["BF_GENERAL_padding_v"])*(a+u) + floor((a+u)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(44+VCB_SAVE["BF_GENERAL_padding_v"]) + 50)
 			else
-				button:ClearAllPoints()
-				if VCB_SAVE["CF_BF_invert"] then
-					button:SetPoint("TOPLEFT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPLEFT", ((32+VCB_SAVE["CF_AURA_padding_h"])*b)-(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) - (ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
-				else
-					button:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*b)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
-				end
-				if VCB_SAVE["CF_TIMER_border"] then
-					buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"], "OUTLINE")
-				else
-					buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"])
-				end
-				if VCB_SAVE["CF_AURA_enableborder"] then
-					if VCB_SAVE["CF_AURA_customborder"] then
-						buttonBorder:SetTexture(VCB_SAVE["CF_AURA_customborderpath"])
-					else
-						buttonBorder:SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["CF_AURA_border"]])
-					end
-				else
-					buttonBorder:SetTexture(nil)
-				end
-				buttonBorder:SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopactiy"])
-				if VCB_SAVE["CF_AURA_enablebgcolor"] then
-					buttonIcon:SetVertexColor(VCB_SAVE["CF_AURA_bgcolor_r"],VCB_SAVE["CF_AURA_bgcolor_g"],VCB_SAVE["CF_AURA_bgcolor_b"])
-				else
-					buttonIcon:SetVertexColor(1,1,1)
-				end
-				if VCB_SAVE["CF_TIMER_border"] then
-					buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_BF_scale"]*VCB_SAVE["CF_TIMER_fontsize"], "OUTLINE")
-				else
-					buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_BF_scale"]*VCB_SAVE["CF_TIMER_fontsize"])
-				end
-				buttonDuration:SetTextColor(VCB_SAVE["CF_TIMER_fontcolor_r"],VCB_SAVE["CF_TIMER_fontcolor_g"],VCB_SAVE["CF_TIMER_fontcolor_b"],VCB_SAVE["CF_TIMER_fontopacity"])
-				if VCB_SAVE["CF_AURA_enableborder"] then
-					buttonCount:SetFont("Fonts\\"..VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
-				else
-					buttonCount:SetFont("Fonts\\"..VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"])
-				end
-				buttonCount:SetVertexColor(VCB_SAVE["CF_AURA_fontcolor_r"],VCB_SAVE["CF_AURA_fontcolor_g"],VCB_SAVE["CF_AURA_fontcolor_b"],VCB_SAVE["CF_AURA_fontopacity"])
-				buttonCount:ClearAllPoints()
-				buttonCount:SetPoint("BOTTOMRIGHT", VCB_SAVE["CF_AURA_fontoffset_x"], VCB_SAVE["CF_AURA_fontoffset_y"])
-				b = b + 1
+				VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
+				button:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*(a+u) + floor((a+u-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(32+VCB_SAVE["BF_GENERAL_padding_h"]) + (32+VCB_SAVE["BF_GENERAL_padding_h"])*CF,-(44+VCB_SAVE["BF_GENERAL_padding_v"])*floor((a+u-o-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]-o)))
 			end
+			if VCB_SAVE["BF_TIMER_border"] then
+				buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"], "OUTLINE")
+			else
+				buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"])
+			end
+			buttonDuration:SetTextColor(VCB_SAVE["BF_TIMER_fontcolor_r"],VCB_SAVE["BF_TIMER_fontcolor_g"],VCB_SAVE["BF_TIMER_fontcolor_b"],VCB_SAVE["BF_TIMER_fontopacity"])
+			if VCB_SAVE["BF_GENERAL_enablebgcolor"] then
+				buttonIcon:SetVertexColor(VCB_SAVE["BF_GENERAL_bgcolor_r"],VCB_SAVE["BF_GENERAL_bgcolor_g"],VCB_SAVE["BF_GENERAL_bgcolor_b"],VCB_SAVE["BF_GENERAL_bgopacity"])
+			else
+				buttonIcon:SetVertexColor(1,1,1,VCB_SAVE["BF_GENERAL_bgopacity"])
+			end
+			if VCB_SAVE["BF_BORDER_enableborder"] then
+				buttonBorder:SetTexture(nil)
+				if VCB_SAVE["BF_BORDER_usecustomborder"] then
+					buttonBorder:SetTexture(VCB_SAVE["BF_BORDER_customborderpath"])
+				else
+					buttonBorder:SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["BF_BORDER_border"]])
+				end
+				buttonBorder:SetVertexColor(VCB_SAVE["BF_BORDER_bordercolor_r"],VCB_SAVE["BF_BORDER_bordercolor_g"],VCB_SAVE["BF_BORDER_bordercolor_b"],VCB_SAVE["BF_BORDER_borderopacity"])
+			else
+				buttonBorder:SetTexture(nil)
+			end
+			if VCB_SAVE["BF_GENERAL_enableborder"] then
+				buttonCount:SetFont("Fonts\\"..VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")
+			else
+				buttonCount:SetFont("Fonts\\"..VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"])
+			end
+			buttonCount:SetVertexColor(VCB_SAVE["BF_GENERAL_fontcolor_r"],VCB_SAVE["BF_GENERAL_fontcolor_g"],VCB_SAVE["BF_GENERAL_fontcolor_b"],VCB_SAVE["BF_GENERAL_fontopacity"])
+			buttonCount:ClearAllPoints()
+			buttonCount:SetPoint("BOTTOMRIGHT", VCB_SAVE["BF_GENERAL_fontoffset_x"], VCB_SAVE["BF_GENERAL_fontoffset_y"])
+			a = a + 1
+		end
+		
+		if VCB_SAVE["CF_BF_invert"] then
+			local j = 31-i
+			button = getglobal("VCB_BF_BUFF_BUTTON"..j)
+			parent = button:GetParent()
+			buttonDuration = getglobal("VCB_BF_BUFF_BUTTON"..j.."Duration")
+			buttonBorder = getglobal("VCB_BF_BUFF_BUTTON"..j.."Border")
+			buttonIcon = getglobal("VCB_BF_BUFF_BUTTON"..j.."Icon")
+			buttonCount = getglobal("VCB_BF_BUFF_BUTTON"..j.."Count")
 		else
-			break
+			button = getglobal("VCB_BF_BUFF_BUTTON"..i)
+			parent = button:GetParent()
+			buttonDuration = getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration")
+			buttonBorder = getglobal("VCB_BF_BUFF_BUTTON"..i.."Border")
+			buttonIcon = getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon")
+			buttonCount = getglobal("VCB_BF_BUFF_BUTTON"..i.."Count")
+		end
+		
+		CF = 0
+		if VCB_SAVE["MISC_disable_CF"] then
+			button:SetParent(VCB_BF_BUFF_FRAME)
+			CF = 1
+		end
+		if parent == VCB_BF_CONSOLIDATED_BUFFFRAME and (button.buffIndex >= 0 or VCB_BF_DUMMY_MODE or (not VCB_BF_LOCKED)) then
+			button:ClearAllPoints()
+			button:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*b)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
+			if VCB_SAVE["CF_TIMER_border"] then
+				buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"], "OUTLINE")
+			else
+				buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"])
+			end
+			if VCB_SAVE["CF_AURA_enableborder"] then
+				if VCB_SAVE["CF_AURA_customborder"] then
+					buttonBorder:SetTexture(VCB_SAVE["CF_AURA_customborderpath"])
+				else
+					buttonBorder:SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["CF_AURA_border"]])
+				end
+			else
+				buttonBorder:SetTexture(nil)
+			end
+			buttonBorder:SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopactiy"])
+			if VCB_SAVE["CF_AURA_enablebgcolor"] then
+				buttonIcon:SetVertexColor(VCB_SAVE["CF_AURA_bgcolor_r"],VCB_SAVE["CF_AURA_bgcolor_g"],VCB_SAVE["CF_AURA_bgcolor_b"])
+			else
+				buttonIcon:SetVertexColor(1,1,1)
+			end
+			if VCB_SAVE["CF_TIMER_border"] then
+				buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_BF_scale"]*VCB_SAVE["CF_TIMER_fontsize"], "OUTLINE")
+			else
+				buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_BF_scale"]*VCB_SAVE["CF_TIMER_fontsize"])
+			end
+			buttonDuration:SetTextColor(VCB_SAVE["CF_TIMER_fontcolor_r"],VCB_SAVE["CF_TIMER_fontcolor_g"],VCB_SAVE["CF_TIMER_fontcolor_b"],VCB_SAVE["CF_TIMER_fontopacity"])
+			if VCB_SAVE["CF_AURA_enablefontborder"] then
+				buttonCount:SetFont("Fonts\\"..VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
+			else
+				buttonCount:SetFont("Fonts\\"..VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"])
+			end
+			buttonCount:SetVertexColor(VCB_SAVE["CF_AURA_fontcolor_r"],VCB_SAVE["CF_AURA_fontcolor_g"],VCB_SAVE["CF_AURA_fontcolor_b"],VCB_SAVE["CF_AURA_fontopacity"])
+			buttonCount:ClearAllPoints()
+			buttonCount:SetPoint("BOTTOMRIGHT", VCB_SAVE["CF_AURA_fontoffset_x"], VCB_SAVE["CF_AURA_fontoffset_y"])
+			b = b + 1
 		end
 	end
 	getglobal("VCB_BF_CONSOLIDATED_ICONCount"):SetText(b-1)
@@ -356,6 +377,15 @@ end
 
 function VCB_BF_WEAPON_BUTTON_OnEvent(bool)
 	local hasMainHandEnchant, mainHandExpiration, mainHandCharges, hasOffHandEnchant, offHandExpiration, offHandCharges = GetWeaponEnchantInfo();
+	local u = 0
+	if hasMainHandEnchant then u = u + 1 end
+	if hasOffHandEnchant then u = u + 1 end
+	if VCB_SAVE["BF_GENERAL_verticalmode"] then
+		VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*u)
+	else
+		VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
+	end
+	
 	if (not hasMainHandEnchant) and hasOffHandEnchant then -- Performance (?)
 		VCB_BF_WEAPON_BUTTON0:ClearAllPoints()
 		VCB_BF_WEAPON_BUTTON1:ClearAllPoints()
@@ -565,11 +595,11 @@ end
 
 function VCB_BF_ToggleLock()
 	if (not VCB_BF_LOCKED) then
-		VCB_BF_Lock(true)
 		VCB_BF_LOCKED = true
+		VCB_BF_Lock(true)
 	else
-		VCB_BF_Lock(false)
 		VCB_BF_LOCKED = false
+		VCB_BF_Lock(false)
 	end
 end
 
@@ -590,6 +620,7 @@ function VCB_BF_Lock(lock)
 		VCB_SendMessage("Locked the frames!")
 	else
 		VCB_SendMessage("Unlocked the frames!")
+		VCB_BF_RepositioningAndResizing()
 	end
 end
 
@@ -644,11 +675,6 @@ function VCB_BF_DummyConfigMode_Disable()
 	VCB_BF_WEAPON_BUTTON_OnEvent(false)
 end
 
---[[
--- VCB_BF:ConsolidatedAdd
--- @return: Void
--- Use: Adds an aura to the consolidated list
---]]
 function VCB_BF_ConsolidatedAdd(name)
 	if not VCB_Contains(Consolidated_Buffs, name) then
 		table.insert(Consolidated_Buffs, name)
@@ -658,11 +684,6 @@ function VCB_BF_ConsolidatedAdd(name)
 	end
 end
 
---[[
--- VCB_BF:ConsolidatedRemove
--- @return: Void
--- Use: Removes an aura from the consolidated list
---]]
 function VCB_BF_ConsolidatedRemove(name)
 	if VCB_Contains(Consolidated_Buffs, name) then
 		table.remove(Consolidated_Buffs, VCB_Table_GetKeys(Consolidated_Buffs, name))
@@ -672,22 +693,11 @@ function VCB_BF_ConsolidatedRemove(name)
 	end
 end
 
---[[
--- VCB_BF:RemoveAll
--- @return: Void
--- Use: Clears the whole consolidated aura list
---]]
 function VCB_BF_RemoveAllFromConsolidate()
 	Consolidated_Buffs = {}
 	VCB_SendMessage("The Consolidated Buffs list was emptied!")
 end
 
---[[
--- VCB_AU:AddToBanned(string)
--- @return: Void
--- Fired: Per command
--- Use: Adds a buffname to the banned list
---]]
 function VCB_BF_AddToBanned(name) 
 	if not VCB_Contains(Banned_Buffs, name) then
 		table.insert(Banned_Buffs, name)
@@ -697,12 +707,6 @@ function VCB_BF_AddToBanned(name)
 	end
 end
 
---[[
--- VCB_AU:RemoveFromBanned(string)
--- @return: Void
--- Fired: Per command
--- Use: Removes a buffname to the banned list
---]]
 function VCB_BF_RemoveFromBanned(name)
 	if VCB_Contains(Banned_Buffs, name) then
 		table.remove(Banned_Buffs, VCB_Table_GetKeys(Banned_Buffs, name))
@@ -712,11 +716,6 @@ function VCB_BF_RemoveFromBanned(name)
 	end
 end
 
---[[
--- VCB_AU:RemoveAll
--- @return: Void
--- Use: Clears the whole banned aura list
---]]
 function VCB_BF_RemoveAllFromBanned()
 	Banned_Buffs = {}
 	VCB_SendMessage("The Banned Buffs list was emptied!")
