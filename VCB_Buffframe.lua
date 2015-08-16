@@ -139,10 +139,9 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 		local debuffType = GetPlayerBuffDispelType(GetPlayerBuff(button:GetID(), "HARMFUL"));
 		local debuffSlot = getglobal(button:GetName().."Border");
 		if ( debuffType ) or VCB_BF_DUMMY_MODE then
-			color = {r=VCB_SAVE["DBF_BORDER_"..strlower(debuffType).."color_r"],g=VCB_SAVE["DBF_BORDER_"..strlower(debuffType).."color_g"],b=VCB_SAVE["DBF_BORDER_"..strlower(debuffType).."color_b"]}
-			color.a=1
+			color = {r=VCB_SAVE["DBF_BORDER_"..strlower(debuffType).."color_r"],g=VCB_SAVE["DBF_BORDER_"..strlower(debuffType).."color_g"],b=VCB_SAVE["DBF_BORDER_"..strlower(debuffType).."color_b"],a=1}
 		elseif(buffIndex >= 0) then
-			color = {r=VCB_SAVE["DBF_BORDER_nonecolor_r"],g=VCB_SAVE["DBF_BORDER_nonecolor_g"],b=VCB_SAVE["DBF_BORDER_nonecolor_b"]}
+			color = {r=VCB_SAVE["DBF_BORDER_nonecolor_r"],g=VCB_SAVE["DBF_BORDER_nonecolor_g"],b=VCB_SAVE["DBF_BORDER_nonecolor_b"],a=VCB_SAVE["DBF_BORDER_borderopacity"]}
 			if VCB_IS_LOADED and button.cat == "buff" then
 				if VCB_SAVE["CF_AURA_enableborder"] and button:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 					color = {r=VCB_SAVE["CF_AURA_bordercolor_r"], g=VCB_SAVE["CF_AURA_bordercolor_r"], b=VCB_SAVE["CF_AURA_bordercolor_r"], a=VCB_SAVE["CF_AURA_borderopacity"]}
@@ -169,6 +168,10 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 		
 		if VCB_IS_LOADED and button.cat == "buff" and button:GetID() == 31 then
 			VCB_BF_RepositioningAndResizing() -- Performance
+		elseif VCB_IS_LOADED and button.cat == "debuff" and button:GetID() == 15 then
+			if VCB_SAVE["DBF_GENERAL_invert"] then
+				VCB_BF_RepositionDebuffs()
+			end
 		end
 	end
 end
@@ -321,6 +324,23 @@ function VCB_BF_RepositioningAndResizing()
 	end
 	getglobal("VCB_BF_CONSOLIDATED_ICONCount"):SetText(b-1)
 	VCB_BF_ResizeConsolidatedFrame(b-1)
+end
+
+function VCB_BF_RepositionDebuffs()
+	local a = 0
+	for i=0,15 do
+		local j = 15-i
+		local button = getglobal("VCB_BF_DEBUFF_BUTTON"..j)
+		if button.buffIndex >= 0 then
+			getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+			if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(a/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*a + floor(a/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*a + floor(a/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(a/VCB_SAVE["DBF_GENERAL_numperrow"]))
+			end
+			a = a + 1
+		end
+	end
 end
 
 function VCB_BF_ResizeConsolidatedFrame(i)
@@ -644,7 +664,15 @@ function VCB_BF_DummyConfigMode_Enable()
 					border:SetVertexColor(VCB_SAVE["BF_BORDER_bordercolor_r"],VCB_SAVE["BF_BORDER_bordercolor_g"],VCB_SAVE["BF_BORDER_bordercolor_b"],VCB_SAVE["BF_BORDER_borderopacity"])
 				end
 			elseif cat == "debuff" and VCB_SAVE["DBF_BORDER_enableborder"] then
-				
+				if VCB_SAVE["DBF_GENERAL_invert"] then
+					local j = 15-i
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+					if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+						getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+					else
+						getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+					end
+				end
 				if i < 3 then
 					border:SetVertexColor(VCB_SAVE["DBF_BORDER_nonecolor_r"],VCB_SAVE["DBF_BORDER_nonecolor_g"],VCB_SAVE["DBF_BORDER_nonecolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
 				elseif i >= 3 and i < 6 then

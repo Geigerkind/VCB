@@ -680,52 +680,13 @@
 						<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
 						<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
 					</Button>
-					-- Button 8
-					<Button name="VCB_BF_MENU_BUTTON8">
-						<Size>
-							<AbsDimension x="130" y="40"/>
-						</Size>
-						<Anchors>
-							<Anchor point="TOP" relativeTo="VCB_BF_MENU_BUTTON7" relativePoint="BOTTOM">
-								<Offset>
-									<AbsDimension x="0" y="10"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnClick>
-								VCB_OPTIONS_HIDE_ALL()
-								VCB_OPTIONS_SHOW("VCB_BF_OM_FRAME", "Order Manager")
-							</OnClick>
-						</Scripts>
-						<Layers>
-							<Layer>
-								-- Button Title
-								<FontString name="VCB_BF_MENU_TITLE8" inherits="GameFontNormalSmall" text="Order Manager">
-									<Size>
-										<AbsDimension x="130" y="40" />
-									</Size>
-									<Anchors>
-										<Anchor point="CENTER">
-											<Offset>
-												<AbsDimension x="0" y="7" />
-											</Offset>
-										</Anchor>
-									</Anchors>
-								</FontString>
-							</Layer>
-						</Layers>
-						<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
-						<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
-						<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
-					</Button>
 					-- Button 9
 					<Button name="VCB_BF_MENU_BUTTON9">
 						<Size>
 							<AbsDimension x="130" y="40"/>
 						</Size>
 						<Anchors>
-							<Anchor point="TOP" relativeTo="VCB_BF_MENU_BUTTON8" relativePoint="BOTTOM">
+							<Anchor point="TOP" relativeTo="VCB_BF_MENU_BUTTON7" relativePoint="BOTTOM">
 								<Offset>
 									<AbsDimension x="0" y="10"/>
 								</Offset>
@@ -5248,6 +5209,7 @@
 										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON3Text"):SetText("Invert buff order")
 									</OnLoad>
 									<OnClick>
+										VCB_BF_DBF_FRAME_INVERTBUFFORDER()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -7662,472 +7624,6 @@
 					</Button>
 				</Frames>
 			</Frame>
-			-- OM Frame
-			<Frame name="VCB_BF_OM_FRAME" hidden="true">
-				<Size>
-					<AbsDimension x="610" y="435"/>
-				</Size>
-				<Anchors>
-					<Anchor point="Left" relativeTo="VCB_BF_MENU_BODY" relativePoint="RIGHT">
-						<Offset>
-							<AbsDimension x="0" y="0" />
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<Frames>
-					<Frame name="VCB_BF_OM_FRAME_LEFT">
-						<Size>
-							<AbsDimension x="220" y="435"/>
-						</Size>
-						<Anchors>
-							<Anchor point="Left">
-								<Offset>
-									<AbsDimension x="0" y="0" />
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
-							<BackgroundInsets>
-								<AbsInset left="11" right="12" top="12" bottom="11" />
-							</BackgroundInsets>
-							<TileSize>
-								<AbsValue val="32" />
-							</TileSize>
-							<EdgeSize>
-								<AbsValue val="32" />
-							</EdgeSize>
-						</Backdrop>
-						<Layers>
-							<Layer>
-								<FontString name="VCB_BF_OM_FRAME_LEFT_SELECT" font="Fonts\FRIZQT__.TTF" text="Select frame:" justifyH="LEFT">
-									<Size>
-										<AbsDimension x="220" y="60" />
-									</Size>
-									<Color r="1.0" g="0.82" b="0"/>
-									<FontHeight val="20"/>
-									<Anchors>
-										<Anchor point="TOP">
-											<Offset>
-												<AbsDimension x="15" y="5" />
-											</Offset>
-										</Anchor>
-									</Anchors>
-								</FontString>
-							</Layer>
-						</Layers>
-						<Frames>
-							<Button name="VCB_OM_FRAME_LEFT_F1">
-								<Size>
-									<AbsDimension x="190" y="40"/>
-								</Size>
-								<Anchors>
-									<Anchor point="TOPLEFT">
-										<Offset>
-											<AbsDimension x="15" y="-40" />
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Layers>
-									<Layer>
-										<FontString name="$parent_Text" inherits="GameFontNormalSmall" text="Consolidate Frame">
-											<Size>
-												<AbsDimension x="190" y="40" />
-											</Size>
-											<Anchors>
-												<Anchor point="CENTER">
-													<Offset>
-														<AbsDimension x="0" y="7" />
-													</Offset>
-												</Anchor>
-											</Anchors>
-										</FontString>
-									</Layer>
-								</Layers>
-								<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
-								<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
-								<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
-							</Button>
-							<Button name="VCB_OM_FRAME_LEFT_F2">
-								<Size>
-									<AbsDimension x="190" y="40"/>
-								</Size>
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="VCB_OM_FRAME_LEFT_F1" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="10" />
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Layers>
-									<Layer>
-										<FontString name="$parent_Text" inherits="GameFontNormalSmall" text="Buff Frame">
-											<Size>
-												<AbsDimension x="190" y="40" />
-											</Size>
-											<Anchors>
-												<Anchor point="CENTER">
-													<Offset>
-														<AbsDimension x="0" y="7" />
-													</Offset>
-												</Anchor>
-											</Anchors>
-										</FontString>
-									</Layer>
-								</Layers>
-								<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
-								<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
-								<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
-							</Button>
-							<Button name="VCB_OM_FRAME_LEFT_F3">
-								<Size>
-									<AbsDimension x="190" y="40"/>
-								</Size>
-								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="VCB_OM_FRAME_LEFT_F2" relativePoint="BOTTOMLEFT">
-										<Offset>
-											<AbsDimension x="0" y="10" />
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Layers>
-									<Layer>
-										<FontString name="$parent_Text" inherits="GameFontNormalSmall" text="Debuff Frame">
-											<Size>
-												<AbsDimension x="190" y="40" />
-											</Size>
-											<Anchors>
-												<Anchor point="CENTER">
-													<Offset>
-														<AbsDimension x="0" y="7" />
-													</Offset>
-												</Anchor>
-											</Anchors>
-										</FontString>
-									</Layer>
-								</Layers>
-								<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
-								<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
-								<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
-							</Button>
-						</Frames>
-					</Frame>
-					<Frame name="VCB_BF_OM_FRAME_RIGHT">
-						<Size>
-							<AbsDimension x="390" y="435"/>
-						</Size>
-						<Anchors>
-							<Anchor point="Left" relativeTo="VCB_BF_OM_FRAME_LEFT" relativePoint="RIGHT">
-								<Offset>
-									<AbsDimension x="0" y="0" />
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
-							<BackgroundInsets>
-								<AbsInset left="11" right="12" top="12" bottom="11" />
-							</BackgroundInsets>
-							<TileSize>
-								<AbsValue val="32" />
-							</TileSize>
-							<EdgeSize>
-								<AbsValue val="32" />
-							</EdgeSize>
-						</Backdrop>
-						<Frames>
-							<ScrollFrame name="VCB_BF_OM_FRAME_RIGHT_SCROLLFRAME" inherits="FauxScrollFrameTemplate">
-								<Anchors>
-									<Anchor point="TOPLEFT">
-										<Offset>
-											<AbsDimension x="0" y="-5" />
-										</Offset>
-									</Anchor>
-									<Anchor point="BOTTOMRIGHT">
-										<Offset>
-										  <AbsDimension x="-30" y="8"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Scripts>
-									<OnVerticalScroll>
-										FauxScrollFrame_OnVerticalScroll(40, VCB_BF_OM_FRAME_RIGHT_SCROLLFRAME_Update) 
-									</OnVerticalScroll>
-									<OnShow>
-									</OnShow>
-							   </Scripts>
-							</ScrollFrame>
-							<Button name="VCB_OM_ENTRY1" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
-							<Anchors>
-								<Anchor point="TOPLEFT" relativeTo="VCB_BF_OM_FRAME_RIGHT_SCROLLFRAME" relativePoint="TOPLEFT">
-									<Offset>
-										<AbsDimension x="15" y="-15" />
-									</Offset>
-								</Anchor>
-							</Anchors>
-							<Layers>
-								<Layer>
-									<FontString name="$parent_Text" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
-										<Size>
-											<AbsDimension x="350" y="40" />
-										</Size>
-										<Anchors>
-											<Anchor point="CENTER">
-												<Offset>
-													<AbsDimension x="20" y="7" />
-												</Offset>
-											</Anchor>
-										</Anchors>
-									</FontString>
-								</Layer>
-							</Layers>
-							<Frames>
-								<Button name="$parent_arrowUp">
-									<size>
-										<AbsDimension x="20" y="20" />
-									</size>
-									<Anchors>
-										<Anchor point="TOPLEFT">
-											<Offset>
-												<AbsDimension x="4" y="4" />
-											</Offset>
-										</Anchor>
-									</Anchors>
-									<NormalTexture file="Interface\Buttons\UI-AttributeButton-Encourage-Up"/>
-									<PushedTexture file="Interface\Buttons\UI-AttributeButton-Encourage-Down"/>
-									<HighlightTexture file="Interface\Buttons\UI-AttributeButton-Encourage-Hilight" alphaMode="ADD"/>
-								</Button>
-								<Button name="$parent_arrowDown">
-									<size>
-										<AbsDimension x="20" y="20" />
-									</size>
-									<Anchors>
-										<Anchor point="BOTTOMLEFT">
-											<Offset>
-												<AbsDimension x="4" y="8" />
-											</Offset>
-										</Anchor>
-									</Anchors>
-									<NormalTexture file="Interface\Buttons\UI-MinusButton-Up"/>
-									<PushedTexture file="Interface\Buttons\UI-MinusButton-Down"/>
-									<HighlightTexture file="Interface\Buttons\UI-MinusButton-Disabled" alphaMode="ADD"/>
-								</Button>
-							</Frames>
-						  </Button>
-						  <Button name="VCB_OM_ENTRY2" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
-							<Anchors>
-							  <Anchor point="TOPLEFT" relativeTo="VCB_OM_ENTRY1" relativePoint="BOTTOMLEFT"/>
-							</Anchors>
-							<Layers>
-								<Layer>
-									<FontString name="$parent_Text" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
-										<Size>
-											<AbsDimension x="350" y="40" />
-										</Size>
-										<Anchors>
-											<Anchor point="CENTER">
-												<Offset>
-													<AbsDimension x="20" y="7" />
-												</Offset>
-											</Anchor>
-										</Anchors>
-									</FontString>
-								</Layer>
-							</Layers>
-							<Frames>
-								<Button name="$parent_arrowUp">
-									<size>
-										<AbsDimension x="20" y="20" />
-									</size>
-									<Anchors>
-										<Anchor point="TOPLEFT">
-											<Offset>
-												<AbsDimension x="4" y="4" />
-											</Offset>
-										</Anchor>
-									</Anchors>
-									<NormalTexture file="Interface\Buttons\UI-AttributeButton-Encourage-Up"/>
-									<PushedTexture file="Interface\Buttons\UI-AttributeButton-Encourage-Down"/>
-									<HighlightTexture file="Interface\Buttons\UI-AttributeButton-Encourage-Hilight" alphaMode="ADD"/>
-								</Button>
-								<Button name="$parent_arrowDown">
-									<size>
-										<AbsDimension x="20" y="20" />
-									</size>
-									<Anchors>
-										<Anchor point="BOTTOMLEFT">
-											<Offset>
-												<AbsDimension x="4" y="8" />
-											</Offset>
-										</Anchor>
-									</Anchors>
-									<NormalTexture file="Interface\Buttons\UI-MinusButton-Up"/>
-									<PushedTexture file="Interface\Buttons\UI-MinusButton-Down"/>
-									<HighlightTexture file="Interface\Buttons\UI-MinusButton-Disabled" alphaMode="ADD"/>
-								</Button>
-							</Frames>
-						  </Button>
-						  <Button name="VCB_OM_ENTRY3" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
-							<Anchors>
-							  <Anchor point="TOPLEFT" relativeTo="VCB_OM_ENTRY2" relativePoint="BOTTOMLEFT"/>
-							</Anchors>
-							<Layers>
-								<Layer>
-									<FontString name="$parent_Text" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
-										<Size>
-											<AbsDimension x="350" y="40" />
-										</Size>
-										<Anchors>
-											<Anchor point="CENTER">
-												<Offset>
-													<AbsDimension x="20" y="7" />
-												</Offset>
-											</Anchor>
-										</Anchors>
-									</FontString>
-								</Layer>
-							</Layers>
-							<Frames>
-								<Button name="$parent_arrowUp">
-									<size>
-										<AbsDimension x="20" y="20" />
-									</size>
-									<Anchors>
-										<Anchor point="TOPLEFT">
-											<Offset>
-												<AbsDimension x="4" y="4" />
-											</Offset>
-										</Anchor>
-									</Anchors>
-									<NormalTexture file="Interface\Buttons\UI-AttributeButton-Encourage-Up"/>
-									<PushedTexture file="Interface\Buttons\UI-AttributeButton-Encourage-Down"/>
-									<HighlightTexture file="Interface\Buttons\UI-AttributeButton-Encourage-Hilight" alphaMode="ADD"/>
-								</Button>
-								<Button name="$parent_arrowDown">
-									<size>
-										<AbsDimension x="20" y="20" />
-									</size>
-									<Anchors>
-										<Anchor point="BOTTOMLEFT">
-											<Offset>
-												<AbsDimension x="4" y="8" />
-											</Offset>
-										</Anchor>
-									</Anchors>
-									<NormalTexture file="Interface\Buttons\UI-MinusButton-Up"/>
-									<PushedTexture file="Interface\Buttons\UI-MinusButton-Down"/>
-									<HighlightTexture file="Interface\Buttons\UI-MinusButton-Disabled" alphaMode="ADD"/>
-								</Button>
-							</Frames>
-						  </Button>
-						  <Button name="VCB_OM_ENTRY4" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
-							<Anchors>
-							  <Anchor point="TOPLEFT" relativeTo="VCB_OM_ENTRY3" relativePoint="BOTTOMLEFT"/>
-							</Anchors>
-							<Layers>
-								<Layer>
-									<FontString name="$parent_Text" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
-										<Size>
-											<AbsDimension x="350" y="40" />
-										</Size>
-										<Anchors>
-											<Anchor point="CENTER">
-												<Offset>
-													<AbsDimension x="20" y="7" />
-												</Offset>
-											</Anchor>
-										</Anchors>
-									</FontString>
-								</Layer>
-							</Layers>
-							<Frames>
-								<Button name="$parent_arrowUp">
-									<size>
-										<AbsDimension x="20" y="20" />
-									</size>
-									<Anchors>
-										<Anchor point="TOPLEFT">
-											<Offset>
-												<AbsDimension x="4" y="4" />
-											</Offset>
-										</Anchor>
-									</Anchors>
-									<NormalTexture file="Interface\Buttons\UI-AttributeButton-Encourage-Up"/>
-									<PushedTexture file="Interface\Buttons\UI-AttributeButton-Encourage-Down"/>
-									<HighlightTexture file="Interface\Buttons\UI-AttributeButton-Encourage-Hilight" alphaMode="ADD"/>
-								</Button>
-								<Button name="$parent_arrowDown">
-									<size>
-										<AbsDimension x="20" y="20" />
-									</size>
-									<Anchors>
-										<Anchor point="BOTTOMLEFT">
-											<Offset>
-												<AbsDimension x="4" y="8" />
-											</Offset>
-										</Anchor>
-									</Anchors>
-									<NormalTexture file="Interface\Buttons\UI-MinusButton-Up"/>
-									<PushedTexture file="Interface\Buttons\UI-MinusButton-Down"/>
-									<HighlightTexture file="Interface\Buttons\UI-MinusButton-Disabled" alphaMode="ADD"/>
-								</Button>
-							</Frames>
-						  </Button>
-						  <Button name="VCB_OM_ENTRY5" inherits="VCB_CONSOLIDATED_BUFFS_ENTRY_TEMPLATE">
-							<Anchors>
-							  <Anchor point="TOPLEFT" relativeTo="VCB_OM_ENTRY4" relativePoint="BOTTOMLEFT"/>
-							</Anchors>
-							<Layers>
-								<Layer>
-									<FontString name="$parent_Text" inherits="GameFontNormalSmall" text="" justifyH="LEFT">
-										<Size>
-											<AbsDimension x="350" y="40" />
-										</Size>
-										<Anchors>
-											<Anchor point="CENTER">
-												<Offset>
-													<AbsDimension x="20" y="7" />
-												</Offset>
-											</Anchor>
-										</Anchors>
-									</FontString>
-								</Layer>
-							</Layers>
-							<Frames>
-								<Button name="$parent_arrowUp">
-									<size>
-										<AbsDimension x="20" y="20" />
-									</size>
-									<Anchors>
-										<Anchor point="TOPLEFT">
-											<Offset>
-												<AbsDimension x="4" y="4" />
-											</Offset>
-										</Anchor>
-									</Anchors>
-									<NormalTexture file="Interface\Buttons\UI-AttributeButton-Encourage-Up"/>
-									<PushedTexture file="Interface\Buttons\UI-AttributeButton-Encourage-Down"/>
-									<HighlightTexture file="Interface\Buttons\UI-AttributeButton-Encourage-Hilight" alphaMode="ADD"/>
-								</Button>
-								<Button name="$parent_arrowDown">
-									<size>
-										<AbsDimension x="20" y="20" />
-									</size>
-									<Anchors>
-										<Anchor point="BOTTOMLEFT">
-											<Offset>
-												<AbsDimension x="4" y="8" />
-											</Offset>
-										</Anchor>
-									</Anchors>
-									<NormalTexture file="Interface\Buttons\UI-MinusButton-Up"/>
-									<PushedTexture file="Interface\Buttons\UI-MinusButton-Down"/>
-									<HighlightTexture file="Interface\Buttons\UI-MinusButton-Disabled" alphaMode="ADD"/>
-								</Button>
-							</Frames>
-						  </Button>
-						</Frames>
-					</Frame>
-				</Frames>
-			</Frame>
 			-- PM Frame
 			<Frame name="VCB_BF_PM_FRAME" hidden="true">
 				<Size>
@@ -8679,7 +8175,7 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
-							-- Aura Border Slider
+							-- Aura Theme Slider
 							<Slider name="VCB_BF_MISC_FRAME_ThemeSlider" inherits="VCB_BF_SliderTemplate">
 								<Size>
 									<AbsDimension x="155" y="16"/>
@@ -8694,14 +8190,17 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = "Move this to change the amount."
-										this:SetMinMaxValues(1,10)
-										this:SetValue(5)
+										this:SetMinMaxValues(1,1)
+										this:SetValue(1)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_MISC_FRAME_ThemeSliderText"):SetText("Theme")
+										getglobal("VCB_BF_MISC_FRAME_ThemeSliderText"):SetText("Theme: Default")
 										getglobal("VCB_BF_MISC_FRAME_ThemeSliderLow"):SetText("1")
-										getglobal("VCB_BF_MISC_FRAME_ThemeSliderHigh"):SetText("10")
+										getglobal("VCB_BF_MISC_FRAME_ThemeSliderHigh"):SetText("1")
 									</OnLoad>
 									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_MISC_FRAME_ThemeSliderChange(this)
+										end
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
@@ -8735,6 +8234,11 @@
 								<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
 								<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
 								<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+								<Scripts>
+									<OnClick>
+										VCB_BF_MISC_FRAME_LOAD()
+									</OnClick>
+								</Scripts>
 							</Button>
 						</Frames>
 					</Frame>
@@ -8988,5 +8492,4 @@
 			</Frame>
 		</Frames>
 	</Frame>
-	
 </Ui>
