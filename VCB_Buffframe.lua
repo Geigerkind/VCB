@@ -188,6 +188,7 @@ function VCB_BF_RepositioningAndResizing()
 			local buttonDuration = getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration")
 			local buttonBorder = getglobal("VCB_BF_BUFF_BUTTON"..i.."Border")
 			local buttonIcon = getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon")
+			local buttonCount = getglobal("VCB_BF_BUFF_BUTTON"..i.."Count")
 			
 			local CF = 0
 			if VCB_SAVE["MISC_disable_CF"] then
@@ -241,6 +242,14 @@ function VCB_BF_RepositioningAndResizing()
 				else
 					buttonBorder:SetTexture(nil)
 				end
+				if VCB_SAVE["BF_GENERAL_enableborder"] then
+					buttonCount:SetFont("Fonts\\"..VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")
+				else
+					buttonCount:SetFont("Fonts\\"..VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"])
+				end
+				buttonCount:SetVertexColor(VCB_SAVE["BF_GENERAL_fontcolor_r"],VCB_SAVE["BF_GENERAL_fontcolor_g"],VCB_SAVE["BF_GENERAL_fontcolor_b"],VCB_SAVE["BF_GENERAL_fontopacity"])
+				buttonCount:ClearAllPoints()
+				buttonCount:SetPoint("BOTTOMRIGHT", VCB_SAVE["BF_GENERAL_fontoffset_x"], VCB_SAVE["BF_GENERAL_fontoffset_y"])
 				a = a + 1
 			else
 				button:ClearAllPoints()
@@ -275,6 +284,14 @@ function VCB_BF_RepositioningAndResizing()
 					buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_BF_scale"]*VCB_SAVE["CF_TIMER_fontsize"])
 				end
 				buttonDuration:SetTextColor(VCB_SAVE["CF_TIMER_fontcolor_r"],VCB_SAVE["CF_TIMER_fontcolor_g"],VCB_SAVE["CF_TIMER_fontcolor_b"],VCB_SAVE["CF_TIMER_fontopacity"])
+				if VCB_SAVE["CF_AURA_enableborder"] then
+					buttonCount:SetFont("Fonts\\"..VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
+				else
+					buttonCount:SetFont("Fonts\\"..VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"])
+				end
+				buttonCount:SetVertexColor(VCB_SAVE["CF_AURA_fontcolor_r"],VCB_SAVE["CF_AURA_fontcolor_g"],VCB_SAVE["CF_AURA_fontcolor_b"],VCB_SAVE["CF_AURA_fontopacity"])
+				buttonCount:ClearAllPoints()
+				buttonCount:SetPoint("BOTTOMRIGHT", VCB_SAVE["CF_AURA_fontoffset_x"], VCB_SAVE["CF_AURA_fontoffset_y"])
 				b = b + 1
 			end
 		else
@@ -596,8 +613,7 @@ function VCB_BF_DummyConfigMode_Enable()
 					border:SetVertexColor(VCB_SAVE["BF_BORDER_bordercolor_r"],VCB_SAVE["BF_BORDER_bordercolor_g"],VCB_SAVE["BF_BORDER_bordercolor_b"],VCB_SAVE["BF_BORDER_borderopacity"])
 				end
 			elseif cat == "debuff" and VCB_SAVE["DBF_BORDER_enableborder"] then
-				count:SetText(5)
-				count:Show()
+				
 				if i < 3 then
 					border:SetVertexColor(VCB_SAVE["DBF_BORDER_nonecolor_r"],VCB_SAVE["DBF_BORDER_nonecolor_g"],VCB_SAVE["DBF_BORDER_nonecolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
 				elseif i >= 3 and i < 6 then
@@ -610,6 +626,8 @@ function VCB_BF_DummyConfigMode_Enable()
 					border:SetVertexColor(VCB_SAVE["DBF_BORDER_diseasecolor_r"],VCB_SAVE["DBF_BORDER_diseasecolor_g"],VCB_SAVE["DBF_BORDER_diseasecolor_b"],VCB_SAVE["DBF_BORDER_borderopacity"])
 				end
 			end
+			count:SetText(5)
+			count:Show()
 			button:Show()
 		end
 	end
