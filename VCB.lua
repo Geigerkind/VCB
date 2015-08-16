@@ -431,6 +431,15 @@ function VCB_OnEvent(event)
 		if Banned_Buffs == nil then
 			Banned_Buffs = {}
 		end
+		if VCB_Profile == nil then
+			VCB_Profile = {}
+		end
+		if VCB_Profile_Name == nil then
+			VCB_Profile_Name = {}
+		end
+		if VCB_CUR_PROFILE == nil then
+			VCB_CUR_PROFILE = "Unknown"
+		end
 		
 		--VCB_SAVE["DBF_GENERAL_invert"] = false
 		
@@ -634,7 +643,9 @@ function VCB_INITIALIZE()
 		VCB_BF_WEAPON_FRAME:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
 		VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", 0, 0)
 	end
-	VCB_BF_WEAPON_BUTTON_OnEvent(false)
+	if (not VCB_BF_PM_FRAME:IsVisible()) then
+		VCB_BF_WEAPON_BUTTON_OnEvent(false)
+	end
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetScale(VCB_SAVE["CF_BF_scale"])
 	VCB_BF_BUFF_FRAME:SetScale(VCB_SAVE["BF_GENERAL_scale"])
 	VCB_BF_DEBUFF_FRAME:SetScale(VCB_SAVE["DBF_GENERAL_scale"])
@@ -1019,6 +1030,8 @@ function VCB_PAGEINIT(frame)
 	elseif frame == "VCB_BF_MISC_FRAME" then
 		getglobal("VCB_BF_MISC_FRAME_CHECKBUTTON1"):SetChecked(VCB_SAVE["MISC_disable_CF"])
 		getglobal("VCB_BF_MISC_FRAME_CHECKBUTTON2"):SetChecked(VCB_SAVE["MISC_disable_BB"])
+	elseif frame == "VCB_BF_PM_FRAME" then
+		getglobal("VCB_BF_PM_FRAME_LEFT_CURRENT_INBOX_TEXT"):SetText(VCB_CUR_PROFILE)
 	end
 end
 
@@ -2827,8 +2840,79 @@ function VCB_BF_MISC_FRAME_LOAD()
 		VCB_SAVE[cat] = VCB_THEME[value][cat]
 	end
 	VCB_INITIALIZE()
+	VCB_BF_RepositioningAndResizing()
 	VCB_PAGEINIT("VCB_BF_MISC_FRAME")
 	VCB_SendMessage("Theme: "..VCB_THEME_NAME[value].." has been loaded!")
 end
 
 ---------------------------------------END MISC FRAME-----------------------------------------------------------------------------------------------------------------
+---------------------------------------START PROFILE MANAGER FRAME-----------------------------------------------------------------------------------------------------------------
+
+function VCB_BF_PM_FRAME_RIGHT_SCROLLFRAME_Update()
+	local line -- 1 through 5 of our window to scroll
+	local lineplusoffset -- an index into our data calculated from the scroll offset
+	local FRAME = getglobal("VCB_BF_PM_FRAME_RIGHT_SCROLLFRAME")
+	FauxScrollFrame_Update(FRAME,VCB_tablelength(VCB_Profile_Name),10,40)
+	for line=1,10 do
+		lineplusoffset = line + FauxScrollFrame_GetOffset(FRAME)
+		if VCB_Profile_Name[lineplusoffset] ~= nil then
+			getglobal("VCB_PM_ENTRY"..line.."_Text"):SetText(lineplusoffset..". "..VCB_Profile_Name[lineplusoffset])
+			getglobal("VCB_PM_ENTRY"..line).name = VCB_Profile_Name[lineplusoffset]
+			getglobal("VCB_PM_ENTRY"..line):Show()
+		else
+			getglobal("VCB_PM_ENTRY"..line):Hide()
+		end
+	end
+end
+
+function VCB_PM_SCROLLFRAME_ENTRY(button)
+	getglobal("VCB_BF_PM_FRAME_LEFT_SELECTED_INBOX_TEXT"):SetText(button.name)
+end
+
+function VCB_BF_PM_FRAME_SAVE()
+	local name = getglobal("VCB_BF_PM_FRAME_EditBox"):GetText()
+	local temp = {}
+	if (name) then
+		for cat, val in pairs(VCB_SAVE) do
+			temp[cat] = VCB_SAVE[cat]
+		end
+		table.insert(VCB_Profile_Name, name)
+		table.insert(VCB_Profile, temp)
+		getglobal("VCB_BF_PM_FRAME_LEFT_CURRENT_INBOX_TEXT"):SetText(name)
+		VCB_CUR_PROFILE = name
+		VCB_SendMessage("Profile: "..name.." has been saved!")
+	end
+	VCB_BF_PM_FRAME_RIGHT_SCROLLFRAME_Update()
+end
+
+function VCB_BF_PM_FRAME_LOAD()
+	local name = getglobal("VCB_BF_PM_FRAME_LEFT_SELECTED_INBOX_TEXT"):GetText()
+	if (name) then
+		local key = VCB_Table_GetKeys(VCB_Profile_Name, name)
+		if (key) then
+			for cat, val in pairs(VCB_SAVE) do
+				VCB_SAVE[cat] = VCB_Profile[key][cat]
+			end
+			VCB_INITIALIZE()
+			VCB_BF_RepositioningAndResizing()
+			getglobal("VCB_BF_PM_FRAME_LEFT_CURRENT_INBOX_TEXT"):SetText(name)
+			VCB_CUR_PROFILE = name
+			VCB_SendMessage("Profile: "..name.." has been loaded!")
+		end
+	end
+end
+
+function VCB_BF_PM_FRAME_DELETE()
+	local name = getglobal("VCB_BF_PM_FRAME_LEFT_SELECTED_INBOX_TEXT"):GetText()
+	if (name) then
+		local key = VCB_Table_GetKeys(VCB_Profile_Name, name)
+		if (key) then
+			table.remove(VCB_Profile_Name, key)
+			table.remove(VCB_Profile, key)
+			VCB_SendMessage("Profile: "..name.." has been removed!")
+		end
+	end
+	VCB_BF_PM_FRAME_RIGHT_SCROLLFRAME_Update()
+end
+
+---------------------------------------END PROFILE MANAGER FRAME-----------------------------------------------------------------------------------------------------------------

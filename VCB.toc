@@ -2,8 +2,8 @@
 ## Title: VCB - Handler by |cFFFF8080Shino|r
 ## Notes: Sums up all general buffs into one frame
 ## Author: Shino <Synced> - Kronos
-## SavedVariables:
-## SavedVariablesPerCharacter: Consolidated_Buffs, Banned_Buffs, VCB_BF_LOCKED, VCB_SAVE
+## SavedVariables: VCB_Profile, VCB_Profile_Name
+## SavedVariablesPerCharacter: Consolidated_Buffs, Banned_Buffs, VCB_BF_LOCKED, VCB_SAVE, VCB_CUR_PROFILE
 ## OptionalDeps: 
 ## Dependencies:
 VCB.lua
