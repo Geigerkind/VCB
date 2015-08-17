@@ -53,6 +53,8 @@ VCB_THEME[1] = {
 	CF_icon_fontopacity = 1,
 	CF_icon_texture = "icon",
 	CF_icon_border = true,
+	CF_icon_possiblebuffs = false,
+	CF_icon_showpbgrayedout = false,
 	CF_BF_anchor = 1,
 	CF_BF_scale = 1,
 	CF_BF_invert = false,
@@ -225,6 +227,8 @@ VCB_THEME[1] = {
 function VCB_OnLoad()
 	this:RegisterEvent("ADDON_LOADED")
 	this:RegisterEvent("PLAYER_ENTERING_WORLD")
+	this:RegisterEvent("PARTY_MEMBERS_CHANGED")
+	this:RegisterEvent("RAID_ROSTER_UPDATE")
 
 	SLASH_VCB1 = "/VanillaConsolidateBuffs"
 	SLASH_VCB2 = "/vanillaconsolidatebuffs"
@@ -258,6 +262,8 @@ function VCB_OnEvent(event)
 				CF_icon_fontopacity = 1,
 				CF_icon_texture = "icon",
 				CF_icon_border = true,
+				CF_icon_possiblebuffs = false,
+				CF_icon_showpbgrayedout = false,
 				CF_BF_anchor = 1,
 				CF_BF_scale = 1,
 				CF_BF_invert = false,
@@ -470,6 +476,10 @@ function VCB_OnEvent(event)
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		VCB_INITIALIZE()
 		VCB_BF_Lock(VCB_BF_LOCKED)
+	elseif event == "PARTY_MEMBERS_CHANGED" or event == "RAID_ROSTER_UPDATE" then
+		if VCB_SAVE["CF_icon_possiblebuffs"] then
+			VCB_BF_RepositioningAndResizing()
+		end
 	end	
 end
 
@@ -833,6 +843,8 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_CF_FRAME_BorderOpaSliderText"):SetText("Border opacity: "..VCB_SAVE["CF_BF_borderopacity"])
 		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_CBG"):SetChecked(VCB_SAVE["CF_BF_custombackground"])
 		getglobal("VCB_BF_CF_FRAME_EDITBOX_BACKGROUND"):SetText(VCB_SAVE["CF_BF_custombackgroundpath"])
+		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON2"):SetChecked(VCB_SAVE["CF_icon_possiblebuffs"])
+		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON3"):SetChecked(VCB_SAVE["CF_icon_showpbgrayedout"])
 	elseif frame == "VCB_BF_CF_FRAME2" then
 		getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON1"):SetChecked(VCB_SAVE["CF_AURA_enableborder"])
 		getglobal("VCB_BF_CF_FRAME2_ColorNormalTexture"):SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"], VCB_SAVE["CF_AURA_bordercolor_g"], VCB_SAVE["CF_AURA_bordercolor_b"])
@@ -1950,6 +1962,24 @@ function VCB_BF_CF_FRAME2_GFontOpacitySliderChange(obj)
 			getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetAlpha(VCB_SAVE["CF_AURA_fontopacity"])
 		end
 	end
+end
+
+function VCB_BF_CF_FRAME_SHOW_POSSIBLE_BUFFS()
+	if VCB_SAVE["CF_icon_possiblebuffs"] then
+		VCB_SAVE["CF_icon_possiblebuffs"] = false
+	else
+		VCB_SAVE["CF_icon_possiblebuffs"] = true
+	end
+	VCB_BF_RepositioningAndResizing()
+end
+
+function VCB_BF_CF_FRAME_SHOW_BUFFS_GRAYED_OUT()
+	if VCB_SAVE["CF_icon_showpbgrayedout"] then
+		VCB_SAVE["CF_icon_showpbgrayedout"] = false
+	else
+		VCB_SAVE["CF_icon_showpbgrayedout"] = true
+	end
+	VCB_BF_RepositioningAndResizing()
 end
 
 ---------------------------------------END CONSOLIDATED FRAME-----------------------------------------------------------------------------------------------------------------

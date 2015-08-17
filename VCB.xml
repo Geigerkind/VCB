@@ -2307,6 +2307,7 @@
 										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON2Text"):SetText("Show amount out of possible buffs")
 									</OnLoad>
 									<OnClick>
+										VCB_BF_CF_FRAME_SHOW_POSSIBLE_BUFFS()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -2327,6 +2328,7 @@
 										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON3Text"):SetText("Show missing buffs (grayed out)")
 									</OnLoad>
 									<OnClick>
+										VCB_BF_CF_FRAME_SHOW_BUFFS_GRAYED_OUT()
 									</OnClick>
 								</Scripts>
 							</CheckButton>

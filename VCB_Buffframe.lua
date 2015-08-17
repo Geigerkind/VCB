@@ -18,6 +18,21 @@ local UPDATETIME = 0.2
 
 local timeSinceWeaponUpdate = 0
 local timeSinceBuffUpdate = 0
+local grayedIcons = false
+local classicon = {}
+classicon = {
+	[1] = "Interface\\ICONS\\Spell_Nature_Regeneration.tga",
+	[2] = "Interface\\ICONS\\Ability_TrueShot.tga",
+	[3] = "Interface\\ICONS\\Spell_Magic_GreaterBlessingofKings.tga",
+	[4] = "Interface\\ICONS\\Spell_Holy_GreaterBlessingofKings.tga",
+	[5] = "Interface\\ICONS\\Spell_Holy_GreaterBlessingofWisdom.tga",
+	[6] = "Interface\\ICONS\\Spell_Holy_GreaterBlessingofLight.tga",
+	[7] = "Interface\\ICONS\\Spell_Holy_GreaterBlessingofSalvation.tga",
+	[8] = "Interface\\ICONS\\Spell_Holy_ArcaneIntellect.tga",
+	[9] = "Interface\\ICONS\\Spell_Holy_PrayerOfFortitude.tga",
+	[10] = "Interface\\ICONS\\Spell_Holy_PrayerofSpirit.tga",
+	[11] = "Interface\\ICONS\\Spell_Holy_PrayerofShadowProtection.tga",
+}
 
 function VCB_BF_OnLoad()
 	if (not VCB_BF_BUFF_BUTTON0) then
@@ -322,8 +337,157 @@ function VCB_BF_RepositioningAndResizing()
 			b = b + 1
 		end
 	end
-	getglobal("VCB_BF_CONSOLIDATED_ICONCount"):SetText(b-1)
+	getglobal("VCB_BF_CONSOLIDATED_ICONCount"):SetText(VCB_BF_GETCFCOUNT(b-1))
 	VCB_BF_ResizeConsolidatedFrame(b-1)
+	if VCB_SAVE["CF_icon_showpbgrayedout"] then
+		VCB_BF_ADD_GRAYEDOUTICONS(b)
+	end
+end
+
+function VCB_BF_ADD_GRAYEDOUTICONS(x)
+	if (not grayedIcons) then
+		for i=0,10 do
+			local GIcon = CreateFrame("Button", "GrayedIcon"..i, VCB_BF_CONSOLIDATED_BUFFFRAME, nil) -- Need to create xml template
+			GIcon:SetWidth(32)
+			GIcon:SetHeight(32)
+			
+			local t = GIcon:CreateTexture(nil,"BACKGROUND")
+			t:SetTexture(classicon[i+1])
+			t:SetAllPoints(GIcon)
+			t:SetVertexColor(0.3,0.3,0.3,1)
+			GIcon.texture = t
+			
+			GIcon:SetScript("OnEnter", function() VCB_BF_CONSOLIDATED_BUFFFRAME:Show() end)
+			GIcon:SetScript("OnLeave", function() VCB_BF_CONSOLIDATED_BUFFFRAME:Hide() end)
+		end
+		grayedIcons = true
+	end
+	
+	local buffs = {}
+	local tchildren =  { VCB_BF_CONSOLIDATED_BUFFFRAME:GetChildren() }
+	local children = {}
+	
+	-- Filter out grayed out icons
+	for _,child in ipairs(tchildren) do
+		if (not strfind(child:GetName(), "GrayedIcon")) then
+			table.insert(children, child)
+		end
+	end
+	
+	-- Fill buffs array
+	for _,child in pairs(children) do
+		GameTooltip:SetOwner(UIParent)
+		GameTooltip:SetPlayerBuff(GetPlayerBuff(child.buffIndex, "HELPFUL"))
+		local name = GameTooltipTextLeft1:GetText()
+		table.insert(buffs, strlower(name))
+	end
+	
+	-- Add grayed out icons
+	-- Druid
+	if (not VCB_Contains(buffs, "mark of the wild")) and (not VCB_Contains(buffs, "gift of the wild")) then
+		GrayedIcon0:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
+		GrayedIcon0:Show()
+		x = x + 1
+	end
+	-- Hunter
+	if (not VCB_Contains(buffs, "trueshot aura")) then
+		GrayedIcon1:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
+		GrayedIcon1:Show()
+		x = x + 1
+	end
+	-- Paladin
+	if (not VCB_Contains(buffs, "greater blessing of kings")) and (not VCB_Contains(buffs, "blessing of kings")) then
+		GrayedIcon2:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
+		GrayedIcon2:Show()
+		x = x + 1
+	end
+	if (not VCB_Contains(buffs, "greater blessing of might")) and (not VCB_Contains(buffs, "blessing of might")) then
+		GrayedIcon3:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
+		GrayedIcon3:Show()
+		x = x + 1
+	end
+	if (not VCB_Contains(buffs, "greater blessing of wisdom")) and (not VCB_Contains(buffs, "blessing of wisdom")) then
+		GrayedIcon4:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
+		GrayedIcon4:Show()
+		x = x + 1
+	end
+	if (not VCB_Contains(buffs, "greater blessing of light")) and (not VCB_Contains(buffs, "blessing of light")) then
+		GrayedIcon5:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
+		GrayedIcon5:Show()
+		x = x + 1
+	end
+	if (not VCB_Contains(buffs, "greater blessing of salvation")) and (not VCB_Contains(buffs, "blessing of salvation")) then
+		GrayedIcon6:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
+		GrayedIcon6:Show()
+		x = x + 1
+	end
+	-- Mage
+	if (not VCB_Contains(buffs, "arcane intellect")) and (not VCB_Contains(buffs, "arcane brilliance")) then
+		GrayedIcon7:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
+		GrayedIcon7:Show()
+		x = x + 1
+	end
+	-- Priest
+	if (not VCB_Contains(buffs, "power word: fortitude")) and (not VCB_Contains(buffs, "prayer of fortitude")) then
+		GrayedIcon8:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
+		GrayedIcon8:Show()
+		x = x + 1
+	end
+	if (not VCB_Contains(buffs, "divine spirit")) and (not VCB_Contains(buffs, "prayer of spirit")) then
+		GrayedIcon9:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
+		GrayedIcon9:Show()
+		x = x + 1
+	end
+	if (not VCB_Contains(buffs, "shadow protection")) and (not VCB_Contains(buffs, "prayer of shadow protection")) then
+		GrayedIcon10:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
+		GrayedIcon10:Show()
+		x = x + 1
+	end
+	
+	VCB_BF_ResizeConsolidatedFrame(x-1)
+end
+
+function VCB_BF_GETCFCOUNT(x)
+	if VCB_SAVE["CF_icon_possiblebuffs"] then
+		local classes = {}
+		local pb = 0
+		local paladins = 0
+		if UnitInRaid("player") then
+			for i=1, 40 do
+				local _, englishClass = UnitClass("raid"..i);
+				if (not englishClass) then break end
+				if (not VCB_Contains(classes, englishClass)) then
+					table.insert(classes, englishClass)
+				end
+				if englishClass == "PALADIN" then paladins = paladins + 1 end
+			end
+		else
+			for i=1, GetNumPartyMembers() do
+				if GetPartyMember(i) then
+					local _, englishClass = UnitClass("party"..i);
+					if (not VCB_Contains(classes, englishClass)) then
+						table.insert(classes, englishClass)
+					end
+					if englishClass == "PALADIN" then paladins = paladins + 1 end
+				end
+			end
+		end
+		if VCB_Contains(classes, "MAGE") then pb = pb + 1 end
+		if VCB_Contains(classes, "DRUID") then pb = pb + 1 end
+		if VCB_Contains(classes, "PALADIN") then
+			if paladins >= 1 then pb = pb + 1 end
+			if paladins >= 2 then pb = pb + 1 end
+			if paladins >= 3 then pb = pb + 1 end
+			if paladins >= 4 then pb = pb + 1 end
+			if paladins >= 5 then pb = pb + 1 end
+		end
+		if VCB_Contains(classes, "PRIEST") then pb = pb + 3 end
+		if VCB_Contains(classes, "HUNTER") then pb = pb + 1 end
+		if pb < x then pb = x end
+		return x.."/"..pb
+	else
+		return x
+	end
 end
 
 function VCB_BF_RepositionDebuffs()
