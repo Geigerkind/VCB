@@ -603,6 +603,11 @@ function VCB_BF_ResizeConsolidatedFrame(i)
 	if p >= VCB_SAVE["CF_BF_numperrow"] then p = VCB_SAVE["CF_BF_numperrow"] end
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetWidth(16+2*VCB_SAVE["CF_AURA_padding_h"]+(p*(32+VCB_SAVE["CF_AURA_padding_h"])))
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetHeight(10+2*VCB_SAVE["CF_AURA_padding_v"]+(ceil(i/VCB_SAVE["CF_BF_numperrow"])*(44+VCB_SAVE["CF_AURA_padding_v"])))
+	
+	if i == 0 then 
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetWidth(0)
+		VCB_BF_CONSOLIDATED_BUFFFRAME:SetHeight(0)
+	end
 end
 
 function VCB_BF_BUFF_BUTTON_OnUpdate(elapsed, button)

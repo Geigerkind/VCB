@@ -4066,7 +4066,7 @@
 								<Scripts>
 									<OnLoad>
 										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON3Text"):SetText("Invert buff order")
+										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON3Text"):SetText("Invert order")
 									</OnLoad>
 									<OnClick>
 										VCB_BF_BF_FRAME_INVERTBUFFMODE()
@@ -4930,7 +4930,7 @@
 								</Anchors>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_BF_FRAME_FONT6" inherits="GameFontNormalSmall" text="Select border color" justifyH="LEFT">
+										<FontString name="VCB_BF_BF_FRAME_FONT6" inherits="GameFontNormalSmall" text="Select font color" justifyH="LEFT">
 											<Size>
 												<AbsDimension x="200" y="16" />
 											</Size>
@@ -5223,7 +5223,7 @@
 								<Scripts>
 									<OnLoad>
 										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON3Text"):SetText("Invert buff order")
+										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON3Text"):SetText("Invert order")
 									</OnLoad>
 									<OnClick>
 										VCB_BF_DBF_FRAME_INVERTBUFFORDER()
