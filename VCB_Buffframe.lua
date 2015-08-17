@@ -127,7 +127,7 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 				if not Banned_Buffs[p] or name == nil then break end
 				if ( strfind(strlower(Banned_Buffs[p]), strlower(name)) ) then
 					CancelPlayerBuff(button:GetID())
-					VCB_SendMessage(name.." has been cancelled!")
+					VCB_SendMessage(name..VCB_HAS_BEEN_CANCELLED)
 					break
 				end
 			end
@@ -424,7 +424,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 	
 	-- Add grayed out icons
 	-- Druid
-	if (not VCB_Contains(buffs, "mark of the wild")) and (not VCB_Contains(buffs, "gift of the wild")) and VCB_Contains(classes, "DRUID") and (VCB_Contains(Consolidated_Buffs, "gift of the wild") or VCB_Contains(Consolidated_Buffs, "mark of the wild")) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_1)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_2)) and VCB_Contains(classes, "DRUID") and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_2) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_1)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon0:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon0:Show()
@@ -434,7 +434,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 		GrayedIcon0:Hide()
 	end
 	-- Hunter
-	if (not VCB_Contains(buffs, "trueshot aura")) and VCB_Contains(classes, "HUNTER") and (VCB_Contains(Consolidated_Buffs, "trueshot aura")) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_3)) and VCB_Contains(classes, "HUNTER") and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_3)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon1:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon1:Show()
@@ -444,7 +444,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 		GrayedIcon1:Hide()
 	end
 	-- Paladin
-	if (not VCB_Contains(buffs, "greater blessing of kings")) and (not VCB_Contains(buffs, "blessing of kings")) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, "blessing of kings")) and (VCB_Contains(Consolidated_Buffs, "greater blessing of kings") or VCB_Contains(Consolidated_Buffs, "blessing of kings")) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_4)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_5)) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, VCB_ABILITY_LOWER_SCRIPT_5)) and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_4) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_5)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon2:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon2:Show()
@@ -453,7 +453,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 	else
 		GrayedIcon2:Hide()
 	end
-	if (not VCB_Contains(buffs, "greater blessing of might")) and (not VCB_Contains(buffs, "blessing of might")) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, "blessing of might")) and (VCB_Contains(Consolidated_Buffs, "greater blessing of might") or VCB_Contains(Consolidated_Buffs, "blessing of might")) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_6)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_7)) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, VCB_ABILITY_LOWER_SCRIPT_7)) and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_6) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_7)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon3:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon3:Show()
@@ -462,7 +462,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 	else
 		GrayedIcon3:Hide()
 	end
-	if (not VCB_Contains(buffs, "greater blessing of wisdom")) and (not VCB_Contains(buffs, "blessing of wisdom")) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, "blessing of wisdom")) and (VCB_Contains(Consolidated_Buffs, "greater blessing of wisdom") or VCB_Contains(Consolidated_Buffs, "blessing of wisdom")) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_8)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_9)) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, VCB_ABILITY_LOWER_SCRIPT_9)) and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_8) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_9)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon4:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon4:Show()
@@ -471,7 +471,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 	else
 		GrayedIcon4:Hide()
 	end
-	if (not VCB_Contains(buffs, "greater blessing of light")) and (not VCB_Contains(buffs, "blessing of light")) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, "blessing of light")) and (VCB_Contains(Consolidated_Buffs, "greater blessing of light") or VCB_Contains(Consolidated_Buffs, "blessing of light")) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_10)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_11)) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, VCB_ABILITY_LOWER_SCRIPT_11)) and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_10) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_11)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon5:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon5:Show()
@@ -480,7 +480,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 	else
 		GrayedIcon5:Hide()
 	end
-	if (not VCB_Contains(buffs, "greater blessing of salvation")) and (not VCB_Contains(buffs, "blessing of salvation")) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, "blessing of salvation")) and (VCB_Contains(Consolidated_Buffs, "greater blessing of salvation") or VCB_Contains(Consolidated_Buffs, "blessing of salvation")) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_12)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_13)) and VCB_Contains(classes, "PALADIN") and (numPaladins > VCB_BF_getNumPaladinBuffs(buffs, VCB_ABILITY_LOWER_SCRIPT_13)) and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_12) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_13)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon6:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon6:Show()
@@ -490,7 +490,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 		GrayedIcon6:Hide()
 	end
 	-- Mage
-	if (not VCB_Contains(buffs, "arcane intellect")) and (not VCB_Contains(buffs, "arcane brilliance")) and VCB_Contains(classes, "MAGE") and (VCB_Contains(Consolidated_Buffs, "arcane intellect") or VCB_Contains(Consolidated_Buffs, "arcane brilliance")) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_14)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_15)) and VCB_Contains(classes, "MAGE") and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_14) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_15)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon7:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon7:Show()
@@ -500,7 +500,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 		GrayedIcon7:Hide()
 	end
 	-- Priest
-	if (not VCB_Contains(buffs, "power word: fortitude")) and (not VCB_Contains(buffs, "prayer of fortitude")) and VCB_Contains(classes, "PRIEST") and (VCB_Contains(Consolidated_Buffs, "prayer of fortitude") or VCB_Contains(Consolidated_Buffs, "power word: fortitude")) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_16)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_17)) and VCB_Contains(classes, "PRIEST") and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_17) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_16)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon8:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon8:Show()
@@ -509,7 +509,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 	else
 		GrayedIcon8:Hide()
 	end
-	if (not VCB_Contains(buffs, "divine spirit")) and (not VCB_Contains(buffs, "prayer of spirit")) and VCB_Contains(classes, "PRIEST") and (VCB_Contains(Consolidated_Buffs, "prayer of spirit") or VCB_Contains(Consolidated_Buffs, "divine spirit")) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_18)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_19)) and VCB_Contains(classes, "PRIEST") and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_19) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_18)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon9:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon9:Show()
@@ -518,7 +518,7 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 	else
 		GrayedIcon9:Hide()
 	end
-	if (not VCB_Contains(buffs, "shadow protection")) and (not VCB_Contains(buffs, "prayer of shadow protection")) and VCB_Contains(classes, "PRIEST") and (VCB_Contains(Consolidated_Buffs, "prayer of shadow protection") or VCB_Contains(Consolidated_Buffs, "shadow protection")) then
+	if (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_20)) and (not VCB_Contains(buffs, VCB_ABILITY_LOWER_SCRIPT_21)) and VCB_Contains(classes, "PRIEST") and (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_21) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_20)) then
 		if VCB_SAVE["CF_icon_showpbgrayedout"] then
 			GrayedIcon10:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*x)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(x/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
 			GrayedIcon10:Show()
@@ -550,16 +550,16 @@ function VCB_BF_getNumPaladinBuffs(buffs, ext)
 	local paladinBuffs = {}
 	local count = 0
 	paladinBuffs = {
-		[1] = "blessing of kings",
-		[2] = "blessing of might",
-		[3] = "blessing of wisdom",
-		[4] = "blessing of light",
-		[5] = "blessing of salvation",
-		[6] = "greater blessing of kings",
-		[7] = "greater blessing of might",
-		[8] = "greater blessing of wisdom",
-		[9] = "greater blessing of light",
-		[10] = "greater blessing of salvation",
+		[1] = VCB_ABILITY_LOWER_SCRIPT_5,
+		[2] = VCB_ABILITY_LOWER_SCRIPT_7,
+		[3] = VCB_ABILITY_LOWER_SCRIPT_9,
+		[4] = VCB_ABILITY_LOWER_SCRIPT_11,
+		[5] = VCB_ABILITY_LOWER_SCRIPT_13,
+		[6] = VCB_ABILITY_LOWER_SCRIPT_4,
+		[7] = VCB_ABILITY_LOWER_SCRIPT_6,
+		[8] = VCB_ABILITY_LOWER_SCRIPT_8,
+		[9] = VCB_ABILITY_LOWER_SCRIPT_10,
+		[10] = VCB_ABILITY_LOWER_SCRIPT_12,
 	}
 	for i=1,10 do
 		if VCB_Contains(buffs, paladinBuffs[i]) and (not strfind(paladinBuffs[i], ext)) then
@@ -572,11 +572,11 @@ end
 function VCB_BF_GetNumPBuffsInCF()
 	local count = 0
 	
-	if (VCB_Contains(Consolidated_Buffs, "greater blessing of kings") or VCB_Contains(Consolidated_Buffs, "blessing of kings")) then count = count + 1 end
-	if (VCB_Contains(Consolidated_Buffs, "greater blessing of might") or VCB_Contains(Consolidated_Buffs, "blessing of might")) then count = count + 1 end
-	if (VCB_Contains(Consolidated_Buffs, "greater blessing of wisdom") or VCB_Contains(Consolidated_Buffs, "blessing of wisdom")) then count = count + 1 end
-	if (VCB_Contains(Consolidated_Buffs, "greater blessing of light") or VCB_Contains(Consolidated_Buffs, "blessing of light")) then count = count + 1 end
-	if (VCB_Contains(Consolidated_Buffs, "greater blessing of salvation") or VCB_Contains(Consolidated_Buffs, "blessing of salvation")) then count = count + 1 end
+	if (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_4) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_5)) then count = count + 1 end
+	if (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_6) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_7)) then count = count + 1 end
+	if (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_8) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_9)) then count = count + 1 end
+	if (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_10) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_11)) then count = count + 1 end
+	if (VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_12) or VCB_Contains(Consolidated_Buffs, VCB_ABILITY_LOWER_SCRIPT_13)) then count = count + 1 end
 	
 	return count
 end
@@ -897,9 +897,9 @@ function VCB_BF_Lock(lock)
 		end
 	end
 	if (lock) then
-		VCB_SendMessage("Locked the frames!")
+		VCB_SendMessage(VCB_LOCKED_FRAMES)
 	else
-		VCB_SendMessage("Unlocked the frames!")
+		VCB_SendMessage(VCB_UNLOCKED_FRAMES)
 		VCB_BF_RepositioningAndResizing()
 	end
 end
@@ -966,45 +966,45 @@ end
 function VCB_BF_ConsolidatedAdd(name)
 	if not VCB_Contains(Consolidated_Buffs, name) then
 		table.insert(Consolidated_Buffs, name)
-		VCB_SendMessage(name.." has been added!")
+		VCB_SendMessage(name..VCB_HAS_BEEN_ADDED)
 	else
-		VCB_SendMessage(name.." is already in the list!")
+		VCB_SendMessage(name..VCB_IS_ALREADY_IN_LIST)
 	end
 end
 
 function VCB_BF_ConsolidatedRemove(name)
 	if VCB_Contains(Consolidated_Buffs, name) then
 		table.remove(Consolidated_Buffs, VCB_Table_GetKeys(Consolidated_Buffs, name))
-		VCB_SendMessage(name.." has been removed!")
+		VCB_SendMessage(name..VCB_HAS_BEEN_REMOVED)
 	else
-		VCB_SendMessage(name.." is not in the list!")
+		VCB_SendMessage(name..VCB_IS_NOT_IN_LIST)
 	end
 end
 
 function VCB_BF_RemoveAllFromConsolidate()
 	Consolidated_Buffs = {}
-	VCB_SendMessage("The Consolidated Buffs list was emptied!")
+	VCB_SendMessage(VCB_CB_LIST_EMPTIED)
 end
 
 function VCB_BF_AddToBanned(name) 
 	if not VCB_Contains(Banned_Buffs, name) then
 		table.insert(Banned_Buffs, name)
-		VCB_SendMessage(name.." has been added!")
+		VCB_SendMessage(name..VCB_HAS_BEEN_ADDED)
 	else
-		VCB_SendMessage(name.." is already in the list!")
+		VCB_SendMessage(name..VCB_IS_ALREADY_IN_LIST)
 	end
 end
 
 function VCB_BF_RemoveFromBanned(name)
 	if VCB_Contains(Banned_Buffs, name) then
 		table.remove(Banned_Buffs, VCB_Table_GetKeys(Banned_Buffs, name))
-		VCB_SendMessage(name.." has been removed!")
+		VCB_SendMessage(name..VCB_HAS_BEEN_REMOVED)
 	else
-		VCB_SendMessage(name.." is not in the list!")
+		VCB_SendMessage(name..VCB_IS_NOT_IN_LIST)
 	end
 end
 
 function VCB_BF_RemoveAllFromBanned()
 	Banned_Buffs = {}
-	VCB_SendMessage("The Banned Buffs list was emptied!")
+	VCB_SendMessage(VCB_BB_LIST_EMPTIED)
 end
