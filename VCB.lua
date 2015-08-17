@@ -779,7 +779,7 @@ end
 
 function VCB_OPTIONS_SHOW(frame, text)
 	getglobal(frame):Show()
-	getglobal("VCB_BF_CONFIG_FRAME_TITLE_FONTSTRING"):SetText(text)
+	getglobal("VCB_BF_CONFIG_FRAME_TITLE_TEXT"):SetText(text)
 	VCB_PAGEINIT(frame)
 	PlaySound("igMainMenuOptionCheckBoxOff")
 end
@@ -871,6 +871,8 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_CF_FRAME2_Color3_SwatchBg").b = VCB_SAVE["CF_TIMER_fontcolor_b"]
 		getglobal("VCB_BF_CF_FRAME2_AuraTimerFontSizeSlider"):SetValue(VCB_SAVE["CF_TIMER_fontsize"])
 		getglobal("VCB_BF_CF_FRAME2_AuraTimerFontSizeSliderText"):SetText("Font size: "..VCB_SAVE["CF_TIMER_fontsize"])
+		getglobal("VCB_BF_CF_FRAME2_AuraTimerOpacitySlider"):SetValue(VCB_SAVE["CF_TIMER_fontopacity"])
+		getglobal("VCB_BF_CF_FRAME2_AuraTimerOpacitySliderText"):SetText("Font opacity: "..VCB_SAVE["CF_TIMER_fontopacity"])
 		getglobal("VCB_BF_CF_FRAME2_GFontSlider"):SetValue(VCB_Table_GetKeys(VCB_FONT_ARRAY, VCB_SAVE["CF_AURA_font"]))
 		getglobal("VCB_BF_CF_FRAME2_GFontSliderText"):SetText("Font: "..VCB_SAVE["CF_AURA_font"])
 		getglobal("VCB_BF_CF_FRAME2_GFontOpacitySlider"):SetValue(VCB_SAVE["CF_AURA_fontopacity"])

@@ -3,6 +3,10 @@
     xsi:schemaLocation="http://www.blizzard.com/wow/ui/
     ..\..\..\FrameXML\UI.xsd">
 	
+	---------------------------------LACALIZATION----------------------------------------------------------------
+	
+	<Script file="Interface\AddOns\VCB\localization\enUS.lua" />
+	
 	---------------------------------GENERAL FRAMES----------------------------------------------------------------
 	
 	<GameTooltip name="VCB_Tooltip" frameStrata="TOOLTIP" hidden="false" parent="UIParent" inherits="GameTooltipTemplate">
@@ -134,10 +138,10 @@
 			</OnDragStop>
 			<OnEnter>
 				GameTooltip:SetOwner(this, "ANCHOR_LEFT")
-				GameTooltip:AddLine("Vanilla Consolidate Buff-Frames")
-				GameTooltip:AddLine("LeftClick: Toggle option menu", 0.5, 0.5, 0.5)
-				GameTooltip:AddLine("RightClick: Toggle frame lock", 0.5, 0.5, 0.5)
-				GameTooltip:AddLine("Drag: Move MiniMap icon", 0.5, 0.5, 0.5)
+				GameTooltip:AddLine(VCB_MINIMAP_TOOLTIP_NAME)
+				GameTooltip:AddLine(VCB_MINIMAP_TOOLTIP_LEFTCLICK, 0.5, 0.5, 0.5)
+				GameTooltip:AddLine(VCB_MINIMAP_TOOLTIP_RIGHTCLICK, 0.5, 0.5, 0.5)
+				GameTooltip:AddLine(VCB_MINIMAP_TOOLTIP_DRAG, 0.5, 0.5, 0.5)
 				GameTooltip:Show()
 			</OnEnter>
 			<OnLeave>
@@ -150,7 +154,6 @@
 	</Button>
 	
 	---------------------------------MAIN CONFIG FRAME----------------------------------------------------------------
-	
 	<Frame name="VCB_BF_ConfigFrame" movable="true" parent="UIParent" frameStrata="HIGH" hidden="true" enableMouse="true" enableKeyboard="true">
 		<Size>
           <AbsDimension x="800" y="515" />
@@ -248,7 +251,7 @@
 					</OnClick>
 					<OnEnter>
 						GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
-						GameTooltip:SetText("Close configuration frame", nil, nil, nil, nil, 1)
+						GameTooltip:SetText(VCB_TOP_BUTTON_CLOSE, nil, nil, nil, nil, 1)
 						GameTooltip:Show()
 					</OnEnter>
 					<OnLeave>
@@ -278,7 +281,7 @@
 					</OnClick>
 					<OnEnter>
 						GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
-						GameTooltip:SetText("Lock VCB", nil, nil, nil, nil, 1)
+						GameTooltip:SetText(VCB_TOP_BUTTON_LOCK, nil, nil, nil, nil, 1)
 						GameTooltip:Show()
 					</OnEnter>
 					<OnLeave>
@@ -312,7 +315,7 @@
 					</OnClick>
 					<OnEnter>
 						GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
-						GameTooltip:SetText("Toggle MiniMap button", nil, nil, nil, nil, 1)
+						GameTooltip:SetText(VCB_TOP_BUTTON_MINIMAP, nil, nil, nil, nil, 1)
 						GameTooltip:Show()
 					</OnEnter>
 					<OnLeave>
@@ -346,7 +349,7 @@
 					</OnClick>
 					<OnEnter>
 						GameTooltip:SetOwner(this, "ANCHOR_RIGHT")
-						GameTooltip:SetText("Toggle Dummy Mode", nil, nil, nil, nil, 1)
+						GameTooltip:SetText(VCB_TOP_BUTTON_DUMMY, nil, nil, nil, nil, 1)
 						GameTooltip:Show()
 					</OnEnter>
 					<OnLeave>
@@ -380,10 +383,15 @@
 						<AbsValue val="32" />
 					</EdgeSize>
 				</Backdrop>
+				<Scripts>
+					<OnLoad>
+						getglobal("VCB_BF_MENU_HEAD_TITLE"):SetText(VCB_MENU_HEAD)
+					</OnLoad>
+				</Scripts>
 				<Layers>
 					<Layer>
 						-- Menu Head title
-						<FontString name="VCB_BF_MENU_TITLE" inherits="GameFontNormalLarge" text="MENU">
+						<FontString name="$parent_TITLE" inherits="GameFontNormalLarge" text="MENU">
 							<Size>
 								<AbsDimension x="160" y="60" />
 							</Size>
@@ -437,13 +445,16 @@
 						<Scripts>
 							<OnClick>
 								VCB_OPTIONS_HIDE_ALL()
-								VCB_OPTIONS_SHOW("VCB_BF_CONSOLIDATED_FRAME", "Consolidated Buffs")
+								VCB_OPTIONS_SHOW("VCB_BF_CONSOLIDATED_FRAME", VCB_MENU_BUTTON1_LINK)
 							</OnClick>
+							<OnLoad>
+								getglobal(this:GetName().."_TITLE"):SetText(VCB_MENU_BUTTON1_NAME)
+							</OnLoad>
 						</Scripts>
 						<Layers>
 							<Layer>
 								-- Button Title
-								<FontString name="VCB_BF_MENU_TITLE1" inherits="GameFontNormalSmall" text="Consolidated Buffs">
+								<FontString name="$parent_TITLE" inherits="GameFontNormalSmall" text="Consolidated Buffs">
 									<Size>
 										<AbsDimension x="130" y="40" />
 									</Size>
@@ -476,13 +487,16 @@
 						<Scripts>
 							<OnClick>
 								VCB_OPTIONS_HIDE_ALL()
-								VCB_OPTIONS_SHOW("VCB_BF_BANNED_FRAME", "Banned Buffs")
+								VCB_OPTIONS_SHOW("VCB_BF_BANNED_FRAME", VCB_MENU_BUTTON2_LINK)
 							</OnClick>
+							<OnLoad>
+								getglobal(this:GetName().."_TITLE"):SetText(VCB_MENU_BUTTON2_NAME)
+							</OnLoad>
 						</Scripts>
 						<Layers>
 							<Layer>
 								-- Button Title
-								<FontString name="VCB_BF_MENU_TITLE2" inherits="GameFontNormalSmall" text="Banned Buffs">
+								<FontString name="$parent_TITLE" inherits="GameFontNormalSmall" text="Banned Buffs">
 									<Size>
 										<AbsDimension x="130" y="40" />
 									</Size>
@@ -515,13 +529,16 @@
 						<Scripts>
 							<OnClick>
 								VCB_OPTIONS_HIDE_ALL()
-								VCB_OPTIONS_SHOW("VCB_BF_TIMER_FRAME", "Timer")
+								VCB_OPTIONS_SHOW("VCB_BF_TIMER_FRAME", VCB_MENU_BUTTON3_LINK)
 							</OnClick>
+							<OnLoad>
+								getglobal(this:GetName().."_TITLE"):SetText(VCB_MENU_BUTTON3_NAME)
+							</OnLoad>
 						</Scripts>
 						<Layers>
 							<Layer>
 								-- Button Title
-								<FontString name="VCB_BF_MENU_TITLE3" inherits="GameFontNormalSmall" text="Timer">
+								<FontString name="$parent_TITLE" inherits="GameFontNormalSmall" text="Timer">
 									<Size>
 										<AbsDimension x="130" y="40" />
 									</Size>
@@ -554,13 +571,16 @@
 						<Scripts>
 							<OnClick>
 								VCB_OPTIONS_HIDE_ALL()
-								VCB_OPTIONS_SHOW("VCB_BF_CF_FRAME", "Consolidated Frame -1-")
+								VCB_OPTIONS_SHOW("VCB_BF_CF_FRAME", VCB_MENU_BUTTON4_LINK)
 							</OnClick>
+							<OnLoad>
+								getglobal(this:GetName().."_TITLE"):SetText(VCB_MENU_BUTTON4_NAME)
+							</OnLoad>
 						</Scripts>
 						<Layers>
 							<Layer>
 								-- Button Title
-								<FontString name="VCB_BF_MENU_TITLE4" inherits="GameFontNormalSmall" text="Consolidated Frame">
+								<FontString name="$parent_TITLE" inherits="GameFontNormalSmall" text="Consolidated Frame">
 									<Size>
 										<AbsDimension x="130" y="40" />
 									</Size>
@@ -593,13 +613,16 @@
 						<Scripts>
 							<OnClick>
 								VCB_OPTIONS_HIDE_ALL()
-								VCB_OPTIONS_SHOW("VCB_BF_BF_FRAME", "Buff Frame -1-")
+								VCB_OPTIONS_SHOW("VCB_BF_BF_FRAME", VCB_MENU_BUTTON5_LINK)
 							</OnClick>
+							<OnLoad>
+								getglobal(this:GetName().."_TITLE"):SetText(VCB_MENU_BUTTON5_NAME)
+							</OnLoad>
 						</Scripts>
 						<Layers>
 							<Layer>
 								-- Button Title
-								<FontString name="VCB_BF_MENU_TITLE5" inherits="GameFontNormalSmall" text="Buff Frame">
+								<FontString name="$parent_TITLE" inherits="GameFontNormalSmall" text="Buff Frame">
 									<Size>
 										<AbsDimension x="130" y="40" />
 									</Size>
@@ -632,13 +655,16 @@
 						<Scripts>
 							<OnClick>
 								VCB_OPTIONS_HIDE_ALL()
-								VCB_OPTIONS_SHOW("VCB_BF_DBF_FRAME", "Debuff Frame -1-")
+								VCB_OPTIONS_SHOW("VCB_BF_DBF_FRAME", VCB_MENU_BUTTON6_LINK)
 							</OnClick>
+							<OnLoad>
+								getglobal(this:GetName().."_TITLE"):SetText(VCB_MENU_BUTTON6_NAME)
+							</OnLoad>
 						</Scripts>
 						<Layers>
 							<Layer>
 								-- Button Title
-								<FontString name="VCB_BF_MENU_TITLE6" inherits="GameFontNormalSmall" text="Debuff Frame">
+								<FontString name="$parent_TITLE" inherits="GameFontNormalSmall" text="Debuff Frame">
 									<Size>
 										<AbsDimension x="130" y="40" />
 									</Size>
@@ -671,13 +697,58 @@
 						<Scripts>
 							<OnClick>
 								VCB_OPTIONS_HIDE_ALL()
-								VCB_OPTIONS_SHOW("VCB_BF_WP_FRAME", "Weapon Frame -1-")
+								VCB_OPTIONS_SHOW("VCB_BF_WP_FRAME", VCB_MENU_BUTTON7_LINK)
 							</OnClick>
+							<OnLoad>
+								getglobal(this:GetName().."_TITLE"):SetText(VCB_MENU_BUTTON7_NAME)
+							</OnLoad>
 						</Scripts>
 						<Layers>
 							<Layer>
 								-- Button Title
-								<FontString name="VCB_BF_MENU_TITLE7" inherits="GameFontNormalSmall" text="Weapon Frame">
+								<FontString name="$parent_TITLE" inherits="GameFontNormalSmall" text="Weapon Frame">
+									<Size>
+										<AbsDimension x="130" y="40" />
+									</Size>
+									<Anchors>
+										<Anchor point="CENTER">
+											<Offset>
+												<AbsDimension x="0" y="7" />
+											</Offset>
+										</Anchor>
+									</Anchors>
+								</FontString>
+							</Layer>
+						</Layers>
+						<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
+						<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
+						<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
+					</Button>
+					-- Button8
+					<Button name="VCB_BF_MENU_BUTTON8">
+						<Size>
+							<AbsDimension x="130" y="40"/>
+						</Size>
+						<Anchors>
+							<Anchor point="TOP" relativeTo="VCB_BF_MENU_BUTTON7" relativePoint="BOTTOM">
+								<Offset>
+									<AbsDimension x="0" y="10"/>
+								</Offset>
+							</Anchor>
+						</Anchors>
+						<Scripts>
+							<OnClick>
+								VCB_OPTIONS_HIDE_ALL()
+								VCB_OPTIONS_SHOW("VCB_BF_PM_FRAME", VCB_MENU_BUTTON8_LINK)
+							</OnClick>
+							<OnLoad>
+								getglobal(this:GetName().."_TITLE"):SetText(VCB_MENU_BUTTON8_NAME)
+							</OnLoad>
+						</Scripts>
+						<Layers>
+							<Layer>
+								-- Button Title
+								<FontString name="$parent_TITLE" inherits="GameFontNormalSmall" text="Profile Manager">
 									<Size>
 										<AbsDimension x="130" y="40" />
 									</Size>
@@ -701,7 +772,7 @@
 							<AbsDimension x="130" y="40"/>
 						</Size>
 						<Anchors>
-							<Anchor point="TOP" relativeTo="VCB_BF_MENU_BUTTON7" relativePoint="BOTTOM">
+							<Anchor point="TOP" relativeTo="VCB_BF_MENU_BUTTON8" relativePoint="BOTTOM">
 								<Offset>
 									<AbsDimension x="0" y="10"/>
 								</Offset>
@@ -710,13 +781,16 @@
 						<Scripts>
 							<OnClick>
 								VCB_OPTIONS_HIDE_ALL()
-								VCB_OPTIONS_SHOW("VCB_BF_PM_FRAME", "Profile Manager")
+								VCB_OPTIONS_SHOW("VCB_BF_MISC_FRAME", VCB_MENU_BUTTON9_LINK)
 							</OnClick>
+							<OnLoad>
+								getglobal(this:GetName().."_TITLE"):SetText(VCB_MENU_BUTTON9_NAME)
+							</OnLoad>
 						</Scripts>
 						<Layers>
 							<Layer>
 								-- Button Title
-								<FontString name="VCB_BF_MENU_TITLE9" inherits="GameFontNormalSmall" text="Profile Manager">
+								<FontString name="$parent_TITLE" inherits="GameFontNormalSmall" text="Miscellaneous">
 									<Size>
 										<AbsDimension x="130" y="40" />
 									</Size>
@@ -749,52 +823,16 @@
 						<Scripts>
 							<OnClick>
 								VCB_OPTIONS_HIDE_ALL()
-								VCB_OPTIONS_SHOW("VCB_BF_MISC_FRAME", "Miscellaneous")
+								VCB_OPTIONS_SHOW("VCB_BF_ABOUT_FRAME", VCB_MENU_BUTTON10_LINK)
 							</OnClick>
+							<OnLoad>
+								getglobal(this:GetName().."_TITLE"):SetText(VCB_MENU_BUTTON10_NAME)
+							</OnLoad>
 						</Scripts>
 						<Layers>
 							<Layer>
 								-- Button Title
-								<FontString name="VCB_BF_MENU_TITLE10" inherits="GameFontNormalSmall" text="Miscellaneous">
-									<Size>
-										<AbsDimension x="130" y="40" />
-									</Size>
-									<Anchors>
-										<Anchor point="CENTER">
-											<Offset>
-												<AbsDimension x="0" y="7" />
-											</Offset>
-										</Anchor>
-									</Anchors>
-								</FontString>
-							</Layer>
-						</Layers>
-						<NormalTexture file="Interface\Buttons\UI-DialogBox-Button-Up"/>
-						<PushedTexture file="Interface\Buttons\UI-DialogBox-Button-Down"/>
-						<HighlightTexture file="Interface\Buttons\UI-DialogBox-Button-Highlight" alphaMode="ADD"/>
-					</Button>
-					-- Button 11
-					<Button name="VCB_BF_MENU_BUTTON11">
-						<Size>
-							<AbsDimension x="130" y="40"/>
-						</Size>
-						<Anchors>
-							<Anchor point="TOP" relativeTo="VCB_BF_MENU_BUTTON10" relativePoint="BOTTOM">
-								<Offset>
-									<AbsDimension x="0" y="10"/>
-								</Offset>
-							</Anchor>
-						</Anchors>
-						<Scripts>
-							<OnClick>
-								VCB_OPTIONS_HIDE_ALL()
-								VCB_OPTIONS_SHOW("VCB_BF_ABOUT_FRAME", "About VCB")
-							</OnClick>
-						</Scripts>
-						<Layers>
-							<Layer>
-								-- Button Title
-								<FontString name="VCB_BF_MENU_TITLE11" inherits="GameFontNormalSmall" text="About">
+								<FontString name="$parent_TITLE" inherits="GameFontNormalSmall" text="About">
 									<Size>
 										<AbsDimension x="130" y="40" />
 									</Size>
@@ -828,14 +866,14 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<FontString name="VCB_BF_CONFIG_FRAME_TITLE_FONTSTRING" font="Fonts\FRIZQT__.TTF" text="Consolidated Buffs" justifyH="LEFT">
+						<FontString name="$parent_TEXT" font="Fonts\FRIZQT__.TTF" text="Consolidated Buffs" justifyH="LEFT">
 							<Size>
 								<AbsDimension x="610" y="60" />
 							</Size>
 							<Color r="1.0" g="0.82" b="0"/>
 							<FontHeight val="92"/>
 							<Anchors>
-								<Anchor point="LEFT" relativeTo="VCB_BF_CONFIG_FRAME_TITLE" relativePoint="LEFT">
+								<Anchor point="LEFT" relativeTo="$parent" relativePoint="LEFT">
 									<Offset>
 										<AbsDimension x="5" y="-10" />
 									</Offset>
@@ -844,6 +882,11 @@
 						</FontString>
 					</Layer>
 				</Layers>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName().."_TEXT"):SetText(VCB_CONFIG_FRAME_TITLE_ONLOAD)
+					</OnLoad>
+				</Scripts>
 			</Frame>
 			-- Consolidated Frame
 			<Frame name="VCB_BF_CONSOLIDATED_FRAME">
@@ -887,7 +930,7 @@
 						</Backdrop>
 						<Layers>
 							<Layer>
-								<FontString name="VCB_BF_CONSOLIDATED_FRAME_LEFT_INSERT" font="Fonts\FRIZQT__.TTF" text="Insert a buff name:" justifyH="LEFT">
+								<FontString name="$parent_INSERT" font="Fonts\FRIZQT__.TTF" text="Insert a buff name:" justifyH="LEFT">
 									<Size>
 										<AbsDimension x="220" y="60" />
 									</Size>
@@ -901,14 +944,14 @@
 										</Anchor>
 									</Anchors>
 								</FontString>
-								<FontString name="VCB_BF_CONSOLIDATED_FRAME_LEFT_DELETE" font="Fonts\FRIZQT__.TTF" text="Selected aura:" justifyH="LEFT">
+								<FontString name="$parent_DELETE" font="Fonts\FRIZQT__.TTF" text="Selected aura:" justifyH="LEFT">
 									<Size>
 										<AbsDimension x="220" y="60" />
 									</Size>
 									<Color r="1.0" g="0.82" b="0"/>
 									<FontHeight val="20"/>
 									<Anchors>
-										<Anchor point="TOP" relativeTo="VCB_BF_CONSOLIDATED_FRAME_LEFT_INSERT" relativePoint="BOTTOM">
+										<Anchor point="TOP" relativeTo="$parent_INSERT" relativePoint="BOTTOM">
 											<Offset>
 												<AbsDimension x="0" y="-70" />
 											</Offset>
@@ -917,11 +960,17 @@
 								</FontString>
 							</Layer>
 						</Layers>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_INSERT"):SetText(VCB_CB_BB_FRAME_LEFT_INSERT)
+								getglobal(this:GetName().."_DELETE"):SetText(VCB_CB_BB_FRAME_LEFT_DELETE)
+							</OnLoad>
+						</Scripts>
 						<Frames>
 							<EditBox name="VCB_BF_CONSOLIDATED_FRAME_EditBox" letters="80">
 								<Size x="160" y="40" />
 								<Anchors>
-									<Anchor point="TOP" relativeTo="VCB_BF_CONSOLIDATED_FRAME_LEFT_INSERT" relativePoint="BOTTOM">
+									<Anchor point="TOP" relativeTo="$parent_INSERT" relativePoint="BOTTOM">
 										<Offset x="-13" y="15" />
 									</Anchor>
 								</Anchors>
@@ -966,11 +1015,14 @@
 										VCB_CONSOLIDATED_BUFFS_ADD()
 										PlaySound("igMainMenuOptionCheckBoxOff")
 									</OnClick>
+									<OnLoad>
+										getglobal(this:GetName().."_TITLE"):SetText(VCB_CB_BB_FRAME_LEFT_ADD)
+									</OnLoad>
 								</Scripts>
 								<Layers>
 									<Layer>
 										-- Button Title
-										<FontString name="VCB_BF_CONSOLIDATED_FRAME_ADD_BUTTON_TITLE" inherits="GameFontNormalSmall" text="ADD">
+										<FontString name="$parent_TITLE" inherits="GameFontNormalSmall" text="ADD">
 											<Size>
 												<AbsDimension x="180" y="40" />
 											</Size>
@@ -993,7 +1045,7 @@
 									<AbsDimension x="195" y="40"/>
 								</Size>
 								<Anchors>
-									<Anchor point="TOP" relativeTo="VCB_BF_CONSOLIDATED_FRAME_LEFT_DELETE" relativePoint="BOTTOM">
+									<Anchor point="TOP" relativeTo="$parent_DELETE" relativePoint="BOTTOM">
 										<Offset>
 											<AbsDimension x="-15" y="15" />
 										</Offset>
@@ -1012,7 +1064,7 @@
 								</Backdrop>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_CONSOLIDATED_FRAME_LEFT_DELETE_INBOX_TEXT" inherits="GameFontNormalSmall" text="">
+										<FontString name="$parent_TEXT" inherits="GameFontNormalSmall" text="">
 											<Size>
 												<AbsDimension x="195" y="40" />
 											</Size>
@@ -1033,7 +1085,7 @@
 									<AbsDimension x="180" y="40"/>
 								</Size>
 								<Anchors>
-									<Anchor point="TOP" relativeTo="VCB_BF_CONSOLIDATED_FRAME_LEFT_DELETE_INBOX" relativePoint="BOTTOM">
+									<Anchor point="TOP" relativeTo="$parent_DELETE_INBOX" relativePoint="BOTTOM">
 										<Offset>
 											<AbsDimension x="0" y="0"/>
 										</Offset>
@@ -1044,11 +1096,14 @@
 										VCB_CONSOLIDATED_BUFFS_DELETE()
 										PlaySound("igMainMenuOptionCheckBoxOff")
 									</OnClick>
+									<OnLoad>
+										getglobal(this:GetName().."_TITLE"):SetText(VCB_CB_BB_FRAME_LEFT_DELETE_BUTTON)
+									</OnLoad>
 								</Scripts>
 								<Layers>
 									<Layer>
 										-- Button Title
-										<FontString name="VCB_BF_CONSOLIDATED_FRAME_DELETE_BUTTON_TITLE" inherits="GameFontNormalSmall" text="DELETE">
+										<FontString name="$parent_TITLE" inherits="GameFontNormalSmall" text="DELETE">
 											<Size>
 												<AbsDimension x="180" y="40" />
 											</Size>
@@ -1083,11 +1138,14 @@
 										VCB_CONSOLIDATED_BUFFS_REMOVE_ALL()
 										PlaySound("igMainMenuOptionCheckBoxOff")
 									</OnClick>
+									<OnLoad>
+										getglobal(this:GetName().."_TITLE"):SetText(VCB_CB_BB_FRAME_LEFT_RA)
+									</OnLoad>
 								</Scripts>
 								<Layers>
 									<Layer>
 										-- Button Title
-										<FontString name="VCB_BF_CONSOLIDATED_FRAME_RA_BUTTON_TITLE" inherits="GameFontNormalSmall" text="Remove all">
+										<FontString name="$parent_TITLE" inherits="GameFontNormalSmall" text="Remove all">
 											<Size>
 												<AbsDimension x="180" y="40" />
 											</Size>
@@ -1412,7 +1470,7 @@
 						</Backdrop>
 						<Layers>
 							<Layer>
-								<FontString name="VCB_BF_BANNED_FRAME_LEFT_INSERT" font="Fonts\FRIZQT__.TTF" text="Insert a buff name:" justifyH="LEFT">
+								<FontString name="$parent_INSERT" font="Fonts\FRIZQT__.TTF" text="Insert a buff name:" justifyH="LEFT">
 									<Size>
 										<AbsDimension x="220" y="60" />
 									</Size>
@@ -1426,14 +1484,14 @@
 										</Anchor>
 									</Anchors>
 								</FontString>
-								<FontString name="VCB_BF_BANNED_FRAME_LEFT_DELETE" font="Fonts\FRIZQT__.TTF" text="Selected aura:" justifyH="LEFT">
+								<FontString name="$parent_DELETE" font="Fonts\FRIZQT__.TTF" text="Selected aura:" justifyH="LEFT">
 									<Size>
 										<AbsDimension x="220" y="60" />
 									</Size>
 									<Color r="1.0" g="0.82" b="0"/>
 									<FontHeight val="20"/>
 									<Anchors>
-										<Anchor point="TOP" relativeTo="VCB_BF_BANNED_FRAME_LEFT_INSERT" relativePoint="BOTTOM">
+										<Anchor point="TOP" relativeTo="$parent_INSERT" relativePoint="BOTTOM">
 											<Offset>
 												<AbsDimension x="0" y="-70" />
 											</Offset>
@@ -1442,6 +1500,12 @@
 								</FontString>
 							</Layer>
 						</Layers>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_INSERT"):SetText(VCB_CB_BB_FRAME_LEFT_INSERT)
+								getglobal(this:GetName().."_DELETE"):SetText(VCB_CB_BB_FRAME_LEFT_DELETE)
+							</OnLoad>
+						</Scripts>
 						<Frames>
 							<EditBox name="VCB_BF_BANNED_FRAME_EditBox" letters="80">
 								<Size x="160" y="40" />
@@ -1495,11 +1559,14 @@
 										VCB_BANNED_BUFFS_ADD()
 										PlaySound("igMainMenuOptionCheckBoxOff")
 									</OnClick>
+									<OnLoad>
+										getglobal(this:GetName().."_TITLE"):SetText(VCB_CB_BB_FRAME_LEFT_ADD)
+									</OnLoad>
 								</Scripts>
 								<Layers>
 									<Layer>
 										-- Button Title
-										<FontString name="VCB_BF_BANNED_FRAME_ADD_BUTTON_TITLE" inherits="GameFontNormalSmall" text="ADD">
+										<FontString name="$parent_TITLE" inherits="GameFontNormalSmall" text="ADD">
 											<Size>
 												<AbsDimension x="180" y="40" />
 											</Size>
@@ -1522,7 +1589,7 @@
 									<AbsDimension x="195" y="40"/>
 								</Size>
 								<Anchors>
-									<Anchor point="TOP" relativeTo="VCB_BF_BANNED_FRAME_LEFT_DELETE" relativePoint="BOTTOM">
+									<Anchor point="TOP" relativeTo="$parent_DELETE" relativePoint="BOTTOM">
 										<Offset>
 											<AbsDimension x="-15" y="15" />
 										</Offset>
@@ -1541,7 +1608,7 @@
 								</Backdrop>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_BANNED_FRAME_LEFT_DELETE_INBOX_TEXT" inherits="GameFontNormalSmall" text="">
+										<FontString name="$parent_TEXT" inherits="GameFontNormalSmall" text="">
 											<Size>
 												<AbsDimension x="195" y="40" />
 											</Size>
@@ -1562,7 +1629,7 @@
 									<AbsDimension x="180" y="40"/>
 								</Size>
 								<Anchors>
-									<Anchor point="TOP" relativeTo="VCB_BF_BANNED_FRAME_LEFT_DELETE_INBOX" relativePoint="BOTTOM">
+									<Anchor point="TOP" relativeTo="$parent_DELETE_INBOX" relativePoint="BOTTOM">
 										<Offset>
 											<AbsDimension x="0" y="0"/>
 										</Offset>
@@ -1573,11 +1640,14 @@
 										VCB_BANNED_BUFFS_DELETE()
 										PlaySound("igMainMenuOptionCheckBoxOff")
 									</OnClick>
+									<OnLoad>
+										getglobal(this:GetName().."_TITLE"):SetText(VCB_CB_BB_FRAME_LEFT_DELETE_BUTTON)
+									</OnLoad>
 								</Scripts>
 								<Layers>
 									<Layer>
 										-- Button Title
-										<FontString name="VCB_BF_BANNED_FRAME_DELETE_BUTTON_TITLE" inherits="GameFontNormalSmall" text="DELETE">
+										<FontString name="$parent_TITLE" inherits="GameFontNormalSmall" text="DELETE">
 											<Size>
 												<AbsDimension x="180" y="40" />
 											</Size>
@@ -1612,11 +1682,14 @@
 										VCB_BANNED_BUFFS_REMOVE_ALL()
 										PlaySound("igMainMenuOptionCheckBoxOff")
 									</OnClick>
+									<OnLoad>
+										getglobal(this:GetName().."_TITLE"):SetText(VCB_CB_BB_FRAME_LEFT_RA)
+									</OnLoad>
 								</Scripts>
 								<Layers>
 									<Layer>
 										-- Button Title
-										<FontString name="VCB_BF_BANNED_FRAME_RA_BUTTON_TITLE" inherits="GameFontNormalSmall" text="Remove all">
+										<FontString name="$parent_TITLE" inherits="GameFontNormalSmall" text="Remove all">
 											<Size>
 												<AbsDimension x="180" y="40" />
 											</Size>
@@ -1913,7 +1986,7 @@
 				</Anchors>
 				<Layers>
 					<Layer>
-						<FontString name="VCB_BF_TIMER_FRAME_FONT1" inherits="GameFontNormal" text="General" justifyH="LEFT">
+						<FontString name="$parent_FONT1" inherits="GameFontNormal" text="General" justifyH="LEFT">
 							<Size>
 								<AbsDimension x="610" y="20" />
 							</Size>
@@ -1938,13 +2011,18 @@
 						<AbsValue val="32" />
 					</EdgeSize>
 				</Backdrop>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName().."_FONT1"):SetText(VCB_CAT_GENERAL)
+					</OnLoad>
+				</Scripts>
 				<Frames>
 					<Frame name="VCB_BF_TIMER_FRAME_GENERAL_FRAME">
 						<Size>
 							<AbsDimension x="580" y="160"/>
 						</Size>
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="VCB_BF_TIMER_FRAME" relativePoint="TOPLEFT">
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 								<Offset>
 									<AbsDimension x="15" y="-25"/>
 								</Offset>
@@ -1976,8 +2054,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to format the timer to hours if more than 3600s are left."
-										getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON1Text"):SetText("Show hours")
+										this.tooltipText = VCB_TIMER_FRAME_SHOW_HOURS_TOOLTIP
+										getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON1Text"):SetText(VCB_TIMER_FRAME_SHOW_HOURS)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CHECKBUTTON_TIMER_HOURS()
@@ -1997,8 +2075,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to show both hours and minutes. For example: 1:34h."
-										getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON2Text"):SetText("Show hours and minutes (h:m)")
+										this.tooltipText = VCB_TIMER_FRAME_SHOW_HOURS_CONVERT_TOOLTIP
+										getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON2Text"):SetText(VCB_TIMER_FRAME_SHOW_HOURS_CONVERT)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CHECKBUTTON_TIMER_HOURS_CONVERT()
@@ -2018,8 +2096,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to format the timer to minutes if more than 60s are left."
-										getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON3Text"):SetText("Show minutes")
+										this.tooltipText = VCB_TIMER_FRAME_SHOW_MINUTES_TOOLTIP
+										getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON3Text"):SetText(VCB_TIMER_FRAME_SHOW_MINUTES)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CHECKBUTTON_TIMER_MINUTES()
@@ -2039,8 +2117,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to show both minutes and seconds. For example: 10:24m."
-										getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON4Text"):SetText("Show minutes and seconds (m:s)")
+										this.tooltipText = VCB_TIMER_FRAME_SHOW_MINUTES_CONVERT_TOOLTIP
+										getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON4Text"):SetText(VCB_TIMER_FRAME_SHOW_MINUTES_CONVERT)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CHECKBUTTON_TIMER_MINUTES_CONVERT()
@@ -2060,8 +2138,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to show tenths. For example: 10:44s."
-										getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON5Text"):SetText("Show tenth the last 60 seconds")
+										this.tooltipText = VCB_TIMER_FRAME_SHOW_TENTH_TOOLTIP
+										getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON5Text"):SetText(VCB_TIMER_FRAME_SHOW_TENTH)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CHECKBUTTON("Timer_tenth")
@@ -2081,8 +2159,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to round down the timer. For example: 70s -> 1m."
-										getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON6Text"):SetText("Round down")
+										this.tooltipText = VCB_TIMER_FRAME_ROUND_DOWN_TOOLTIP
+										getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON6Text"):SetText(VCB_TIMER_FRAME_ROUND_DOWN)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CHECKBUTTON_ROUND()
@@ -2102,8 +2180,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to round up the timer. For example: 70s -> 2m."
-										getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON7Text"):SetText("Round up")
+										this.tooltipText = VCB_TIMER_FRAME_ROUND_UP_TOOLTIP
+										getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON7Text"):SetText(VCB_TIMER_FRAME_ROUND_UP)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CHECKBUTTON_ROUND()
@@ -2123,11 +2201,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the font."
+										this.aide = VCB_COMMON_SLIDER_FONT_TOOLTIP
 										this:SetMinMaxValues(1,4)
 										this:SetValue(1)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_TIMER_FRAME_FontSliderText"):SetText("Font")
+										getglobal("VCB_BF_TIMER_FRAME_FontSliderText"):SetText(VCB_COMMON_SLIDER_FONT)
 										getglobal("VCB_BF_TIMER_FRAME_FontSliderLow"):SetText("1")
 										getglobal("VCB_BF_TIMER_FRAME_FontSliderHigh"):SetText("4")
 									</OnLoad>
@@ -2167,7 +2245,7 @@
 				</Backdrop>
 				<Layers>
 					<Layer>
-						<FontString name="VCB_BF_CF_FRAME_FONT1" inherits="GameFontNormal" text="Consolidate Icon" justifyH="LEFT">
+						<FontString name="$parent_FONT1" inherits="GameFontNormal" text="Consolidate Icon" justifyH="LEFT">
 							<Size>
 								<AbsDimension x="610" y="20" />
 							</Size>
@@ -2179,7 +2257,7 @@
 								</Anchor>
 							</Anchors>
 						</FontString>
-						<FontString name="VCB_BF_CF_FRAME_FONT3" inherits="GameFontNormal" text="Buff Frames" justifyH="LEFT">
+						<FontString name="$parent_FONT2" inherits="GameFontNormal" text="Buff Frames" justifyH="LEFT">
 							<Size>
 								<AbsDimension x="610" y="20" />
 							</Size>
@@ -2200,6 +2278,10 @@
 					<OnHide>
 						VCB_BF_CONSOLIDATED_BUFFFRAME:Hide()
 					</OnHide>
+					<OnLoad>
+						getglobal(this:GetName().."_FONT1"):SetText(VCB_CAT_CONSOLIDATED_ICON)
+						getglobal(this:GetName().."_FONT2"):SetText(VCB_CAT_BUFF_FRAME)
+					</OnLoad>
 				</Scripts>
 				<Frames>
 					<Frame name="VCB_BF_CF_FRAME_CI_FRAME">
@@ -2240,12 +2322,12 @@
 								</Anchors>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_CF_FRAME_FONT2" inherits="GameFontNormalSmall" text="Select font color" justifyH="LEFT">
+										<FontString name="$parent_Font" inherits="GameFontNormalSmall" text="Select font color" justifyH="LEFT">
 											<Size>
 												<AbsDimension x="200" y="16" />
 											</Size>
 											<Anchors>
-												<Anchor point="LEFT" relativeTo="VCB_BF_CF_FRAME_Color" relativePoint="RIGHT">
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
 													<Offset>
 														<AbsDimension x="5" y="0" />
 													</Offset>
@@ -2271,6 +2353,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."_Font"):SetText(VCB_COMMON_COLOR_FONTCOLOR)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -2281,7 +2364,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText("Click here to change the color of the font.", nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_COMMON_COLOR_FONTCOLOR_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -2303,8 +2386,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON2Text"):SetText("Show amount out of possible buffs")
+										this.tooltipText = VCB_CF_FRAME_POSSIBLE_BUFFS_TOOLTIP
+										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON2Text"):SetText(VCB_CF_FRAME_POSSIBLE_BUFFS)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CF_FRAME_SHOW_POSSIBLE_BUFFS()
@@ -2324,8 +2407,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON3Text"):SetText("Show missing buffs (grayed out)")
+										this.tooltipText = VCB_CF_FRAME_SHOW_PB_GRAYED_OUT_TOOLTIP
+										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON3Text"):SetText(VCB_CF_FRAME_SHOW_PB_GRAYED_OUT)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CF_FRAME_SHOW_BUFFS_GRAYED_OUT()
@@ -2345,8 +2428,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_BORDERText"):SetText("Enable font border")
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_FONT_BORDER_TOOLTIP
+										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_BORDERText"):SetText(VCB_COMMON_BUTTON_ENABLE_FONT_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CF_FRAME_CHECKBUTTON_BORDER_CLICK()
@@ -2366,11 +2449,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the font size."
+										this.aide = VCB_COMMON_SLIDER_FONT_SIZE_TOOLTIP
 										this:SetMinMaxValues(1,24)
 										this:SetValue(12)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_CF_FRAME_SizeSliderText"):SetText("Font size")
+										getglobal("VCB_BF_CF_FRAME_SizeSliderText"):SetText(VCB_COMMON_SLIDER_FONT_SIZE)
 										getglobal("VCB_BF_CF_FRAME_SizeSliderLow"):SetText("1")
 										getglobal("VCB_BF_CF_FRAME_SizeSliderHigh"):SetText("24")
 									</OnLoad>
@@ -2394,11 +2477,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the font."
+										this.aide = VCB_COMMON_SLIDER_FONT_TOOLTIP
 										this:SetMinMaxValues(1,4)
 										this:SetValue(1)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_CF_FRAME_FontSliderText"):SetText("Font")
+										getglobal("VCB_BF_CF_FRAME_FontSliderText"):SetText(VCB_COMMON_SLIDER_FONT)
 										getglobal("VCB_BF_CF_FRAME_FontSliderLow"):SetText("1")
 										getglobal("VCB_BF_CF_FRAME_FontSliderHigh"):SetText("4")
 									</OnLoad>
@@ -2422,11 +2505,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the opacity."
+										this.aide = VCB_CF_FRAME_ICON_OPACITY_TOOLTIP
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_CF_FRAME_AlphaSliderText"):SetText("Icon Opacity")
+										getglobal("VCB_BF_CF_FRAME_AlphaSliderText"):SetText(VCB_CF_FRAME_ICON_OPACITY)
 										getglobal("VCB_BF_CF_FRAME_AlphaSliderLow"):SetText("0")
 										getglobal("VCB_BF_CF_FRAME_AlphaSliderHigh"):SetText("1.0")
 									</OnLoad>
@@ -2450,11 +2533,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the opacity."
+										this.aide = VCB_COMMON_SLIDER_FONT_OPACITY_TOOLTIP
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_CF_FRAME_FontAlphaSliderText"):SetText("Font Opacity")
+										getglobal("VCB_BF_CF_FRAME_FontAlphaSliderText"):SetText(VCB_COMMON_SLIDER_FONT_OPACITY)
 										getglobal("VCB_BF_CF_FRAME_FontAlphaSliderLow"):SetText("0")
 										getglobal("VCB_BF_CF_FRAME_FontAlphaSliderHigh"):SetText("1.0")
 									</OnLoad>
@@ -2478,11 +2561,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the opacity."
+										this.aide = VCB_CF_FRAME_ICON_TEXTURE_TOOLTIP
 										this:SetMinMaxValues(1,1)
 										this:SetValue(1)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_CF_FRAME_TextureSliderText"):SetText("Texture")
+										getglobal("VCB_BF_CF_FRAME_TextureSliderText"):SetText(VCB_CF_FRAME_ICON_TEXTURE)
 										getglobal("VCB_BF_CF_FRAME_TextureSliderLow"):SetText("1")
 										getglobal("VCB_BF_CF_FRAME_TextureSliderHigh"):SetText("1")
 									</OnLoad>
@@ -2533,12 +2616,12 @@
 								</Anchors>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_CF_FRAME_FONT4" inherits="GameFontNormalSmall" text="Select border color" justifyH="LEFT">
+										<FontString name="$parent_Font" inherits="GameFontNormalSmall" text="Select border color" justifyH="LEFT">
 											<Size>
 												<AbsDimension x="200" y="16" />
 											</Size>
 											<Anchors>
-												<Anchor point="LEFT" relativeTo="VCB_BF_CF_FRAME_Color2" relativePoint="RIGHT">
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
 													<Offset>
 														<AbsDimension x="5" y="0" />
 													</Offset>
@@ -2564,6 +2647,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."_Font"):SetText(VCB_COMMON_COLOR_BORDERCOLOR)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -2574,7 +2658,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_COMMON_COLOR_BORDERCOLOR_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -2597,12 +2681,12 @@
 								</Anchors>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_CF_FRAME_FONT5" inherits="GameFontNormalSmall" text="Select background color" justifyH="LEFT">
+										<FontString name="$parent_Font" inherits="GameFontNormalSmall" text="Select background color" justifyH="LEFT">
 											<Size>
 												<AbsDimension x="200" y="16" />
 											</Size>
 											<Anchors>
-												<Anchor point="LEFT" relativeTo="VCB_BF_CF_FRAME_Color3" relativePoint="RIGHT">
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
 													<Offset>
 														<AbsDimension x="5" y="0" />
 													</Offset>
@@ -2628,6 +2712,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."_Font"):SetText(VCB_COMMON_COLOR_BACKGROUNDCOLOR)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -2638,7 +2723,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText("Test", nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_COMMON_COLOR_BACKGROUNDCOLOR_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -2660,8 +2745,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON1Text"):SetText("Invert order")
+										this.tooltipText = VCB_COMMON_BUTTON_INVERT_ORDER_TOOLTIP
+										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON1Text"):SetText(VCB_COMMON_BUTTON_INVERT_ORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CF_FRAME_INVERTBUTTON()
@@ -2681,8 +2766,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON4Text"):SetText("Use custom border")
+										this.tooltipText = VCB_COMMON_BUTTON_USE_CUSTOM_BORDER_TOOLTIP
+										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON4Text"):SetText(VCB_COMMON_BUTTON_USE_CUSTOM_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CF_FRAME_USE_CUSTOM_BORDER()
@@ -2702,8 +2787,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_CBGText"):SetText("Use custom background")
+										this.tooltipText = VCB_COMMON_BUTTON_USE_CUSTOM_BACKGROUND_TOOLTIP
+										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_CBGText"):SetText(VCB_COMMON_BUTTON_USE_CUSTOM_BACKGROUND)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CF_FRAME_USE_CUSTOM_BACKGROUND()
@@ -2723,11 +2808,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the anchor."
+										this.aide = VCB_CF_FRAME_BF_ANCHOR_TOOLTIP
 										this:SetMinMaxValues(1,4)
 										this:SetValue(1)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_CF_FRAME_AnchorSliderText"):SetText("Anchor")
+										getglobal("VCB_BF_CF_FRAME_AnchorSliderText"):SetText(VCB_CF_FRAME_BF_ANCHOR)
 										getglobal("VCB_BF_CF_FRAME_AnchorSliderLow"):SetText("1")
 										getglobal("VCB_BF_CF_FRAME_AnchorSliderHigh"):SetText("4")
 									</OnLoad>
@@ -2751,11 +2836,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the scale."
+										this.aide = VCB_COMMON_SLIDER_SCALE_TOOLTIP
 										this:SetMinMaxValues(0.1,3.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_CF_FRAME_ScaleSliderText"):SetText("Scale")
+										getglobal("VCB_BF_CF_FRAME_ScaleSliderText"):SetText(VCB_COMMON_SLIDER_SCALE)
 										getglobal("VCB_BF_CF_FRAME_ScaleSliderLow"):SetText("0.1")
 										getglobal("VCB_BF_CF_FRAME_ScaleSliderHigh"):SetText("3.0")
 									</OnLoad>
@@ -2779,11 +2864,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_BUFFS_PER_ROW_TOOLTIP
 										this:SetMinMaxValues(1,10)
 										this:SetValue(5)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_CF_FRAME_NumPerRowSliderText"):SetText("Buffs per row")
+										getglobal("VCB_BF_CF_FRAME_NumPerRowSliderText"):SetText(VCB_COMMON_SLIDER_BUFFS_PER_ROW)
 										getglobal("VCB_BF_CF_FRAME_NumPerRowSliderLow"):SetText("1")
 										getglobal("VCB_BF_CF_FRAME_NumPerRowSliderHigh"):SetText("10")
 									</OnLoad>
@@ -2807,11 +2892,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_CF_FRAME_BF_BACKGROUND_TOOLTIP
 										this:SetMinMaxValues(1,3)
 										this:SetValue(1)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_CF_FRAME_BackdropSliderText"):SetText("Background")
+										getglobal("VCB_BF_CF_FRAME_BackdropSliderText"):SetText(VCB_CF_FRAME_BF_BACKGROUND)
 										getglobal("VCB_BF_CF_FRAME_BackdropSliderLow"):SetText("1")
 										getglobal("VCB_BF_CF_FRAME_BackdropSliderHigh"):SetText("3")
 									</OnLoad>
@@ -2835,11 +2920,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_BACKGROUND_OPACITY_TOOLTIP
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(0.5)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_CF_FRAME_BGOpaSliderText"):SetText("Background Opacity")
+										getglobal("VCB_BF_CF_FRAME_BGOpaSliderText"):SetText(VCB_COMMON_SLIDER_BACKGROUND_OPACITY)
 										getglobal("VCB_BF_CF_FRAME_BGOpaSliderLow"):SetText("0")
 										getglobal("VCB_BF_CF_FRAME_BGOpaSliderHigh"):SetText("1.0")
 									</OnLoad>
@@ -2863,11 +2948,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_BORDER_TOOLTIP
 										this:SetMinMaxValues(1,2)
 										this:SetValue(5)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_CF_FRAME_BFBorderSliderText"):SetText("Border")
+										getglobal("VCB_BF_CF_FRAME_BFBorderSliderText"):SetText(VCB_COMMON_SLIDER_BORDER)
 										getglobal("VCB_BF_CF_FRAME_BFBorderSliderLow"):SetText("1")
 										getglobal("VCB_BF_CF_FRAME_BFBorderSliderHigh"):SetText("2")
 									</OnLoad>
@@ -2887,7 +2972,7 @@
 								</Anchors>
 								<Layers>
 									<Layer level="BACKGROUND">
-										<FontString name="VCB_BF_CF_FRAME_EDITBOX_BORDER_FONT4" inherits="GameFontNormalSmall" text="Custom border path:">
+										<FontString name="$parent_FONT" inherits="GameFontNormalSmall" text="Custom border path:">
 											<Size>
 												<AbsDimension x="130" y="20" />
 											</Size>
@@ -2923,6 +3008,9 @@
 									<OnTextChanged>
 										VCB_BF_CF_FRAME_EDITBOX_BORDER_CHANGE(this)
 									</OnTextChanged>
+									<OnLoad>
+										getglobal(this:GetName().."_FONT"):SetText(VCB_COMMON_EDITBOX_CUSTOM_BORDER_PATH)
+									</OnLoad>
 								</Scripts>
 								<FontString inherits="ChatFontNormal" />
 							</EditBox>
@@ -2935,7 +3023,7 @@
 								</Anchors>
 								<Layers>
 									<Layer level="BACKGROUND">
-										<FontString name="$parentFont" inherits="GameFontNormalSmall" text="Custom background path:">
+										<FontString name="$parent_Font" inherits="GameFontNormalSmall" text="Custom background path:">
 											<Size>
 												<AbsDimension x="140" y="20" />
 											</Size>
@@ -2971,6 +3059,9 @@
 									<OnTextChanged>
 										VCB_BF_CF_FRAME_EDITBOX_BACKGROUND_CHANGE(this)
 									</OnTextChanged>
+									<OnLoad>
+										getglobal(this:GetName().."_Font"):SetText(VCB_CF_FRAME_BF_CUSTOM_BACKGROUND_PATH)
+									</OnLoad>
 								</Scripts>
 								<FontString inherits="ChatFontNormal" />
 							</EditBox>
@@ -2987,11 +3078,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_BORDER_OPACITY_TOOLTIP
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(0.5)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_CF_FRAME_BorderOpaSliderText"):SetText("Border Opacity")
+										getglobal("VCB_BF_CF_FRAME_BorderOpaSliderText"):SetText(VCB_COMMON_SLIDER_BORDER_OPACITY)
 										getglobal("VCB_BF_CF_FRAME_BorderOpaSliderLow"):SetText("0")
 										getglobal("VCB_BF_CF_FRAME_BorderOpaSliderHigh"):SetText("1.0")
 									</OnLoad>
@@ -3020,15 +3111,18 @@
 								VCB_BF_CF_FRAME_CHANGE_PAGE()
 								PlaySound("igMainMenuOptionCheckBoxOff");
 							</OnClick>
+							<OnLoad>
+								getglobal(this:GetName().."_FONT"):SetText(VCB_COMMON_PAGE_1)
+							</OnLoad>
 						</Scripts>
 						<Layers>
 							<Layer>
-								<FontString name="VCB_BF_CF_FRAME_FONT6" inherits="GameFontNormalSmall" text="Page 1 of 2">
+								<FontString name="$parent_FONT" inherits="GameFontNormalSmall" text="Page 1 of 2">
 									<Size>
 										<AbsDimension x="100" y="30" />
 									</Size>
 									<Anchors>
-										<Anchor point="LEFT" relativeTo="VCB_BF_CF_FRAME_previous_page" relativePoint="RIGHT">
+										<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
 											<Offset>
 												<AbsDimension x="-15" y="0" />
 											</Offset>
@@ -3089,24 +3183,24 @@
 				</Backdrop>
 				<Layers>
 					<Layer>
-						<FontString name="VCB_BF_CF_FRAME2_FONT2" inherits="GameFontNormal" text="Aura" justifyH="LEFT">
+						<FontString name="$parent_FONT1" inherits="GameFontNormal" text="Aura" justifyH="LEFT">
 							<Size>
 								<AbsDimension x="610" y="30" />
 							</Size>
 							<Anchors>
-								<Anchor point="TOPLEFT" relativeTo="VCB_BF_CF_FRAME2" relativePoint="TOPLEFT">
+								<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 									<Offset>
 										<AbsDimension x="20" y="-10" />
 									</Offset>
 								</Anchor>
 							</Anchors>
 						</FontString>
-						<FontString name="VCB_BF_CF_FRAME2_FONT3" inherits="GameFontNormal" text="Aura Timer" justifyH="LEFT">
+						<FontString name="$parent_FONT2" inherits="GameFontNormal" text="Aura Timer" justifyH="LEFT">
 							<Size>
 								<AbsDimension x="610" y="30" />
 							</Size>
 							<Anchors>
-								<Anchor point="TOPLEFT" relativeTo="VCB_BF_CF_FRAME2" relativePoint="TOPLEFT">
+								<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 									<Offset>
 										<AbsDimension x="20" y="-280" />
 									</Offset>
@@ -3122,6 +3216,10 @@
 					<OnHide>
 						VCB_BF_CONSOLIDATED_BUFFFRAME:Hide()
 					</OnHide>
+					<OnLoad>
+						getglobal(this:GetName().."_FONT1"):SetText(VCB_CAT_AURA)
+						getglobal(this:GetName().."_FONT2"):SetText(VCB_CAT_AURA_TIMER)
+					</OnLoad>
 				</Scripts>
 				<Frames>
 					<Frame name="VCB_BF_CF_FRAME2_BUFF_FRAME">
@@ -3129,7 +3227,7 @@
 							<AbsDimension x="580" y="240"/>
 						</Size>
 						<Anchors>
-							<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME2" relativePoint="TOP">
+							<Anchor point="TOP" relativeTo="$parent" relativePoint="TOP">
 								<Offset>
 									<AbsDimension x="0" y="-30"/>
 								</Offset>
@@ -3154,7 +3252,7 @@
 									<AbsDimension x="30" y="30"/>
 								</Size>
 								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="VCB_BF_CF_FRAME2_BUFF_FRAME" relativePoint="TOPLEFT">
+									<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 										<Offset>
 											<AbsDimension x="10" y="-5"/>
 										</Offset>
@@ -3162,8 +3260,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON1Text"):SetText("Enable border")
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_BORDER_TOOLTIP
+										getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON1Text"):SetText(VCB_COMMON_BUTTON_ENABLE_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CF_FRAME2_ENABLEBORDER()
@@ -3184,8 +3282,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON2Text"):SetText("Enable background color")
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_BACKGROUND_COLOR_TOOLTIP
+										getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON2Text"):SetText(VCB_COMMON_BUTTON_ENABLE_BACKGROUND_COLOR)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CF_FRAME2_ENABLEBGCOLOR()
@@ -3206,8 +3304,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON3Text"):SetText("Use custom border")
+										this.tooltipText = VCB_COMMON_BUTTON_USE_CUSTOM_BORDER_TOOLTIP
+										getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON3Text"):SetText(VCB_COMMON_BUTTON_USE_CUSTOM_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CF_FRAME2_USE_CUSTOMBORDER()
@@ -3228,135 +3326,7 @@
 								</Anchors>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_CF_FRAME2_FONT4" inherits="GameFontNormalSmall" text="Select border color" justifyH="LEFT">
-											<Size>
-												<AbsDimension x="200" y="16" />
-											</Size>
-											<Anchors>
-												<Anchor point="LEFT" relativeTo="VCB_BF_CF_FRAME2_Color" relativePoint="RIGHT">
-													<Offset>
-														<AbsDimension x="5" y="0" />
-													</Offset>
-												</Anchor>
-											</Anchors>
-										</FontString>
-									</Layer>
-									<Layer level="BACKGROUND">
-										<Texture name="$parent_SwatchBg">
-											<Size>
-												<AbsDimension x="14" y="14"/>
-											</Size>
-											<Anchors>
-												<Anchor point="CENTER">
-													<Offset>
-														<AbsDimension x="0" y="0"/>
-													</Offset>
-												</Anchor>
-											</Anchors>
-											<Color r="1.0" g="1.0" b="1.0"/>
-										</Texture>
-									</Layer>
-								</Layers>
-								<Scripts>
-									<OnLoad>
-										getglobal(this:GetName().."_SwatchBg").r = 1.0;
-										getglobal(this:GetName().."_SwatchBg").g = 1.0;
-										getglobal(this:GetName().."_SwatchBg").b = 1.0;
-									</OnLoad>
-									<OnClick>
-										VCB_BF_OpenColorPicker(this, "CF_AURA_border", nil, "buffsborder");
-									</OnClick>
-									<OnEnter>
-										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
-										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
-									</OnEnter>
-									<OnLeave>
-										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
-										GameTooltip:Hide();
-									</OnLeave>
-								</Scripts>
-								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
-							</Button>
-							-- COLOR PICKER
-							<Button name="VCB_BF_CF_FRAME2_Color2">
-								<Size>
-									<AbsDimension x="16" y="16"/>
-								</Size>
-								<Anchors>
-									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME2_Color" relativePoint="BOTTOM">
-										<Offset>
-											<AbsDimension x="0" y="-10"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Layers>
-									<Layer>
-										<FontString name="VCB_BF_CF_FRAME2_FONT5" inherits="GameFontNormalSmall" text="Select background color" justifyH="LEFT">
-											<Size>
-												<AbsDimension x="200" y="16" />
-											</Size>
-											<Anchors>
-												<Anchor point="LEFT" relativeTo="VCB_BF_CF_FRAME2_Color2" relativePoint="RIGHT">
-													<Offset>
-														<AbsDimension x="5" y="0" />
-													</Offset>
-												</Anchor>
-											</Anchors>
-										</FontString>
-									</Layer>
-									<Layer level="BACKGROUND">
-										<Texture name="$parent_SwatchBg">
-											<Size>
-												<AbsDimension x="14" y="14"/>
-											</Size>
-											<Anchors>
-												<Anchor point="CENTER">
-													<Offset>
-														<AbsDimension x="0" y="0"/>
-													</Offset>
-												</Anchor>
-											</Anchors>
-											<Color r="1.0" g="1.0" b="1.0"/>
-										</Texture>
-									</Layer>
-								</Layers>
-								<Scripts>
-									<OnLoad>
-										getglobal(this:GetName().."_SwatchBg").r = 1.0;
-										getglobal(this:GetName().."_SwatchBg").g = 1.0;
-										getglobal(this:GetName().."_SwatchBg").b = 1.0;
-									</OnLoad>
-									<OnClick>
-										VCB_BF_OpenColorPicker(this, "CF_AURA_bg", "CF_AURA_enablebgcolor", "buffsbg");
-									</OnClick>
-									<OnEnter>
-										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
-										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
-									</OnEnter>
-									<OnLeave>
-										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
-										GameTooltip:Hide();
-									</OnLeave>
-								</Scripts>
-								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
-							</Button>
-							-- COLOR PICKER font color
-							<Button name="VCB_BF_CF_FRAME2_Color_fontcolor">
-								<Size>
-									<AbsDimension x="16" y="16"/>
-								</Size>
-								<Anchors>
-									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME2_Color2" relativePoint="BOTTOM">
-										<Offset>
-											<AbsDimension x="0" y="-10"/>
-										</Offset>
-									</Anchor>
-								</Anchors>
-								<Layers>
-									<Layer>
-										<FontString name="$parentFont" inherits="GameFontNormalSmall" text="Select font color" justifyH="LEFT">
+										<FontString name="$parent_Font" inherits="GameFontNormalSmall" text="Select border color" justifyH="LEFT">
 											<Size>
 												<AbsDimension x="200" y="16" />
 											</Size>
@@ -3387,6 +3357,137 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."_Font"):SetText(VCB_COMMON_COLOR_BORDERCOLOR)
+										getglobal(this:GetName().."_SwatchBg").r = 1.0;
+										getglobal(this:GetName().."_SwatchBg").g = 1.0;
+										getglobal(this:GetName().."_SwatchBg").b = 1.0;
+									</OnLoad>
+									<OnClick>
+										VCB_BF_OpenColorPicker(this, "CF_AURA_border", nil, "buffsborder");
+									</OnClick>
+									<OnEnter>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+										GameTooltip:SetText(VCB_COMMON_COLOR_BORDERCOLOR_TOOLTIP, nil, nil, nil, nil, 1);
+									</OnEnter>
+									<OnLeave>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
+										GameTooltip:Hide();
+									</OnLeave>
+								</Scripts>
+								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
+							</Button>
+							-- COLOR PICKER
+							<Button name="VCB_BF_CF_FRAME2_Color2">
+								<Size>
+									<AbsDimension x="16" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME2_Color" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-10"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer>
+										<FontString name="$parent_Font" inherits="GameFontNormalSmall" text="Select background color" justifyH="LEFT">
+											<Size>
+												<AbsDimension x="200" y="16" />
+											</Size>
+											<Anchors>
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+													<Offset>
+														<AbsDimension x="5" y="0" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+									<Layer level="BACKGROUND">
+										<Texture name="$parent_SwatchBg">
+											<Size>
+												<AbsDimension x="14" y="14"/>
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="0"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+											<Color r="1.0" g="1.0" b="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnLoad>
+										getglobal(this:GetName().."_Font"):SetText(VCB_COMMON_COLOR_BACKGROUNDCOLOR)
+										getglobal(this:GetName().."_SwatchBg").r = 1.0;
+										getglobal(this:GetName().."_SwatchBg").g = 1.0;
+										getglobal(this:GetName().."_SwatchBg").b = 1.0;
+									</OnLoad>
+									<OnClick>
+										VCB_BF_OpenColorPicker(this, "CF_AURA_bg", "CF_AURA_enablebgcolor", "buffsbg");
+									</OnClick>
+									<OnEnter>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+										GameTooltip:SetText(VCB_COMMON_COLOR_BACKGROUNDCOLOR_TOOLTIP, nil, nil, nil, nil, 1);
+									</OnEnter>
+									<OnLeave>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
+										GameTooltip:Hide();
+									</OnLeave>
+								</Scripts>
+								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
+							</Button>
+							-- COLOR PICKER font color
+							<Button name="VCB_BF_CF_FRAME2_Color_fontcolor">
+								<Size>
+									<AbsDimension x="16" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME2_Color2" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-10"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer>
+										<FontString name="$parent_Font" inherits="GameFontNormalSmall" text="Select font color" justifyH="LEFT">
+											<Size>
+												<AbsDimension x="200" y="16" />
+											</Size>
+											<Anchors>
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
+													<Offset>
+														<AbsDimension x="5" y="0" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+									</Layer>
+									<Layer level="BACKGROUND">
+										<Texture name="$parent_SwatchBg">
+											<Size>
+												<AbsDimension x="14" y="14"/>
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="0"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+											<Color r="1.0" g="1.0" b="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnLoad>
+										getglobal(this:GetName().."_Font"):SetText(VCB_COMMON_COLOR_FONTCOLOR)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -3397,7 +3498,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_COMMON_COLOR_FONTCOLOR_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -3420,8 +3521,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON_FBorderText"):SetText("Enable font border")
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_FONT_BORDER_TOOLTIP
+										getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON_FBorderText"):SetText(VCB_COMMON_BUTTON_ENABLE_FONT_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CF_FRAME2_G_ENABLE_BORDER()
@@ -3442,11 +3543,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_PADDING_H_TOOLTIP
 										this:SetMinMaxValues(1,10)
 										this:SetValue(2)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_CF_FRAME2_AuraPaddingHSliderText"):SetText("Padding H")
+										getglobal("VCB_BF_CF_FRAME2_AuraPaddingHSliderText"):SetText(VCB_COMMON_SLIDER_PADDING_H)
 										getglobal("VCB_BF_CF_FRAME2_AuraPaddingHSliderLow"):SetText("1")
 										getglobal("VCB_BF_CF_FRAME2_AuraPaddingHSliderHigh"):SetText("10")
 									</OnLoad>
@@ -3471,11 +3572,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_PADDING_V_TOOLTIP
 										this:SetMinMaxValues(1,10)
 										this:SetValue(2)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_CF_FRAME2_AuraPaddingVSliderText"):SetText("Padding Y")
+										getglobal("VCB_BF_CF_FRAME2_AuraPaddingVSliderText"):SetText(VCB_COMMON_SLIDER_PADDING_V)
 										getglobal("VCB_BF_CF_FRAME2_AuraPaddingVSliderLow"):SetText("1")
 										getglobal("VCB_BF_CF_FRAME2_AuraPaddingVSliderHigh"):SetText("10")
 									</OnLoad>
@@ -3500,11 +3601,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_SIZE_TOOLTIP
 										this:SetMinMaxValues(1,24)
 										this:SetValue(13)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_CF_FRAME2_GFontSizeSliderText"):SetText("Font size")
+										getglobal("VCB_BF_CF_FRAME2_GFontSizeSliderText"):SetText(VCB_COMMON_SLIDER_FONT_SIZE)
 										getglobal("VCB_BF_CF_FRAME2_GFontSizeSliderLow"):SetText("1")
 										getglobal("VCB_BF_CF_FRAME2_GFontSizeSliderHigh"):SetText("24")
 									</OnLoad>
@@ -3529,11 +3630,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_OFFSET_X_TOOLTIP
 										this:SetMinMaxValues(-28,28)
 										this:SetValue(5)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_CF_FRAME2_GFontOffsetXSliderText"):SetText("Font offset X")
+										getglobal("VCB_BF_CF_FRAME2_GFontOffsetXSliderText"):SetText(VCB_COMMON_SLIDER_FONT_OFFSET_X)
 										getglobal("VCB_BF_CF_FRAME2_GFontOffsetXSliderLow"):SetText("-28")
 										getglobal("VCB_BF_CF_FRAME2_GFontOffsetXSliderHigh"):SetText("28")
 									</OnLoad>
@@ -3558,11 +3659,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_OFFSET_Y_TOOLTIP
 										this:SetMinMaxValues(-28,28)
 										this:SetValue(5)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_CF_FRAME2_GFontOffsetYSliderText"):SetText("Font offset Y")
+										getglobal("VCB_BF_CF_FRAME2_GFontOffsetYSliderText"):SetText(VCB_COMMON_SLIDER_FONT_OFFSET_Y)
 										getglobal("VCB_BF_CF_FRAME2_GFontOffsetYSliderLow"):SetText("-28")
 										getglobal("VCB_BF_CF_FRAME2_GFontOffsetYSliderHigh"):SetText("28")
 									</OnLoad>
@@ -3587,11 +3688,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_BORDER_TOOLTIP
 										this:SetMinMaxValues(1,1)
 										this:SetValue(1)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_CF_FRAME2_AuraBorderSliderText"):SetText("Border")
+										getglobal("VCB_BF_CF_FRAME2_AuraBorderSliderText"):SetText(VCB_COMMON_SLIDER_BORDER)
 										getglobal("VCB_BF_CF_FRAME2_AuraBorderSliderLow"):SetText("1")
 										getglobal("VCB_BF_CF_FRAME2_AuraBorderSliderHigh"):SetText("1")
 									</OnLoad>
@@ -3612,12 +3713,12 @@
 								</Anchors>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_CF_FRAME_FONT4" inherits="GameFontNormalSmall" text="Custom border path:">
+										<FontString name="$parent_FONT" inherits="GameFontNormalSmall" text="Custom border path:">
 											<Size>
 												<AbsDimension x="130" y="20" />
 											</Size>
 											<Anchors>
-												<Anchor point="BOTTOM" relativeTo="VCB_BF_CF_FRAME2_EDITBOX_BORDER" relativePoint="TOP">
+												<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="TOP">
 													<Offset>
 														<AbsDimension x="0" y="-8" />
 													</Offset>
@@ -3651,6 +3752,9 @@
 									<OnTextChanged>
 										VCB_BF_CF_FRAME2_EDITBOX_BORDER_CHANGE(this)
 									</OnTextChanged>
+									<OnLoad>
+										getglobal(this:GetName().."_FONT"):SetText(VCB_COMMON_EDITBOX_CUSTOM_BORDER_PATH)
+									</OnLoad>
 								</Scripts>
 							</EditBox>
 							-- Aura Font Slider
@@ -3667,11 +3771,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_TOOLTIP
 										this:SetMinMaxValues(1,4)
 										this:SetValue(1)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_CF_FRAME2_GFontSliderText"):SetText("Font")
+										getglobal("VCB_BF_CF_FRAME2_GFontSliderText"):SetText(VCB_COMMON_SLIDER_FONT)
 										getglobal("VCB_BF_CF_FRAME2_GFontSliderLow"):SetText("1")
 										getglobal("VCB_BF_CF_FRAME2_GFontSliderHigh"):SetText("4")
 									</OnLoad>
@@ -3696,11 +3800,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_OPACITY_TOOLTIP
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_CF_FRAME2_GFontOpacitySliderText"):SetText("Font opacity")
+										getglobal("VCB_BF_CF_FRAME2_GFontOpacitySliderText"):SetText(VCB_COMMON_SLIDER_FONT_OPACITY)
 										getglobal("VCB_BF_CF_FRAME2_GFontOpacitySliderLow"):SetText("0")
 										getglobal("VCB_BF_CF_FRAME2_GFontOpacitySliderHigh"):SetText("1.0")
 									</OnLoad>
@@ -3743,7 +3847,7 @@
 									<AbsDimension x="30" y="30"/>
 								</Size>
 								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="VCB_BF_CF_FRAME2_TIMER_FRAME" relativePoint="TOPLEFT">
+									<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 										<Offset>
 											<AbsDimension x="10" y="-10"/>
 										</Offset>
@@ -3751,8 +3855,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON4Text"):SetText("Enable border")
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_BORDER_TOOLTIP
+										getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON4Text"):SetText(VCB_COMMON_BUTTON_ENABLE_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CF_FRAME2_TIMER_ENABLEBORDER()
@@ -3773,12 +3877,12 @@
 								</Anchors>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_CF_FRAME2_FONT6" inherits="GameFontNormalSmall" text="Select font color" justifyH="LEFT">
+										<FontString name="$parent_Font" inherits="GameFontNormalSmall" text="Select font color" justifyH="LEFT">
 											<Size>
 												<AbsDimension x="200" y="16" />
 											</Size>
 											<Anchors>
-												<Anchor point="LEFT" relativeTo="VCB_BF_CF_FRAME2_Color3" relativePoint="RIGHT">
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
 													<Offset>
 														<AbsDimension x="5" y="0" />
 													</Offset>
@@ -3804,6 +3908,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."_Font"):SetText(VCB_COMMON_COLOR_FONTCOLOR)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -3814,7 +3919,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_COMMON_COLOR_FONTCOLOR_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -3837,11 +3942,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_SIZE_TOOLTIP
 										this:SetMinMaxValues(1,24)
 										this:SetValue(10)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_CF_FRAME2_AuraTimerFontSizeSliderText"):SetText("Font size")
+										getglobal("VCB_BF_CF_FRAME2_AuraTimerFontSizeSliderText"):SetText(VCB_COMMON_SLIDER_FONT_SIZE)
 										getglobal("VCB_BF_CF_FRAME2_AuraTimerFontSizeSliderLow"):SetText("1")
 										getglobal("VCB_BF_CF_FRAME2_AuraTimerFontSizeSliderHigh"):SetText("24")
 									</OnLoad>
@@ -3866,11 +3971,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_OPACITY_TOOLTIP
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_CF_FRAME2_AuraTimerOpacitySliderText"):SetText("Opacity")
+										getglobal("VCB_BF_CF_FRAME2_AuraTimerOpacitySliderText"):SetText(VCB_COMMON_SLIDER_FONT_OPACITY)
 										getglobal("VCB_BF_CF_FRAME2_AuraTimerOpacitySliderLow"):SetText("0")
 										getglobal("VCB_BF_CF_FRAME2_AuraTimerOpacitySliderHigh"):SetText("1.0")
 									</OnLoad>
@@ -3888,7 +3993,7 @@
 							<AbsDimension x="30" y="30"/>
 						</Size>
 						<Anchors>
-							<Anchor point="BOTTOM" relativeTo="VCB_BF_CF_FRAME2" relativePoint="BOTTOM">
+							<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="BOTTOM">
 								<Offset>
 									<AbsDimension x="-50" y="15"/>
 								</Offset>
@@ -3899,15 +4004,18 @@
 								VCB_BF_CF_FRAME_CHANGE_PAGE()
 								PlaySound("igMainMenuOptionCheckBoxOff");
 							</OnClick>
+							<OnLoad>
+								getglobal(this:GetName().."_FONT"):SetText(VCB_COMMON_PAGE_2)
+							</OnLoad>
 						</Scripts>
 						<Layers>
 							<Layer>
-								<FontString name="VCB_BF_CF_FRAME2_FONT1" inherits="GameFontNormalSmall" text="Page 2 of 2">
+								<FontString name="$parent_FONT" inherits="GameFontNormalSmall" text="Page 2 of 2">
 									<Size>
 										<AbsDimension x="100" y="30" />
 									</Size>
 									<Anchors>
-										<Anchor point="LEFT" relativeTo="VCB_BF_CF_FRAME2_previous_page" relativePoint="RIGHT">
+										<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
 											<Offset>
 												<AbsDimension x="-15" y="0" />
 											</Offset>
@@ -3925,7 +4033,7 @@
 							<AbsDimension x="30" y="30"/>
 						</Size>
 						<Anchors>
-							<Anchor point="BOTTOM" relativeTo="VCB_BF_CF_FRAME2" relativePoint="BOTTOM">
+							<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="BOTTOM">
 								<Offset>
 									<AbsDimension x="50" y="15"/>
 								</Offset>
@@ -3968,7 +4076,7 @@
 				</Backdrop>
 				<Layers>
 					<Layer>
-						<FontString name="VCB_BF_BF_FRAME_FONT1" inherits="GameFontNormal" text="General" justifyH="LEFT">
+						<FontString name="$parent_FONT1" inherits="GameFontNormal" text="General" justifyH="LEFT">
 							<Size>
 								<AbsDimension x="610" y="30" />
 							</Size>
@@ -3982,13 +4090,18 @@
 						</FontString>
 					</Layer>
 				</Layers>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName().."_FONT1"):SetText(VCB_CAT_GENERAL)
+					</OnLoad>
+				</Scripts>
 				<Frames>
 					<Frame name="VCB_BF_BF_FRAME_GENERAL">
 						<Size>
 							<AbsDimension x="580" y="240"/>
 						</Size>
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="VCB_BF_BF_FRAME" relativePoint="TOPLEFT">
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 								<Offset>
 									<AbsDimension x="15" y="-30"/>
 								</Offset>
@@ -4021,8 +4134,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON1Text"):SetText("Vertical mode")
+										this.tooltipText = VCB_COMMON_BUTTON_VERTICAL_MODE_TOOLTIP
+										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON1Text"):SetText(VCB_COMMON_BUTTON_VERTICAL_MODE)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_BF_FRAME_VERTICAL_MODE()
@@ -4043,8 +4156,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON2Text"):SetText("Enable background color")
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_BACKGROUND_COLOR_TOOLTIP
+										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON2Text"):SetText(VCB_COMMON_BUTTON_ENABLE_BACKGROUND_COLOR)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_BF_FRAME_ENABLE_BGCOLOR()
@@ -4065,8 +4178,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON3Text"):SetText("Invert order")
+										this.tooltipText = VCB_COMMON_BUTTON_INVERT_ORDER_TOOLTIP
+										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON3Text"):SetText(VCB_COMMON_BUTTON_INVERT_ORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_BF_FRAME_INVERTBUFFMODE()
@@ -4087,7 +4200,7 @@
 								</Anchors>
 								<Layers>
 									<Layer>
-										<FontString name="$parentFont" inherits="GameFontNormalSmall" text="Select font color" justifyH="LEFT">
+										<FontString name="$parent_Font" inherits="GameFontNormalSmall" text="Select font color" justifyH="LEFT">
 											<Size>
 												<AbsDimension x="200" y="16" />
 											</Size>
@@ -4118,6 +4231,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."_Font"):SetText(VCB_COMMON_COLOR_FONTCOLOR)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -4128,7 +4242,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_COMMON_COLOR_FONTCOLOR_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -4151,8 +4265,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON_FBorderText"):SetText("Enable font border")
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_FONT_BORDER_TOOLTIP
+										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON_FBorderText"):SetText(VCB_COMMON_BUTTON_ENABLE_FONT_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_BF_FRAME_G_ENABLE_BORDER()
@@ -4173,12 +4287,12 @@
 								</Anchors>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_BF_FRAME_FONT4" inherits="GameFontNormalSmall" text="Select background color" justifyH="LEFT">
+										<FontString name="$parent_Font" inherits="GameFontNormalSmall" text="Select background color" justifyH="LEFT">
 											<Size>
 												<AbsDimension x="200" y="16" />
 											</Size>
 											<Anchors>
-												<Anchor point="LEFT" relativeTo="VCB_BF_BF_FRAME_Color1" relativePoint="RIGHT">
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
 													<Offset>
 														<AbsDimension x="5" y="0" />
 													</Offset>
@@ -4204,6 +4318,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."_Font"):SetText(VCB_COMMON_COLOR_BACKGROUNDCOLOR)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -4214,7 +4329,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_COMMON_COLOR_BACKGROUNDCOLOR_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -4237,11 +4352,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_BUFFS_PER_ROW_TOOLTIP
 										this:SetMinMaxValues(5,32)
 										this:SetValue(16)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_BF_FRAME_NumPerRowSliderText"):SetText("Buffs per row")
+										getglobal("VCB_BF_BF_FRAME_NumPerRowSliderText"):SetText(VCB_COMMON_SLIDER_BUFFS_PER_ROW)
 										getglobal("VCB_BF_BF_FRAME_NumPerRowSliderLow"):SetText("5")
 										getglobal("VCB_BF_BF_FRAME_NumPerRowSliderHigh"):SetText("32")
 									</OnLoad>
@@ -4266,11 +4381,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_PADDING_H_TOOLTIP
 										this:SetMinMaxValues(1,10)
 										this:SetValue(5)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_BF_FRAME_AuraPaddingHSliderText"):SetText("Padding H")
+										getglobal("VCB_BF_BF_FRAME_AuraPaddingHSliderText"):SetText(VCB_COMMON_SLIDER_PADDING_H)
 										getglobal("VCB_BF_BF_FRAME_AuraPaddingHSliderLow"):SetText("1")
 										getglobal("VCB_BF_BF_FRAME_AuraPaddingHSliderHigh"):SetText("10")
 									</OnLoad>
@@ -4295,11 +4410,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_PADDING_V_TOOLTIP
 										this:SetMinMaxValues(1,10)
 										this:SetValue(5)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_BF_FRAME_AuraPaddingVSliderText"):SetText("Padding Y")
+										getglobal("VCB_BF_BF_FRAME_AuraPaddingVSliderText"):SetText(VCB_COMMON_SLIDER_PADDING_V)
 										getglobal("VCB_BF_BF_FRAME_AuraPaddingVSliderLow"):SetText("1")
 										getglobal("VCB_BF_BF_FRAME_AuraPaddingVSliderHigh"):SetText("10")
 									</OnLoad>
@@ -4324,11 +4439,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_SIZE_TOOLTIP
 										this:SetMinMaxValues(1,24)
 										this:SetValue(13)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_BF_FRAME_GFontSizeSliderText"):SetText("Font size")
+										getglobal("VCB_BF_BF_FRAME_GFontSizeSliderText"):SetText(VCB_COMMON_SLIDER_FONT_SIZE)
 										getglobal("VCB_BF_BF_FRAME_GFontSizeSliderLow"):SetText("1")
 										getglobal("VCB_BF_BF_FRAME_GFontSizeSliderHigh"):SetText("24")
 									</OnLoad>
@@ -4353,11 +4468,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_OFFSET_X_TOOLTIP
 										this:SetMinMaxValues(-28,28)
 										this:SetValue(5)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_BF_FRAME_GFontOffsetXSliderText"):SetText("Font offset X")
+										getglobal("VCB_BF_BF_FRAME_GFontOffsetXSliderText"):SetText(VCB_COMMON_SLIDER_FONT_OFFSET_X)
 										getglobal("VCB_BF_BF_FRAME_GFontOffsetXSliderLow"):SetText("-28")
 										getglobal("VCB_BF_BF_FRAME_GFontOffsetXSliderHigh"):SetText("28")
 									</OnLoad>
@@ -4382,11 +4497,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_BACKGROUND_OPACITY_TOOLTIP
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_BF_FRAME_BGOpaSliderText"):SetText("Opacity")
+										getglobal("VCB_BF_BF_FRAME_BGOpaSliderText"):SetText(VCB_COMMON_SLIDER_BACKGROUND_OPACITY)
 										getglobal("VCB_BF_BF_FRAME_BGOpaSliderLow"):SetText("0")
 										getglobal("VCB_BF_BF_FRAME_BGOpaSliderHigh"):SetText("1.0")
 									</OnLoad>
@@ -4411,11 +4526,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_SCALE_TOOLTIP
 										this:SetMinMaxValues(0.5,3.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_BF_FRAME_ScaleSliderText"):SetText("Scale")
+										getglobal("VCB_BF_BF_FRAME_ScaleSliderText"):SetText(VCB_COMMON_SLIDER_SCALE)
 										getglobal("VCB_BF_BF_FRAME_ScaleSliderLow"):SetText("0.5")
 										getglobal("VCB_BF_BF_FRAME_ScaleSliderHigh"):SetText("3.0")
 									</OnLoad>
@@ -4440,11 +4555,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_TOOLTIP
 										this:SetMinMaxValues(1,4)
 										this:SetValue(1)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_BF_FRAME_GFontSliderText"):SetText("Font")
+										getglobal("VCB_BF_BF_FRAME_GFontSliderText"):SetText(VCB_COMMON_SLIDER_FONT)
 										getglobal("VCB_BF_BF_FRAME_GFontSliderLow"):SetText("1")
 										getglobal("VCB_BF_BF_FRAME_GFontSliderHigh"):SetText("4")
 									</OnLoad>
@@ -4469,11 +4584,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_OPACITY_TOOLTIP
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_BF_FRAME_GFontOpacitySliderText"):SetText("Font opacity")
+										getglobal("VCB_BF_BF_FRAME_GFontOpacitySliderText"):SetText(VCB_COMMON_SLIDER_FONT_OPACITY)
 										getglobal("VCB_BF_BF_FRAME_GFontOpacitySliderLow"):SetText("0")
 										getglobal("VCB_BF_BF_FRAME_GFontOpacitySliderHigh"):SetText("1.0")
 									</OnLoad>
@@ -4498,11 +4613,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_OFFSET_Y_TOOLTIP
 										this:SetMinMaxValues(-28,28)
 										this:SetValue(5)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_BF_FRAME_GFontOffsetYSliderText"):SetText("Font offset Y")
+										getglobal("VCB_BF_BF_FRAME_GFontOffsetYSliderText"):SetText(VCB_COMMON_SLIDER_FONT_OFFSET_Y)
 										getglobal("VCB_BF_BF_FRAME_GFontOffsetYSliderLow"):SetText("-28")
 										getglobal("VCB_BF_BF_FRAME_GFontOffsetYSliderHigh"):SetText("28")
 									</OnLoad>
@@ -4531,10 +4646,13 @@
 								VCB_BF_BF_FRAME_CHANGE_PAGE()
 								PlaySound("igMainMenuOptionCheckBoxOff");
 							</OnClick>
+							<OnLoad>
+								getglobal(this:GetName().."_Font"):SetText(VCB_COMMON_PAGE_1)
+							</OnLoad>
 						</Scripts>
 						<Layers>
 							<Layer>
-								<FontString name="$parentFont" inherits="GameFontNormalSmall" text="Page 1 of 2">
+								<FontString name="$parent_Font" inherits="GameFontNormalSmall" text="Page 1 of 2">
 									<Size>
 										<AbsDimension x="100" y="30" />
 									</Size>
@@ -4626,6 +4744,12 @@
 						</FontString>
 					</Layer>
 				</Layers>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName().."Font1"):SetText(VCB_CAT_BORDER)
+						getglobal(this:GetName().."Font2"):SetText(VCB_CAT_AURA_TIMER)
+					</OnLoad>
+				</Scripts>
 				<Frames>
 					<Frame name="VCB_BF_BF_FRAME_BORDER">
 						<Size>
@@ -4657,7 +4781,7 @@
 									<AbsDimension x="30" y="30"/>
 								</Size>
 								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="VCB_BF_BF_FRAME_BORDER" relativePoint="TOPLEFT">
+									<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 										<Offset>
 											<AbsDimension x="10" y="-5"/>
 										</Offset>
@@ -4665,8 +4789,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON5Text"):SetText("Enable border")
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_BORDER_TOOLTIP
+										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON5Text"):SetText(VCB_COMMON_BUTTON_ENABLE_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_BF_FRAME_ENABLE_BORDER()
@@ -4687,8 +4811,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON6Text"):SetText("Use custom border")
+										this.tooltipText = VCB_COMMON_BUTTON_USE_CUSTOM_BORDER_TOOLTIP
+										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON6Text"):SetText(VCB_COMMON_BUTTON_USE_CUSTOM_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_BF_FRAME_USE_CUSTOM_BORDER()
@@ -4709,12 +4833,12 @@
 								</Anchors>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_BF_FRAME_FONT7" inherits="GameFontNormalSmall" text="Select border color" justifyH="LEFT">
+										<FontString name="$parent_Font" inherits="GameFontNormalSmall" text="Select border color" justifyH="LEFT">
 											<Size>
 												<AbsDimension x="200" y="16" />
 											</Size>
 											<Anchors>
-												<Anchor point="LEFT" relativeTo="VCB_BF_BF_FRAME_Color4" relativePoint="RIGHT">
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
 													<Offset>
 														<AbsDimension x="5" y="0" />
 													</Offset>
@@ -4740,6 +4864,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."_Font"):SetText(VCB_COMMON_COLOR_BORDERCOLOR)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -4750,7 +4875,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_COMMON_COLOR_BORDERCOLOR_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -4769,12 +4894,12 @@
 								</Anchors>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_BF_FRAME_FONT8" inherits="GameFontNormalSmall" text="Custom border path:">
+										<FontString name="$parent_Font" inherits="GameFontNormalSmall" text="Custom border path:">
 											<Size>
 												<AbsDimension x="130" y="20" />
 											</Size>
 											<Anchors>
-												<Anchor point="BOTTOM" relativeTo="VCB_BF_BF_FRAME_EDITBOX_BORDER" relativePoint="TOP">
+												<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="TOP">
 													<Offset>
 														<AbsDimension x="0" y="-8" />
 													</Offset>
@@ -4808,6 +4933,9 @@
 									<OnTextChanged>
 										VCB_BF_BF_FRAME_EDITBOX_BORDERCHANGE(this)
 									</OnTextChanged>
+									<OnLoad>
+										getglobal(this:GetName().."_Font"):SetText(VCB_COMMON_EDITBOX_CUSTOM_BORDER_PATH)
+									</OnLoad>
 								</Scripts>
 							</EditBox>
 							-- Aura Border opacity Slider
@@ -4824,11 +4952,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_BORDER_OPACITY_TOOLTIP
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_BF_FRAME_BorderOpacitySliderText"):SetText("Border Opacity")
+										getglobal("VCB_BF_BF_FRAME_BorderOpacitySliderText"):SetText(VCB_COMMON_SLIDER_BORDER_OPACITY)
 										getglobal("VCB_BF_BF_FRAME_BorderOpacitySliderLow"):SetText("0")
 										getglobal("VCB_BF_BF_FRAME_BorderOpacitySliderHigh"):SetText("1.0")
 									</OnLoad>
@@ -4853,11 +4981,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_BORDER_TOOLTIP
 										this:SetMinMaxValues(1,1)
 										this:SetValue(1)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_BF_FRAME_BorderSliderText"):SetText("Border")
+										getglobal("VCB_BF_BF_FRAME_BorderSliderText"):SetText(VCB_COMMON_SLIDER_BORDER)
 										getglobal("VCB_BF_BF_FRAME_BorderSliderLow"):SetText("1")
 										getglobal("VCB_BF_BF_FRAME_BorderSliderHigh"):SetText("1")
 									</OnLoad>
@@ -4900,7 +5028,7 @@
 									<AbsDimension x="30" y="30"/>
 								</Size>
 								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="VCB_BF_BF_FRAME_TIMER" relativePoint="TOPLEFT">
+									<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 										<Offset>
 											<AbsDimension x="10" y="-10"/>
 										</Offset>
@@ -4908,8 +5036,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON4Text"):SetText("Enable border")
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_BORDER_TOOLTIP
+										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON4Text"):SetText(VCB_COMMON_BUTTON_ENABLE_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_BF_FRAME_TIMER_ENABLE_BORDER()
@@ -4930,12 +5058,12 @@
 								</Anchors>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_BF_FRAME_FONT6" inherits="GameFontNormalSmall" text="Select font color" justifyH="LEFT">
+										<FontString name="$parent_Font" inherits="GameFontNormalSmall" text="Select font color" justifyH="LEFT">
 											<Size>
 												<AbsDimension x="200" y="16" />
 											</Size>
 											<Anchors>
-												<Anchor point="LEFT" relativeTo="VCB_BF_BF_FRAME_Color2" relativePoint="RIGHT">
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
 													<Offset>
 														<AbsDimension x="5" y="0" />
 													</Offset>
@@ -4961,6 +5089,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."_Font"):SetText(VCB_COMMON_COLOR_FONTCOLOR)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -4971,7 +5100,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_COMMON_COLOR_FONTCOLOR_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -4994,11 +5123,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_SIZE_TOOLTIP
 										this:SetMinMaxValues(1,24)
 										this:SetValue(10)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_BF_FRAME_FontSizeSliderText"):SetText("Font Size")
+										getglobal("VCB_BF_BF_FRAME_FontSizeSliderText"):SetText(VCB_COMMON_SLIDER_FONT_SIZE)
 										getglobal("VCB_BF_BF_FRAME_FontSizeSliderLow"):SetText("1")
 										getglobal("VCB_BF_BF_FRAME_FontSizeSliderHigh"):SetText("24")
 									</OnLoad>
@@ -5023,11 +5152,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_OPACITY_TOOLTIP
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_BF_FRAME_FontOpacitySliderText"):SetText("Font Opacity")
+										getglobal("VCB_BF_BF_FRAME_FontOpacitySliderText"):SetText(VCB_COMMON_SLIDER_FONT_OPACITY)
 										getglobal("VCB_BF_BF_FRAME_FontOpacitySliderLow"):SetText("0")
 										getglobal("VCB_BF_BF_FRAME_FontOpacitySliderHigh"):SetText("1.0")
 									</OnLoad>
@@ -5056,6 +5185,9 @@
 								VCB_BF_BF_FRAME_CHANGE_PAGE()
 								PlaySound("igMainMenuOptionCheckBoxOff");
 							</OnClick>
+							<OnLoad>
+								getglobal(this:GetName().."Font"):SetText(VCB_COMMON_PAGE_2)
+							</OnLoad>
 						</Scripts>
 						<Layers>
 							<Layer>
@@ -5125,12 +5257,12 @@
 				</Backdrop>
 				<Layers>
 					<Layer>
-						<FontString name="VCB_BF_DBF_FRAME_FONT1" inherits="GameFontNormal" text="General" justifyH="LEFT">
+						<FontString name="$parent_FONT" inherits="GameFontNormal" text="General" justifyH="LEFT">
 							<Size>
 								<AbsDimension x="610" y="30" />
 							</Size>
 							<Anchors>
-								<Anchor point="TOPLEFT" relativeTo="VCB_BF_BF_FRAME" relativePoint="TOPLEFT">
+								<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 									<Offset>
 										<AbsDimension x="20" y="-10" />
 									</Offset>
@@ -5139,13 +5271,18 @@
 						</FontString>
 					</Layer>
 				</Layers>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName().."_FONT"):SetText(VCB_CAT_GENERAL)
+					</OnLoad>
+				</Scripts>
 				<Frames>
 					<Frame name="VCB_BF_DBF_FRAME_GENERAL">
 						<Size>
 							<AbsDimension x="580" y="240"/>
 						</Size>
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="VCB_BF_DBF_FRAME" relativePoint="TOPLEFT">
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 								<Offset>
 									<AbsDimension x="15" y="-30"/>
 								</Offset>
@@ -5170,7 +5307,7 @@
 									<AbsDimension x="30" y="30"/>
 								</Size>
 								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="VCB_BF_DBF_FRAME_GENERAL" relativePoint="TOPLEFT">
+									<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 										<Offset>
 											<AbsDimension x="10" y="-5"/>
 										</Offset>
@@ -5178,8 +5315,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON1Text"):SetText("Vertical mode")
+										this.tooltipText = VCB_COMMON_BUTTON_VERTICAL_MODE_TOOLTIP
+										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON1Text"):SetText(VCB_COMMON_BUTTON_VERTICAL_MODE)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_DBF_FRAME_VERTICAL_MODE()
@@ -5200,8 +5337,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON2Text"):SetText("Enable background color")
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_BACKGROUND_COLOR_TOOLTIP
+										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON2Text"):SetText(VCB_COMMON_BUTTON_ENABLE_BACKGROUND_COLOR)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_DBF_FRAME_ENABLE_BGCOLOR()
@@ -5222,8 +5359,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON3Text"):SetText("Invert order")
+										this.tooltipText = VCB_COMMON_BUTTON_INVERT_ORDER_TOOLTIP
+										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON3Text"):SetText(VCB_COMMON_BUTTON_INVERT_ORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_DBF_FRAME_INVERTBUFFORDER()
@@ -5275,6 +5412,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."Font"):SetText(VCB_COMMON_COLOR_FONTCOLOR)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -5285,7 +5423,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_COMMON_COLOR_FONTCOLOR_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -5308,8 +5446,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON_FBorderText"):SetText("Enable font border")
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_FONT_BORDER_TOOLTIP
+										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON_FBorderText"):SetText(VCB_COMMON_BUTTON_ENABLE_FONT_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_DBF_FRAME_G_ENABLE_BORDER()
@@ -5330,12 +5468,12 @@
 								</Anchors>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_DBF_FRAME_FONT4" inherits="GameFontNormalSmall" text="Select background color" justifyH="LEFT">
+										<FontString name="$parent_Font" inherits="GameFontNormalSmall" text="Select background color" justifyH="LEFT">
 											<Size>
 												<AbsDimension x="200" y="16" />
 											</Size>
 											<Anchors>
-												<Anchor point="LEFT" relativeTo="VCB_BF_DBF_FRAME_Color1" relativePoint="RIGHT">
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
 													<Offset>
 														<AbsDimension x="5" y="0" />
 													</Offset>
@@ -5361,6 +5499,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."_Font"):SetText(VCB_COMMON_COLOR_BACKGROUNDCOLOR)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -5371,7 +5510,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_COMMON_COLOR_BACKGROUNDCOLOR_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -5394,11 +5533,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_BUFFS_PER_ROW_TOOLTIP
 										this:SetMinMaxValues(5,16)
 										this:SetValue(16)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_DBF_FRAME_NumPerRowSliderText"):SetText("Buffs per row")
+										getglobal("VCB_BF_DBF_FRAME_NumPerRowSliderText"):SetText(VCB_COMMON_SLIDER_BUFFS_PER_ROW)
 										getglobal("VCB_BF_DBF_FRAME_NumPerRowSliderLow"):SetText("5")
 										getglobal("VCB_BF_DBF_FRAME_NumPerRowSliderHigh"):SetText("16")
 									</OnLoad>
@@ -5423,11 +5562,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_PADDING_H_TOOLTIP
 										this:SetMinMaxValues(1,10)
 										this:SetValue(2)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_DBF_FRAME_AuraPaddingHSliderText"):SetText("Padding H")
+										getglobal("VCB_BF_DBF_FRAME_AuraPaddingHSliderText"):SetText(VCB_COMMON_SLIDER_PADDING_H)
 										getglobal("VCB_BF_DBF_FRAME_AuraPaddingHSliderLow"):SetText("1")
 										getglobal("VCB_BF_DBF_FRAME_AuraPaddingHSliderHigh"):SetText("10")
 									</OnLoad>
@@ -5452,11 +5591,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_PADDING_V_TOOLTIP
 										this:SetMinMaxValues(1,10)
 										this:SetValue(2)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_DBF_FRAME_AuraPaddingVSliderText"):SetText("Padding Y")
+										getglobal("VCB_BF_DBF_FRAME_AuraPaddingVSliderText"):SetText(VCB_COMMON_SLIDER_PADDING_V)
 										getglobal("VCB_BF_DBF_FRAME_AuraPaddingVSliderLow"):SetText("1")
 										getglobal("VCB_BF_DBF_FRAME_AuraPaddingVSliderHigh"):SetText("10")
 									</OnLoad>
@@ -5481,11 +5620,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_SIZE_TOOLTIP
 										this:SetMinMaxValues(1,24)
 										this:SetValue(13)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_DBF_FRAME_GFontSizeSliderText"):SetText("Font size")
+										getglobal("VCB_BF_DBF_FRAME_GFontSizeSliderText"):SetText(VCB_COMMON_SLIDER_FONT_SIZE)
 										getglobal("VCB_BF_DBF_FRAME_GFontSizeSliderLow"):SetText("1")
 										getglobal("VCB_BF_DBF_FRAME_GFontSizeSliderHigh"):SetText("24")
 									</OnLoad>
@@ -5510,11 +5649,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_OFFSET_Y_TOOLTIP
 										this:SetMinMaxValues(-28,28)
 										this:SetValue(5)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_DBF_FRAME_GFontOffsetXSliderText"):SetText("Font offset Y")
+										getglobal("VCB_BF_DBF_FRAME_GFontOffsetXSliderText"):SetText(VCB_COMMON_SLIDER_FONT_OFFSET_Y)
 										getglobal("VCB_BF_DBF_FRAME_GFontOffsetXSliderLow"):SetText("-28")
 										getglobal("VCB_BF_DBF_FRAME_GFontOffsetXSliderHigh"):SetText("28")
 									</OnLoad>
@@ -5539,11 +5678,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_BACKGROUND_OPACITY_TOOLTIP
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_DBF_FRAME_BGOpaSliderText"):SetText("Background Opacity")
+										getglobal("VCB_BF_DBF_FRAME_BGOpaSliderText"):SetText(VCB_COMMON_SLIDER_BACKGROUND_OPACITY)
 										getglobal("VCB_BF_DBF_FRAME_BGOpaSliderLow"):SetText("0")
 										getglobal("VCB_BF_DBF_FRAME_BGOpaSliderHigh"):SetText("1.0")
 									</OnLoad>
@@ -5568,11 +5707,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_SCALE_TOOLTIP
 										this:SetMinMaxValues(0.5,2.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_DBF_FRAME_ScaleSliderText"):SetText("Scale")
+										getglobal("VCB_BF_DBF_FRAME_ScaleSliderText"):SetText(VCB_COMMON_SLIDER_SCALE)
 										getglobal("VCB_BF_DBF_FRAME_ScaleSliderLow"):SetText("0.5")
 										getglobal("VCB_BF_DBF_FRAME_ScaleSliderHigh"):SetText("2.0")
 									</OnLoad>
@@ -5597,11 +5736,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_TOOLTIP
 										this:SetMinMaxValues(1,4)
 										this:SetValue(1)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_DBF_FRAME_GFontSliderText"):SetText("Font")
+										getglobal("VCB_BF_DBF_FRAME_GFontSliderText"):SetText(VCB_COMMON_SLIDER_FONT)
 										getglobal("VCB_BF_DBF_FRAME_GFontSliderLow"):SetText("1")
 										getglobal("VCB_BF_DBF_FRAME_GFontSliderHigh"):SetText("4")
 									</OnLoad>
@@ -5626,11 +5765,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_OPACITY_TOOLTIP
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_DBF_FRAME_GFontOpacitySliderText"):SetText("Font Opacity")
+										getglobal("VCB_BF_DBF_FRAME_GFontOpacitySliderText"):SetText(VCB_COMMON_SLIDER_FONT_OPACITY)
 										getglobal("VCB_BF_DBF_FRAME_GFontOpacitySliderLow"):SetText("0")
 										getglobal("VCB_BF_DBF_FRAME_GFontOpacitySliderHigh"):SetText("1.0")
 									</OnLoad>
@@ -5655,11 +5794,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_OFFSET_Y_TOOLTIP
 										this:SetMinMaxValues(-28,28)
 										this:SetValue(5)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_DBF_FRAME_GFontOffsetYSliderText"):SetText("Font offset Y")
+										getglobal("VCB_BF_DBF_FRAME_GFontOffsetYSliderText"):SetText(VCB_COMMON_SLIDER_FONT_OFFSET_Y)
 										getglobal("VCB_BF_DBF_FRAME_GFontOffsetYSliderLow"):SetText("-28")
 										getglobal("VCB_BF_DBF_FRAME_GFontOffsetYSliderHigh"):SetText("28")
 									</OnLoad>
@@ -5677,7 +5816,7 @@
 							<AbsDimension x="30" y="30"/>
 						</Size>
 						<Anchors>
-							<Anchor point="BOTTOM" relativeTo="VCB_BF_DBF_FRAME" relativePoint="BOTTOM">
+							<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="BOTTOM">
 								<Offset>
 									<AbsDimension x="-50" y="15"/>
 								</Offset>
@@ -5688,6 +5827,9 @@
 								VCB_BF_DBF_FRAME_CHANGE_PAGE()
 								PlaySound("igMainMenuOptionCheckBoxOff");
 							</OnClick>
+							<OnLoad>
+								getglobal(this:GetName().."Font"):SetText(VCB_COMMON_PAGE_1)
+							</OnLoad>
 						</Scripts>
 						<Layers>
 							<Layer>
@@ -5714,7 +5856,7 @@
 							<AbsDimension x="30" y="30"/>
 						</Size>
 						<Anchors>
-							<Anchor point="BOTTOM" relativeTo="VCB_BF_DBF_FRAME" relativePoint="BOTTOM">
+							<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="BOTTOM">
 								<Offset>
 									<AbsDimension x="50" y="15"/>
 								</Offset>
@@ -5783,13 +5925,19 @@
 						</FontString>
 					</Layer>
 				</Layers>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName().."Font1"):SetText(VCB_CAT_BORDER)
+						getglobal(this:GetName().."Font2"):SetText(VCB_CAT_AURA_TIMER)
+					</OnLoad>
+				</Scripts>
 				<Frames>
 					<Frame name="VCB_BF_DBF_FRAME_BORDER">
 						<Size>
 							<AbsDimension x="580" y="100"/>
 						</Size>
 						<Anchors>
-							<Anchor point="TOP" relativeTo="VCB_BF_DBF_FRAME2" relativePoint="TOP">
+							<Anchor point="TOP" relativeTo="$parent" relativePoint="TOP">
 								<Offset>
 									<AbsDimension x="0" y="-30"/>
 								</Offset>
@@ -5814,7 +5962,7 @@
 									<AbsDimension x="30" y="30"/>
 								</Size>
 								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="VCB_BF_DBF_FRAME_BORDER" relativePoint="TOPLEFT">
+									<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 										<Offset>
 											<AbsDimension x="10" y="-5"/>
 										</Offset>
@@ -5822,8 +5970,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON5Text"):SetText("Enable border")
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_BORDER_TOOLTIP
+										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON5Text"):SetText(VCB_COMMON_BUTTON_ENABLE_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_DBF_FRAME_ENABLE_BORDER()
@@ -5844,8 +5992,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON6Text"):SetText("Use custom border")
+										this.tooltipText = VCB_COMMON_BUTTON_USE_CUSTOM_BORDER_TOOLTIP
+										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON6Text"):SetText(VCB_COMMON_BUTTON_USE_CUSTOM_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_DBF_FRAME_USE_CUSTOM_BORDER()
@@ -5862,12 +6010,12 @@
 								</Anchors>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_DBF_FRAME_FONT8" inherits="GameFontNormalSmall" text="Custom border path:">
+										<FontString name="$parent_FONT" inherits="GameFontNormalSmall" text="Custom border path:">
 											<Size>
 												<AbsDimension x="130" y="20" />
 											</Size>
 											<Anchors>
-												<Anchor point="BOTTOM" relativeTo="VCB_BF_DBF_FRAME_EDITBOX_BORDER" relativePoint="TOP">
+												<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="TOP">
 													<Offset>
 														<AbsDimension x="0" y="-8" />
 													</Offset>
@@ -5901,6 +6049,9 @@
 									<OnTextChanged>
 										VCB_BF_DBF_FRAME_EDITBOX_BORDER_CHANGE(this)
 									</OnTextChanged>
+									<OnLoad>
+										getglobal(this:GetName().."_FONT"):SetText(VCB_COMMON_EDITBOX_CUSTOM_BORDER_PATH)
+									</OnLoad>
 								</Scripts>
 							</EditBox>
 							-- Aura Border Slider
@@ -5917,11 +6068,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_BORDER_TOOLTIP
 										this:SetMinMaxValues(1,1)
 										this:SetValue(1)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_DBF_FRAME_BorderSliderText"):SetText("Border")
+										getglobal("VCB_BF_DBF_FRAME_BorderSliderText"):SetText(VCB_COMMON_SLIDER_BORDER)
 										getglobal("VCB_BF_DBF_FRAME_BorderSliderLow"):SetText("1")
 										getglobal("VCB_BF_DBF_FRAME_BorderSliderHigh"):SetText("1")
 									</OnLoad>
@@ -5946,11 +6097,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_BORDER_OPACITY_TOOLTIP
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_DBF_FRAME_BorderOpacitySliderText"):SetText("Border opacity")
+										getglobal("VCB_BF_DBF_FRAME_BorderOpacitySliderText"):SetText(VCB_COMMON_SLIDER_BORDER_OPACITY)
 										getglobal("VCB_BF_DBF_FRAME_BorderOpacitySliderLow"):SetText("0")
 										getglobal("VCB_BF_DBF_FRAME_BorderOpacitySliderHigh"):SetText("1.0")
 									</OnLoad>
@@ -6006,6 +6157,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."Font"):SetText(VCB_DBF_FRAME_COLOR_NONE)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -6016,7 +6168,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_DBF_FRAME_COLOR_NONE_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -6070,6 +6222,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."Font"):SetText(VCB_DBF_FRAME_COLOR_POISON)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -6080,7 +6233,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_DBF_FRAME_COLOR_POISON_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -6134,6 +6287,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."Font"):SetText(VCB_DBF_FRAME_COLOR_MAGIC)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -6144,7 +6298,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_DBF_FRAME_COLOR_MAGIC_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -6198,6 +6352,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."Font"):SetText(VCB_DBF_FRAME_COLOR_CURSE)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -6208,7 +6363,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_DBF_FRAME_COLOR_CURSE_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -6262,6 +6417,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."Font"):SetText(VCB_DBF_FRAME_COLOR_DISEASE)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -6272,7 +6428,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_DBF_FRAME_COLOR_DISEASE_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -6313,7 +6469,7 @@
 									<AbsDimension x="30" y="30"/>
 								</Size>
 								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="VCB_BF_DBF_FRAME_TIMER" relativePoint="TOPLEFT">
+									<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 										<Offset>
 											<AbsDimension x="10" y="-10"/>
 										</Offset>
@@ -6321,8 +6477,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON4Text"):SetText("Enable border")
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_BORDER_TOOLTIP
+										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON4Text"):SetText(VCB_COMMON_BUTTON_ENABLE_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_DBF_FRAME_ENABLE_FONTBORDER()
@@ -6374,6 +6530,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."Font"):SetText(VCB_COMMON_COLOR_FONTCOLOR)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -6384,7 +6541,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_COMMON_COLOR_FONTCOLOR_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -6407,11 +6564,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_SIZE_TOOLTIP
 										this:SetMinMaxValues(1,24)
 										this:SetValue(10)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_DBF_FRAME_FontSizeSliderText"):SetText("Font size")
+										getglobal("VCB_BF_DBF_FRAME_FontSizeSliderText"):SetText(VCB_COMMON_SLIDER_FONT_SIZE)
 										getglobal("VCB_BF_DBF_FRAME_FontSizeSliderLow"):SetText("1")
 										getglobal("VCB_BF_DBF_FRAME_FontSizeSliderHigh"):SetText("24")
 									</OnLoad>
@@ -6436,11 +6593,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_OPACITY_TOOLTIP
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_DBF_FRAME_FontOpacitySliderText"):SetText("Font Opacity")
+										getglobal("VCB_BF_DBF_FRAME_FontOpacitySliderText"):SetText(VCB_COMMON_SLIDER_FONT_OPACITY)
 										getglobal("VCB_BF_DBF_FRAME_FontOpacitySliderLow"):SetText("0")
 										getglobal("VCB_BF_DBF_FRAME_FontOpacitySliderHigh"):SetText("1.0")
 									</OnLoad>
@@ -6458,7 +6615,7 @@
 							<AbsDimension x="30" y="30"/>
 						</Size>
 						<Anchors>
-							<Anchor point="BOTTOM" relativeTo="VCB_BF_DBF_FRAME2" relativePoint="BOTTOM">
+							<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="BOTTOM">
 								<Offset>
 									<AbsDimension x="-50" y="15"/>
 								</Offset>
@@ -6469,6 +6626,9 @@
 								VCB_BF_DBF_FRAME_CHANGE_PAGE()
 								PlaySound("igMainMenuOptionCheckBoxOff");
 							</OnClick>
+							<OnLoad>
+								getglobal(this:GetName().."Font"):SetText(VCB_COMMON_PAGE_2)
+							</OnLoad>
 						</Scripts>
 						<Layers>
 							<Layer>
@@ -6495,7 +6655,7 @@
 							<AbsDimension x="30" y="30"/>
 						</Size>
 						<Anchors>
-							<Anchor point="BOTTOM" relativeTo="VCB_BF_DBF_FRAME2" relativePoint="BOTTOM">
+							<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="BOTTOM">
 								<Offset>
 									<AbsDimension x="50" y="15"/>
 								</Offset>
@@ -6538,12 +6698,12 @@
 				</Backdrop>
 				<Layers>
 					<Layer>
-						<FontString name="VCB_BF_WP_FRAME_FONT1" inherits="GameFontNormal" text="General" justifyH="LEFT">
+						<FontString name="$parent_FONT" inherits="GameFontNormal" text="General" justifyH="LEFT">
 							<Size>
 								<AbsDimension x="610" y="30" />
 							</Size>
 							<Anchors>
-								<Anchor point="TOPLEFT" relativeTo="VCB_BF_WP_FRAME" relativePoint="TOPLEFT">
+								<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 									<Offset>
 										<AbsDimension x="20" y="-10" />
 									</Offset>
@@ -6552,13 +6712,18 @@
 						</FontString>
 					</Layer>
 				</Layers>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName().."_FONT"):SetText(VCB_CAT_GENERAL)
+					</OnLoad>
+				</Scripts>
 				<Frames>
 					<Frame name="VCB_BF_WP_FRAME_GENERAL">
 						<Size>
 							<AbsDimension x="580" y="240"/>
 						</Size>
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="VCB_BF_WP_FRAME" relativePoint="TOPLEFT">
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 								<Offset>
 									<AbsDimension x="15" y="-30"/>
 								</Offset>
@@ -6583,7 +6748,7 @@
 									<AbsDimension x="30" y="30"/>
 								</Size>
 								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="VCB_BF_WP_FRAME_GENERAL" relativePoint="TOPLEFT">
+									<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 										<Offset>
 											<AbsDimension x="10" y="-5"/>
 										</Offset>
@@ -6591,8 +6756,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON1Text"):SetText("Vertical mode")
+										this.tooltipText = VCB_COMMON_BUTTON_VERTICAL_MODE_TOOLTIP
+										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON1Text"):SetText(VCB_COMMON_BUTTON_VERTICAL_MODE)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_WP_FRAME_VERTICAL_MODE()
@@ -6613,8 +6778,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON2Text"):SetText("Enable background color")
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_BACKGROUND_COLOR_TOOLTIP
+										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON2Text"):SetText(VCB_COMMON_BUTTON_ENABLE_BACKGROUND_COLOR)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_WP_FRAME_ENABLEBGCOLOR()
@@ -6635,8 +6800,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON7Text"):SetText("Attach to Buff-Frame")
+										this.tooltipText = VCB_WP_FRAME_ATTACH_TO_BF_FRAME_TOOLTIP
+										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON7Text"):SetText(VCB_WP_FRAME_ATTACH_TO_BF_FRAME)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_WP_FRAME_ATTACH()
@@ -6657,12 +6822,12 @@
 								</Anchors>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_WP_FRAME_FONT4" inherits="GameFontNormalSmall" text="Select background color" justifyH="LEFT">
+										<FontString name="$parent_Font" inherits="GameFontNormalSmall" text="Select background color" justifyH="LEFT">
 											<Size>
 												<AbsDimension x="200" y="16" />
 											</Size>
 											<Anchors>
-												<Anchor point="LEFT" relativeTo="VCB_BF_WP_FRAME_Color1" relativePoint="RIGHT">
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
 													<Offset>
 														<AbsDimension x="5" y="0" />
 													</Offset>
@@ -6688,6 +6853,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."_Font"):SetText(VCB_COMMON_COLOR_BACKGROUNDCOLOR)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -6698,7 +6864,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_COMMON_COLOR_BACKGROUNDCOLOR_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -6752,6 +6918,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."Font"):SetText(VCB_COMMON_COLOR_FONTCOLOR)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -6762,7 +6929,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_COMMON_COLOR_FONTCOLOR_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -6785,8 +6952,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON8Text"):SetText("Enable font border")
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_FONT_BORDER_TOOLTIP
+										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON8Text"):SetText(VCB_COMMON_BUTTON_ENABLE_FONT_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_WP_FRAME_ENABLE_FONT_BORDER()
@@ -6807,11 +6974,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_PADDING_H_TOOLTIP
 										this:SetMinMaxValues(1,10)
 										this:SetValue(5)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_WP_FRAME_AuraPaddingHSliderText"):SetText("Padding H")
+										getglobal("VCB_BF_WP_FRAME_AuraPaddingHSliderText"):SetText(VCB_COMMON_SLIDER_PADDING_H)
 										getglobal("VCB_BF_WP_FRAME_AuraPaddingHSliderLow"):SetText("1")
 										getglobal("VCB_BF_WP_FRAME_AuraPaddingHSliderHigh"):SetText("10")
 									</OnLoad>
@@ -6836,11 +7003,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_PADDING_H_TOOLTIP
 										this:SetMinMaxValues(1,10)
 										this:SetValue(5)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_WP_FRAME_AuraPaddingVSliderText"):SetText("Padding H")
+										getglobal("VCB_BF_WP_FRAME_AuraPaddingVSliderText"):SetText(VCB_COMMON_SLIDER_PADDING_H)
 										getglobal("VCB_BF_WP_FRAME_AuraPaddingVSliderLow"):SetText("1")
 										getglobal("VCB_BF_WP_FRAME_AuraPaddingVSliderHigh"):SetText("10")
 									</OnLoad>
@@ -6865,11 +7032,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_SIZE_TOOLTIP
 										this:SetMinMaxValues(1,24)
 										this:SetValue(10)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_WP_FRAME_FontSizeSliderText"):SetText("Font size")
+										getglobal("VCB_BF_WP_FRAME_FontSizeSliderText"):SetText(VCB_COMMON_SLIDER_FONT_SIZE)
 										getglobal("VCB_BF_WP_FRAME_FontSizeSliderLow"):SetText("1")
 										getglobal("VCB_BF_WP_FRAME_FontSizeSliderHigh"):SetText("24")
 									</OnLoad>
@@ -6894,11 +7061,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_OFFSET_X_TOOLTIP
 										this:SetMinMaxValues(-28,28)
 										this:SetValue(-5)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_WP_FRAME_OffsetXSliderText"):SetText("Font offset X")
+										getglobal("VCB_BF_WP_FRAME_OffsetXSliderText"):SetText(VCB_COMMON_SLIDER_FONT_OFFSET_X)
 										getglobal("VCB_BF_WP_FRAME_OffsetXSliderLow"):SetText("-28")
 										getglobal("VCB_BF_WP_FRAME_OffsetXSliderHigh"):SetText("28")
 									</OnLoad>
@@ -6923,11 +7090,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_OFFSET_Y_TOOLTIP
 										this:SetMinMaxValues(-28,28)
 										this:SetValue(-5)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_WP_FRAME_OffsetYSliderText"):SetText("Font offset Y")
+										getglobal("VCB_BF_WP_FRAME_OffsetYSliderText"):SetText(VCB_COMMON_SLIDER_FONT_OFFSET_Y)
 										getglobal("VCB_BF_WP_FRAME_OffsetYSliderLow"):SetText("-28")
 										getglobal("VCB_BF_WP_FRAME_OffsetYSliderHigh"):SetText("28")
 									</OnLoad>
@@ -6952,11 +7119,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_BACKGROUND_OPACITY_TOOLTIP
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_WP_FRAME_BGOpaSliderText"):SetText("Background Opacity")
+										getglobal("VCB_BF_WP_FRAME_BGOpaSliderText"):SetText(VCB_COMMON_SLIDER_BACKGROUND_OPACITY)
 										getglobal("VCB_BF_WP_FRAME_BGOpaSliderLow"):SetText("0")
 										getglobal("VCB_BF_WP_FRAME_BGOpaSliderHigh"):SetText("1.0")
 									</OnLoad>
@@ -6981,11 +7148,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_SCALE_TOOLTIP
 										this:SetMinMaxValues(0.5,2.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_WP_FRAME_ScaleSliderText"):SetText("Scale")
+										getglobal("VCB_BF_WP_FRAME_ScaleSliderText"):SetText(VCB_COMMON_SLIDER_SCALE)
 										getglobal("VCB_BF_WP_FRAME_ScaleSliderLow"):SetText("0.5")
 										getglobal("VCB_BF_WP_FRAME_ScaleSliderHigh"):SetText("2.0")
 									</OnLoad>
@@ -7010,11 +7177,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_TOOLTIP
 										this:SetMinMaxValues(1,4)
 										this:SetValue(1)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_WP_FRAME_FontSliderText"):SetText("Font")
+										getglobal("VCB_BF_WP_FRAME_FontSliderText"):SetText(VCB_COMMON_SLIDER_FONT)
 										getglobal("VCB_BF_WP_FRAME_FontSliderLow"):SetText("1")
 										getglobal("VCB_BF_WP_FRAME_FontSliderHigh"):SetText("4")
 									</OnLoad>
@@ -7039,11 +7206,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_OPACITY_TOOLTIP
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_WP_FRAME_FontOpacitySliderText"):SetText("Font opacity")
+										getglobal("VCB_BF_WP_FRAME_FontOpacitySliderText"):SetText(VCB_COMMON_SLIDER_FONT_OPACITY)
 										getglobal("VCB_BF_WP_FRAME_FontOpacitySliderLow"):SetText("0")
 										getglobal("VCB_BF_WP_FRAME_FontOpacitySliderHigh"):SetText("1.0")
 									</OnLoad>
@@ -7061,7 +7228,7 @@
 							<AbsDimension x="30" y="30"/>
 						</Size>
 						<Anchors>
-							<Anchor point="BOTTOM" relativeTo="VCB_BF_WP_FRAME" relativePoint="BOTTOM">
+							<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="BOTTOM">
 								<Offset>
 									<AbsDimension x="-50" y="15"/>
 								</Offset>
@@ -7072,6 +7239,9 @@
 								VCB_BF_WP_FRAME_CHANGE_PAGE()
 								PlaySound("igMainMenuOptionCheckBoxOff");
 							</OnClick>
+							<OnLoad>
+								getglobal(this:GetName().."Font"):SetText(VCB_COMMON_PAGE_1)
+							</OnLoad>
 						</Scripts>
 						<Layers>
 							<Layer>
@@ -7098,7 +7268,7 @@
 							<AbsDimension x="30" y="30"/>
 						</Size>
 						<Anchors>
-							<Anchor point="BOTTOM" relativeTo="VCB_BF_WP_FRAME" relativePoint="BOTTOM">
+							<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="BOTTOM">
 								<Offset>
 									<AbsDimension x="50" y="15"/>
 								</Offset>
@@ -7167,6 +7337,12 @@
 						</FontString>
 					</Layer>
 				</Layers>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName().."Font1"):SetText(VCB_CAT_BORDER)
+						getglobal(this:GetName().."Font2"):SetText(VCB_CAT_AURA_TIMER)
+					</OnLoad>
+				</Scripts>
 				<Frames>
 					<Frame name="VCB_BF_WP_FRAME_BORDER">
 						<Size>
@@ -7198,7 +7374,7 @@
 									<AbsDimension x="30" y="30"/>
 								</Size>
 								<Anchors>
-									<Anchor point="TOPLEFT" relativeTo="VCB_BF_WP_FRAME_BORDER" relativePoint="TOPLEFT">
+									<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 										<Offset>
 											<AbsDimension x="10" y="-5"/>
 										</Offset>
@@ -7206,8 +7382,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON5Text"):SetText("Enable border")
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_BORDER_TOOLTIP
+										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON5Text"):SetText(VCB_COMMON_BUTTON_ENABLE_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_WP_FRAME_ENABLE_BORDER()
@@ -7228,8 +7404,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON6Text"):SetText("Use custom border")
+										this.tooltipText = VCB_COMMON_BUTTON_USE_CUSTOM_BORDER_TOOLTIP
+										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON6Text"):SetText(VCB_COMMON_BUTTON_USE_CUSTOM_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_WP_FRAME_USE_CUSTOM_BORDER()
@@ -7250,12 +7426,12 @@
 								</Anchors>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_WP_FRAME_FONT7" inherits="GameFontNormalSmall" text="Select border color" justifyH="LEFT">
+										<FontString name="$parent_Font" inherits="GameFontNormalSmall" text="Select border color" justifyH="LEFT">
 											<Size>
 												<AbsDimension x="200" y="16" />
 											</Size>
 											<Anchors>
-												<Anchor point="LEFT" relativeTo="VCB_BF_WP_FRAME_Color4" relativePoint="RIGHT">
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
 													<Offset>
 														<AbsDimension x="5" y="0" />
 													</Offset>
@@ -7281,6 +7457,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."_Font"):SetText(VCB_COMMON_COLOR_BORDERCOLOR)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -7291,7 +7468,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_COMMON_COLOR_BORDERCOLOR_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -7310,12 +7487,12 @@
 								</Anchors>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_WP_FRAME_FONT8" inherits="GameFontNormalSmall" text="Custom border path:">
+										<FontString name="$parent_FONT" inherits="GameFontNormalSmall" text="Custom border path:">
 											<Size>
 												<AbsDimension x="130" y="20" />
 											</Size>
 											<Anchors>
-												<Anchor point="BOTTOM" relativeTo="VCB_BF_WP_FRAME_EDITBOX_BORDER" relativePoint="TOP">
+												<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="TOP">
 													<Offset>
 														<AbsDimension x="0" y="-8" />
 													</Offset>
@@ -7349,6 +7526,9 @@
 									<OnTextChanged>
 										VCB_BF_WP_FRAME_EDITBOX_BORDER_CHANGE(this)
 									</OnTextChanged>
+									<OnLoad>
+										getglobal(this:GetName().."_FONT"):SetText(VCB_COMMON_EDITBOX_CUSTOM_BORDER_PATH)
+									</OnLoad>
 								</Scripts>
 							</EditBox>
 							-- Aura Border Slider
@@ -7365,11 +7545,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_BORDER_TOOLTIP
 										this:SetMinMaxValues(1,1)
 										this:SetValue(1)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_WP_FRAME_BorderSliderText"):SetText("Border")
+										getglobal("VCB_BF_WP_FRAME_BorderSliderText"):SetText(VCB_COMMON_SLIDER_BORDER)
 										getglobal("VCB_BF_WP_FRAME_BorderSliderLow"):SetText("1")
 										getglobal("VCB_BF_WP_FRAME_BorderSliderHigh"):SetText("1")
 									</OnLoad>
@@ -7394,11 +7574,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_BORDER_OPACITY_TOOLTIP
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_WP_FRAME_BorderOpacitySliderText"):SetText("Border Opacity")
+										getglobal("VCB_BF_WP_FRAME_BorderOpacitySliderText"):SetText(VCB_COMMON_SLIDER_BORDER_OPACITY)
 										getglobal("VCB_BF_WP_FRAME_BorderOpacitySliderLow"):SetText("0")
 										getglobal("VCB_BF_WP_FRAME_BorderOpacitySliderHigh"):SetText("1.0")
 									</OnLoad>
@@ -7449,8 +7629,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON4Text"):SetText("Enable border")
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_BORDER_TOOLTIP
+										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON4Text"):SetText(VCB_COMMON_BUTTON_ENABLE_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_WP_FRAME_TIMER_ENABLE_BORDER()
@@ -7471,12 +7651,12 @@
 								</Anchors>
 								<Layers>
 									<Layer>
-										<FontString name="VCB_BF_WP_FRAME_FONT6" inherits="GameFontNormalSmall" text="Select border color" justifyH="LEFT">
+										<FontString name="$parent_Font" inherits="GameFontNormalSmall" text="Select font color" justifyH="LEFT">
 											<Size>
 												<AbsDimension x="200" y="16" />
 											</Size>
 											<Anchors>
-												<Anchor point="LEFT" relativeTo="VCB_BF_WP_FRAME_Color2" relativePoint="RIGHT">
+												<Anchor point="LEFT" relativeTo="$parent" relativePoint="RIGHT">
 													<Offset>
 														<AbsDimension x="5" y="0" />
 													</Offset>
@@ -7502,6 +7682,7 @@
 								</Layers>
 								<Scripts>
 									<OnLoad>
+										getglobal(this:GetName().."_Font"):SetText(VCB_COMMON_COLOR_FONTCOLOR)
 										getglobal(this:GetName().."_SwatchBg").r = 1.0;
 										getglobal(this:GetName().."_SwatchBg").g = 1.0;
 										getglobal(this:GetName().."_SwatchBg").b = 1.0;
@@ -7512,7 +7693,7 @@
 									<OnEnter>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
 										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
-										GameTooltip:SetText(PowaText.aideColor, nil, nil, nil, nil, 1);
+										GameTooltip:SetText(VCB_COMMON_COLOR_FONTCOLOR_TOOLTIP, nil, nil, nil, nil, 1);
 									</OnEnter>
 									<OnLeave>
 										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
@@ -7535,11 +7716,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_SIZE_TOOLTIP
 										this:SetMinMaxValues(1,24)
 										this:SetValue(1)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_WP_FRAME_TIMER_FontSizeSliderText"):SetText("Font size")
+										getglobal("VCB_BF_WP_FRAME_TIMER_FontSizeSliderText"):SetText(VCB_COMMON_SLIDER_FONT_SIZE)
 										getglobal("VCB_BF_WP_FRAME_TIMER_FontSizeSliderLow"):SetText("1")
 										getglobal("VCB_BF_WP_FRAME_TIMER_FontSizeSliderHigh"):SetText("24")
 									</OnLoad>
@@ -7564,11 +7745,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_COMMON_SLIDER_FONT_OPACITY_TOOLTIP
 										this:SetMinMaxValues(0,1.0)
 										this:SetValue(1.0)
 										this:SetValueStep(0.1)
-										getglobal("VCB_BF_WP_FRAME_TIMER_FontOpacitySliderText"):SetText("Font opacity")
+										getglobal("VCB_BF_WP_FRAME_TIMER_FontOpacitySliderText"):SetText(VCB_COMMON_SLIDER_FONT_OPACITY)
 										getglobal("VCB_BF_WP_FRAME_TIMER_FontOpacitySliderLow"):SetText("0")
 										getglobal("VCB_BF_WP_FRAME_TIMER_FontOpacitySliderHigh"):SetText("1.0")
 									</OnLoad>
@@ -7586,7 +7767,7 @@
 							<AbsDimension x="30" y="30"/>
 						</Size>
 						<Anchors>
-							<Anchor point="BOTTOM" relativeTo="VCB_BF_WP_FRAME2" relativePoint="BOTTOM">
+							<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="BOTTOM">
 								<Offset>
 									<AbsDimension x="-50" y="15"/>
 								</Offset>
@@ -7597,6 +7778,9 @@
 								VCB_BF_WP_FRAME_CHANGE_PAGE()
 								PlaySound("igMainMenuOptionCheckBoxOff");
 							</OnClick>
+							<OnLoad>
+								getglobal(this:GetName().."Font"):SetText(VCB_COMMON_PAGE_2)
+							</OnLoad>
 						</Scripts>
 						<Layers>
 							<Layer>
@@ -7623,7 +7807,7 @@
 							<AbsDimension x="30" y="30"/>
 						</Size>
 						<Anchors>
-							<Anchor point="BOTTOM" relativeTo="VCB_BF_WP_FRAME2" relativePoint="BOTTOM">
+							<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="BOTTOM">
 								<Offset>
 									<AbsDimension x="50" y="15"/>
 								</Offset>
@@ -7728,6 +7912,13 @@
 								</FontString>
 							</Layer>
 						</Layers>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_INSERT"):SetText(VCB_PM_FRAME_LEFT_INSERT_TEXT)
+								getglobal(this:GetName().."_SELECT"):SetText(VCB_PM_FRAME_LEFT_SELECT_TEXT)
+								getglobal(this:GetName().."_CURRENT"):SetText(VCB_PM_FRAME_LEFT_CURRENT_TEXT)
+							</OnLoad>
+						</Scripts>
 						<Frames>
 							<EditBox name="VCB_BF_PM_FRAME_EditBox" letters="80">
 								<Size x="160" y="40" />
@@ -7794,6 +7985,9 @@
 									<OnClick>
 										VCB_BF_PM_FRAME_SAVE()
 									</OnClick>
+									<OnLoad>
+										getglobal(this:GetName().."_Text"):SetText(VCB_PM_FRAME_LEFT_SAVE_TEXT)
+									</OnLoad>
 								</Scripts>
 							</Button>
 							<Frame name="VCB_BF_PM_FRAME_LEFT_SELECTED_INBOX">
@@ -7869,6 +8063,9 @@
 									<OnClick>
 										VCB_BF_PM_FRAME_DELETE()
 									</OnClick>
+									<OnLoad>
+										getglobal(this:GetName().."_Text"):SetText(VCB_PM_FRAME_LEFT_DELETE_TEXT)
+									</OnLoad>
 								</Scripts>
 							</Button>
 							<Button name="VCB_PM_FRAME_LEFT_LOAD">
@@ -7905,6 +8102,9 @@
 									<OnClick>
 										VCB_BF_PM_FRAME_LOAD()
 									</OnClick>
+									<OnLoad>
+										getglobal(this:GetName().."_Text"):SetText(VCB_COMMON_BUTTON_LOAD_TEXT)
+									</OnLoad>
 								</Scripts>
 							</Button>
 							<Frame name="VCB_BF_PM_FRAME_LEFT_CURRENT_INBOX">
@@ -8239,7 +8439,7 @@
 							<AbsDimension x="580" y="80"/>
 						</Size>
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="VCB_BF_MISC_FRAME" relativePoint="TOPLEFT">
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 								<Offset>
 									<AbsDimension x="15" y="-30"/>
 								</Offset>
@@ -8273,6 +8473,11 @@
 								</FontString>
 							</Layer>
 						</Layers>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_FONT"):SetText(VCB_CAT_GENERAL)
+							</OnLoad>
+						</Scripts>
 						<Frames>
 							-- Checkbutton Disable Consolidate Mechanic
 							<CheckButton name="VCB_BF_MISC_FRAME_CHECKBUTTON1" inherits="VCB_BF_CheckTemplate">
@@ -8288,8 +8493,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
-										getglobal("VCB_BF_MISC_FRAME_CHECKBUTTON1Text"):SetText("Disable consolidate mechanic")
+										this.tooltipText = VCB_MISC_FRAME_TEXT_DISABLE_CF_TOOLTIP
+										getglobal("VCB_BF_MISC_FRAME_CHECKBUTTON1Text"):SetText(VCB_MISC_FRAME_TEXT_DISABLE_CF)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_MISC_FRAME_DISABLE_CF()
@@ -8310,7 +8515,7 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = "Check this to invert the buff order."
+										this.tooltipText = VCB_MISC_FRAME_TEXT_DISABLE_BB_TOOLTIP
 										getglobal("VCB_BF_MISC_FRAME_CHECKBUTTON2Text"):SetText("Disable banning mechanic")
 									</OnLoad>
 									<OnClick>
@@ -8332,11 +8537,11 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.aide = "Move this to change the amount."
+										this.aide = VCB_MISC_FRAME_TEXT_THEME_TOOLTIP
 										this:SetMinMaxValues(1,1)
 										this:SetValue(1)
 										this:SetValueStep(1)
-										getglobal("VCB_BF_MISC_FRAME_ThemeSliderText"):SetText("Theme: Default")
+										getglobal("VCB_BF_MISC_FRAME_ThemeSliderText"):SetText(VCB_MISC_FRAME_TEXT_THEME)
 										getglobal("VCB_BF_MISC_FRAME_ThemeSliderLow"):SetText("1")
 										getglobal("VCB_BF_MISC_FRAME_ThemeSliderHigh"):SetText("1")
 									</OnLoad>
@@ -8381,6 +8586,9 @@
 									<OnClick>
 										VCB_BF_MISC_FRAME_LOAD()
 									</OnClick>
+									<OnLoad>
+										getglobal(this:GetName().."_Text"):SetText(VCB_COMMON_BUTTON_LOAD_TEXT)
+									</OnLoad>
 								</Scripts>
 							</Button>
 						</Frames>
@@ -8416,7 +8624,7 @@
 							<AbsDimension x="580" y="60"/>
 						</Size>
 						<Anchors>
-							<Anchor point="TOPLEFT" relativeTo="VCB_BF_ABOUT_FRAME" relativePoint="TOPLEFT">
+							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 								<Offset>
 									<AbsDimension x="15" y="-30"/>
 								</Offset>
@@ -8448,7 +8656,7 @@
 										</Anchor>
 									</Anchors>
 								</FontString>
-								<FontString name="$parent_FONT2" inherits="GameFontDisable" text="Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. The AddOn provides a lot functions to customize it to your tastes and adds a lot of helpful functions for a better overview, which is its purpose in the first place anyway." justifyH="LEFT">
+								<FontString name="$parent_FONT2" inherits="GameFontDisable" text="" justifyH="LEFT">
 									<Size>
 										<AbsDimension x="560" y="50" />
 									</Size>
@@ -8462,6 +8670,12 @@
 								</FontString>
 							</Layer>
 						</Layers>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_FONT"):SetText(VCB_CAT_ABOUT_1)
+								getglobal(this:GetName().."_FONT2"):SetText(VCB_ABOUT_TEXT_1)
+							</OnLoad>
+						</Scripts>
 					</Frame>
 					<Frame name="VCB_BF_ABOUT_FRAME2">
 						<Size>
@@ -8500,7 +8714,7 @@
 										</Anchor>
 									</Anchors>
 								</FontString>
-								<FontString name="$parent_FONT2" inherits="GameFontDisable" text="VCB was created by Shino (Albea) &lt;Synced&gt; who developed the AddOn on Kronos (Twinstar.cz). He is formally known as Geigerkind in the Twinstar community." justifyH="LEFT">
+								<FontString name="$parent_FONT2" inherits="GameFontDisable" text="" justifyH="LEFT">
 									<Size>
 										<AbsDimension x="560" y="40" />
 									</Size>
@@ -8514,6 +8728,12 @@
 								</FontString>
 							</Layer>
 						</Layers>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_FONT"):SetText(VCB_CAT_ABOUT_2)
+								getglobal(this:GetName().."_FONT2"):SetText(VCB_ABOUT_TEXT_2)
+							</OnLoad>
+						</Scripts>
 					</Frame>
 					<Frame name="VCB_BF_ABOUT_FRAME3">
 						<Size>
@@ -8552,7 +8772,7 @@
 										</Anchor>
 									</Anchors>
 								</FontString>
-								<FontString name="$parent_FONT2" inherits="GameFontDisable" text="Flynn (Twinstar AddOn Master) - Thanks for helping me in the beginning. &#xA;Schaka (Author of Questie) - Thanks for helping me in the beginning. &#xA;Sinsthar (Author of PowerAuras) - You kinda inspired me to create an interface." justifyH="LEFT">
+								<FontString name="$parent_FONT2" inherits="GameFontDisable" text="" justifyH="LEFT">
 									<Size>
 										<AbsDimension x="560" y="50" />
 									</Size>
@@ -8566,6 +8786,12 @@
 								</FontString>
 							</Layer>
 						</Layers>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_FONT"):SetText(VCB_CAT_ABOUT_3)
+								getglobal(this:GetName().."_FONT2"):SetText(VCB_ABOUT_TEXT_3)
+							</OnLoad>
+						</Scripts>
 					</Frame>
 					<Frame name="VCB_BF_ABOUT_FRAME4">
 						<Size>
@@ -8604,7 +8830,7 @@
 										</Anchor>
 									</Anchors>
 								</FontString>
-								<FontString name="$parent_FONT2" inherits="GameFontDisable" text="Moosic &lt;Synced&gt; - Tested the AddOn &#xA;Fender &lt;Synced&gt; - Feedback early on&#xA;Areina &lt;Synced&gt; - Helped phrasing this^^" justifyH="LEFT" justifyV="TOP">
+								<FontString name="$parent_FONT2" inherits="GameFontDisable" text="" justifyH="LEFT" justifyV="TOP">
 									<Size>
 										<AbsDimension x="280" y="50" />
 									</Size>
@@ -8616,7 +8842,7 @@
 										</Anchor>
 									</Anchors>
 								</FontString>
-								<FontString name="$parent_FONT2" inherits="GameFontDisable" text="Dopefish &lt;Arcanum&gt; - Feedback early on &#xA;Helvete &lt;NOPE&gt; - Feedback early on" justifyH="LEFT" justifyV="TOP">
+								<FontString name="$parent_FONT3" inherits="GameFontDisable" text="" justifyH="LEFT" justifyV="TOP">
 									<Size>
 										<AbsDimension x="270" y="50" />
 									</Size>
@@ -8630,6 +8856,13 @@
 								</FontString>
 							</Layer>
 						</Layers>
+						<Scripts>
+							<OnLoad>
+								getglobal(this:GetName().."_FONT"):SetText(VCB_CAT_ABOUT_4)
+								getglobal(this:GetName().."_FONT2"):SetText(VCB_ABOUT_TEXT_4)
+								getglobal(this:GetName().."_FONT3"):SetText(VCB_ABOUT_TEXT_5)
+							</OnLoad>
+						</Scripts>
 					</Frame>
 				</Frames>
 			</Frame>
