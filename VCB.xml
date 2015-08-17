@@ -2019,7 +2019,7 @@
 				<Frames>
 					<Frame name="VCB_BF_TIMER_FRAME_GENERAL_FRAME">
 						<Size>
-							<AbsDimension x="580" y="160"/>
+							<AbsDimension x="580" y="170"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
@@ -2185,6 +2185,27 @@
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CHECKBUTTON_ROUND()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="VCB_BF_TIMER_FRAME_CHECKBUTTON8" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_TIMER_FRAME_CHECKBUTTON6" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = VCB_TIMER_FRAME_FLASH_TOOLTIP
+										getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON8Text"):SetText(VCB_TIMER_FRAME_FLASH)
+									</OnLoad>
+									<OnClick>
+										VCB_BF_CHECKBUTTON("Timer_flash")
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -3811,6 +3832,35 @@
 									<OnValueChanged>
 										if VCB_IS_LOADED then
 											VCB_BF_CF_FRAME2_GFontOpacitySliderChange(this)
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
+							-- Aura BG opacity Slider
+							<Slider name="VCB_BF_CF_FRAME2_GBGOpacitySlider" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="155" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME2_GFontOpacitySlider" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-30" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = VCB_COMMON_SLIDER_BACKGROUND_OPACITY_TOOLTIP
+										this:SetMinMaxValues(0,1.0)
+										this:SetValue(1.0)
+										this:SetValueStep(0.1)
+										getglobal("VCB_BF_CF_FRAME2_GBGOpacitySliderText"):SetText(VCB_COMMON_SLIDER_BACKGROUND_OPACITY)
+										getglobal("VCB_BF_CF_FRAME2_GBGOpacitySliderLow"):SetText("0")
+										getglobal("VCB_BF_CF_FRAME2_GBGOpacitySliderHigh"):SetText("1.0")
+									</OnLoad>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_BF_CF_FRAME2_GBGOpacitySliderChange(this)
 										end
 									</OnValueChanged>
 								</Scripts>

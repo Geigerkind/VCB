@@ -44,6 +44,7 @@ VCB_THEME[1] = {
 	Timer_tenth = false,
 	Timer_round = false,
 	Timer_font = "FRIZQT__.ttf",
+	Timer_flash = false,
 	CF_icon_color_r = 1,
 	CF_icon_color_g = 1,
 	CF_icon_color_b = 1,
@@ -73,6 +74,7 @@ VCB_THEME[1] = {
 	CF_BF_background = 1,
 	CF_BF_custombackground = false,
 	CF_BF_custombackgroundpath = "",
+	CF_AURA_bgopacity = 1,
 	CF_AURA_enableborder = false,
 	CF_AURA_borderopacity = 1,
 	CF_AURA_bordercolor_r = 1,
@@ -253,6 +255,7 @@ function VCB_OnEvent(event)
 				Timer_tenth = false,
 				Timer_round = false,
 				Timer_font = "FRIZQT__.ttf",
+				Timer_flash = false,
 				CF_icon_color_r = 1,
 				CF_icon_color_g = 1,
 				CF_icon_color_b = 1,
@@ -282,6 +285,7 @@ function VCB_OnEvent(event)
 				CF_BF_background = 1,
 				CF_BF_custombackground = false,
 				CF_BF_custombackgroundpath = "",
+				CF_AURA_bgopacity = 1,
 				CF_AURA_enableborder = false,
 				CF_AURA_borderopacity = 1,
 				CF_AURA_bordercolor_r = 1,
@@ -533,9 +537,9 @@ function VCB_INITIALIZE()
 			end
 			getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopactiy"])
 			if VCB_SAVE["CF_AURA_enablebgcolor"] then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon"):SetVertexColor(VCB_SAVE["CF_AURA_bgcolor_r"],VCB_SAVE["CF_AURA_bgcolor_g"],VCB_SAVE["CF_AURA_bgcolor_b"])
+				getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon"):SetVertexColor(VCB_SAVE["CF_AURA_bgcolor_r"],VCB_SAVE["CF_AURA_bgcolor_g"],VCB_SAVE["CF_AURA_bgcolor_b"],VCB_SAVE["CF_AURA_bgcolor_b"])
 			else
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon"):SetVertexColor(1,1,1)
+				getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon"):SetVertexColor(1,1,1,VCB_SAVE["CF_AURA_bgcolor_b"])
 			end
 			if VCB_SAVE["CF_TIMER_border"] then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"], "OUTLINE")
@@ -800,6 +804,7 @@ function VCB_PAGEINIT(frame)
 		end
 		getglobal("VCB_BF_TIMER_FRAME_FontSlider"):SetValue(VCB_Table_GetKeys(VCB_FONT_ARRAY, VCB_SAVE["Timer_font"]))
 		getglobal("VCB_BF_TIMER_FRAME_FontSliderText"):SetText(VCB_COMMON_SLIDER_FONT..": "..VCB_SAVE["Timer_font"])
+		getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON8"):SetChecked(VCB_SAVE["Timer_flash"])
 	elseif frame == "VCB_BF_CF_FRAME" then	
 		getglobal("VCB_BF_CF_FRAME_AnchorSlider"):SetValue(VCB_SAVE["CF_BF_anchor"])
 		getglobal("VCB_BF_CF_FRAME_AnchorSliderText"):SetText(VCB_CF_FRAME_BF_ANCHOR..": "..VCB_ANCHOR_ARRAY[VCB_SAVE["CF_BF_anchor"]])
@@ -888,6 +893,8 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_CF_FRAME2_Color_fontcolor_SwatchBg").r = VCB_SAVE["CF_AURA_fontcolor_r"]
 		getglobal("VCB_BF_CF_FRAME2_Color_fontcolor_SwatchBg").g = VCB_SAVE["CF_AURA_fontcolor_g"]
 		getglobal("VCB_BF_CF_FRAME2_Color_fontcolor_SwatchBg").b = VCB_SAVE["CF_AURA_fontcolor_b"]
+		getglobal("VCB_BF_CF_FRAME2_GBGOpacitySlider"):SetValue(VCB_SAVE["CF_AURA_bgopacity"])
+		getglobal("VCB_BF_CF_FRAME2_GBGOpacitySliderText"):SetText(VCB_COMMON_SLIDER_BACKGROUND_OPACITY..": "..VCB_SAVE["CF_AURA_bgopacity"])
 	elseif frame == "VCB_BF_BF_FRAME" then
 		getglobal("VCB_BF_BF_FRAME_CHECKBUTTON1"):SetChecked(VCB_SAVE["BF_GENERAL_verticalmode"])
 		getglobal("VCB_BF_BF_FRAME_NumPerRowSlider"):SetValue(VCB_SAVE["BF_GENERAL_numperrow"])
@@ -1982,6 +1989,16 @@ function VCB_BF_CF_FRAME_SHOW_BUFFS_GRAYED_OUT()
 		VCB_SAVE["CF_icon_showpbgrayedout"] = true
 	end
 	VCB_BF_RepositioningAndResizing()
+end
+
+function VCB_BF_CF_FRAME2_GBGOpacitySliderChange(obj)
+	VCB_SAVE["CF_AURA_bgopacity"] = string.format("%.1f", obj:GetValue())
+	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_BACKGROUND_OPACITY..": "..VCB_SAVE["CF_AURA_bgopacity"])
+	for i=0,31 do
+		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
+			getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon"):SetAlpha(VCB_SAVE["CF_AURA_bgopacity"])
+		end
+	end
 end
 
 ---------------------------------------END CONSOLIDATED FRAME-----------------------------------------------------------------------------------------------------------------

@@ -316,9 +316,9 @@ function VCB_BF_RepositioningAndResizing()
 			end
 			buttonBorder:SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopactiy"])
 			if VCB_SAVE["CF_AURA_enablebgcolor"] then
-				buttonIcon:SetVertexColor(VCB_SAVE["CF_AURA_bgcolor_r"],VCB_SAVE["CF_AURA_bgcolor_g"],VCB_SAVE["CF_AURA_bgcolor_b"])
+				buttonIcon:SetVertexColor(VCB_SAVE["CF_AURA_bgcolor_r"],VCB_SAVE["CF_AURA_bgcolor_g"],VCB_SAVE["CF_AURA_bgcolor_b"],VCB_SAVE["CF_AURA_bgopacity"])
 			else
-				buttonIcon:SetVertexColor(1,1,1)
+				buttonIcon:SetVertexColor(1,1,1,VCB_SAVE["CF_AURA_bgcolor_b"])
 			end
 			if VCB_SAVE["CF_TIMER_border"] then
 				buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_BF_scale"]*VCB_SAVE["CF_TIMER_fontsize"], "OUTLINE")
@@ -621,12 +621,11 @@ function VCB_BF_BUFF_BUTTON_OnUpdate(elapsed, button)
 	
 		local buffIndex = button.buffIndex;
 		local timeLeft = GetPlayerBuffTimeLeft(buffIndex);
-		--if ( timeLeft < BUFF_WARNING_TIME and VCB_BF_LOCKED ) then -- later potential -> and self.db.profile.flashes[button.cat]
-			--UIFrameFlash(button, 2, 2, timeLeft, false, 0, 0) -- Causing Buttons to disappear
-		--else
-			--UIFrameFlashRemoveFrame(button)
-			--button:SetAlpha(1.0);
-		--end
+		if timeLeft > 0 and VCB_SAVE["Timer_flash"] then
+			VCB_BF_CUSTOM_FLASH(button,timeLeft)
+		else
+			button:SetAlpha(VCB_BF_GETBUTTONALPHA(button))
+		end
 	
 		-- Update duration
 		if (timeLeft>0 or VCB_BF_DUMMY_MODE) then
@@ -649,9 +648,35 @@ function VCB_BF_BUFF_BUTTON_OnUpdate(elapsed, button)
 	end
 end
 
+function VCB_BF_GETBUTTONALPHA(button)
+	local a = 1
+	if button.cat == "debuff" then 
+		a = VCB_SAVE["DBF_GENERAL_bgopacity"]
+	elseif button.cat == "buff" then
+		if button:GetParent() == VCB_BF_BUFF_FRAME then
+			a = VCB_SAVE["BF_GENERAL_bgopacity"]
+		else
+			a = VCB_SAVE["CF_AURA_bgopacity"]
+		end
+	end
+	return a
+end
+
+function VCB_BF_CUSTOM_FLASH(button, timeLeft) -- Workaround because the UIFrameFlash function causes problems
+	local a = VCB_BF_GETBUTTONALPHA(button)
+	if timeLeft <= 30 then
+		if button.flashIndex == nil then button.flashIndex = 0 end
+		button:SetAlpha(a*((math.cos(button.flashIndex)+1)*0.5))
+		button.flashIndex = button.flashIndex + random(0.2,1.5) -- Sets the speed of flashing || random -> make it more flashy?
+	else
+		button.flashIndex = 0
+		button:SetAlpha(a)
+	end
+end
+
 function VCB_BF_BUFF_BUTTON_OnClick(button)
 	if button.cat == "buff" then
-		CancelPlayerBuff(button.buffIndex)
+		CancelPlayerBuff(GetPlayerBuff(button.buffIndex, "HELPFUL"))
 	end
 end
 

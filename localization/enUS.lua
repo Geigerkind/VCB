@@ -51,6 +51,8 @@ if (GetLocale() == "enUS") then
 	VCB_TIMER_FRAME_ROUND_DOWN_TOOLTIP = "Check this to round down the timer. For example: 70s -> 1m."
 	VCB_TIMER_FRAME_ROUND_UP = "Round up"
 	VCB_TIMER_FRAME_ROUND_UP_TOOLTIP = "Check this to round up the timer. For example: 70s -> 2m."
+	VCB_TIMER_FRAME_FLASH = "Enable flash animation"
+	VCB_TIMER_FRAME_FLASH_TOOLTIP = "Check this to enable the flash animation if the aura is close to expire (30s)"
 	VCB_CF_FRAME_POSSIBLE_BUFFS = "Show amount out of possible buffs"
 	VCB_CF_FRAME_POSSIBLE_BUFFS_TOOLTIP = "Check this to show the amount of buffs, out of the buffs that you have, on the consolidate icon that could be consolidated if you had them."
 	VCB_CF_FRAME_SHOW_PB_GRAYED_OUT = "Show missing buffs (grayed out)"
