@@ -349,6 +349,9 @@ Everyone who contributes to this will be mentioned **in the About Tab** of the A
 
 ```
 
+**v2.5:**
+- NONE
+
 **v2.4:**  
 - NONE  
   
