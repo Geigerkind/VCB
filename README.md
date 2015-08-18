@@ -30,6 +30,9 @@ Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. Th
 
 ### Changelog ###
 
+
+```
+
 **v2.4:**  
 -Aura applications added  
 
@@ -78,9 +81,14 @@ Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. Th
 -Some visual bugs were fixed  
 -Buff Frames were implemented but not finished yet.  
 -The Addons were split from another so they work independently.  
--The Command "Unbuff" was added for macro uses.  
+-The Command "Unbuff" was added for macro uses. 
+```
+ 
 
 ### Known Bugs ###
+
+
+```
 
 **v2.4:**  
 - NONE  
@@ -103,6 +111,8 @@ Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. Th
 - Debuffs who are applied twice are not displayed correctly -- FIXED  
 - Timer are not working correctly sometimes -- FIXED  
 - All aura frames pop up the consolidated buff frame -- FIXED 
+```
+
 
 
 ### Ideas ###
