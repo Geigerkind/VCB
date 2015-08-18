@@ -123,12 +123,12 @@ Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. Th
 - option to show timers as example 0:24 instead of 24s -- DONE  
   
 **Hallonkaka:**  
-- Option to have buffs/debuffs flashing then they just have a couple of seconds left, like the normal buffbar  
-- Make the frames less mushed when there's no buffs ([image](http://i.imgur.com/SRFLNH3.png))
-- Had some issues with trying to move the frame, but realized later that i need to click to the left of the icon to move it. so make the icon the thing to click   
-- One major improvement could be to make it really like retail and have a counter that shows how many buffs out of how many possible buffs you have.  
-- Example: you add the buff "Power Word: Fortitude" along with the class "Priest", so whenever a priest is in your group, it will show 0/1 if the priest hasn't buffed stamina.  
-- the visual part with grayed out icons for missing buffs when you hover over the icon is probably a bit harder (or just annoying to code) so a simple list with "Missing Buffs" would work just as fine.  
+- Option to have buffs/debuffs flashing then they just have a couple of seconds left, like the normal buffbar -- DONE  
+- Make the frames less mushed when there's no buffs ([image](http://i.imgur.com/SRFLNH3.png)) -- DONE  
+- Had some issues with trying to move the frame, but realized later that i need to click to the left of the icon to move it. so make the icon the thing to click -- DONE   
+- One major improvement could be to make it really like retail and have a counter that shows how many buffs out of how many possible buffs you have. -- DONE  
+- Example: you add the buff "Power Word: Fortitude" along with the class "Priest", so whenever a priest is in your group, it will show 0/1 if the priest hasn't buffed stamina. -- DONE  
+- the visual part with grayed out icons for missing buffs when you hover over the icon is probably a bit harder (or just annoying to code) so a simple list with "Missing Buffs" would work just as fine. -- DONE  
 
 
 ### Common Issues ###
