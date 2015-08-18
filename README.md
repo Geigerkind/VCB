@@ -124,7 +124,7 @@ Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. Th
   
 **Hallonkaka:**  
 - Option to have buffs/debuffs flashing then they just have a couple of seconds left, like the normal buffbar  
-- Make the frames less mushed when there's no buffs ([url=http://i.imgur.com/SRFLNH3.png]Image[/url])  
+- Make the frames less mushed when there's no buffs ([image](http://i.imgur.com/SRFLNH3.png))
 - Had some issues with trying to move the frame, but realized later that i need to click to the left of the icon to move it. so make the icon the thing to click   
 - One major improvement could be to make it really like retail and have a counter that shows how many buffs out of how many possible buffs you have.  
 - Example: you add the buff "Power Word: Fortitude" along with the class "Priest", so whenever a priest is in your group, it will show 0/1 if the priest hasn't buffed stamina.  
