@@ -163,7 +163,7 @@ if (GetLocale() == "deDE") then
 	VCB_ABOUT_TEXT_2 = "VCB wurde von Shino (Albea) <Synced> entwickelt, der auf Kronos (Twinstar.cz) gearbeitet hat. In der Twinstar-Community ist er als Geigerkind bekannt."
 	VCB_ABOUT_TEXT_3 = "Flynn (Twinstar AddOn Master) - Danke für das Helfen am Anfang!                       Schaka (Author of Questie) - Danke für das Helfen am Anfang!                       Sinsthar (Author of PowerAuras) - Du hast mich inspiriert ein Interface zu bauen."
 	VCB_ABOUT_TEXT_4 = "Moosic <Synced> - Testet das AddOn 		Fender <Synced> - Frühes Feedback              Areina <Synced> - Half formulieren^^"
-	VCB_ABOUT_TEXT_5 = "Dopefish <Arcanum> - Frühes Feedback 		Helvete <NOPE> - Frühes Feedback"
+	VCB_ABOUT_TEXT_5 = "Dopefish <Arcanum> - Frühes Feedback 		Helvete <NOPE> - Frühes Feedback		Ayz <Insidious> - Feedback early on"
 
 	VCB_CUR_PROFILE_TEXT = "Unbekannt"
 	VCB_CONSOLIDATED_BUFFS_TEXT_1 = "Mal der Wildnis"

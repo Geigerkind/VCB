@@ -162,7 +162,7 @@
 	VCB_ABOUT_TEXT_2 = "VCB was created by Shino (Albea) <Synced> who developed the AddOn on Kronos (Twinstar.cz). He is formally known as Geigerkind in the Twinstar community."
 	VCB_ABOUT_TEXT_3 = "Flynn (Twinstar AddOn Master) - Thanks for helping me in the beginning.                       Schaka (Author of Questie) - Thanks for helping me in the beginning.                       Sinsthar (Author of PowerAuras) - You kinda inspired me to create an interface."
 	VCB_ABOUT_TEXT_4 = "Moosic <Synced> - Tested the AddOn 		Fender <Synced> - Feedback early on              Areina <Synced> - Helped phrasing this^^"
-	VCB_ABOUT_TEXT_5 = "Dopefish <Arcanum> - Feedback early on 		Helvete <NOPE> - Feedback early on"
+	VCB_ABOUT_TEXT_5 = "Dopefish <Arcanum> - Feedback early on 		Helvete <NOPE> - Feedback early on		Ayz <Insidious> - Feedback early on"
 
 	VCB_CUR_PROFILE_TEXT = "Unknown"
 	VCB_CONSOLIDATED_BUFFS_TEXT_1 = "Mark of the Wild"
