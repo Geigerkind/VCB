@@ -1053,6 +1053,12 @@ function VCB_BF_DummyConfigMode_Disable()
 	VCB_BF_RepositioningAndResizing()
 end
 
+function VCB_BF_updateBuffs()
+	for i=0,31 do
+		VCB_BF_BUFF_BUTTON_Update(getglobal("VCB_BF_BUFF_BUTTON"..i))
+	end
+end
+
 function VCB_BF_ConsolidatedAdd(name)
 	if not VCB_Contains(Consolidated_Buffs, name) then
 		table.insert(Consolidated_Buffs, name)
@@ -1060,6 +1066,7 @@ function VCB_BF_ConsolidatedAdd(name)
 	else
 		VCB_SendMessage(name..VCB_IS_ALREADY_IN_LIST)
 	end
+	VCB_BF_updateBuffs()
 end
 
 function VCB_BF_ConsolidatedRemove(name)
@@ -1069,11 +1076,13 @@ function VCB_BF_ConsolidatedRemove(name)
 	else
 		VCB_SendMessage(name..VCB_IS_NOT_IN_LIST)
 	end
+	VCB_BF_updateBuffs()
 end
 
 function VCB_BF_RemoveAllFromConsolidate()
 	Consolidated_Buffs = {}
 	VCB_SendMessage(VCB_CB_LIST_EMPTIED)
+	VCB_BF_updateBuffs()
 end
 
 function VCB_BF_AddToBanned(name) 
@@ -1083,6 +1092,7 @@ function VCB_BF_AddToBanned(name)
 	else
 		VCB_SendMessage(name..VCB_IS_ALREADY_IN_LIST)
 	end
+	VCB_BF_updateBuffs()
 end
 
 function VCB_BF_RemoveFromBanned(name)
