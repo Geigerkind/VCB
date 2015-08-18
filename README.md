@@ -30,16 +30,16 @@ Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. Th
 
 ### Changelog ###
 
-v2.4:
-Aura applications added
-v2.3:
-GameTooltips are now shown properly
-Auras arent funky anymore in the way of being displayed
-v2.2:
-Timer finally fixed
-Performance updated
-v2.1:
-Timer fixed
+v2.4:  
+Aura applications added  
+v2.3:  
+GameTooltips are now shown properly  
+Auras arent funky anymore in the way of being displayed  
+v2.2:  
+Timer finally fixed  
+Performance updated  
+v2.1:  
+Timer fixed  
 v2.0:
 Buffs are now displayed correctly after adding them to the list
 Debuffs can now be displayed twice
