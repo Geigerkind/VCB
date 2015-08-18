@@ -77,6 +77,92 @@ Everyone who contributes to this will be mentioned **in the About Tab** of the A
 -Added localization deDE
 -Added localization enUS
 -Added localization enGB
+-Reworked banning mechanic
+-Reworked loading mechainc
+-Reworked remove buff mechanic
+-Implemented custom flashing mechanic because the default one causes huge problems with sorting
+-Implemented Interface
+-Implemented Interface Menu
+-Implemented Interface quick Buttons (Close, Lock, MiniMap, Dummy Mode)
+-Added functions to the MiniMap Button (Drag, Leftclick -> open menu, Rightclick -> lock VCB)
+-Reworked compatibillity with other addons
+-Updated textures
+-Added features to increase the using experience overall
+-Added Consolidated Buffs Frame with an overview for all buffs, adding and removing system
+-Added default consolidated buffs
+-Removed the all slash commands, which are replaced with the interface (/vcb)
+-Implemented Interface for Banned-Buffs (similiar to consolidated buffs)
+-Added banned buff list overview
+-Added banned buff add and remove functions
+-Implemented Timer interface
+-Added font timer slider
+-Added show hours checkbutton
+-Added show minutes checkbutton
+-Added show tenth checkbutton
+-Added round down/up checkbutton
+-Added show hours and minutes (h:m) checkbutton
+-Added show minutes and seconds (m:s) checkbutton
+-Added enable flash animation checkbutton
+-Added function to all those features mentioned above
+-Implemented Interface for Consolidated Frame
+-Implemented Consolidated Icon interface
+-For that:
+-Added select font color option
+-Added show amount out of possible buffs checkbutton (1/5 -> Depending on your group members)
+-Added show missing buffs (grayed out) checkbutton
+-Added enable font border checkbutton
+-Added font size slider
+-Added font slider
+-Added icon opacity slider
+-Added font opacity slider
+-Added texture slider
+-Added function for all those features added above (for the consolidated icon)
+-Implemented interface for Buff Frame
+-For that:
+-Added select border color colorpicker
+-Added select background color colorpicker
+-Added invert order checkbutton
+-Added use custom border checkbutton
+-Added use custom background checkbutton
+-Added invert aura orientation checkbutton 
+-Added border opacity slider
+-Added background opacity slider
+-Added border slider
+-Added custom border path editbox
+-Added custom background path editbox
+-Added anchor slider
+-Added scale slider
+-Added buffs per row slider
+-Added background slider
+-Added functions for all those features mentioned above
+-Implemented pager for a lot of pages
+-Implemented aura frame
+-For that:
+-Added enable border checkbutton
+-Added enable background color checkbutton
+-Added use custom border checkbutton
+-Added select border color colorpicker
+-Added select background color colorpicker
+-Added select font color colorpicker
+-Added enable font border checkbutton
+-Added padding horizontal slider
+-Added padding vertical slider
+-Added font size slider
+-Added font offset x slider
+-Added font offset y slider
+-Added border slider
+-Added custom border path editbox
+-Added font slider
+-Added font opacity slider
+-Added background opacity slider
+-Added functions to all those features mentioned above
+-Implemented aura timer interface
+-For that:
+-Added enable font border checkbutton
+-Added select font color colorpicker
+-Added font size slider
+-Added font opacity slider
+--Added functions to those features mentioned above
 
 **v2.4:**  
 -Aura applications added  
