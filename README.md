@@ -34,6 +34,7 @@ Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. Th
 This is AddOn has become very huge and for one person a gigantic task.  
 To keep this AddOn Up-To-Date, performant, clean and bugless, I need your help! 
 You can help by many ways:
+
 * [Report Bugs](https://bitbucket.org/Albea/vcb/issues?status=new&status=open), tell me how to reproduce them and improve everyones experience
 * Give your opinion about the AddOn and point out ideas in the forum threads ([Nostalrius](http://forum.nostalrius.org/viewtopic.php?f=63&t=18189) / [Kronos](http://forum.twinstar.cz/showthread.php/98688-RELEASE-VCB-Vanilla-Consolidated-Buff-Frames))
 * Some localizations are still missing, and since some functions require this, it is an important task and deserves a lot of thanks. If you are a native speaker of following languages and willing to contribute to this project then copy this form and post it in one of those threads. ([Nostalrius](http://forum.nostalrius.org/viewtopic.php?f=63&t=18189) / [Kronos](http://forum.twinstar.cz/showthread.php/98688-RELEASE-VCB-Vanilla-Consolidated-Buff-Frames)) Following languages are still missing: Spanish(esEs), Spanish(Mexican)(esMX), French(frFR), Italian(itIT), Korean(koKR), Portuguese(ptBR), Russian(ruRU), Chinese(zhCN), Chinese(Taiwan)(zhTW)
