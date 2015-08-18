@@ -48,16 +48,16 @@ Everyone who contributes to this will be mentioned **in the About Tab** of the A
 
 ### How does it look like? ###
 
-The Default Frame Configuration:  
+**The Default Frame Configuration:**  
 ![2Jpf1ZS.png](https://bitbucket.org/repo/54Xrdo/images/2166706774-2Jpf1ZS.png)  
 
-The Unlocked Frame:  
+**The Unlocked Frame:**  
 ![uJHSNVy.png](https://bitbucket.org/repo/54Xrdo/images/3876903280-uJHSNVy.png)  
   
-The Dummy Mode for configuration:  
+**The Dummy Mode for configuration:**  
 ![JsW2ZU4.png](https://bitbucket.org/repo/54Xrdo/images/2701062446-JsW2ZU4.png)
 
-The Consolidated Frame options:  
+**The Consolidated Frame options:**  
 ![TpR5eQf.png](https://bitbucket.org/repo/54Xrdo/images/267774962-TpR5eQf.png)  
 
 
