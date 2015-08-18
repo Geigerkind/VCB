@@ -1,4 +1,5 @@
-
+	VCB_MAIN_NAME = "Vanilla Consolidate Buff-Frames"
+	VCB_MAIN_VERSION = "v2.5"
 	VCB_MINIMAP_TOOLTIP_NAME = "Vanilla Consolidate Buff-Frames"
 	VCB_MINIMAP_TOOLTIP_LEFTCLICK = "LeftClick: Toggle option menu"
 	VCB_MINIMAP_TOOLTIP_RIGHTCLICK = "RightClick: Toggle frame lock"

@@ -200,6 +200,7 @@
 			<OnLoad>
 				VCB_OnLoad()
 				this:SetClampedToScreen(true)
+				getglobal("VCB_BF_Header"):SetText(VCB_MAIN_NAME.." "..VCB_MAIN_VERSION)
 			</OnLoad>
 		</Scripts>
 		-- Title block
@@ -219,7 +220,7 @@
 	          <TexCoords left="0.2" right="0.8" top="0" bottom="0.6" />
 		    </Texture>
 			-- Title text		
-			<FontString name="VCB_BF_Header" inherits="GameFontNormalSmall" text="Vanilla Consolidated Buff-Frames v2.4">
+			<FontString name="VCB_BF_Header" inherits="GameFontNormalSmall" text="Vanilla Consolidated Buff-Frames v2.5">
 		      <Size>
 			    <AbsDimension x="285" y="0" />
 	          </Size>
