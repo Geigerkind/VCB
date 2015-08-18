@@ -1,4 +1,4 @@
-# README #
+# Vanilla Consolidate Buff-Frames (VCB) #
 
 ### What is VCB? ###
 
