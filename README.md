@@ -291,6 +291,7 @@ Everyone who contributes to this will be mentioned **in the About Tab** of the A
 -Implemented supporter tab
 -Done some polishing
 -Worked on the readme
+-Solved an updating issue when adding/removing a buff from a list
 
 **v2.4:**  
 -Aura applications added  
