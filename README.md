@@ -413,5 +413,6 @@ Everyone who contributes to this will be mentioned **in the About Tab** of the A
 
 ```
 1. You have to bann/add buffs in the language of your client. If you ban an buff in english but you use an german client for example, it won't work.
+2. I get an lua error after installing it, what should I do. You probably had an version before. I addded a lot of new variables that you need to reload therefore follow the instructions carefully!
 
 ```
