@@ -109,7 +109,6 @@ Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. Th
 
 
 ```
-#!lua
 
 **Fender:**  
 - Mirror consolidated buff frame -- DONE  
