@@ -375,6 +375,10 @@
 				if (not VCB_BF_LOCKED) and (VCB_IS_LOADED) then
 					if (not VCB_SAVE["WP_GENERAL_attach"]) then
 						VCB_BF_WEAPON_FRAME:StopMovingOrSizing()
+						local point, relativeTo, relativePoint, xOfs, yOfs = VCB_BF_WEAPON_FRAME:GetPoint()
+						VCB_WP_POINT = point
+						VCB_WP_POSX = xOfs
+						VCB_WP_POSY = yOfs
 					else
 						VCB_BF_BUFF_FRAME:StopMovingOrSizing()
 					end

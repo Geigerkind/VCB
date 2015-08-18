@@ -481,6 +481,15 @@ function VCB_OnEvent(event)
 		if VCB_CUR_PROFILE == nil then
 			VCB_CUR_PROFILE = VCB_CUR_PROFILE_TEXT
 		end
+		if VCB_WP_POSX == nil then
+			VCB_WP_POSX = 0
+		end
+		if VCB_WP_POSY == nil then
+			VCB_WP_POSX = 0
+		end
+		if VCB_WP_POINT == nil then
+			VCB_WP_POINT = "CENTER"
+		end
 		
 		VCB_IS_LOADED = true
 	elseif event == "PLAYER_ENTERING_WORLD" then
@@ -705,7 +714,7 @@ function VCB_INITIALIZE()
 		VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -2*(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
 	else
 		VCB_BF_WEAPON_FRAME:SetParent(UIParent)
-		VCB_BF_WEAPON_FRAME:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+		VCB_BF_WEAPON_FRAME:SetPoint(VCB_WP_POINT, UIParent, VCB_WP_POINT, VCB_WP_POSX, VCB_WP_POSY)
 		VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", 0, 0)
 	end
 	if (not VCB_BF_PM_FRAME:IsVisible()) then
@@ -2893,12 +2902,16 @@ function VCB_BF_WP_FRAME_ATTACH()
 		VCB_SAVE["WP_GENERAL_attach"] = false
 		VCB_BF_WEAPON_FRAME:ClearAllPoints()
 		VCB_BF_WEAPON_FRAME:SetParent(UIParent)
-		VCB_BF_WEAPON_FRAME:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
+		VCB_BF_WEAPON_FRAME:SetPoint(VCB_WP_POINT, UIParent, VCB_WP_POINT, VCB_WP_POSX, VCB_WP_POSY)
 		VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
 		VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", 0, 0)
 		VCB_BF_WEAPON_FRAME:SetScale(VCB_SAVE["WP_GENERAL_scale"])
 	else
 		VCB_SAVE["WP_GENERAL_attach"] = true
+		local point, relativeTo, relativePoint, xOfs, yOfs = VCB_BF_WEAPON_FRAME:GetPoint()
+		VCB_WP_POINT = point
+		VCB_WP_POSX = xOfs
+		VCB_WP_POSY = yOfs
 		VCB_BF_WEAPON_FRAME:ClearAllPoints()
 		VCB_BF_WEAPON_FRAME:SetParent(VCB_BF_BUFF_FRAME)
 		VCB_BF_WEAPON_FRAME:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", 0, 0)
