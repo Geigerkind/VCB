@@ -107,6 +107,10 @@ Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. Th
 
 ### Ideas ###
 
+
+```
+#!lua
+
 **Fender:**  
 - Mirror consolidated buff frame -- DONE  
 - Change order off buffs in the consolidated buff frame -- DONE  
@@ -129,6 +133,8 @@ Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. Th
 - One major improvement could be to make it really like retail and have a counter that shows how many buffs out of how many possible buffs you have. -- DONE  
 - Example: you add the buff "Power Word: Fortitude" along with the class "Priest", so whenever a priest is in your group, it will show 0/1 if the priest hasn't buffed stamina. -- DONE  
 - the visual part with grayed out icons for missing buffs when you hover over the icon is probably a bit harder (or just annoying to code) so a simple list with "Missing Buffs" would work just as fine. -- DONE  
+
+```
 
 
 ### Common Issues ###
