@@ -41,7 +41,7 @@ You can help by many ways:
 Following languages are still missing: Spanish(esEs), Spanish(Mexican)(esMX), French(frFR), Italian(itIT), Korean(koKR), Portuguese(ptBR), Russian(ruRU), Chinese(zhCN), Chinese(Taiwan)(zhTW)
 * If you play on Kronos you can donate Gold to Shino (on Alliance). By that I can invest more time in programming instead of farming consumables.
 
-Everyone who contributes to this will be mentioned in the About Tab of the AddOn for an permanent time!
+Everyone who contributes to this will be mentioned **in the About Tab** of the AddOn for an **permanent time**!
 
 ![vUqDGgY.png](https://bitbucket.org/repo/54Xrdo/images/3261093832-vUqDGgY.png)
 
