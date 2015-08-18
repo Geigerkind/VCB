@@ -33,7 +33,7 @@ Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. Th
 
 This is AddOn has become very huge and for one person a gigantic task.  
 To keep this AddOn **Up-To-Date, performant, clean and bugfree**, I need your help!   
-You can help by many ways:
+You can help in many ways:
 
 * [Report Bugs](https://bitbucket.org/Albea/vcb/issues?status=new&status=open), tell me how to reproduce them and improve everyones experience
 * Give **your opinion** about the AddOn and point out ideas in the forum threads ([Nostalrius](http://forum.nostalrius.org/viewtopic.php?f=63&t=18189) / [Kronos](http://forum.twinstar.cz/showthread.php/98688-RELEASE-VCB-Vanilla-Consolidated-Buff-Frames))
