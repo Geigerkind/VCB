@@ -111,6 +111,8 @@ if (GetLocale() == "enUS") then
 	VCB_COMMON_BUTTON_ENABLE_BACKGROUND_COLOR_TOOLTIP = "Check this to add a background color to the icon."
 	VCB_COMMON_BUTTON_VERTICAL_MODE = "Vertical mode"
 	VCB_COMMON_BUTTON_VERTICAL_MODE_TOOLTIP = "Check this to turn the frames and switch into vertical mode."
+	VCB_COMMON_BUTTON_INVERT_ORIENTATION = "Invert aura orientation"
+	VCB_COMMON_BUTTON_INVERT_ORIENTATION_TOOLTIP = "Check this to invert the aura orientation. Meaning that the buffs are oriented on the left side instead of the right etc."
 	
 	VCB_COMMON_BUTTON_LOAD_TEXT = "Load"
 	

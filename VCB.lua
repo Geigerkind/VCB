@@ -74,6 +74,7 @@ VCB_THEME[1] = {
 	CF_BF_background = 1,
 	CF_BF_custombackground = false,
 	CF_BF_custombackgroundpath = "",
+	CF_BF_invertorientation = false,
 	CF_AURA_bgopacity = 1,
 	CF_AURA_enableborder = false,
 	CF_AURA_borderopacity = 1,
@@ -124,6 +125,7 @@ VCB_THEME[1] = {
 	BF_GENERAL_fontoffset_x = -5,
 	BF_GENERAL_fontoffset_y = 5,
 	BF_GENERAL_invert = false,
+	BF_GENERAL_invertorientation = false,
 	BF_BORDER_enableborder = false,
 	BF_BORDER_bordercolor_r = 1,
 	BF_BORDER_bordercolor_g = 1,
@@ -158,6 +160,7 @@ VCB_THEME[1] = {
 	DBF_GENERAL_fontoffset_x = -5,
 	DBF_GENERAL_fontoffset_y = 5,
 	DBF_GENERAL_invert = false,
+	DBF_GENERAL_invertorientation = false,
 	DBF_BORDER_enableborder = true,
 	DBF_BORDER_usecustomborder = false,
 	DBF_BORDER_customborderpath = "",
@@ -285,6 +288,7 @@ function VCB_OnEvent(event)
 				CF_BF_background = 1,
 				CF_BF_custombackground = false,
 				CF_BF_custombackgroundpath = "",
+				CF_BF_invertorientation = false,
 				CF_AURA_bgopacity = 1,
 				CF_AURA_enableborder = false,
 				CF_AURA_borderopacity = 1,
@@ -335,6 +339,7 @@ function VCB_OnEvent(event)
 				BF_GENERAL_fontoffset_x = -5,
 				BF_GENERAL_fontoffset_y = 5,
 				BF_GENERAL_invert = false,
+				BF_GENERAL_invertorientation = false,
 				BF_BORDER_enableborder = false,
 				BF_BORDER_bordercolor_r = 1,
 				BF_BORDER_bordercolor_g = 1,
@@ -369,6 +374,7 @@ function VCB_OnEvent(event)
 				DBF_GENERAL_fontoffset_x = -5,
 				DBF_GENERAL_fontoffset_y = 5,
 				DBF_GENERAL_invert = false,
+				DBF_GENERAL_invertorientation = false,
 				DBF_BORDER_enableborder = true,
 				DBF_BORDER_usecustomborder = false,
 				DBF_BORDER_customborderpath = "",
@@ -524,6 +530,8 @@ function VCB_INITIALIZE()
 	end
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
+	--[=====[ 
+	-- Commented it out since it is called in VCB_BF_RepositioningAndResizing anyway
 	for i=0,31 do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 			if VCB_SAVE["CF_AURA_enableborder"] then
@@ -588,21 +596,41 @@ function VCB_INITIALIZE()
 			getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetPoint("BOTTOMRIGHT", VCB_SAVE["BF_GENERAL_fontoffset_x"], VCB_SAVE["BF_GENERAL_fontoffset_y"])
 		end
 	end
+	--]=====] 
 	for i=0,15 do
-		if VCB_SAVE["DBF_GENERAL_invert"] then
-			local j = 15-i
-			getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
-			if VCB_SAVE["DBF_GENERAL_verticalmode"] then
-				getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+		if VCB_SAVE["DBF_GENERAL_invertorientation"] then
+			if VCB_SAVE["DBF_GENERAL_invert"] then
+				local j = 15-i
+				getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+				if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*i - floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
 			else
-				getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+				if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*i - floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
 			end
 		else
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
-			if VCB_SAVE["DBF_GENERAL_verticalmode"] then
-				getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+			if VCB_SAVE["DBF_GENERAL_invert"] then
+				local j = 15-i
+				getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+				if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
 			else
-				getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+				if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
 			end
 		end
 		if VCB_SAVE["DBF_GENERAL_enablebgcolor"] then
@@ -850,6 +878,7 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_CF_FRAME_EDITBOX_BACKGROUND"):SetText(VCB_SAVE["CF_BF_custombackgroundpath"])
 		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON2"):SetChecked(VCB_SAVE["CF_icon_possiblebuffs"])
 		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON3"):SetChecked(VCB_SAVE["CF_icon_showpbgrayedout"])
+		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_IBO"):SetChecked(VCB_SAVE["CF_BF_invertorientation"])
 	elseif frame == "VCB_BF_CF_FRAME2" then
 		getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON1"):SetChecked(VCB_SAVE["CF_AURA_enableborder"])
 		getglobal("VCB_BF_CF_FRAME2_ColorNormalTexture"):SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"], VCB_SAVE["CF_AURA_bordercolor_g"], VCB_SAVE["CF_AURA_bordercolor_b"])
@@ -928,6 +957,7 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_BF_FRAME_Color_fontcolor_SwatchBg").g = VCB_SAVE["BF_GENERAL_fontcolor_g"]
 		getglobal("VCB_BF_BF_FRAME_Color_fontcolor_SwatchBg").b = VCB_SAVE["BF_GENERAL_fontcolor_b"]
 		getglobal("VCB_BF_BF_FRAME_CHECKBUTTON3"):SetChecked(VCB_SAVE["BF_GENERAL_invert"])
+		getglobal("VCB_BF_BF_FRAME_CHECKBUTTON_IBO"):SetChecked(VCB_SAVE["BF_GENERAL_invertorientation"])
 	elseif frame == "VCB_BF_BF_FRAME2" then
 		getglobal("VCB_BF_BF_FRAME_CHECKBUTTON5"):SetChecked(VCB_SAVE["BF_BORDER_enableborder"])
 		getglobal("VCB_BF_BF_FRAME_Color4NormalTexture"):SetVertexColor(VCB_SAVE["BF_BORDER_bordercolor_r"], VCB_SAVE["BF_BORDER_bordercolor_g"], VCB_SAVE["BF_BORDER_bordercolor_b"])
@@ -982,6 +1012,7 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_DBF_FRAME_Color_fontcolor_SwatchBg").g = VCB_SAVE["DBF_GENERAL_fontcolor_g"]
 		getglobal("VCB_BF_DBF_FRAME_Color_fontcolor_SwatchBg").b = VCB_SAVE["DBF_GENERAL_fontcolor_b"]
 		getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON3"):SetChecked(VCB_SAVE["DBF_GENERAL_invert"])
+		getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON_IBO"):SetChecked(VCB_SAVE["DBF_GENERAL_invertorientation"])
 	elseif frame == "VCB_BF_DBF_FRAME2" then
 		getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON5"):SetChecked(VCB_SAVE["DBF_BORDER_enableborder"])
 		getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON6"):SetChecked(VCB_SAVE["DBF_BORDER_usecustomborder"])
@@ -2001,6 +2032,15 @@ function VCB_BF_CF_FRAME2_GBGOpacitySliderChange(obj)
 	end
 end
 
+function VCB_BF_CF_FRAME_INVERT_BUFF_ORIENTATION()
+	if VCB_SAVE["CF_BF_invertorientation"] then
+		VCB_SAVE["CF_BF_invertorientation"] = false
+	else
+		VCB_SAVE["CF_BF_invertorientation"] = true
+	end
+	VCB_BF_RepositioningAndResizing()
+end
+
 ---------------------------------------END CONSOLIDATED FRAME-----------------------------------------------------------------------------------------------------------------
 ---------------------------------------START BUFF FRAME-----------------------------------------------------------------------------------------------------------------
 
@@ -2016,6 +2056,7 @@ function VCB_BF_BF_FRAME_VERTICAL_MODE()
 			VCB_BF_WP_FRAME_VERTICAL_MODE()
 		end
 	end
+	VCB_BF_WEAPON_BUTTON_OnEvent(false)
 	VCB_BF_RepositioningAndResizing()
 end
 
@@ -2031,7 +2072,11 @@ function VCB_BF_BF_FRAME_AuraPaddingHChange(obj)
 	if VCB_SAVE["WP_GENERAL_attach"] and (not VCB_SAVE["WP_GENERAL_verticalmode"]) then
 		for i=0,1 do
 			getglobal("VCB_BF_WEAPON_BUTTON"..i):ClearAllPoints()
-			getglobal("VCB_BF_WEAPON_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*i, 0)
+			if VCB_SAVE["BF_GENERAL_invertorientation"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i):SetPoint("TOPLEFT", (32+VCB_SAVE["BF_GENERAL_padding_h"])*i, 0)
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*i, 0)
+			end
 		end
 	end
 	VCB_BF_RepositioningAndResizing()
@@ -2043,7 +2088,11 @@ function VCB_BF_BF_FRAME_AuraPaddingVChange(obj)
 	if VCB_SAVE["WP_GENERAL_attach"] and VCB_SAVE["WP_GENERAL_verticalmode"] then
 		for i=0,1 do
 			getglobal("VCB_BF_WEAPON_BUTTON"..i):ClearAllPoints()
-			getglobal("VCB_BF_WEAPON_BUTTON"..i):SetPoint("TOPRIGHT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*i)
+			if VCB_SAVE["BF_GENERAL_invertorientation"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i):SetPoint("TOPLEFT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*i)
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i):SetPoint("TOPRIGHT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*i)
+			end
 		end
 	end
 	VCB_BF_RepositioningAndResizing()
@@ -2307,6 +2356,16 @@ function VCB_BF_BF_FRAME_INVERTBUFFMODE()
 	VCB_BF_RepositioningAndResizing()
 end
 
+function VCB_BF_BF_FRAME_INVERT_AURA_ORIENTATION()
+	if VCB_SAVE["BF_GENERAL_invertorientation"] then
+		VCB_SAVE["BF_GENERAL_invertorientation"] = false
+	else
+		VCB_SAVE["BF_GENERAL_invertorientation"] = true
+	end
+	VCB_BF_WEAPON_BUTTON_OnEvent(false)
+	VCB_BF_RepositioningAndResizing()
+end
+
 ---------------------------------------END BUFF FRAME-----------------------------------------------------------------------------------------------------------------
 ---------------------------------------START DEBUFF FRAME-----------------------------------------------------------------------------------------------------------------
 
@@ -2314,14 +2373,48 @@ function VCB_BF_DBF_FRAME_VERTICAL_MODE()
 	if VCB_SAVE["DBF_GENERAL_verticalmode"] then
 		VCB_SAVE["DBF_GENERAL_verticalmode"] = false
 		for i=0,15 do
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+			if VCB_SAVE["DBF_GENERAL_invertorientation"] then
+				if VCB_SAVE["DBF_GENERAL_invert"] then
+					local j = 15-i
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*i - floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*i - floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
+			else
+				if VCB_SAVE["DBF_GENERAL_invert"] then
+					local j = 15-i
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
+			end
 		end
 	else
 		VCB_SAVE["DBF_GENERAL_verticalmode"] = true
 		for i=0,15 do
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+			if VCB_SAVE["DBF_GENERAL_invertorientation"] then
+				if VCB_SAVE["DBF_GENERAL_invert"] then
+					local j = 15-i
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				end
+			else
+				if VCB_SAVE["DBF_GENERAL_invert"] then
+					local j = 15-i
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				end
+			end
 		end
 	end
 end
@@ -2330,11 +2423,46 @@ function VCB_BF_DBF_FRAME_NumPerRowSliderChange(obj)
 	VCB_SAVE["DBF_GENERAL_numperrow"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_BUFFS_PER_ROW..": "..VCB_SAVE["DBF_GENERAL_numperrow"])
 	for i=0,15 do
-		getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
-		if VCB_SAVE["DBF_GENERAL_verticalmode"] then
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+		if VCB_SAVE["DBF_GENERAL_invertorientation"] then
+			if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+				if VCB_SAVE["DBF_GENERAL_invert"] then
+					local j = 15-i
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				end
+			else
+				if VCB_SAVE["DBF_GENERAL_invert"] then
+					local j = 15-i
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*i - floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*i - floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
+			end
 		else
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+			if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+				if VCB_SAVE["DBF_GENERAL_invert"] then
+					local j = 15-i
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				end
+			else
+				if VCB_SAVE["DBF_GENERAL_invert"] then
+					local j = 15-i
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
+			end
 		end
 	end
 end
@@ -2343,11 +2471,46 @@ function VCB_BF_DBF_FRAME_AuraPaddingHSliderChange(obj)
 	VCB_SAVE["DBF_GENERAL_padding_h"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_PADDING_H..": "..VCB_SAVE["DBF_GENERAL_padding_h"])
 	for i=0,15 do
-		getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
-		if VCB_SAVE["DBF_GENERAL_verticalmode"] then
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+		if VCB_SAVE["DBF_GENERAL_invertorientation"] then
+			if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+				if VCB_SAVE["DBF_GENERAL_invert"] then
+					local j = 15-i
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				end
+			else
+				if VCB_SAVE["DBF_GENERAL_invert"] then
+					local j = 15-i
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*i - floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*i - floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
+			end
 		else
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+			if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+				if VCB_SAVE["DBF_GENERAL_invert"] then
+					local j = 15-i
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				end
+			else
+				if VCB_SAVE["DBF_GENERAL_invert"] then
+					local j = 15-i
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
+			end
 		end
 	end
 end
@@ -2356,11 +2519,46 @@ function VCB_BF_DBF_FRAME_AuraPaddingVSliderChange(obj)
 	VCB_SAVE["DBF_GENERAL_padding_v"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_PADDING_V..": "..VCB_SAVE["DBF_GENERAL_padding_v"])
 	for i=0,15 do
-		getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
-		if VCB_SAVE["DBF_GENERAL_verticalmode"] then
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+		if VCB_SAVE["DBF_GENERAL_invertorientation"] then
+			if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+				if VCB_SAVE["DBF_GENERAL_invert"] then
+					local j = 15-i
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				end
+			else
+				if VCB_SAVE["DBF_GENERAL_invert"] then
+					local j = 15-i
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*i - floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*i - floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
+			end
 		else
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+			if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+				if VCB_SAVE["DBF_GENERAL_invert"] then
+					local j = 15-i
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				end
+			else
+				if VCB_SAVE["DBF_GENERAL_invert"] then
+					local j = 15-i
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
+			end
 		end
 	end
 end
@@ -2585,10 +2783,18 @@ function VCB_BF_DBF_FRAME_INVERTBUFFORDER()
 		VCB_SAVE["DBF_GENERAL_invert"] = false
 		for i=0,15 do
 			getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
-			if VCB_SAVE["DBF_GENERAL_verticalmode"] then
-				getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+			if VCB_SAVE["DBF_GENERAL_invertorientation"] then
+				if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*i - floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
 			else
-				getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
 			end
 		end
 	else
@@ -2596,10 +2802,62 @@ function VCB_BF_DBF_FRAME_INVERTBUFFORDER()
 		for i=0,15 do
 			local j = 15-i
 			getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
-			if VCB_SAVE["DBF_GENERAL_verticalmode"] then
-				getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+			if VCB_SAVE["DBF_GENERAL_invertorientation"] then
+				if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*i - floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
 			else
-				getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
+			end
+		end
+	end
+end
+
+function VCB_BF_DBF_FRAME_INVERT_AURA_ORIENTATION()
+	if VCB_SAVE["DBF_GENERAL_invertorientation"] then
+		VCB_SAVE["DBF_GENERAL_invertorientation"] = false
+		for i=0,15 do
+			if VCB_SAVE["DBF_GENERAL_invert"] then
+				local j = 15-i
+				getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+				if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+				if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
+			end
+		end
+	else
+		VCB_SAVE["DBF_GENERAL_invertorientation"] = true
+		for i=0,15 do
+			if VCB_SAVE["DBF_GENERAL_invert"] then
+				local j = 15-i
+				getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
+				if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*i - floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i):ClearAllPoints()
+				if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+				else
+					getglobal("VCB_BF_DEBUFF_BUTTON"..i):SetPoint("TOPLEFT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*i - floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+				end
 			end
 		end
 	end

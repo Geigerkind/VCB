@@ -84,7 +84,7 @@
 			<OnLeave>
 				VCB_BF_CONSOLIDATED_ICONIcon:SetTexture(nil)
 				VCB_BF_CONSOLIDATED_ICONIcon:SetTexture("Interface\\AddOns\\VCB\\images\\"..VCB_SAVE["CF_icon_texture"]..".tga")
-				if (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) and (VCB_BF_LOCKED) then
+				if (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) then
 					VCB_BF_CONSOLIDATED_BUFFFRAME:Hide()
 				end
 			</OnLeave>
@@ -144,7 +144,7 @@
 				end
 			</OnEnter>
 			<OnLeave>
-				if (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) and (VCB_BF_LOCKED) then
+				if (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) then
 					this:Hide()
 				end
 			</OnLeave>
@@ -178,7 +178,7 @@
 				GameTooltip:SetPlayerBuff(this.buffIndex)
 			</OnEnter>
 			<OnLeave>
-				if this:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME and (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) and (VCB_BF_LOCKED) then
+				if this:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME and (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) then
 					VCB_BF_CONSOLIDATED_BUFFFRAME:Hide()
 				end
 				GameTooltip:Hide()

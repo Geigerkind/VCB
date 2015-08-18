@@ -236,11 +236,21 @@ function VCB_BF_RepositioningAndResizing()
 				end
 			end
 			if VCB_SAVE["BF_GENERAL_verticalmode"] then
-				VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*u)
-				button:SetPoint("TOP", VCB_BF_BUFF_FRAME, "BOTTOM", -(36+VCB_SAVE["BF_GENERAL_padding_h"])*floor((a+u-o)/(VCB_SAVE["BF_GENERAL_numperrow"])) + 10,-(44+VCB_SAVE["BF_GENERAL_padding_v"])*(a+u) + floor((a+u)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(44+VCB_SAVE["BF_GENERAL_padding_v"]) + 50)
+				if VCB_SAVE["BF_GENERAL_invertorientation"] then
+					VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPLEFT", VCB_BF_BUFF_FRAME, "BOTTOMLEFT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*(u-1)) -- WHY -1 ?!
+					button:SetPoint("TOPLEFT", VCB_BF_BUFF_FRAME, "BOTTOMLEFT", (36+VCB_SAVE["BF_GENERAL_padding_h"])*floor((a+u-o)/(VCB_SAVE["BF_GENERAL_numperrow"])),-(44+VCB_SAVE["BF_GENERAL_padding_v"])*(a+u) + floor((a+u)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(44+VCB_SAVE["BF_GENERAL_padding_v"]) + 50)
+				else
+					VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "BOTTOMRIGHT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*(u-1))
+					button:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "BOTTOMRIGHT", -(36+VCB_SAVE["BF_GENERAL_padding_h"])*floor((a+u-o)/(VCB_SAVE["BF_GENERAL_numperrow"])),-(44+VCB_SAVE["BF_GENERAL_padding_v"])*(a+u) + floor((a+u)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(44+VCB_SAVE["BF_GENERAL_padding_v"]) + 50)
+				end
 			else
-				VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
-				button:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*(a+u) + floor((a+u-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(32+VCB_SAVE["BF_GENERAL_padding_h"]) + (32+VCB_SAVE["BF_GENERAL_padding_h"])*CF,-(44+VCB_SAVE["BF_GENERAL_padding_v"])*floor((a+u-o-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]-o)))
+				if VCB_SAVE["BF_GENERAL_invertorientation"] then
+					VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPLEFT", (32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
+					button:SetPoint("TOPLEFT", VCB_BF_BUFF_FRAME, "TOPLEFT", (32+VCB_SAVE["BF_GENERAL_padding_h"])*(a+u) - floor((a+u-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(32+VCB_SAVE["BF_GENERAL_padding_h"]) - (32+VCB_SAVE["BF_GENERAL_padding_h"])*CF,-(44+VCB_SAVE["BF_GENERAL_padding_v"])*floor((a+u-o-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]-o)))
+				else
+					VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
+					button:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*(a+u) + floor((a+u-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(32+VCB_SAVE["BF_GENERAL_padding_h"]) + (32+VCB_SAVE["BF_GENERAL_padding_h"])*CF,-(44+VCB_SAVE["BF_GENERAL_padding_v"])*floor((a+u-o-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]-o)))
+				end
 			end
 			if VCB_SAVE["BF_TIMER_border"] then
 				buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"], "OUTLINE")
@@ -299,7 +309,11 @@ function VCB_BF_RepositioningAndResizing()
 		end
 		if parent == VCB_BF_CONSOLIDATED_BUFFFRAME and (button.buffIndex >= 0 or VCB_BF_DUMMY_MODE or (not VCB_BF_LOCKED)) then
 			button:ClearAllPoints()
-			button:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*b)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
+			if VCB_SAVE["CF_BF_invertorientation"] then
+				button:SetPoint("TOPLEFT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPLEFT", ((32+VCB_SAVE["CF_AURA_padding_h"])*b)-(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) - (ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
+			else
+				button:SetPoint("TOPRIGHT", VCB_BF_CONSOLIDATED_BUFFFRAME, "TOPRIGHT", (-(32+VCB_SAVE["CF_AURA_padding_h"])*b)+(24-0.5*VCB_SAVE["CF_AURA_padding_h"]) + (ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)*VCB_SAVE["CF_BF_numperrow"]*(32+VCB_SAVE["CF_AURA_padding_h"]),-(44+VCB_SAVE["CF_AURA_padding_v"])*(ceil(b/VCB_SAVE["CF_BF_numperrow"]) - 1)-(6+VCB_SAVE["CF_AURA_padding_v"]))
+			end
 			if VCB_SAVE["CF_TIMER_border"] then
 				buttonDuration:SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"], "OUTLINE")
 			else
@@ -603,10 +617,11 @@ function VCB_BF_ResizeConsolidatedFrame(i)
 	if p >= VCB_SAVE["CF_BF_numperrow"] then p = VCB_SAVE["CF_BF_numperrow"] end
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetWidth(16+2*VCB_SAVE["CF_AURA_padding_h"]+(p*(32+VCB_SAVE["CF_AURA_padding_h"])))
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetHeight(10+2*VCB_SAVE["CF_AURA_padding_v"]+(ceil(i/VCB_SAVE["CF_BF_numperrow"])*(44+VCB_SAVE["CF_AURA_padding_v"])))
-	
+
 	if i == 0 then 
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetWidth(0)
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetHeight(0)
+		VCB_BF_CONSOLIDATED_BUFFFRAME:Hide()
 	end
 end
 
@@ -685,30 +700,71 @@ function VCB_BF_WEAPON_BUTTON_OnEvent(bool)
 	local u = 0
 	if hasMainHandEnchant then u = u + 1 end
 	if hasOffHandEnchant then u = u + 1 end
+	VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
 	if VCB_SAVE["BF_GENERAL_verticalmode"] then
-		VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*u)
+		if VCB_SAVE["BF_GENERAL_invertorientation"] then
+			VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPLEFT", VCB_BF_BUFF_FRAME, "BOTTOMLEFT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*(u-1)) -- WHY?!
+		else
+			VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "BOTTOMRIGHT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*(u-1))
+		end
 	else
-		VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
+		if VCB_SAVE["BF_GENERAL_invertorientation"] then
+			VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPLEFT", (32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
+		else
+			VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
+		end
 	end
 	
 	if (not hasMainHandEnchant) and hasOffHandEnchant then -- Performance (?)
 		VCB_BF_WEAPON_BUTTON0:ClearAllPoints()
 		VCB_BF_WEAPON_BUTTON1:ClearAllPoints()
 		if VCB_SAVE["WP_GENERAL_attach"] then
-			VCB_BF_WEAPON_BUTTON0:SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT",-(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
+			if VCB_SAVE["BF_GENERAL_invertorientation"] then
+				if VCB_SAVE["BF_GENERAL_verticalmode"] then
+					VCB_BF_WEAPON_BUTTON0:SetPoint("TOPLEFT", VCB_BF_WEAPON_FRAME, "TOPLEFT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"]))
+				else
+					VCB_BF_WEAPON_BUTTON0:SetPoint("TOPLEFT", VCB_BF_WEAPON_FRAME, "TOPLEFT",(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
+				end
+			else
+				if VCB_SAVE["BF_GENERAL_verticalmode"] then
+					VCB_BF_WEAPON_BUTTON0:SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"]))
+				else
+					VCB_BF_WEAPON_BUTTON0:SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT",-(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
+				end
+			end
 		else
 			VCB_BF_WEAPON_BUTTON0:SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT",-(32+VCB_SAVE["WP_GENERAL_padding_h"]), 0)
 		end
-		VCB_BF_WEAPON_BUTTON1:SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT", 0, 0)
+		if VCB_SAVE["BF_GENERAL_invertorientation"] then
+			VCB_BF_WEAPON_BUTTON1:SetPoint("TOPLEFT", VCB_BF_WEAPON_FRAME, "TOPLEFT", 0, 0)
+		else
+			VCB_BF_WEAPON_BUTTON1:SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT", 0, 0)
+		end
 	else
 		VCB_BF_WEAPON_BUTTON0:ClearAllPoints()
 		VCB_BF_WEAPON_BUTTON1:ClearAllPoints()
 		if VCB_SAVE["WP_GENERAL_attach"] then
-			VCB_BF_WEAPON_BUTTON1:SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT",-(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
+			if VCB_SAVE["BF_GENERAL_invertorientation"] then
+				if VCB_SAVE["BF_GENERAL_verticalmode"] then
+					VCB_BF_WEAPON_BUTTON1:SetPoint("TOPLEFT", VCB_BF_WEAPON_FRAME, "TOPLEFT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"]))
+				else
+					VCB_BF_WEAPON_BUTTON1:SetPoint("TOPLEFT", VCB_BF_WEAPON_FRAME, "TOPLEFT",(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
+				end
+			else
+				if VCB_SAVE["BF_GENERAL_verticalmode"] then
+					VCB_BF_WEAPON_BUTTON1:SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"]))
+				else
+					VCB_BF_WEAPON_BUTTON1:SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT",-(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
+				end
+			end
 		else
 			VCB_BF_WEAPON_BUTTON1:SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT", -(32+VCB_SAVE["WP_GENERAL_padding_h"]), 0)
 		end
-		VCB_BF_WEAPON_BUTTON0:SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT", 0, 0)
+		if VCB_SAVE["BF_GENERAL_invertorientation"] then
+			VCB_BF_WEAPON_BUTTON0:SetPoint("TOPLEFT", VCB_BF_WEAPON_FRAME, "TOPLEFT", 0, 0)
+		else
+			VCB_BF_WEAPON_BUTTON0:SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT", 0, 0)
+		end
 	end
 	if VCB_SAVE["WP_GENERAL_attach"] and (bool) then
 		VCB_BF_RepositioningAndResizing()
@@ -925,8 +981,8 @@ function VCB_BF_Lock(lock)
 		VCB_SendMessage(VCB_LOCKED_FRAMES)
 	else
 		VCB_SendMessage(VCB_UNLOCKED_FRAMES)
-		VCB_BF_RepositioningAndResizing()
 	end
+	VCB_BF_RepositioningAndResizing()
 end
 
 function VCB_BF_DummyConfigMode_Enable()
@@ -952,10 +1008,18 @@ function VCB_BF_DummyConfigMode_Enable()
 				if VCB_SAVE["DBF_GENERAL_invert"] then
 					local j = 15-i
 					getglobal("VCB_BF_DEBUFF_BUTTON"..j):ClearAllPoints()
-					if VCB_SAVE["DBF_GENERAL_verticalmode"] then
-						getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+					if VCB_SAVE["DBF_GENERAL_invertorientation"] then
+						if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+							getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+						else
+							getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", (32+VCB_SAVE["DBF_GENERAL_padding_h"])*i - floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+						end
 					else
-						getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+						if VCB_SAVE["DBF_GENERAL_verticalmode"] then
+							getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(44+VCB_SAVE["DBF_GENERAL_padding_v"]))
+						else
+							getglobal("VCB_BF_DEBUFF_BUTTON"..j):SetPoint("TOPRIGHT", -(32+VCB_SAVE["DBF_GENERAL_padding_h"])*i + floor(i/VCB_SAVE["DBF_GENERAL_numperrow"])*VCB_SAVE["DBF_GENERAL_numperrow"]*(32+VCB_SAVE["DBF_GENERAL_padding_h"]), -(44+VCB_SAVE["DBF_GENERAL_padding_v"])*floor(i/VCB_SAVE["DBF_GENERAL_numperrow"]))
+						end
 					end
 				end
 				if i < 3 then
@@ -986,6 +1050,7 @@ function VCB_BF_DummyConfigMode_Disable()
 		end
 	end
 	VCB_BF_WEAPON_BUTTON_OnEvent(false)
+	VCB_BF_RepositioningAndResizing()
 end
 
 function VCB_BF_ConsolidatedAdd(name)

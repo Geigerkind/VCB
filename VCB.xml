@@ -343,6 +343,9 @@
 						if VCB_BF_DUMMY_MODE then
 							VCB_BF_DummyConfigMode_Disable()
 						else
+							if VCB_BF_CF_FRAME:IsVisible() or VCB_BF_CF_FRAME2:IsVisible() then
+								VCB_BF_CONSOLIDATED_BUFFFRAME:Show()
+							end
 							VCB_BF_DummyConfigMode_Enable()
 						end
 						PlaySound("igMainMenuOptionCheckBoxOff")
@@ -2816,6 +2819,27 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
+							<CheckButton name="VCB_BF_CF_FRAME_CHECKBUTTON_IBO" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_CHECKBUTTON_CBG" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="3"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = VCB_COMMON_BUTTON_INVERT_ORIENTATION_TOOLTIP
+										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_IBOText"):SetText(VCB_COMMON_BUTTON_INVERT_ORIENTATION)
+									</OnLoad>
+									<OnClick>
+										VCB_BF_CF_FRAME_INVERT_BUFF_ORIENTATION()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
 							<Slider name="VCB_BF_CF_FRAME_AnchorSlider" inherits="VCB_BF_SliderTemplate">
 								<Size>
 									<AbsDimension x="155" y="16"/>
@@ -3091,9 +3115,9 @@
 									<AbsDimension x="155" y="16"/>
 								</Size>
 								<Anchors>
-									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_CHECKBUTTON_CBG" relativePoint="BOTTOM">
+									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_CHECKBUTTON_IBO" relativePoint="BOTTOM">
 										<Offset>
-											<AbsDimension x="90" y="-30" />
+											<AbsDimension x="90" y="-13" />
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -4323,6 +4347,28 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
+							-- Checkbutton invert aura orientation
+							<CheckButton name="VCB_BF_BF_FRAME_CHECKBUTTON_IBO" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_BF_FRAME_CHECKBUTTON_FBorder" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = VCB_COMMON_BUTTON_INVERT_ORIENTATION_TOOLTIP
+										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON_IBOText"):SetText(VCB_COMMON_BUTTON_INVERT_ORIENTATION)
+									</OnLoad>
+									<OnClick>
+										VCB_BF_BF_FRAME_INVERT_AURA_ORIENTATION()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
 							-- COLOR PICKER
 							<Button name="VCB_BF_BF_FRAME_Color1">
 								<Size>
@@ -5501,6 +5547,28 @@
 									</OnLoad>
 									<OnClick>
 										VCB_BF_DBF_FRAME_G_ENABLE_BORDER()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							-- Checkbutton invert aura orientation
+							<CheckButton name="VCB_BF_DBF_FRAME_CHECKBUTTON_IBO" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_DBF_FRAME_CHECKBUTTON_FBorder" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = VCB_COMMON_BUTTON_INVERT_ORIENTATION_TOOLTIP
+										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON_IBOText"):SetText(VCB_COMMON_BUTTON_INVERT_ORIENTATION)
+									</OnLoad>
+									<OnClick>
+										VCB_BF_DBF_FRAME_INVERT_AURA_ORIENTATION()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
