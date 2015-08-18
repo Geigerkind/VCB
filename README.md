@@ -162,7 +162,135 @@ Everyone who contributes to this will be mentioned **in the About Tab** of the A
 -Added select font color colorpicker
 -Added font size slider
 -Added font opacity slider
---Added functions to those features mentioned above
+-Added functions to those features mentioned above
+-Implemented interface for the Buff Frame
+-Implemented interface for general options
+-For that:
+-Added vertical mode checkbutton
+-Added enable background color checkbutton
+-Added select background color colorpicker
+-Added invert order checkbutton
+-Added select font color colorpicker
+-Added enable font border checkbutton
+-Added invert aura orientation checkbutton
+-Added buffs per row slider
+-Added padding horizontal slider
+-Added padding vertical slider
+-Added font size slider
+-Added font offset x slider
+-Added background opacity slider
+-Added scale slider
+-Added font slider
+-Added font opacity slider
+-Added font offset y slider
+-Added functions for all those features mentioned above
+-Implemented border interface for the buff frame
+-For that:
+-Added enable border checkbutton
+-Added use custom border checkbutton
+-Added select border color color picker
+-Added custom border path editbox
+-Added background opacity slider
+-Added border slider
+-Added functions for all those features mentioned above
+-Implemented aura timer interface for the buff frame
+-Added enable font border checkbutton
+-Added select font color colorpicker
+-Added font size slider
+-Added font opacity slider
+-Added functions for all those features mentioned above
+-Implemented debuff frame
+-Implemented debuff general frame
+-For that:
+-Added vertical mode checkbutton
+-Added enable background color checkbutton
+-Added select background color colorpicker
+-Added invert order checkbutton
+-Added select font color colorpicker
+-Added enable font border checkbutton
+-Added invert aura orientation checkbutton
+-Added buffs per row slider
+-Added padding horizontal slider
+-Added padding vertical slider
+-Added font size slider
+-Added font offset x slider
+-Added background opacity slider
+-Added scale slider
+-Added font slider
+-Added font opacity slider
+-Added font offset y slider
+-Added function for all those features mentioned above for the debuff frame
+-Implemented debuff border interface
+-For that:
+-Added enable border checkbutton
+-Added use custom border checkbutton
+-Added custom border path editbox
+-Added border checkbutton
+-Added backgroundopacity checkbutton
+-Added colorpicker for each debuff type (none, poison, magic, curse, disease)
+-Added functions for all those features mentioned above
+-Implemented debuff aura timer interface
+-For that:
+-Added enable font border checkbutton
+-Added selct font color colorpicker
+-Added font size slider
+-Added font opacity slider
+-Added functions for all those features mentioned above
+-Implemented interface for the weapon frame
+-Implemented weapon general frame
+-For that:
+-Added vertical mode checkbutton
+-Added enable background color checkbutton
+-Added select background color colorpicker
+-Added attach to Buff-Frame checkbutton
+-Added select font color colorpicker
+-Added enable font border checkbutton
+-Added padding horizontal slider
+-Added padding vertical slider
+-Added font size slider
+-Added font offset x slider
+-Added font offset y slider
+-Added background opacity slider
+-Added scale slider
+-Added font slider
+-Added font opacity slider
+-Added functions for all those features mentioned above
+-Implemented weapon border interface
+-Added enable border checkbutton
+-Added enable custom border checkbutton
+-Added select border color colorpicker
+-Added custom border path editbox
+-Added border slider
+-Added background opacity slider
+-Added functions for all those features mentioned above
+-Implemented weapon aura timer interface
+-Added enable border checkbutton
+-Added select font color colorpicker
+-Added font size slider
+-Added font opacity slider
+-Added functions for all those features mentioned above
+-Implemented profile manager frame
+-For that:
+-Made profiles global for the whole account
+-Added a list for the profiles list
+-Added editbox to save a profile
+-Added editbox to delete and load a profile
+-Added a current profile frame
+-Added functions for all those features mentioned above
+-Implemented miscellaneous interface
+-Implemented miscellaneous general interface
+-For That:
+-Added disable consolidated mechanic (if you dont want (I mean who does not want it?!))
+-Added disable banning mechanic (If you dont need it)
+-Added Theme slider
+-Added load button
+-Added Default theme
+-Added functions for all those features mentioned above
+-Implemented about interface
+-Implemented all sorts of information for vcb
+-Implemented supporter tab
+-Done some polishing
+-Worked on the readme
 
 **v2.4:**  
 -Aura applications added  
