@@ -31,7 +31,16 @@ Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. Th
 
 ### Supporting ###
 
+This is AddOn has become very huge and for one person a gigantic task.  
+To keep this AddOn Up-To-Date, performant, clean and bugless, I need your help! 
+You can help by many ways:
+* [Report Bugs](https://bitbucket.org/Albea/vcb/issues?status=new&status=open), tell me how to reproduce them and improve everyones experience
+* Give your opinion about the AddOn and point out ideas in the forum threads ([Nostalrius](http://forum.nostalrius.org/viewtopic.php?f=63&t=18189) / [Kronos](http://forum.twinstar.cz/showthread.php/98688-RELEASE-VCB-Vanilla-Consolidated-Buff-Frames))
+* If you play on Kronos you can donate Gold to Shino (on Alliance). By that I can invest more time in programming instead of farming consumables.
 
+Everyone who contributes to this will be mentioned in the About Tab of the AddOn for an permanent time!
+
+![vUqDGgY.png](https://bitbucket.org/repo/54Xrdo/images/3261093832-vUqDGgY.png)
 
 ### Changelog ###
 
