@@ -28,6 +28,11 @@ Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. Th
 * Delete VCB_Buffframe.lua and VCB_Buffframe.lua.bak
 * Enjoy
 
+
+### Supporting ###
+
+
+
 ### Changelog ###
 
 
@@ -148,4 +153,8 @@ Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. Th
 
 ### Common Issues ###
 
-### Supporting ###
+
+```
+1. You have to bann/add buffs in the language of your client. If you ban an buff in english but you use an german client for example, it won't work.
+
+```
