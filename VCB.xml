@@ -3931,8 +3931,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_BORDER_TOOLTIP
-										getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON4Text"):SetText(VCB_COMMON_BUTTON_ENABLE_BORDER)
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_FONT_BORDER_TOOLTIP
+										getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON4Text"):SetText(VCB_COMMON_BUTTON_ENABLE_FONT_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CF_FRAME2_TIMER_ENABLEBORDER()
@@ -5134,8 +5134,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_BORDER_TOOLTIP
-										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON4Text"):SetText(VCB_COMMON_BUTTON_ENABLE_BORDER)
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_FONT_BORDER_TOOLTIP
+										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON4Text"):SetText(VCB_COMMON_BUTTON_ENABLE_FONT_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_BF_FRAME_TIMER_ENABLE_BORDER()
@@ -6597,8 +6597,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_BORDER_TOOLTIP
-										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON4Text"):SetText(VCB_COMMON_BUTTON_ENABLE_BORDER)
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_FONT_BORDER_TOOLTIP
+										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON4Text"):SetText(VCB_COMMON_BUTTON_ENABLE_FONT_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_DBF_FRAME_ENABLE_FONTBORDER()
@@ -7749,8 +7749,8 @@
 								</Anchors>
 								<Scripts>
 									<OnLoad>
-										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_BORDER_TOOLTIP
-										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON4Text"):SetText(VCB_COMMON_BUTTON_ENABLE_BORDER)
+										this.tooltipText = VCB_COMMON_BUTTON_ENABLE_FONT_BORDER_TOOLTIP
+										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON4Text"):SetText(VCB_COMMON_BUTTON_ENABLE_FONT_BORDER)
 									</OnLoad>
 									<OnClick>
 										VCB_BF_WP_FRAME_TIMER_ENABLE_BORDER()

@@ -873,7 +873,7 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_CF_FRAME_BackdropSlider"):SetValue(VCB_SAVE["CF_BF_background"])
 		getglobal("VCB_BF_CF_FRAME_BackdropSliderText"):SetText(VCB_CF_FRAME_BF_BACKGROUND..": "..VCB_SAVE["CF_BF_background"])
 		getglobal("VCB_BF_CF_FRAME_BorderOpaSlider"):SetValue(VCB_SAVE["CF_BF_borderopacity"])
-		getglobal("VCB_BF_CF_FRAME_BorderOpaSliderText"):SetText(VCB_COMMON_SLIDER_BACKGROUND_OPACITY..": "..VCB_SAVE["CF_BF_borderopacity"])
+		getglobal("VCB_BF_CF_FRAME_BorderOpaSliderText"):SetText(VCB_COMMON_SLIDER_BORDER_OPACITY..": "..VCB_SAVE["CF_BF_borderopacity"])
 		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_CBG"):SetChecked(VCB_SAVE["CF_BF_custombackground"])
 		getglobal("VCB_BF_CF_FRAME_EDITBOX_BACKGROUND"):SetText(VCB_SAVE["CF_BF_custombackgroundpath"])
 		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON2"):SetChecked(VCB_SAVE["CF_icon_possiblebuffs"])
@@ -1768,7 +1768,7 @@ end
 
 function VCB_BF_CF_FRAME_BorderOpaSliderChange(obj)
 	VCB_SAVE["CF_BF_borderopacity"] = string.format("%.1f", obj:GetValue())
-	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_BACKGROUND_OPACITY..": "..VCB_SAVE["CF_BF_borderopacity"])
+	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_BORDER_OPACITY..": "..VCB_SAVE["CF_BF_borderopacity"])
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
 end
 
