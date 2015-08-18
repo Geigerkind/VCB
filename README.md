@@ -30,21 +30,21 @@ Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. Th
 
 ### Changelog ###
 
-**v2.4*:**  
+***v2.4:**  
 -Aura applications added  
 
-*v2.3:*  
+**v2.3:**  
 -GameTooltips are now shown properly  
 -Auras arent funky anymore in the way of being displayed  
 
-*v2.2:*  
+**v2.2:**  
 -Timer finally fixed  
 -Performance updated  
 
-*v2.1:*  
+**v2.1:**  
 -Timer fixed  
 
-*v2.0:*  
+**v2.0:**  
 -Buffs are now displayed correctly after adding them to the list  
 -Debuffs can now be displayed twice  
 -Timer should be fixed now  
@@ -53,29 +53,29 @@ Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. Th
 -The module is now scalable  
 -The autounbuffer sends out a message if a buff is cancelled  
 
-*v1.9:*  
+**v1.9:**  
 -Hotfix for a function name error  
 
-*v1.8:*  
+**v1.8:**  
 -Clean up  
--Sol*ved some bugs  
+-Sol**ved some bugs  
 
-*v1.7:*  
+**v1.7:**  
 -A colored border depending on the debuff type was added at the debuffs  
 -Timer fixed  
 -Tooltips are now displayed properly  
 
-*v1.6:*  
+**v1.6:**  
 -Fully implemented Buff and Debuff Frames  
 -The Frame is now dragable  
 -Added the command "lock"  
 -Added the command "ra" to clear the cons. buff list  
 -Fixed some bugs  
--Did some *visual stuff  
+-Did some **visual stuff  
 
-*v1.5:*  
+**v1.5:**  
 -Some major bugs were fixed with the AutoUnbuffer  
--Some *visual bugs were fixed  
+-Some **visual bugs were fixed  
 -Buff Frames were implemented but not finished yet.  
 -The Addons were split from another so they work independently.  
 -The Command "Unbuff" was added for macro uses.  
