@@ -13,11 +13,19 @@ Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. Th
 * Customize the frames to your personal tastes
 * Nearly everything is customizable 
 
-### Contribution guidelines ###
+### Installing Instructions ###
 
-* Writing tests
-* Code review
-* Other guidelines
+* Download the AddOn [here](https://bitbucket.org/Albea/vcb/downloads)
+* Rename the unziped folder to "VCB"
+* Place the folder into your AddOn directory in your World of Warcraft folder
+* (If you had a previous version (<v2.5))
+* Go into your WTF/Account/ACCNAME/SavedVariables/
+* Delete VCB.lua and VCB.lua.bak
+* Go into your WTF/Account/ACCNAME/SERVER/CHARNAME/
+* Delete VCB.lua and VCB.lua.bak
+* Delete VCB_AutoUnbuffer.lua and VCB_AutoUnbuffer.lua.bak
+* Delete VCB_Buffframe.lua and VCB_Buffframe.lua.bak
+* Enjoy
 
 ### Who do I talk to? ###
 
