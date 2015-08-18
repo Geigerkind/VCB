@@ -6,6 +6,8 @@
 	---------------------------------LACALIZATION----------------------------------------------------------------
 	
 	<Script file="Interface\AddOns\VCB\localization\enUS.lua" />
+	<Script file="Interface\AddOns\VCB\localization\enGB.lua" />
+	<Script file="Interface\AddOns\VCB\localization\deDE.lua" />
 	
 	---------------------------------GENERAL FRAMES----------------------------------------------------------------
 	

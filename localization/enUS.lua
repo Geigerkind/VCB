@@ -1,4 +1,4 @@
-if (GetLocale() == "enUS") then
+
 	VCB_MINIMAP_TOOLTIP_NAME = "Vanilla Consolidate Buff-Frames"
 	VCB_MINIMAP_TOOLTIP_LEFTCLICK = "LeftClick: Toggle option menu"
 	VCB_MINIMAP_TOOLTIP_RIGHTCLICK = "RightClick: Toggle frame lock"
@@ -218,4 +218,4 @@ if (GetLocale() == "enUS") then
 	
 	VCB_LOCKED_FRAMES = "Locked the frames!"
 	VCB_UNLOCKED_FRAMES = "Unlocked the frames!"
-end
+
