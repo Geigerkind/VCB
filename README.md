@@ -30,7 +30,7 @@ Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. Th
 
 ### Changelog ###
 
-***v2.4:**  
+**v2.4:**  
 -Aura applications added  
 
 **v2.3:**  
