@@ -82,7 +82,57 @@ Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. Th
 
 ### Known Bugs ###
 
+**v2.4:**  
+- NONE  
+  
+**v2.3:**  
+- No aura applications  
+  
+**v2.2:**  
+- Aura frames sometimes dont vanish if they run out  
+- GameTooltip not shown in the consolidated frame  
+  
+**v2.1:**  
+- NONE  
+  
+**v2.0:**  
+- Timer still a bit funky -- FIXED  
+  
+**v1.9:**  
+- Buffs are not displayed correctly after adding them to the list (relogg fixes this problem) -- FIXED  
+- Debuffs who are applied twice are not displayed correctly -- FIXED  
+- Timer are not working correctly sometimes -- FIXED  
+- All aura frames pop up the consolidated buff frame -- FIXED 
+
+
 ### Ideas ###
+
+    Fender:
+    - Mirror consolidated buff frame
+    - Change order off buffs in the consolidated buff frame
+    - Change order in general
+    - Create an system to order buffs
+
+    Moosic:
+    - Scale the whole module -- DONE
+    - Change the buff border's color (red to gold/black(?)) -- DONE
+
+    Ayz:
+    - Let buffs and debuffs be movable independently of each other
+    - let the timers scale together with the icon-size, currently the timers are same size regardless of icon size
+    - option to show timers as example 0:24 instead of 24s
+
+    Hallonkaka:
+    * Option to have buffs/debuffs flashing then they just have a couple of seconds left, like the normal buffbar
+    * Make the frames less mushed when there's no buffs ([url=http://i.imgur.com/SRFLNH3.png]Image[/url])
+    * Had some issues with trying to move the frame, but realized later that i need to click to the left of the icon to move it. so make the icon the thing to click
+
+    One major improvement could be to make it really like retail and have a counter that shows how many buffs out of how many possible buffs you have.
+
+    Example: you add the buff "Power Word: Fortitude" along with the class "Priest", so whenever a priest is in your group, it will show 0/1 if the priest hasn't buffed stamina.
+
+    the visual part with grayed out icons for missing buffs when you hover over the icon is probably a bit harder (or just annoying to code) so a simple list with "Missing Buffs" would work just as fine.
+
 
 ### Common Issues ###
 
