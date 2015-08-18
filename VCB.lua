@@ -726,20 +726,7 @@ end
 
 function VCB_SlashCommandHandler(msg)
 	if(msg) then
-		local cmd = string.lower(msg)
-		if string.sub(cmd, 1, 5) == VCB_COMMON_SLIDER_SCALE.."" and IsAddOnLoaded("VCB_Buffframe") then
-			if string.len(cmd) > 6 then
-				local scale = string.sub(cmd, 7, string.len(cmd))
-				VCB_BF:Scale(tonumber(scale))
-			end
-		elseif string.sub(cmd, 1, 6) == "unbuff" and IsAddOnLoaded("VCB_AutoUnbuffer") then
-			if string.len(cmd) > 7 then
-				local unbuff = string.sub(cmd, 8, string.len(cmd))
-				VCB_AU:Unbuff(unbuff)
-			end
-		else
-			VCB_BF_ConfigFrame:Show()
-		end
+		VCB_BF_ConfigFrame:Show()
 	end
 end
 
