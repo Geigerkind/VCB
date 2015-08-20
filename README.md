@@ -397,6 +397,7 @@ Everyone who contributes to this will be mentioned **in the About Tab** of the A
 - Let buffs and debuffs be movable independently of each other -- DONE  
 - let the timers scale together with the icon-size, currently the timers are same size regardless of icon size -- DONE  
 - option to show timers as example 0:24 instead of 24s -- DONE  
+- Enable consolidated buffs for target debuffs - would be useful in raids for some classes if not all
   
 **Hallonkaka:**  
 - Option to have buffs/debuffs flashing then they just have a couple of seconds left, like the normal buffbar -- DONE  
