@@ -99,7 +99,7 @@ function VCB_BF_CreateBuffButtons()
 end
 
 function VCB_BF_BUFF_BUTTON_Update(button)
-	if (VCB_BF_DUMMY_MODE == false) then
+	if (VCB_BF_DUMMY_MODE == false and VCB_IS_LOADED) then
 		local buffIndex, untilCancelled = GetPlayerBuff(button:GetID(), button.buffFilter);
 		button.buffIndex = buffIndex;
 		button.untilCancelled = untilCancelled;
@@ -217,6 +217,8 @@ function VCB_BF_RepositioningAndResizing()
 			button:SetParent(VCB_BF_BUFF_FRAME)
 			CF = 1
 		end
+		
+		if (not button.buffIndex) then break end -- for /reload function
 		
 		if parent == VCB_BF_BUFF_FRAME and (button.buffIndex >= 0 or VCB_BF_DUMMY_MODE or (not VCB_BF_LOCKED)) then
 			button:ClearAllPoints()

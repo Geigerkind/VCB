@@ -165,7 +165,9 @@
 				VCB_BF_BUFF_BUTTON_Update(this)
 			</OnEvent>
 			<OnUpdate>
-				VCB_BF_BUFF_BUTTON_OnUpdate(arg1, this)
+				if VCB_IS_LOADED then
+					VCB_BF_BUFF_BUTTON_OnUpdate(arg1, this)
+				end
 			</OnUpdate>
 			<OnClick>
 				VCB_BF_BUFF_BUTTON_OnClick(this)

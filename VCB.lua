@@ -231,7 +231,6 @@ VCB_THEME[1] = {
 --]]
 function VCB_OnLoad()
 	this:RegisterEvent("ADDON_LOADED")
-	this:RegisterEvent("PLAYER_ENTERING_WORLD")
 	this:RegisterEvent("PARTY_MEMBERS_CHANGED")
 	this:RegisterEvent("RAID_ROSTER_UPDATE")
 
@@ -247,7 +246,7 @@ function VCB_OnLoad()
 end
 
 function VCB_OnEvent(event)
-	if event == "ADDON_LOADED" and not VCB_IS_LOADED then
+	if event == "ADDON_LOADED" and VCB_IS_LOADED == false then
 		if VCB_SAVE == nil then
 			VCB_SAVE = {}
 			VCB_SAVE = {
@@ -490,12 +489,10 @@ function VCB_OnEvent(event)
 		if VCB_WP_POINT == nil then
 			VCB_WP_POINT = "CENTER"
 		end
-		
-		VCB_IS_LOADED = true
-	elseif event == "PLAYER_ENTERING_WORLD" then
 		VCB_INITIALIZE()
 		VCB_BF_Lock(VCB_BF_LOCKED)
-	elseif event == "PARTY_MEMBERS_CHANGED" or event == "RAID_ROSTER_UPDATE" then
+		VCB_IS_LOADED = true
+	elseif (event == "PARTY_MEMBERS_CHANGED" or event == "RAID_ROSTER_UPDATE") then
 		if VCB_SAVE["CF_icon_possiblebuffs"] then
 			VCB_BF_RepositioningAndResizing()
 		end
@@ -539,73 +536,6 @@ function VCB_INITIALIZE()
 	end
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
-	--[=====[ 
-	-- Commented it out since it is called in VCB_BF_RepositioningAndResizing anyway
-	for i=0,31 do
-		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
-			if VCB_SAVE["CF_AURA_enableborder"] then
-				if VCB_SAVE["CF_AURA_customborder"] then
-					getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_SAVE["CF_AURA_customborderpath"])
-				else
-					getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["CF_AURA_border"]])
-				end
-			else
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
-			end
-			getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopactiy"])
-			if VCB_SAVE["CF_AURA_enablebgcolor"] then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon"):SetVertexColor(VCB_SAVE["CF_AURA_bgcolor_r"],VCB_SAVE["CF_AURA_bgcolor_g"],VCB_SAVE["CF_AURA_bgcolor_b"],VCB_SAVE["CF_AURA_bgcolor_b"])
-			else
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon"):SetVertexColor(1,1,1,VCB_SAVE["CF_AURA_bgcolor_b"])
-			end
-			if VCB_SAVE["CF_TIMER_border"] then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"], "OUTLINE")
-			else
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"])
-			end
-			getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetTextColor(VCB_SAVE["CF_TIMER_fontcolor_r"],VCB_SAVE["CF_TIMER_fontcolor_g"],VCB_SAVE["CF_TIMER_fontcolor_b"],VCB_SAVE["CF_TIMER_fontopacity"])
-			if VCB_SAVE["CF_AURA_enablefontborder"] then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
-			else
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"])
-			end
-			getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetVertexColor(VCB_SAVE["CF_AURA_fontcolor_r"],VCB_SAVE["CF_AURA_fontcolor_g"],VCB_SAVE["CF_AURA_fontcolor_b"],VCB_SAVE["CF_AURA_fontopacity"])
-			getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):ClearAllPoints()
-			getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetPoint("BOTTOMRIGHT", VCB_SAVE["CF_AURA_fontoffset_x"], VCB_SAVE["CF_AURA_fontoffset_y"])
-		else
-			if VCB_SAVE["BF_GENERAL_enablebgcolor"] then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon"):SetVertexColor(VCB_SAVE["BF_GENERAL_bgcolor_r"],VCB_SAVE["BF_GENERAL_bgcolor_g"],VCB_SAVE["BF_GENERAL_bgcolor_b"],VCB_SAVE["BF_GENERAL_bgopacity"])
-			else
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon"):SetVertexColor(1,1,1,VCB_SAVE["BF_GENERAL_bgopacity"])
-			end
-			if VCB_SAVE["BF_BORDER_enableborder"] then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
-				if VCB_SAVE["BF_BORDER_usecustomborder"] then
-					getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_SAVE["BF_BORDER_customborderpath"])
-				else
-					getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["BF_BORDER_border"]])
-				end
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["BF_BORDER_bordercolor_r"],VCB_SAVE["BF_BORDER_bordercolor_g"],VCB_SAVE["BF_BORDER_bordercolor_b"],VCB_SAVE["BF_BORDER_borderopacity"])
-			else
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
-			end
-			if VCB_SAVE["BF_TIMER_border"] then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"], "OUTLINE")
-			else
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"])
-			end
-			getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetTextColor(VCB_SAVE["BF_TIMER_fontcolor_r"],VCB_SAVE["BF_TIMER_fontcolor_g"],VCB_SAVE["BF_TIMER_fontcolor_b"],VCB_SAVE["BF_TIMER_fontopacity"])
-			if VCB_SAVE["BF_GENERAL_enableborder"] then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")
-			else
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"])
-			end
-			getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetVertexColor(VCB_SAVE["BF_GENERAL_fontcolor_r"],VCB_SAVE["BF_GENERAL_fontcolor_g"],VCB_SAVE["BF_GENERAL_fontcolor_b"],VCB_SAVE["BF_GENERAL_fontopacity"])
-			getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):ClearAllPoints()
-			getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetPoint("BOTTOMRIGHT", VCB_SAVE["BF_GENERAL_fontoffset_x"], VCB_SAVE["BF_GENERAL_fontoffset_y"])
-		end
-	end
-	--]=====] 
 	for i=0,15 do
 		if VCB_SAVE["DBF_GENERAL_invertorientation"] then
 			if VCB_SAVE["DBF_GENERAL_invert"] then
