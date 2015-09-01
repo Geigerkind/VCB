@@ -3,7 +3,7 @@
 
 -- Global variables
 VCB_NAME = "Vanilla Consolidate Buffs"
-VCB_VERSION = "2.5"
+VCB_VERSION = "2.6"
 VCB_IS_LOADED = false
 VCB_BF_DUMMY_MODE = false
 VCB_FONT_ARRAY = {}

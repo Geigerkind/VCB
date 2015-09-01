@@ -1,14 +1,14 @@
 ## Interface: 10900
-## Title: Vanilla Consolidate Buff-Frames |cFFFF8080-Shino-|r
-## Title-deDE: Vanilla Consolidate Buff-Frames |cFFFF8080-Shino-|r
-## Title-enGB: Vanilla Consolidate Buff-Frames |cFFFF8080-Shino-|r
+## Title: VCB |cFFFF8080-Shino-|r
+## Title-deDE: VCB |cFFFF8080-Shino-|r
+## Title-enGB: VCB |cFFFF8080-Shino-|r
 ## Notes: Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. The AddOn provides a lot functions to customize it to your tastes and adds a lot of helpful functions for a better overview, which is its purpose in the first place anyway.
 ## Notes-deDE: Vanilla Consolidate Buff-Frames (VCB) ist ein intelligentes Aura-Verwaltungs-System. Es verfügt über zahlreichen Funktionen, um das Modul nach eigenen Wünschen zu gestalten. Hauptsächlich verbessert es aber die Übersicht, was auch sein Hauptzweck ist.
 ## Notes-enGB: Vanilla Consolidate Buff-Frames (VCB) is a smart system to manage your auras. The AddOn provides a lot functions to customize it to your tastes and adds a lot of helpful functions for a better overview, which is its purpose in the first place anyway.
 ## Author: Shino <Synced> - Kronos
 ## SavedVariables: VCB_Profile, VCB_Profile_Name
 ## SavedVariablesPerCharacter: Consolidated_Buffs, Banned_Buffs, VCB_BF_LOCKED, VCB_SAVE, VCB_CUR_PROFILE, VCB_WP_POSX, VCB_WP_POSY, VCB_WP_POINT
-## Version: 2.5
+## Version: 2.6
 VCB.lua
 VCB_Buffframe.lua
 VCB.xml
