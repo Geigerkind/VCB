@@ -2025,7 +2025,7 @@
 				<Frames>
 					<Frame name="VCB_BF_TIMER_FRAME_GENERAL_FRAME">
 						<Size>
-							<AbsDimension x="580" y="170"/>
+							<AbsDimension x="580" y="200"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
@@ -2215,6 +2215,76 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
+							<CheckButton name="VCB_BF_TIMER_FRAME_CHECKBUTTON9" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_TIMER_FRAME_CHECKBUTTON8" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = VCB_TIMER_FRAME_COLOR_BELOW_60_TOOLTIP
+										getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON9Text"):SetText(VCB_TIMER_FRAME_COLOR_BELOW_60)
+									</OnLoad>
+									<OnClick>
+										VCB_BF_CHECKBUTTON("Timer_below_60")
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<Button name="VCB_BF_TIMER_FRAME_Color">
+								<Size>
+									<AbsDimension x="16" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="VCB_BF_TIMER_FRAME_CHECKBUTTON9" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="130" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer level="BACKGROUND">
+										<Texture name="$parent_SwatchBg">
+											<Size>
+												<AbsDimension x="14" y="14"/>
+											</Size>
+											<Anchors>
+												<Anchor point="CENTER">
+													<Offset>
+														<AbsDimension x="0" y="0"/>
+													</Offset>
+												</Anchor>
+											</Anchors>
+											<Color r="1.0" g="1.0" b="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnLoad>
+										getglobal(this:GetName().."_SwatchBg").r = 1.0;
+										getglobal(this:GetName().."_SwatchBg").g = 1.0;
+										getglobal(this:GetName().."_SwatchBg").b = 1.0;
+									</OnLoad>
+									<OnClick>
+										VCB_BF_OpenColorPicker(this, "Timer_below_60_", nil, "NONE");
+									</OnClick>
+									<OnEnter>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(NORMAL_FONT_COLOR.r, NORMAL_FONT_COLOR.g, NORMAL_FONT_COLOR.b);
+										GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+										GameTooltip:SetText(VCB_COMMON_COLOR_FONTCOLOR_TOOLTIP, nil, nil, nil, nil, 1);
+									</OnEnter>
+									<OnLeave>
+										getglobal(this:GetName().."_SwatchBg"):SetVertexColor(HIGHLIGHT_FONT_COLOR.r, HIGHLIGHT_FONT_COLOR.g, HIGHLIGHT_FONT_COLOR.b);
+										GameTooltip:Hide();
+									</OnLeave>
+								</Scripts>
+								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
+							</Button>
 							<Slider name="VCB_BF_TIMER_FRAME_FontSlider" inherits="VCB_BF_SliderTemplate">
 								<Size>
 									<AbsDimension x="180" y="16"/>
@@ -2313,7 +2383,7 @@
 				<Frames>
 					<Frame name="VCB_BF_CF_FRAME_CI_FRAME">
 						<Size>
-							<AbsDimension x="580" y="150"/>
+							<AbsDimension x="580" y="153"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="VCB_BF_CF_FRAME" relativePoint="TOPLEFT">
@@ -2460,6 +2530,27 @@
 									</OnLoad>
 									<OnClick>
 										VCB_BF_CF_FRAME_CHECKBUTTON_BORDER_CLICK()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="VCB_BF_CF_FRAME_CHECKBUTTON_ATTACH" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_CHECKBUTTON_BORDER" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = VCB_WP_FRAME_ATTACH_TO_BF_FRAME_TOOLTIP
+										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_ATTACHText"):SetText(VCB_WP_FRAME_ATTACH_TO_BF_FRAME)
+									</OnLoad>
+									<OnClick>
+										VCB_BF_CF_FRAME_CHECKBUTTON_ATTACH_CLICK()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -2612,7 +2703,7 @@
 						<Anchors>
 							<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_CI_FRAME" relativePoint="BOTTOM">
 								<Offset>
-									<AbsDimension x="0" y="-20"/>
+									<AbsDimension x="0" y="-18"/>
 								</Offset>
 							</Anchor>
 						</Anchors>

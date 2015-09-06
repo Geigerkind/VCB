@@ -1,6 +1,6 @@
 if (GetLocale() == "deDE") then
 	VCB_MAIN_NAME = "Vanilla Consolidate Buff-Frames"
-	VCB_MAIN_VERSION = "v2.6"
+	VCB_MAIN_VERSION = "v2.7"
 	VCB_MINIMAP_TOOLTIP_NAME = "Vanilla Consolidate Buff-Frames"
 	VCB_MINIMAP_TOOLTIP_LEFTCLICK = "Linksklick: Zeige/ Verstecke das Menü"
 	VCB_MINIMAP_TOOLTIP_RIGHTCLICK = "Rechtsklick: (Un)/fixiere die Fenster"
@@ -55,6 +55,8 @@ if (GetLocale() == "deDE") then
 	VCB_TIMER_FRAME_ROUND_UP_TOOLTIP = "Kreuze das an, um die verbleibende Zeit aufzurunden. Zum Beispiel: 70 Sekunden -> 2 Minuten."
 	VCB_TIMER_FRAME_FLASH = "Aktiviere Blink-Animation"
 	VCB_TIMER_FRAME_FLASH_TOOLTIP = "Kreuze das an, um die Blink-Animation zu aktivieren, wenn weniger als 30 Sekunden verbleiben."
+	VCB_TIMER_FRAME_COLOR_BELOW_60 = "Farbe unter 60s"
+	VCB_TIMER_FRAME_COLOR_BELOW_60_TOOLTIP = "Kreuze das an, um die Farbe zu ändern, wenn weniger als 60s verbleiben."
 	VCB_CF_FRAME_POSSIBLE_BUFFS = "Zeige die Anzahl an möglichen Buffs"
 	VCB_CF_FRAME_POSSIBLE_BUFFS_TOOLTIP = "Kreuze das an, um die Anzahl an möglichen Buffs anzeigen zu lassen, die theoretisch konsolidiert sein könnten."
 	VCB_CF_FRAME_SHOW_PB_GRAYED_OUT = "Zeige fehlende Buffs (ausgegraut)"

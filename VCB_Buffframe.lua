@@ -227,30 +227,42 @@ function VCB_BF_RepositioningAndResizing()
 			if VCB_SAVE["WP_GENERAL_attach"] then
 				if VCB_BF_DUMMY_MODE then
 					u = 2
+					if (not VCB_SAVE["CF_icon_attach"]) then u = u - 1 end
 				else
 					local hasMainHandEnchant, mainHandExpiration, mainHandCharges, hasOffHandEnchant, offHandExpiration, offHandCharges = GetWeaponEnchantInfo()
 					if hasMainHandEnchant then u = u + 1 end
 					if hasOffHandEnchant then u = u + 1 end
+					if (not VCB_SAVE["CF_icon_attach"]) then u = u - 1 end
 				end
-				VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
+				if VCB_SAVE["CF_icon_attach"] then
+					VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
+				end
 				if a <= (VCB_SAVE["BF_GENERAL_numperrow"]-(3-CF)) then
 					o = u
 				end
 			end
 			if VCB_SAVE["BF_GENERAL_verticalmode"] then
 				if VCB_SAVE["BF_GENERAL_invertorientation"] then
-					VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPLEFT", VCB_BF_BUFF_FRAME, "BOTTOMLEFT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*(u-1)) -- WHY -1 ?!
+					if VCB_SAVE["CF_icon_attach"] then
+						VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPLEFT", VCB_BF_BUFF_FRAME, "BOTTOMLEFT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*(u-1)) -- WHY -1 ?!
+					end
 					button:SetPoint("TOPLEFT", VCB_BF_BUFF_FRAME, "BOTTOMLEFT", (36+VCB_SAVE["BF_GENERAL_padding_h"])*floor((a+u-o)/(VCB_SAVE["BF_GENERAL_numperrow"])),-(44+VCB_SAVE["BF_GENERAL_padding_v"])*(a+u) + floor((a+u)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(44+VCB_SAVE["BF_GENERAL_padding_v"]) + 50)
 				else
-					VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "BOTTOMRIGHT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*(u-1))
+					if VCB_SAVE["CF_icon_attach"] then
+						VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "BOTTOMRIGHT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*(u-1))
+					end
 					button:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "BOTTOMRIGHT", -(36+VCB_SAVE["BF_GENERAL_padding_h"])*floor((a+u-o)/(VCB_SAVE["BF_GENERAL_numperrow"])),-(44+VCB_SAVE["BF_GENERAL_padding_v"])*(a+u) + floor((a+u)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(44+VCB_SAVE["BF_GENERAL_padding_v"]) + 50)
 				end
 			else
 				if VCB_SAVE["BF_GENERAL_invertorientation"] then
-					VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPLEFT", (32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
+					if VCB_SAVE["CF_icon_attach"] then
+						VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPLEFT", (32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
+					end
 					button:SetPoint("TOPLEFT", VCB_BF_BUFF_FRAME, "TOPLEFT", (32+VCB_SAVE["BF_GENERAL_padding_h"])*(a+u) - floor((a+u-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(32+VCB_SAVE["BF_GENERAL_padding_h"]) - (32+VCB_SAVE["BF_GENERAL_padding_h"])*CF,-(44+VCB_SAVE["BF_GENERAL_padding_v"])*floor((a+u-o-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]-o)))
 				else
-					VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
+					if VCB_SAVE["CF_icon_attach"] then
+						VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
+					end
 					button:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*(a+u) + floor((a+u-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(32+VCB_SAVE["BF_GENERAL_padding_h"]) + (32+VCB_SAVE["BF_GENERAL_padding_h"])*CF,-(44+VCB_SAVE["BF_GENERAL_padding_v"])*floor((a+u-o-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]-o)))
 				end
 			end
@@ -647,10 +659,18 @@ function VCB_BF_BUFF_BUTTON_OnUpdate(elapsed, button)
 		-- Update duration
 		if (timeLeft>0 or VCB_BF_DUMMY_MODE) then
 			if VCB_BF_DUMMY_MODE then
-				buffDuration:SetText(VCB_BF_GetDuration(random(1,150)+(random(1,99)/100)))
-			else
-				buffDuration:SetText(VCB_BF_GetDuration(timeLeft))
+				timeLeft = random(1,150)+(random(1,99)/100)
 			end
+			if VCB_SAVE["Timer_below_60"] and timeLeft < 60 then
+				buffDuration:SetTextColor(VCB_SAVE["Timer_below_60_color_r"],VCB_SAVE["Timer_below_60_color_g"],VCB_SAVE["Timer_below_60_color_b"])
+			else
+				if button.cat == "buff" then
+					buffDuration:SetTextColor(VCB_SAVE["BF_TIMER_fontcolor_r"],VCB_SAVE["BF_TIMER_fontcolor_g"],VCB_SAVE["BF_TIMER_fontcolor_b"])
+				elseif button.cat == "debuff" then
+					buffDuration:SetTextColor(VCB_SAVE["DBF_TIMER_fontcolor_r"],VCB_SAVE["DBF_TIMER_fontcolor_g"],VCB_SAVE["DBF_TIMER_fontcolor_b"])
+				end
+			end
+			buffDuration:SetText(VCB_BF_GetDuration(timeLeft))
 			buffDuration:Show()
 		else
 			buffDuration:Hide()
@@ -702,18 +722,20 @@ function VCB_BF_WEAPON_BUTTON_OnEvent(bool)
 	local u = 0
 	if hasMainHandEnchant then u = u + 1 end
 	if hasOffHandEnchant then u = u + 1 end
-	VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
-	if VCB_SAVE["BF_GENERAL_verticalmode"] then
-		if VCB_SAVE["BF_GENERAL_invertorientation"] then
-			VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPLEFT", VCB_BF_BUFF_FRAME, "BOTTOMLEFT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*(u-1)) -- WHY?!
+	if VCB_SAVE["CF_icon_attach"] then
+		VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
+		if VCB_SAVE["BF_GENERAL_verticalmode"] then
+			if VCB_SAVE["BF_GENERAL_invertorientation"] then
+				VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPLEFT", VCB_BF_BUFF_FRAME, "BOTTOMLEFT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*(u-1)) -- WHY?!
+			else
+				VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "BOTTOMRIGHT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*(u-1))
+			end
 		else
-			VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "BOTTOMRIGHT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*(u-1))
-		end
-	else
-		if VCB_SAVE["BF_GENERAL_invertorientation"] then
-			VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPLEFT", (32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
-		else
-			VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
+			if VCB_SAVE["BF_GENERAL_invertorientation"] then
+				VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPLEFT", (32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
+			else
+				VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
+			end
 		end
 	end
 	
@@ -960,9 +982,11 @@ function VCB_BF_ToggleLock()
 	if (not VCB_BF_LOCKED) then
 		VCB_BF_LOCKED = true
 		VCB_BF_Lock(true)
+		VCB_SendMessage(VCB_LOCKED_FRAMES)
 	else
 		VCB_BF_LOCKED = false
 		VCB_BF_Lock(false)
+		VCB_SendMessage(VCB_UNLOCKED_FRAMES)
 	end
 end
 
@@ -978,11 +1002,6 @@ function VCB_BF_Lock(lock)
 				getglobal(templateName..i.."_Ghost_Texture"):Show()
 			end
 		end
-	end
-	if (lock) then
-		VCB_SendMessage(VCB_LOCKED_FRAMES)
-	else
-		VCB_SendMessage(VCB_UNLOCKED_FRAMES)
 	end
 	VCB_BF_RepositioningAndResizing()
 end

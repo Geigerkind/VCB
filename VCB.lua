@@ -3,7 +3,7 @@
 
 -- Global variables
 VCB_NAME = "Vanilla Consolidate Buffs"
-VCB_VERSION = "2.6"
+VCB_VERSION = "2.7"
 VCB_IS_LOADED = false
 VCB_BF_DUMMY_MODE = false
 VCB_FONT_ARRAY = {}
@@ -45,6 +45,10 @@ VCB_THEME[1] = {
 	Timer_round = false,
 	Timer_font = "FRIZQT__.ttf",
 	Timer_flash = false,
+	Timer_below_60 = false,
+	Timer_below_60_color_r = 1,
+	Timer_below_60_color_g = 0.82,
+	Timer_below_60_color_b = 0,
 	CF_icon_color_r = 1,
 	CF_icon_color_g = 1,
 	CF_icon_color_b = 1,
@@ -56,6 +60,7 @@ VCB_THEME[1] = {
 	CF_icon_border = true,
 	CF_icon_possiblebuffs = false,
 	CF_icon_showpbgrayedout = false,
+	CF_icon_attach = true,
 	CF_BF_anchor = 1,
 	CF_BF_scale = 1,
 	CF_BF_invert = false,
@@ -258,6 +263,9 @@ function VCB_OnEvent(event)
 				Timer_round = false,
 				Timer_font = "FRIZQT__.ttf",
 				Timer_flash = false,
+				Timer_below_60 = false,
+				Timer_below_60_color_g = 0.82,
+				Timer_below_60_color_b = 0,
 				CF_icon_color_r = 1,
 				CF_icon_color_g = 1,
 				CF_icon_color_b = 1,
@@ -269,6 +277,7 @@ function VCB_OnEvent(event)
 				CF_icon_border = true,
 				CF_icon_possiblebuffs = false,
 				CF_icon_showpbgrayedout = false,
+				CF_icon_attach = true,
 				CF_BF_anchor = 1,
 				CF_BF_scale = 1,
 				CF_BF_invert = false,
@@ -484,11 +493,28 @@ function VCB_OnEvent(event)
 			VCB_WP_POSX = 0
 		end
 		if VCB_WP_POSY == nil then
-			VCB_WP_POSX = 0
+			VCB_WP_POSY = 0
 		end
 		if VCB_WP_POINT == nil then
 			VCB_WP_POINT = "CENTER"
 		end
+		if VCB_ICON_POSX == nil then
+			VCB_ICON_POSX = 0
+		end
+		if VCB_ICON_POSY == nil then
+			VCB_ICON_POSY = 0
+		end
+		if VCB_ICON_POINT == nil then
+			VCB_ICON_POINT = "CENTER"
+		end
+		
+		-- New variables since v2.5:
+		if VCB_SAVE["Timer_below_60"] == nil then VCB_SAVE["Timer_below_60"] = false end
+		if VCB_SAVE["Timer_below_60_color_r"] == nil then VCB_SAVE["Timer_below_60_color_r"] = 1 end
+		if VCB_SAVE["Timer_below_60_color_g"] == nil then VCB_SAVE["Timer_below_60_color_g"] = 0.82 end
+		if VCB_SAVE["Timer_below_60_color_b"] == nil then VCB_SAVE["Timer_below_60_color_b"] = 0 end
+		if VCB_SAVE["CF_icon_attach"] == nil then VCB_SAVE["CF_icon_attach"] = true end
+		
 		VCB_INITIALIZE()
 		VCB_BF_Lock(VCB_BF_LOCKED)
 		VCB_IS_LOADED = true
@@ -604,9 +630,9 @@ function VCB_INITIALIZE()
 	for i=0,1 do
 		getglobal("VCB_BF_WEAPON_BUTTON"..i):ClearAllPoints()
 		if VCB_SAVE["WP_GENERAL_verticalmode"] then
-			getglobal("VCB_BF_WEAPON_BUTTON"..i):SetPoint("TOPRIGHT", 0, -(44+VCB_SAVE["WP_GENERAL_padding_v"])*i)
+			getglobal("VCB_BF_WEAPON_BUTTON"..i):SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT", 0, -(44+VCB_SAVE["WP_GENERAL_padding_v"])*i)
 		else
-			getglobal("VCB_BF_WEAPON_BUTTON"..i):SetPoint("TOPRIGHT", -(32+VCB_SAVE["WP_GENERAL_padding_h"])*i, 0)
+			getglobal("VCB_BF_WEAPON_BUTTON"..i):SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT", -(32+VCB_SAVE["WP_GENERAL_padding_h"])*i, 0)
 		end
 		if VCB_SAVE["WP_GENERAL_enablebgcolor"] then
 			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Icon"):SetVertexColor(VCB_SAVE["WP_GENERAL_bgcolor_r"],VCB_SAVE["WP_GENERAL_bgcolor_g"],VCB_SAVE["WP_GENERAL_bgcolor_b"],VCB_SAVE["WP_GENERAL_bgopacity"])
@@ -636,28 +662,27 @@ function VCB_INITIALIZE()
 		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetPoint("BOTTOMRIGHT", VCB_SAVE["WP_GENERAL_offset_x"], VCB_SAVE["WP_GENERAL_offset_y"])
 		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetTextColor(VCB_SAVE["WP_TIMER_fontcolor_r"],VCB_SAVE["WP_TIMER_fontcolor_g"],VCB_SAVE["WP_TIMER_fontcolor_b"],VCB_SAVE["WP_TIMER_fontopacity"])
 	end
-	VCB_BF_WEAPON_FRAME:ClearAllPoints()
 	VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
-	if VCB_SAVE["WP_GENERAL_attach"] then
-		VCB_BF_WEAPON_FRAME:SetParent(VCB_BF_BUFF_FRAME)
-		VCB_BF_WEAPON_FRAME:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", 0, 0)
+	if VCB_SAVE["CF_icon_attach"] then
 		VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -2*(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
 	else
-		VCB_BF_WEAPON_FRAME:SetParent(UIParent)
-		VCB_BF_WEAPON_FRAME:SetPoint(VCB_WP_POINT, UIParent, VCB_WP_POINT, VCB_WP_POSX, VCB_WP_POSY)
-		VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", 0, 0)
+		VCB_BF_CONSOLIDATED_ICON:SetPoint(VCB_ICON_POINT, UIParent, VCB_ICON_POINT, VCB_ICON_POSX, VCB_ICON_POSY)
 	end
 	if (not VCB_BF_PM_FRAME:IsVisible()) then
 		VCB_BF_WEAPON_BUTTON_OnEvent(false)
 	end
+	if VCB_SAVE["WP_GENERAL_attach"] then
+		VCB_BF_WEAPON_FRAME:ClearAllPoints()
+		VCB_BF_WEAPON_FRAME:SetScale(1)
+		VCB_BF_WEAPON_FRAME:SetParent(VCB_BF_BUFF_FRAME)
+		VCB_BF_WEAPON_FRAME:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", 0, 0)
+	else
+		VCB_BF_WEAPON_FRAME:SetPoint(VCB_WP_POINT, UIParent, VCB_WP_POINT, VCB_WP_POSX, VCB_WP_POSY)
+		VCB_BF_WEAPON_FRAME:SetScale(VCB_SAVE["WP_GENERAL_scale"])
+	end
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetScale(VCB_SAVE["CF_BF_scale"])
 	VCB_BF_BUFF_FRAME:SetScale(VCB_SAVE["BF_GENERAL_scale"])
 	VCB_BF_DEBUFF_FRAME:SetScale(VCB_SAVE["DBF_GENERAL_scale"])
-	if VCB_SAVE["WP_GENERAL_attach"] then
-		VCB_BF_WEAPON_FRAME:SetScale(1)
-	else
-		VCB_BF_WEAPON_FRAME:SetScale(VCB_SAVE["WP_GENERAL_scale"])
-	end
 	if VCB_SAVE["MISC_disable_CF"] then
 		VCB_BF_CONSOLIDATED_ICON:Hide()
 	end
@@ -759,6 +784,11 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_TIMER_FRAME_FontSlider"):SetValue(VCB_Table_GetKeys(VCB_FONT_ARRAY, VCB_SAVE["Timer_font"]))
 		getglobal("VCB_BF_TIMER_FRAME_FontSliderText"):SetText(VCB_COMMON_SLIDER_FONT..": "..VCB_SAVE["Timer_font"])
 		getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON8"):SetChecked(VCB_SAVE["Timer_flash"])
+		getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON9"):SetChecked(VCB_SAVE["Timer_below_60"])
+		getglobal("VCB_BF_TIMER_FRAME_ColorNormalTexture"):SetVertexColor(VCB_SAVE["Timer_below_60_color_r"], VCB_SAVE["Timer_below_60_color_g"], VCB_SAVE["Timer_below_60_color_b"])
+		getglobal("VCB_BF_TIMER_FRAME_Color_SwatchBg").r = VCB_SAVE["Timer_below_60_color_r"]
+		getglobal("VCB_BF_TIMER_FRAME_Color_SwatchBg").g = VCB_SAVE["Timer_below_60_color_g"]
+		getglobal("VCB_BF_TIMER_FRAME_Color_SwatchBg").b = VCB_SAVE["Timer_below_60_color_b"]
 	elseif frame == "VCB_BF_CF_FRAME" then	
 		getglobal("VCB_BF_CF_FRAME_AnchorSlider"):SetValue(VCB_SAVE["CF_BF_anchor"])
 		getglobal("VCB_BF_CF_FRAME_AnchorSliderText"):SetText(VCB_CF_FRAME_BF_ANCHOR..": "..VCB_ANCHOR_ARRAY[VCB_SAVE["CF_BF_anchor"]])
@@ -805,6 +835,7 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON2"):SetChecked(VCB_SAVE["CF_icon_possiblebuffs"])
 		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON3"):SetChecked(VCB_SAVE["CF_icon_showpbgrayedout"])
 		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_IBO"):SetChecked(VCB_SAVE["CF_BF_invertorientation"])
+		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_ATTACH"):SetChecked(VCB_SAVE["CF_icon_attach"])
 	elseif frame == "VCB_BF_CF_FRAME2" then
 		getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON1"):SetChecked(VCB_SAVE["CF_AURA_enableborder"])
 		getglobal("VCB_BF_CF_FRAME2_ColorNormalTexture"):SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"], VCB_SAVE["CF_AURA_bordercolor_g"], VCB_SAVE["CF_AURA_bordercolor_b"])
@@ -1967,6 +1998,24 @@ function VCB_BF_CF_FRAME_INVERT_BUFF_ORIENTATION()
 	VCB_BF_RepositioningAndResizing()
 end
 
+function VCB_BF_CF_FRAME_CHECKBUTTON_ATTACH_CLICK()
+	if VCB_SAVE["CF_icon_attach"] then
+		VCB_SAVE["CF_icon_attach"] = false
+		VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
+		VCB_BF_CONSOLIDATED_ICON:SetParent(UIParent)
+		VCB_BF_CONSOLIDATED_ICON:SetPoint(VCB_ICON_POINT, UIParent, VCB_ICON_POINT, VCB_ICON_POSX, VCB_ICON_POSY)
+		VCB_BF_CONSOLIDATED_ICON:SetScale(1)
+	else
+		VCB_SAVE["CF_icon_attach"] = true
+		VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
+		VCB_BF_CONSOLIDATED_ICON:SetParent(VCB_BF_BUFF_FRAME)
+		VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", 0, 0)
+		VCB_BF_WEAPON_FRAME:SetScale(1)
+	end
+	VCB_BF_WEAPON_BUTTON_OnEvent(false)
+	VCB_BF_RepositioningAndResizing()
+end
+
 ---------------------------------------END CONSOLIDATED FRAME-----------------------------------------------------------------------------------------------------------------
 ---------------------------------------START BUFF FRAME-----------------------------------------------------------------------------------------------------------------
 
@@ -2833,8 +2882,10 @@ function VCB_BF_WP_FRAME_ATTACH()
 		VCB_BF_WEAPON_FRAME:ClearAllPoints()
 		VCB_BF_WEAPON_FRAME:SetParent(UIParent)
 		VCB_BF_WEAPON_FRAME:SetPoint(VCB_WP_POINT, UIParent, VCB_WP_POINT, VCB_WP_POSX, VCB_WP_POSY)
-		VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
-		VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", 0, 0)
+		if VCB_SAVE["CF_icon_attach"] then
+			VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
+			VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", 0, 0)
+		end
 		VCB_BF_WEAPON_FRAME:SetScale(VCB_SAVE["WP_GENERAL_scale"])
 	else
 		VCB_SAVE["WP_GENERAL_attach"] = true
@@ -2845,8 +2896,10 @@ function VCB_BF_WP_FRAME_ATTACH()
 		VCB_BF_WEAPON_FRAME:ClearAllPoints()
 		VCB_BF_WEAPON_FRAME:SetParent(VCB_BF_BUFF_FRAME)
 		VCB_BF_WEAPON_FRAME:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", 0, 0)
-		VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
-		VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -2*(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
+		if VCB_SAVE["CF_icon_attach"] then
+			VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
+			VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -2*(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
+		end
 		if (VCB_SAVE["BF_GENERAL_verticalmode"] and (not VCB_SAVE["WP_GENERAL_verticalmode"])) or ((not VCB_SAVE["BF_GENERAL_verticalmode"]) and (VCB_SAVE["WP_GENERAL_verticalmode"])) then
 			VCB_BF_BF_FRAME_VERTICAL_MODE()
 		end

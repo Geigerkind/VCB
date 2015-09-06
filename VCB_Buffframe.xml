@@ -18,7 +18,7 @@
 		<Anchors>
 			<Anchor point="CENTER" relativeTo="UIParent" relativePoint="CENTER">
 				<Offset>
-					<AbsDimension x="-205" y="-13"/>
+					<AbsDimension x="-205" y="0"/>
 				</Offset>
 			</Anchor>
 		</Anchors>
@@ -35,7 +35,7 @@
 		<Anchors>
 			<Anchor point="CENTER" relativeTo="UIParent" relativePoint="CENTER">
 				<Offset>
-					<AbsDimension x="-205" y="-13"/>
+					<AbsDimension x="-205" y="-70"/>
 				</Offset>
 			</Anchor>
 		</Anchors>
@@ -52,7 +52,7 @@
 		<Anchors>
 			<Anchor point="CENTER" relativeTo="UIParent" relativePoint="CENTER">
 				<Offset>
-					<AbsDimension x="-205" y="-13"/>
+					<AbsDimension x="-205" y="50"/>
 				</Offset>
 			</Anchor>
 		</Anchors>
@@ -62,7 +62,7 @@
 			</OnLoad>
 		</Scripts>
 	</Frame>
-	<Frame name="VCB_BF_CONSOLIDATED_ICON" parent="VCB_BF_BUFF_FRAME" toplevel="true" frameStrata="LOW">
+	<Frame name="VCB_BF_CONSOLIDATED_ICON" parent="VCB_BF_BUFF_FRAME" toplevel="true" frameStrata="LOW" movable="true">
 		<Size>
 			<AbsDimension x="32" y="32"/>
 		</Size>
@@ -89,15 +89,30 @@
 				end
 			</OnLeave>
 			<OnMouseDown>
-				if (not VCB_BF_LOCKED) then
-					VCB_BF_BUFF_FRAME:StartMoving()
+				if (not VCB_BF_LOCKED) and VCB_IS_LOADED then
+					if (not VCB_SAVE["CF_icon_attach"]) then
+						this:StartMoving()
+					else
+						VCB_BF_BUFF_FRAME:StartMoving()
+					end
 				end
 			</OnMouseDown>
 			<OnMouseUp>
-				if (not VCB_BF_LOCKED) then
-					VCB_BF_BUFF_FRAME:StopMovingOrSizing()
+				if (not VCB_BF_LOCKED) and VCB_IS_LOADED then
+					if (not VCB_SAVE["CF_icon_attach"]) then
+						this:StopMovingOrSizing()
+						local point, relativeTo, relativePoint, xOfs, yOfs = this:GetPoint()
+						VCB_ICON_POINT = point
+						VCB_ICON_POSX = xOfs
+						VCB_ICON_POSY = yOfs
+					else
+						VCB_BF_BUFF_FRAME:StopMovingOrSizing()
+					end
 				end
 			</OnMouseUp>
+			<OnLoad>
+				this:SetClampedToScreen(true)
+			</OnLoad>
 		</Scripts>
 		<Layers>
 			<Layer level="BACKGROUND">
