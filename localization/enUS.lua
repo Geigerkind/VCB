@@ -100,7 +100,7 @@
 	VCB_COMMON_COLOR_BACKGROUNDCOLOR = "Select background color"
 	VCB_COMMON_COLOR_BACKGROUNDCOLOR_TOOLTIP = "Click here to change the color of the background."
 	
-	VCB_COMMON_BUTTON_ENABLE_FONT_BORDER = "Enable font border"
+	VCB_COMMON_BUTTON_ENABLE_FONT_BORDER = "Font Border"
 	VCB_COMMON_BUTTON_ENABLE_FONT_BORDER_TOOLTIP = "Check this to outline the font."
 	VCB_COMMON_BUTTON_INVERT_ORDER = "Invert order"
 	VCB_COMMON_BUTTON_INVERT_ORDER_TOOLTIP = "Check this to invert the buff order."
@@ -116,6 +116,8 @@
 	VCB_COMMON_BUTTON_VERTICAL_MODE_TOOLTIP = "Check this to turn the frames and switch into vertical mode."
 	VCB_COMMON_BUTTON_INVERT_ORIENTATION = "Invert aura orientation"
 	VCB_COMMON_BUTTON_INVERT_ORIENTATION_TOOLTIP = "Check this to invert the aura orientation. Meaning that the buffs are oriented on the left side instead of the right etc."
+	VCB_COMMON_BUTTON_CUSTOMFONT = "Custom Font"
+	VCB_COMMON_BUTTON_CUSTOMFONT_TOOLTIP = "Use the a custom font instead of the provided ones."
 	
 	VCB_COMMON_BUTTON_LOAD_TEXT = "Load"
 	
@@ -145,6 +147,7 @@
 	VCB_COMMON_SLIDER_FONT_OFFSET_Y_TOOLTIP = "Move this to change the vertical offset of the font."
 	
 	VCB_COMMON_EDITBOX_CUSTOM_BORDER_PATH = "Custom border path:"
+	VCB_COMMON_EDITBOX_CUSTOMFONT_PATH = "Custom Font path:"
 	
 	VCB_COMMON_PAGE_1 = "Page 1 of 2"
 	VCB_COMMON_PAGE_2 = "Page 2 of 2"

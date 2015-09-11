@@ -311,8 +311,10 @@
 					<OnClick>
 						if VCB_BF_MINIMAP_FRAME:IsVisible() then
 							VCB_BF_MINIMAP_FRAME:Hide()
+							VCB_MM_ICON = true
 						else
 							VCB_BF_MINIMAP_FRAME:Show()
+							VCB_MM_ICON = false
 						end
 						PlaySound("igMainMenuOptionCheckBoxOff")
 					</OnClick>
@@ -2025,7 +2027,7 @@
 				<Frames>
 					<Frame name="VCB_BF_TIMER_FRAME_GENERAL_FRAME">
 						<Size>
-							<AbsDimension x="580" y="200"/>
+							<AbsDimension x="580" y="225"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
@@ -2285,6 +2287,27 @@
 								</Scripts>
 								<NormalTexture name="$parentNormalTexture" file="Interface\ChatFrame\ChatFrameColorSwatch"/>
 							</Button>
+							<CheckButton name="VCB_BF_TIMER_FRAME_CHECKBUTTON_CUSTOMFONT" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_TIMER_FRAME_CHECKBUTTON9" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = VCB_COMMON_BUTTON_CUSTOMFONT_TOOLTIP
+										getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON_CUSTOMFONTText"):SetText(VCB_COMMON_BUTTON_CUSTOMFONT)
+									</OnLoad>
+									<OnClick>
+										VCB_BF_TIMER_FRAME_CHECKBUTTON_CUSTOMFONT_CLICK()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
 							<Slider name="VCB_BF_TIMER_FRAME_FontSlider" inherits="VCB_BF_SliderTemplate">
 								<Size>
 									<AbsDimension x="180" y="16"/>
@@ -2299,12 +2322,12 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = VCB_COMMON_SLIDER_FONT_TOOLTIP
-										this:SetMinMaxValues(1,4)
+										this:SetMinMaxValues(1,15)
 										this:SetValue(1)
 										this:SetValueStep(1)
 										getglobal("VCB_BF_TIMER_FRAME_FontSliderText"):SetText(VCB_COMMON_SLIDER_FONT)
 										getglobal("VCB_BF_TIMER_FRAME_FontSliderLow"):SetText("1")
-										getglobal("VCB_BF_TIMER_FRAME_FontSliderHigh"):SetText("4")
+										getglobal("VCB_BF_TIMER_FRAME_FontSliderHigh"):SetText("15")
 									</OnLoad>
 									<OnValueChanged>
 										if VCB_IS_LOADED then
@@ -2313,6 +2336,57 @@
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
+							<EditBox name="VCB_BF_TIMER_FRAME_EDITBOX_CUSTOMFONT" letters="200">
+								<Size x="130" y="36" />
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_TIMER_FRAME_FontSlider" relativePoint="BOTTOM">
+										<Offset x="1" y="-20" />
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer level="BACKGROUND">
+										<FontString name="$parent_FONT" inherits="GameFontNormalSmall" text="Custom border path:">
+											<Size>
+												<AbsDimension x="130" y="20" />
+											</Size>
+											<Anchors>
+												<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="TOP">
+													<Offset>
+														<AbsDimension x="0" y="-8" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Left">
+											<Size x="90" y="36" />
+											<Anchors>
+												<Anchor point="LEFT">
+													<Offset x="-20" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0" right="0.2" top="0" bottom="1.0"/>
+										</Texture>
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Right">
+											<Size x="90" y="36" />
+											<Anchors>
+												<Anchor point="RIGHT">
+													<Offset x="15" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0.7" right="1.0" top="0" bottom="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnTextChanged>
+										VCB_BF_TIMER_FRAME_EDITBOX_CUSTOMFONT_CHANGE(this)
+									</OnTextChanged>
+									<OnLoad>
+										getglobal(this:GetName().."_FONT"):SetText(VCB_COMMON_EDITBOX_CUSTOMFONT_PATH)
+									</OnLoad>
+								</Scripts>
+								<FontString inherits="ChatFontNormal" />
+							</EditBox>
 						</Frames>
 					</Frame>
 				</Frames>
@@ -2533,6 +2607,27 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
+							<CheckButton name="VCB_BF_CF_FRAME_CHECKBUTTON_CUSTOMFONT" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="VCB_BF_CF_FRAME_CHECKBUTTON_BORDER" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="60" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = VCB_COMMON_BUTTON_CUSTOMFONT_TOOLTIP
+										getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_CUSTOMFONTText"):SetText(VCB_COMMON_BUTTON_CUSTOMFONT)
+									</OnLoad>
+									<OnClick>
+										VCB_BF_CF_FRAME_CHECKBUTTON_CUSTOMFONT_CLICK()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
 							<CheckButton name="VCB_BF_CF_FRAME_CHECKBUTTON_ATTACH" inherits="VCB_BF_CheckTemplate">
 								<Size>
 									<AbsDimension x="30" y="30"/>
@@ -2596,12 +2691,12 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = VCB_COMMON_SLIDER_FONT_TOOLTIP
-										this:SetMinMaxValues(1,4)
+										this:SetMinMaxValues(1,15)
 										this:SetValue(1)
 										this:SetValueStep(1)
 										getglobal("VCB_BF_CF_FRAME_FontSliderText"):SetText(VCB_COMMON_SLIDER_FONT)
 										getglobal("VCB_BF_CF_FRAME_FontSliderLow"):SetText("1")
-										getglobal("VCB_BF_CF_FRAME_FontSliderHigh"):SetText("4")
+										getglobal("VCB_BF_CF_FRAME_FontSliderHigh"):SetText("15")
 									</OnLoad>
 									<OnValueChanged>
 										if VCB_IS_LOADED then
@@ -2694,6 +2789,57 @@
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
+							<EditBox name="VCB_BF_CF_FRAME_EDITBOX_CUSTOMFONT" letters="200">
+								<Size x="130" y="36" />
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME_FontSlider" relativePoint="BOTTOM">
+										<Offset x="1" y="-20" />
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer level="BACKGROUND">
+										<FontString name="$parent_FONT" inherits="GameFontNormalSmall" text="Custom border path:">
+											<Size>
+												<AbsDimension x="130" y="20" />
+											</Size>
+											<Anchors>
+												<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="TOP">
+													<Offset>
+														<AbsDimension x="0" y="-8" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Left">
+											<Size x="90" y="36" />
+											<Anchors>
+												<Anchor point="LEFT">
+													<Offset x="-20" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0" right="0.2" top="0" bottom="1.0"/>
+										</Texture>
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Right">
+											<Size x="90" y="36" />
+											<Anchors>
+												<Anchor point="RIGHT">
+													<Offset x="15" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0.7" right="1.0" top="0" bottom="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnTextChanged>
+										VCB_BF_CF_FRAME_EDITBOX_CUSTOMFONT_CHANGE(this)
+									</OnTextChanged>
+									<OnLoad>
+										getglobal(this:GetName().."_FONT"):SetText(VCB_COMMON_EDITBOX_CUSTOMFONT_PATH)
+									</OnLoad>
+								</Scripts>
+								<FontString inherits="ChatFontNormal" />
+							</EditBox>
 						</Frames>
 					</Frame>
 					<Frame name="VCB_BF_CF_FRAME_BF_FRAME">
@@ -2948,12 +3094,12 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = VCB_CF_FRAME_BF_ANCHOR_TOOLTIP
-										this:SetMinMaxValues(1,4)
+										this:SetMinMaxValues(1,15)
 										this:SetValue(1)
 										this:SetValueStep(1)
 										getglobal("VCB_BF_CF_FRAME_AnchorSliderText"):SetText(VCB_CF_FRAME_BF_ANCHOR)
 										getglobal("VCB_BF_CF_FRAME_AnchorSliderLow"):SetText("1")
-										getglobal("VCB_BF_CF_FRAME_AnchorSliderHigh"):SetText("4")
+										getglobal("VCB_BF_CF_FRAME_AnchorSliderHigh"):SetText("15")
 									</OnLoad>
 									<OnValueChanged>
 										if VCB_IS_LOADED then
@@ -3341,7 +3487,7 @@
 							<Anchors>
 								<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
 									<Offset>
-										<AbsDimension x="20" y="-280" />
+										<AbsDimension x="20" y="-300" />
 									</Offset>
 								</Anchor>
 							</Anchors>
@@ -3363,7 +3509,7 @@
 				<Frames>
 					<Frame name="VCB_BF_CF_FRAME2_BUFF_FRAME">
 						<Size>
-							<AbsDimension x="580" y="240"/>
+							<AbsDimension x="580" y="260"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOP" relativeTo="$parent" relativePoint="TOP">
@@ -3415,7 +3561,7 @@
 								<Anchors>
 									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME2_CHECKBUTTON1" relativePoint="BOTTOM">
 										<Offset>
-											<AbsDimension x="0" y="0"/>
+											<AbsDimension x="0" y="5"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -3437,7 +3583,7 @@
 								<Anchors>
 									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME2_CHECKBUTTON2" relativePoint="BOTTOM">
 										<Offset>
-											<AbsDimension x="0" y="0"/>
+											<AbsDimension x="0" y="5"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -3459,7 +3605,7 @@
 								<Anchors>
 									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME2_CHECKBUTTON3" relativePoint="BOTTOM">
 										<Offset>
-											<AbsDimension x="0" y="-5"/>
+											<AbsDimension x="0" y="0"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -3654,7 +3800,7 @@
 								<Anchors>
 									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME2_Color_fontcolor" relativePoint="BOTTOM">
 										<Offset>
-											<AbsDimension x="0" y="-10"/>
+											<AbsDimension x="0" y="-5"/>
 										</Offset>
 									</Anchor>
 								</Anchors>
@@ -3911,12 +4057,12 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = VCB_COMMON_SLIDER_FONT_TOOLTIP
-										this:SetMinMaxValues(1,4)
+										this:SetMinMaxValues(1,15)
 										this:SetValue(1)
 										this:SetValueStep(1)
 										getglobal("VCB_BF_CF_FRAME2_GFontSliderText"):SetText(VCB_COMMON_SLIDER_FONT)
 										getglobal("VCB_BF_CF_FRAME2_GFontSliderLow"):SetText("1")
-										getglobal("VCB_BF_CF_FRAME2_GFontSliderHigh"):SetText("4")
+										getglobal("VCB_BF_CF_FRAME2_GFontSliderHigh"):SetText("15")
 									</OnLoad>
 									<OnValueChanged>
 										if VCB_IS_LOADED then
@@ -3983,6 +4129,79 @@
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
+							-- Checkbutton Custom font
+							<CheckButton name="VCB_BF_CF_FRAME2_CHECKBUTTON_CUSTOMFONT" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME2_CHECKBUTTON_FBorder" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="5"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = VCB_COMMON_BUTTON_CUSTOMFONT_TOOLTIP
+										getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON_CUSTOMFONTText"):SetText(VCB_COMMON_BUTTON_CUSTOMFONT)
+									</OnLoad>
+									<OnClick>
+										VCB_BF_CF_FRAME2_CHECKBUTTON_CUSTOMFONT_CLICK()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<EditBox name="VCB_BF_CF_FRAME2_EDITBOX_CUSTOMFONT" letters="200">
+								<Size x="130" y="36" />
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_CF_FRAME2_CHECKBUTTON_CUSTOMFONT" relativePoint="BOTTOM">
+										<Offset x="75" y="-5" />
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer level="BACKGROUND">
+										<FontString name="$parent_FONT" inherits="GameFontNormalSmall" text="Custom border path:">
+											<Size>
+												<AbsDimension x="130" y="20" />
+											</Size>
+											<Anchors>
+												<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="TOP">
+													<Offset>
+														<AbsDimension x="0" y="-8" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Left">
+											<Size x="90" y="36" />
+											<Anchors>
+												<Anchor point="LEFT">
+													<Offset x="-20" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0" right="0.2" top="0" bottom="1.0"/>
+										</Texture>
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Right">
+											<Size x="90" y="36" />
+											<Anchors>
+												<Anchor point="RIGHT">
+													<Offset x="15" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0.7" right="1.0" top="0" bottom="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnTextChanged>
+										VCB_BF_CF_FRAME2_EDITBOX_CUSTOMFONT_CHANGE(this)
+									</OnTextChanged>
+									<OnLoad>
+										getglobal(this:GetName().."_FONT"):SetText(VCB_COMMON_EDITBOX_CUSTOMFONT_PATH)
+									</OnLoad>
+								</Scripts>
+								<FontString inherits="ChatFontNormal" />
+							</EditBox>
 						</Frames>
 					</Frame>
 					<Frame name="VCB_BF_CF_FRAME2_TIMER_FRAME">
@@ -4266,7 +4485,7 @@
 				<Frames>
 					<Frame name="VCB_BF_BF_FRAME_GENERAL">
 						<Size>
-							<AbsDimension x="580" y="240"/>
+							<AbsDimension x="580" y="290"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
@@ -4460,6 +4679,28 @@
 									</OnLoad>
 									<OnClick>
 										VCB_BF_BF_FRAME_INVERT_AURA_ORIENTATION()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							-- Checkbutton Custom font
+							<CheckButton name="VCB_BF_BF_FRAME_CHECKBUTTON_CUSTOMFONT" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_BF_FRAME_CHECKBUTTON_IBO" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = VCB_COMMON_BUTTON_CUSTOMFONT_TOOLTIP
+										getglobal("VCB_BF_BF_FRAME_CHECKBUTTON_CUSTOMFONTText"):SetText(VCB_COMMON_BUTTON_CUSTOMFONT)
+									</OnLoad>
+									<OnClick>
+										VCB_BF_BF_FRAME_CHECKBUTTON_CUSTOMFONT_CLICK()
 									</OnClick>
 								</Scripts>
 							</CheckButton>
@@ -4746,12 +4987,12 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = VCB_COMMON_SLIDER_FONT_TOOLTIP
-										this:SetMinMaxValues(1,4)
+										this:SetMinMaxValues(1,15)
 										this:SetValue(1)
 										this:SetValueStep(1)
 										getglobal("VCB_BF_BF_FRAME_GFontSliderText"):SetText(VCB_COMMON_SLIDER_FONT)
 										getglobal("VCB_BF_BF_FRAME_GFontSliderLow"):SetText("1")
-										getglobal("VCB_BF_BF_FRAME_GFontSliderHigh"):SetText("4")
+										getglobal("VCB_BF_BF_FRAME_GFontSliderHigh"):SetText("15")
 									</OnLoad>
 									<OnValueChanged>
 										if VCB_IS_LOADED then
@@ -4818,6 +5059,57 @@
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
+							<EditBox name="VCB_BF_BF_FRAME_EDITBOX_CUSTOMFONT" letters="200">
+								<Size x="130" y="36" />
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_BF_FRAME_GFontOffsetXSlider" relativePoint="BOTTOM">
+										<Offset x="1" y="-20" />
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer level="BACKGROUND">
+										<FontString name="$parent_FONT" inherits="GameFontNormalSmall" text="Custom border path:">
+											<Size>
+												<AbsDimension x="130" y="20" />
+											</Size>
+											<Anchors>
+												<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="TOP">
+													<Offset>
+														<AbsDimension x="0" y="-8" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Left">
+											<Size x="90" y="36" />
+											<Anchors>
+												<Anchor point="LEFT">
+													<Offset x="-20" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0" right="0.2" top="0" bottom="1.0"/>
+										</Texture>
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Right">
+											<Size x="90" y="36" />
+											<Anchors>
+												<Anchor point="RIGHT">
+													<Offset x="15" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0.7" right="1.0" top="0" bottom="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnTextChanged>
+										VCB_BF_BF_FRAME_EDITBOX_CUSTOMFONT_CHANGE(this)
+									</OnTextChanged>
+									<OnLoad>
+										getglobal(this:GetName().."_FONT"):SetText(VCB_COMMON_EDITBOX_CUSTOMFONT_PATH)
+									</OnLoad>
+								</Scripts>
+								<FontString inherits="ChatFontNormal" />
+							</EditBox>
 						</Frames>
 					</Frame>
 					<Button name="$parent_previous_page">
@@ -5469,7 +5761,7 @@
 				<Frames>
 					<Frame name="VCB_BF_DBF_FRAME_GENERAL">
 						<Size>
-							<AbsDimension x="580" y="240"/>
+							<AbsDimension x="580" y="290"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
@@ -5949,12 +6241,12 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = VCB_COMMON_SLIDER_FONT_TOOLTIP
-										this:SetMinMaxValues(1,4)
+										this:SetMinMaxValues(1,15)
 										this:SetValue(1)
 										this:SetValueStep(1)
 										getglobal("VCB_BF_DBF_FRAME_GFontSliderText"):SetText(VCB_COMMON_SLIDER_FONT)
 										getglobal("VCB_BF_DBF_FRAME_GFontSliderLow"):SetText("1")
-										getglobal("VCB_BF_DBF_FRAME_GFontSliderHigh"):SetText("4")
+										getglobal("VCB_BF_DBF_FRAME_GFontSliderHigh"):SetText("15")
 									</OnLoad>
 									<OnValueChanged>
 										if VCB_IS_LOADED then
@@ -6021,6 +6313,79 @@
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
+							-- Checkbutton Custom font
+							<CheckButton name="VCB_BF_DBF_FRAME_CHECKBUTTON_CUSTOMFONT" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_DBF_FRAME_CHECKBUTTON_IBO" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = VCB_COMMON_BUTTON_CUSTOMFONT_TOOLTIP
+										getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON_CUSTOMFONTText"):SetText(VCB_COMMON_BUTTON_CUSTOMFONT)
+									</OnLoad>
+									<OnClick>
+										VCB_BF_DBF_FRAME_CHECKBUTTON_CUSTOMFONT_CLICK()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<EditBox name="VCB_BF_DBF_FRAME_EDITBOX_CUSTOMFONT" letters="200">
+								<Size x="130" y="36" />
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_DBF_FRAME_GFontOffsetXSlider" relativePoint="BOTTOM">
+										<Offset x="1" y="-20" />
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer level="BACKGROUND">
+										<FontString name="$parent_FONT" inherits="GameFontNormalSmall" text="Custom border path:">
+											<Size>
+												<AbsDimension x="130" y="20" />
+											</Size>
+											<Anchors>
+												<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="TOP">
+													<Offset>
+														<AbsDimension x="0" y="-8" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Left">
+											<Size x="90" y="36" />
+											<Anchors>
+												<Anchor point="LEFT">
+													<Offset x="-20" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0" right="0.2" top="0" bottom="1.0"/>
+										</Texture>
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Right">
+											<Size x="90" y="36" />
+											<Anchors>
+												<Anchor point="RIGHT">
+													<Offset x="15" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0.7" right="1.0" top="0" bottom="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnTextChanged>
+										VCB_BF_DBF_FRAME_EDITBOX_CUSTOMFONT_CHANGE(this)
+									</OnTextChanged>
+									<OnLoad>
+										getglobal(this:GetName().."_FONT"):SetText(VCB_COMMON_EDITBOX_CUSTOMFONT_PATH)
+									</OnLoad>
+								</Scripts>
+								<FontString inherits="ChatFontNormal" />
+							</EditBox>
 						</Frames>
 					</Frame>
 					<Button name="VCB_BF_DBF_FRAME_previous_page">
@@ -7390,12 +7755,12 @@
 								<Scripts>
 									<OnLoad>
 										this.aide = VCB_COMMON_SLIDER_FONT_TOOLTIP
-										this:SetMinMaxValues(1,4)
+										this:SetMinMaxValues(1,15)
 										this:SetValue(1)
 										this:SetValueStep(1)
 										getglobal("VCB_BF_WP_FRAME_FontSliderText"):SetText(VCB_COMMON_SLIDER_FONT)
 										getglobal("VCB_BF_WP_FRAME_FontSliderLow"):SetText("1")
-										getglobal("VCB_BF_WP_FRAME_FontSliderHigh"):SetText("4")
+										getglobal("VCB_BF_WP_FRAME_FontSliderHigh"):SetText("15")
 									</OnLoad>
 									<OnValueChanged>
 										if VCB_IS_LOADED then
@@ -7433,6 +7798,79 @@
 									</OnValueChanged>
 								</Scripts>
 							</Slider>
+							-- Checkbutton Custom font
+							<CheckButton name="VCB_BF_WP_FRAME_CHECKBUTTON_CUSTOMFONT" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_WP_FRAME_CHECKBUTTON8" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = VCB_COMMON_BUTTON_CUSTOMFONT_TOOLTIP
+										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON_CUSTOMFONTText"):SetText(VCB_COMMON_BUTTON_CUSTOMFONT)
+									</OnLoad>
+									<OnClick>
+										VCB_BF_WP_FRAME_CHECKBUTTON_CUSTOMFONT_CLICK()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<EditBox name="VCB_BF_WP_FRAME_EDITBOX_CUSTOMFONT" letters="200">
+								<Size x="130" y="36" />
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_WP_FRAME_FontOpacitySlider" relativePoint="BOTTOM">
+										<Offset x="1" y="-20" />
+									</Anchor>
+								</Anchors>
+								<Layers>
+									<Layer level="BACKGROUND">
+										<FontString name="$parent_FONT" inherits="GameFontNormalSmall" text="Custom border path:">
+											<Size>
+												<AbsDimension x="130" y="20" />
+											</Size>
+											<Anchors>
+												<Anchor point="BOTTOM" relativeTo="$parent" relativePoint="TOP">
+													<Offset>
+														<AbsDimension x="0" y="-8" />
+													</Offset>
+												</Anchor>
+											</Anchors>
+										</FontString>
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Left">
+											<Size x="90" y="36" />
+											<Anchors>
+												<Anchor point="LEFT">
+													<Offset x="-20" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0" right="0.2" top="0" bottom="1.0"/>
+										</Texture>
+										<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Right">
+											<Size x="90" y="36" />
+											<Anchors>
+												<Anchor point="RIGHT">
+													<Offset x="15" y="0" />
+												</Anchor>
+											</Anchors>
+											<TexCoords left="0.7" right="1.0" top="0" bottom="1.0"/>
+										</Texture>
+									</Layer>
+								</Layers>
+								<Scripts>
+									<OnTextChanged>
+										VCB_BF_WP_FRAME_EDITBOX_CUSTOMFONT_CHANGE(this)
+									</OnTextChanged>
+									<OnLoad>
+										getglobal(this:GetName().."_FONT"):SetText(VCB_COMMON_EDITBOX_CUSTOMFONT_PATH)
+									</OnLoad>
+								</Scripts>
+								<FontString inherits="ChatFontNormal" />
+							</EditBox>
 						</Frames>
 					</Frame>
 					<Button name="VCB_BF_WP_FRAME_previous_page">

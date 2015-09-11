@@ -7,10 +7,21 @@ VCB_VERSION = "2.7"
 VCB_IS_LOADED = false
 VCB_BF_DUMMY_MODE = false
 VCB_FONT_ARRAY = {}
-VCB_FONT_ARRAY[1] = "FRIZQT__.ttf"
-VCB_FONT_ARRAY[2] = "ARIALN.ttf"
-VCB_FONT_ARRAY[3] = "skurri.ttf"
-VCB_FONT_ARRAY[4] = "MORPHEUS.ttf"
+VCB_FONT_ARRAY[1] = "Fonts\\FRIZQT__.ttf"
+VCB_FONT_ARRAY[2] = "Fonts\\ARIALN.ttf"
+VCB_FONT_ARRAY[3] = "Fonts\\skurri.ttf"
+VCB_FONT_ARRAY[4] = "Fonts\\MORPHEUS.ttf"
+VCB_FONT_ARRAY[5] = "Interface\\AddOns\\VCB\\Fonts\\DUF_Font1.ttf"
+VCB_FONT_ARRAY[6] = "Interface\\AddOns\\VCB\\Fonts\\DUF_Font2.ttf"
+VCB_FONT_ARRAY[7] = "Interface\\AddOns\\VCB\\Fonts\\DUF_Font3.ttf"
+VCB_FONT_ARRAY[8] = "Interface\\AddOns\\VCB\\Fonts\\DUF_Font4.ttf"
+VCB_FONT_ARRAY[9] = "Interface\\AddOns\\VCB\\Fonts\\DUF_Font5.ttf"
+VCB_FONT_ARRAY[10] = "Interface\\AddOns\\VCB\\Fonts\\FUTURABC.TTF"
+VCB_FONT_ARRAY[11] = "Interface\\AddOns\\VCB\\Fonts\\FUTUXKCI.TTF"
+VCB_FONT_ARRAY[12] = "Interface\\AddOns\\VCB\\Fonts\\IX_Font_Bold.ttf"
+VCB_FONT_ARRAY[13] = "Interface\\AddOns\\VCB\\Fonts\\IX_Font_Bold_Italic.ttf"
+VCB_FONT_ARRAY[14] = "Interface\\AddOns\\VCB\\Fonts\\Montreal_Bold.ttf"
+VCB_FONT_ARRAY[15] = "Interface\\AddOns\\VCB\\Fonts\\Montreal_Heavy_Bold.ttf"
 VCB_ANCHOR_ARRAY = {}
 VCB_ANCHOR_ARRAY[1] = "Bottom"
 VCB_ANCHOR_ARRAY[2] = "Right"
@@ -43,17 +54,19 @@ VCB_THEME[1] = {
 	Timer_minutes_convert = false,
 	Timer_tenth = false,
 	Timer_round = false,
-	Timer_font = "FRIZQT__.ttf",
+	Timer_font = "Fonts\\FRIZQT__.ttf",
 	Timer_flash = false,
 	Timer_below_60 = false,
 	Timer_below_60_color_r = 1,
 	Timer_below_60_color_g = 0.82,
 	Timer_below_60_color_b = 0,
+	Timer_usecfont = false,
+	Timer_customfont = "",
 	CF_icon_color_r = 1,
 	CF_icon_color_g = 1,
 	CF_icon_color_b = 1,
 	CF_icon_fontsize = 13,
-	CF_icon_font = "FRIZQT__.ttf",
+	CF_icon_font = "Fonts\\FRIZQT__.ttf",
 	CF_icon_opacity = 1,
 	CF_icon_fontopacity = 1,
 	CF_icon_texture = "icon",
@@ -61,6 +74,8 @@ VCB_THEME[1] = {
 	CF_icon_possiblebuffs = false,
 	CF_icon_showpbgrayedout = false,
 	CF_icon_attach = true,
+	CF_icon_usecfont = false,
+	CF_icon_customfont = "",
 	CF_BF_anchor = 1,
 	CF_BF_scale = 1,
 	CF_BF_invert = false,
@@ -99,7 +114,7 @@ VCB_THEME[1] = {
 	CF_AURA_fontcolor_r = 1,
 	CF_AURA_fontcolor_g = 1,
 	CF_AURA_fontcolor_b = 1,
-	CF_AURA_font = "FRIZQT__.ttf",
+	CF_AURA_font = "Fonts\\FRIZQT__.ttf",
 	CF_AURA_fontopacity = 1,
 	CF_AURA_fontsize = 13,
 	CF_AURA_fontoffset_x = -5,
@@ -124,13 +139,15 @@ VCB_THEME[1] = {
 	BF_GENERAL_fontcolor_r = 1,
 	BF_GENERAL_fontcolor_g = 1,
 	BF_GENERAL_fontcolor_b = 1,
-	BF_GENERAL_font = "FRIZQT__.ttf",
+	BF_GENERAL_font = "Fonts\\FRIZQT__.ttf",
 	BF_GENERAL_fontopacity = 1,
 	BF_GENERAL_fontsize = 13,
 	BF_GENERAL_fontoffset_x = -5,
 	BF_GENERAL_fontoffset_y = 5,
 	BF_GENERAL_invert = false,
 	BF_GENERAL_invertorientation = false,
+	BF_GENERAL_usecfont = false,
+	BF_GENERAL_customfont = "",
 	BF_BORDER_enableborder = false,
 	BF_BORDER_bordercolor_r = 1,
 	BF_BORDER_bordercolor_g = 1,
@@ -159,13 +176,15 @@ VCB_THEME[1] = {
 	DBF_GENERAL_fontcolor_r = 1,
 	DBF_GENERAL_fontcolor_g = 1,
 	DBF_GENERAL_fontcolor_b = 1,
-	DBF_GENERAL_font = "FRIZQT__.ttf",
+	DBF_GENERAL_font = "Fonts\\FRIZQT__.ttf",
 	DBF_GENERAL_fontopacity = 1,
 	DBF_GENERAL_fontsize = 13,
 	DBF_GENERAL_fontoffset_x = -5,
 	DBF_GENERAL_fontoffset_y = 5,
 	DBF_GENERAL_invert = false,
 	DBF_GENERAL_invertorientation = false,
+	DBF_GENERAL_usecfont = false,
+	DBF_GENERAL_customfont = "",
 	DBF_BORDER_enableborder = true,
 	DBF_BORDER_usecustomborder = false,
 	DBF_BORDER_customborderpath = "",
@@ -208,9 +227,11 @@ VCB_THEME[1] = {
 	WP_GENERAL_fontcolor_b = 1,
 	WP_GENERAL_bgopacity = 1,
 	WP_GENERAL_scale = 1,
-	WP_GENERAL_font = "FRIZQT__.ttf",
+	WP_GENERAL_font = "Fonts\\FRIZQT__.ttf",
 	WP_GENERAL_offset_x = -2,
 	WP_GENERAL_offset_y = 2,
+	WP_GENERAL_usecfont = false,
+	WP_GENERAL_customfont = "",
 	WP_BORDER_enableborder = true,
 	WP_BORDER_usecustomborder = false,
 	WP_BORDER_bordercolor_r = 0.2,
@@ -238,6 +259,7 @@ function VCB_OnLoad()
 	this:RegisterEvent("ADDON_LOADED")
 	this:RegisterEvent("PARTY_MEMBERS_CHANGED")
 	this:RegisterEvent("RAID_ROSTER_UPDATE")
+	this:RegisterEvent("PLAYER_ENTERING_WORLD")
 
 	SLASH_VCB1 = "/VanillaConsolidateBuffs"
 	SLASH_VCB2 = "/vanillaconsolidatebuffs"
@@ -261,16 +283,18 @@ function VCB_OnEvent(event)
 				Timer_minutes_convert = false,
 				Timer_tenth = false,
 				Timer_round = false,
-				Timer_font = "FRIZQT__.ttf",
+				Timer_font = "Fonts\\FRIZQT__.ttf",
 				Timer_flash = false,
 				Timer_below_60 = false,
 				Timer_below_60_color_g = 0.82,
 				Timer_below_60_color_b = 0,
+				Timer_usecfont = false,
+				Timer_customfont = "",
 				CF_icon_color_r = 1,
 				CF_icon_color_g = 1,
 				CF_icon_color_b = 1,
 				CF_icon_fontsize = 13,
-				CF_icon_font = "FRIZQT__.ttf",
+				CF_icon_font = "Fonts\\FRIZQT__.ttf",
 				CF_icon_opacity = 1,
 				CF_icon_fontopacity = 1,
 				CF_icon_texture = "icon",
@@ -278,6 +302,8 @@ function VCB_OnEvent(event)
 				CF_icon_possiblebuffs = false,
 				CF_icon_showpbgrayedout = false,
 				CF_icon_attach = true,
+				CF_icon_usecfont = false,
+				CF_icon_customfont = "",
 				CF_BF_anchor = 1,
 				CF_BF_scale = 1,
 				CF_BF_invert = false,
@@ -316,7 +342,7 @@ function VCB_OnEvent(event)
 				CF_AURA_fontcolor_r = 1,
 				CF_AURA_fontcolor_g = 1,
 				CF_AURA_fontcolor_b = 1,
-				CF_AURA_font = "FRIZQT__.ttf",
+				CF_AURA_font = "Fonts\\FRIZQT__.ttf",
 				CF_AURA_fontopacity = 1,
 				CF_AURA_fontsize = 13,
 				CF_AURA_fontoffset_x = -5,
@@ -341,13 +367,15 @@ function VCB_OnEvent(event)
 				BF_GENERAL_fontcolor_r = 1,
 				BF_GENERAL_fontcolor_g = 1,
 				BF_GENERAL_fontcolor_b = 1,
-				BF_GENERAL_font = "FRIZQT__.ttf",
+				BF_GENERAL_font = "Fonts\\FRIZQT__.ttf",
 				BF_GENERAL_fontopacity = 1,
 				BF_GENERAL_fontsize = 13,
 				BF_GENERAL_fontoffset_x = -5,
 				BF_GENERAL_fontoffset_y = 5,
 				BF_GENERAL_invert = false,
 				BF_GENERAL_invertorientation = false,
+				BF_GENERAL_usecfont = false,
+				BF_GENERAL_customfont = "",
 				BF_BORDER_enableborder = false,
 				BF_BORDER_bordercolor_r = 1,
 				BF_BORDER_bordercolor_g = 1,
@@ -376,13 +404,15 @@ function VCB_OnEvent(event)
 				DBF_GENERAL_fontcolor_r = 1,
 				DBF_GENERAL_fontcolor_g = 1,
 				DBF_GENERAL_fontcolor_b = 1,
-				DBF_GENERAL_font = "FRIZQT__.ttf",
+				DBF_GENERAL_font = "Fonts\\FRIZQT__.ttf",
 				DBF_GENERAL_fontopacity = 1,
 				DBF_GENERAL_fontsize = 13,
 				DBF_GENERAL_fontoffset_x = -5,
 				DBF_GENERAL_fontoffset_y = 5,
 				DBF_GENERAL_invert = false,
 				DBF_GENERAL_invertorientation = false,
+				DBF_GENERAL_usecfont = false,
+				DBF_GENERAL_customfont = "",
 				DBF_BORDER_enableborder = true,
 				DBF_BORDER_usecustomborder = false,
 				DBF_BORDER_customborderpath = "",
@@ -425,9 +455,11 @@ function VCB_OnEvent(event)
 				WP_GENERAL_fontcolor_b = 1,
 				WP_GENERAL_bgopacity = 1,
 				WP_GENERAL_scale = 1,
-				WP_GENERAL_font = "FRIZQT__.ttf",
+				WP_GENERAL_font = "Fonts\\FRIZQT__.ttf",
 				WP_GENERAL_offset_x = -2,
 				WP_GENERAL_offset_y = 2,
+				WP_GENERAL_usecfont = false,
+				WP_GENERAL_customfont = "",
 				WP_BORDER_enableborder = true,
 				WP_BORDER_usecustomborder = false,
 				WP_BORDER_bordercolor_r = 0.2,
@@ -514,6 +546,27 @@ function VCB_OnEvent(event)
 		if VCB_SAVE["Timer_below_60_color_g"] == nil then VCB_SAVE["Timer_below_60_color_g"] = 0.82 end
 		if VCB_SAVE["Timer_below_60_color_b"] == nil then VCB_SAVE["Timer_below_60_color_b"] = 0 end
 		if VCB_SAVE["CF_icon_attach"] == nil then VCB_SAVE["CF_icon_attach"] = true end
+		if VCB_MM_ICON == nil then VCB_MM_ICON = false end
+		if VCB_SAVE["CF_icon_usecfont"] == nil then VCB_SAVE["CF_icon_usecfont"] = false end
+		if VCB_SAVE["CF_icon_customfont"] == nil then VCB_SAVE["CF_icon_customfont"] = "" end
+		if VCB_SAVE["Timer_usecfont"] == nil then VCB_SAVE["Timer_usecfont"] = false end
+		if VCB_SAVE["Timer_customfont"] == nil then VCB_SAVE["Timer_customfont"] = "" end
+		if VCB_SAVE["BF_GENERAL_usecfont"] == nil then VCB_SAVE["BF_GENERAL_usecfont"] = false end
+		if VCB_SAVE["BF_GENERAL_customfont"] == nil then VCB_SAVE["BF_GENERAL_customfont"] = "" end
+		if VCB_SAVE["DBF_GENERAL_usecfont"] == nil then VCB_SAVE["DBF_GENERAL_usecfont"] = false end
+		if VCB_SAVE["DBF_GENERAL_customfont"] == nil then VCB_SAVE["DBF_GENERAL_customfont"] = "" end
+		if VCB_SAVE["WP_GENERAL_usecfont"] == nil then VCB_SAVE["WP_GENERAL_usecfont"] = false end
+		if VCB_SAVE["WP_GENERAL_customfont"] == nil then VCB_SAVE["WP_GENERAL_customfont"] = "" end
+		
+		-- To catch a crash due to the font update
+		if strsub(VCB_SAVE["Timer_font"], 1, 5) ~= "Fonts" then
+			VCB_SAVE["Timer_font"] = "Fonts\\FRIZQT__.ttf"
+			VCB_SAVE["CF_icon_font"] = "Fonts\\FRIZQT__.ttf"
+			VCB_SAVE["CF_AURA_font"] = "Fonts\\FRIZQT__.ttf"
+			VCB_SAVE["BF_GENERAL_font"] = "Fonts\\FRIZQT__.ttf"
+			VCB_SAVE["DBF_GENERAL_font"] = "Fonts\\FRIZQT__.ttf"
+			VCB_SAVE["WP_GENERAL_font"] = "Fonts\\FRIZQT__.ttf"
+		end
 		
 		VCB_INITIALIZE()
 		VCB_BF_Lock(VCB_BF_LOCKED)
@@ -522,6 +575,8 @@ function VCB_OnEvent(event)
 		if VCB_SAVE["CF_icon_possiblebuffs"] then
 			VCB_BF_RepositioningAndResizing()
 		end
+	elseif (event == "PLAYER_ENTERING_WORLD") then
+		VCB_BF_WEAPON_BUTTON_OnEvent(false)
 	end	
 end
 
@@ -539,9 +594,9 @@ function VCB_INITIALIZE()
 	
 	VCB_BF_CONSOLIDATED_ICON:SetAlpha(VCB_SAVE["CF_icon_opacity"])
 	if VCB_SAVE["CF_icon_border"] then
-		VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"], "OUTLINE")
+		VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"], "OUTLINE")
 	else
-		VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
+		VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
 	end
 	VCB_BF_CONSOLIDATED_ICONCount:SetTextColor(VCB_SAVE["CF_icon_color_r"], VCB_SAVE["CF_icon_color_g"], VCB_SAVE["CF_icon_color_b"], VCB_SAVE["CF_icon_fontopacity"])
 	VCB_BF_CONSOLIDATED_ICONIcon:SetTexture(nil)
@@ -612,15 +667,31 @@ function VCB_INITIALIZE()
 			end
 		end
 		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Border"):SetAlpha(VCB_SAVE["DBF_BORDER_borderopacity"]) -- Need colors
-		if VCB_SAVE["DBF_TIMER_enableborder"] then
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"], "OUTLINE")
+		if VCB_SAVE["Timer_usecfont"] then
+			if VCB_SAVE["DBF_TIMER_enableborder"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["DBF_TIMER_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["DBF_TIMER_fontsize"])
+			end
 		else
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"])
+			if VCB_SAVE["DBF_TIMER_enableborder"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"])
+			end
 		end
-		if VCB_SAVE["DBF_GENERAL_enableborder"] then
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"], "OUTLINE")
+		if VCB_SAVE["DBF_GENERAL_usecfont"] then
+			if VCB_SAVE["DBF_GENERAL_enableborder"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_customfont"], VCB_SAVE["DBF_GENERAL_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_customfont"], VCB_SAVE["DBF_GENERAL_fontsize"])
+			end
 		else
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"])
+			if VCB_SAVE["DBF_GENERAL_enableborder"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"])
+			end
 		end
 		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetVertexColor(VCB_SAVE["DBF_GENERAL_fontcolor_r"],VCB_SAVE["DBF_GENERAL_fontcolor_g"],VCB_SAVE["DBF_GENERAL_fontcolor_b"],VCB_SAVE["DBF_GENERAL_fontopacity"])
 		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):ClearAllPoints()
@@ -649,14 +720,22 @@ function VCB_INITIALIZE()
 			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["WP_BORDER_bordercolor_r"],VCB_SAVE["WP_BORDER_bordercolor_g"],VCB_SAVE["WP_BORDER_bordercolor_b"],VCB_SAVE["WP_BORDER_borderopacity"])
 		end
 		if VCB_SAVE["WP_TIMER_enableborder"] then
-			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"], "OUTLINE")
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"], "OUTLINE")
 		else
-			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"])
+			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"])
 		end
-		if VCB_SAVE["WP_GENERAL_enableborder"] then
-			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"], "OUTLINE")
+		if VCB_SAVE["WP_GENERAL_usecfont"] then
+			if VCB_SAVE["WP_GENERAL_enableborder"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_customfont"], VCB_SAVE["WP_GENERAL_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_customfont"], VCB_SAVE["WP_GENERAL_fontsize"])
+			end
 		else
-			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"])
+			if VCB_SAVE["WP_GENERAL_enableborder"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"])
+			end
 		end
 		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetVertexColor(VCB_SAVE["WP_GENERAL_fontcolor_r"],VCB_SAVE["WP_GENERAL_fontcolor_g"],VCB_SAVE["WP_GENERAL_fontcolor_b"],VCB_SAVE["WP_GENERAL_fontopacity"])
 		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetPoint("BOTTOMRIGHT", VCB_SAVE["WP_GENERAL_offset_x"], VCB_SAVE["WP_GENERAL_offset_y"])
@@ -667,6 +746,19 @@ function VCB_INITIALIZE()
 		VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -2*(32+VCB_SAVE["BF_GENERAL_padding_h"]), 0)
 	else
 		VCB_BF_CONSOLIDATED_ICON:SetPoint(VCB_ICON_POINT, UIParent, VCB_ICON_POINT, VCB_ICON_POSX, VCB_ICON_POSY)
+	end
+	if VCB_SAVE["CF_icon_usecfont"] then
+		if VCB_SAVE["CF_icon_border"] then
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_customfont"], VCB_SAVE["CF_icon_fontsize"], "OUTLINE")
+		else
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_customfont"], VCB_SAVE["CF_icon_fontsize"])
+		end
+	else
+		if VCB_SAVE["CF_icon_border"] then
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"], "OUTLINE")
+		else
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
+		end
 	end
 	if (not VCB_BF_PM_FRAME:IsVisible()) then
 		VCB_BF_WEAPON_BUTTON_OnEvent(false)
@@ -685,6 +777,9 @@ function VCB_INITIALIZE()
 	VCB_BF_DEBUFF_FRAME:SetScale(VCB_SAVE["DBF_GENERAL_scale"])
 	if VCB_SAVE["MISC_disable_CF"] then
 		VCB_BF_CONSOLIDATED_ICON:Hide()
+	end
+	if VCB_MM_ICON then
+		VCB_BF_MINIMAP_FRAME:Hide()
 	end
 end
 
@@ -789,6 +884,8 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_TIMER_FRAME_Color_SwatchBg").r = VCB_SAVE["Timer_below_60_color_r"]
 		getglobal("VCB_BF_TIMER_FRAME_Color_SwatchBg").g = VCB_SAVE["Timer_below_60_color_g"]
 		getglobal("VCB_BF_TIMER_FRAME_Color_SwatchBg").b = VCB_SAVE["Timer_below_60_color_b"]
+		getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON_CUSTOMFONT"):SetChecked(VCB_SAVE["Timer_usecfont"])
+		getglobal("VCB_BF_TIMER_FRAME_EDITBOX_CUSTOMFONT"):SetText(VCB_SAVE["Timer_customfont"])
 	elseif frame == "VCB_BF_CF_FRAME" then	
 		getglobal("VCB_BF_CF_FRAME_AnchorSlider"):SetValue(VCB_SAVE["CF_BF_anchor"])
 		getglobal("VCB_BF_CF_FRAME_AnchorSliderText"):SetText(VCB_CF_FRAME_BF_ANCHOR..": "..VCB_ANCHOR_ARRAY[VCB_SAVE["CF_BF_anchor"]])
@@ -836,6 +933,8 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON3"):SetChecked(VCB_SAVE["CF_icon_showpbgrayedout"])
 		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_IBO"):SetChecked(VCB_SAVE["CF_BF_invertorientation"])
 		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_ATTACH"):SetChecked(VCB_SAVE["CF_icon_attach"])
+		getglobal("VCB_BF_CF_FRAME_CHECKBUTTON_CUSTOMFONT"):SetChecked(VCB_SAVE["CF_icon_usecfont"])
+		getglobal("VCB_BF_CF_FRAME_EDITBOX_CUSTOMFONT"):SetText(VCB_SAVE["CF_icon_customfont"])
 	elseif frame == "VCB_BF_CF_FRAME2" then
 		getglobal("VCB_BF_CF_FRAME2_CHECKBUTTON1"):SetChecked(VCB_SAVE["CF_AURA_enableborder"])
 		getglobal("VCB_BF_CF_FRAME2_ColorNormalTexture"):SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"], VCB_SAVE["CF_AURA_bordercolor_g"], VCB_SAVE["CF_AURA_bordercolor_b"])
@@ -915,6 +1014,8 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_BF_FRAME_Color_fontcolor_SwatchBg").b = VCB_SAVE["BF_GENERAL_fontcolor_b"]
 		getglobal("VCB_BF_BF_FRAME_CHECKBUTTON3"):SetChecked(VCB_SAVE["BF_GENERAL_invert"])
 		getglobal("VCB_BF_BF_FRAME_CHECKBUTTON_IBO"):SetChecked(VCB_SAVE["BF_GENERAL_invertorientation"])
+		getglobal("VCB_BF_BF_FRAME_CHECKBUTTON_CUSTOMFONT"):SetChecked(VCB_SAVE["BF_GENERAL_usecfont"])
+		getglobal("VCB_BF_BF_FRAME_EDITBOX_CUSTOMFONT"):SetText(VCB_SAVE["BF_GENERAL_customfont"])
 	elseif frame == "VCB_BF_BF_FRAME2" then
 		getglobal("VCB_BF_BF_FRAME_CHECKBUTTON5"):SetChecked(VCB_SAVE["BF_BORDER_enableborder"])
 		getglobal("VCB_BF_BF_FRAME_Color4NormalTexture"):SetVertexColor(VCB_SAVE["BF_BORDER_bordercolor_r"], VCB_SAVE["BF_BORDER_bordercolor_g"], VCB_SAVE["BF_BORDER_bordercolor_b"])
@@ -970,6 +1071,8 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_DBF_FRAME_Color_fontcolor_SwatchBg").b = VCB_SAVE["DBF_GENERAL_fontcolor_b"]
 		getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON3"):SetChecked(VCB_SAVE["DBF_GENERAL_invert"])
 		getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON_IBO"):SetChecked(VCB_SAVE["DBF_GENERAL_invertorientation"])
+		getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON_CUSTOMFONT"):SetChecked(VCB_SAVE["DBF_GENERAL_usecfont"])
+		getglobal("VCB_BF_DBF_FRAME_EDITBOX_CUSTOMFONT"):SetText(VCB_SAVE["DBF_GENERAL_customfont"])
 	elseif frame == "VCB_BF_DBF_FRAME2" then
 		getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON5"):SetChecked(VCB_SAVE["DBF_BORDER_enableborder"])
 		getglobal("VCB_BF_DBF_FRAME_CHECKBUTTON6"):SetChecked(VCB_SAVE["DBF_BORDER_usecustomborder"])
@@ -1038,6 +1141,8 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_WP_FRAME_OffsetYSlider"):SetValue(VCB_SAVE["WP_GENERAL_offset_y"])
 		getglobal("VCB_BF_WP_FRAME_OffsetYSliderText"):SetText(VCB_COMMON_SLIDER_FONT_OFFSET_Y..": "..VCB_SAVE["WP_GENERAL_offset_y"])
 		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON8"):SetChecked(VCB_SAVE["WP_GENERAL_enableborder"])
+		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON_CUSTOMFONT"):SetChecked(VCB_SAVE["WP_GENERAL_usecfont"])
+		getglobal("VCB_BF_WP_FRAME_EDITBOX_CUSTOMFONT"):SetText(VCB_SAVE["WP_GENERAL_customfont"])
 	elseif frame == "VCB_BF_WP_FRAME2" then
 		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON5"):SetChecked(VCB_SAVE["WP_BORDER_enableborder"])
 		getglobal("VCB_BF_WP_FRAME_Color4NormalTexture"):SetVertexColor(VCB_SAVE["WP_BORDER_bordercolor_r"], VCB_SAVE["WP_BORDER_bordercolor_g"], VCB_SAVE["WP_BORDER_bordercolor_b"])
@@ -1497,9 +1602,9 @@ function VCB_BF_CHECKBUTTON_TIMER_BORDER()
 	for cat, tname in pairs(VCB_BUTTONNAME) do
 		for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
 			if VCB_SAVE["Timer_border"] then
-				getglobal(tname..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["Timer_fontsize"], "OUTLINE")
+				getglobal(tname..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["Timer_fontsize"], "OUTLINE")
 			else
-				getglobal(tname..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["Timer_fontsize"])
+				getglobal(tname..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["Timer_fontsize"])
 			end
 		end
 	end
@@ -1511,9 +1616,95 @@ function VCB_BF_TIMER_FRAME_FontSliderChange(obj)
 	for cat, tname in pairs(VCB_BUTTONNAME) do
 		for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
 			if getglobal(tname..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
-				getglobal(tname..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"])
+				getglobal(tname..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"])
 			else
-				getglobal(tname..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"])
+				getglobal(tname..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"])
+			end
+		end
+	end
+end
+
+function VCB_BF_TIMER_FRAME_CHECKBUTTON_CUSTOMFONT_CLICK()
+	if VCB_SAVE["Timer_usecfont"] then
+		VCB_SAVE["Timer_usecfont"] = false
+		for cat, template in pairs(VCB_BUTTONNAME) do
+			for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
+				local button = getglobal(template..i.."Duration")
+				if cat == "buff" then
+					if VCB_SAVE["BF_TIMER_enableborder"] then
+						button:SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"], "OUTLINE")
+					else
+						button:SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"])
+					end
+				elseif cat == "debuff" then
+					if VCB_SAVE["DBF_TIMER_enableborder"] then
+						button:SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"], "OUTLINE")
+					else
+						button:SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"])
+					end
+				else
+					if VCB_SAVE["WP_TIMER_enableborder"] then
+						button:SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"], "OUTLINE")
+					else
+						button:SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"])
+					end
+				end
+			end
+		end
+	else
+		VCB_SAVE["Timer_usecfont"] = true
+		for cat, template in pairs(VCB_BUTTONNAME) do
+			for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
+				local button = getglobal(template..i.."Duration")
+				if cat == "buff" then
+					if VCB_SAVE["BF_TIMER_enableborder"] then
+						button:SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["BF_TIMER_fontsize"], "OUTLINE")
+					else
+						button:SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["BF_TIMER_fontsize"])
+					end
+				elseif cat == "debuff" then
+					if VCB_SAVE["DBF_TIMER_enableborder"] then
+						button:SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["DBF_TIMER_fontsize"], "OUTLINE")
+					else
+						button:SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["DBF_TIMER_fontsize"])
+					end
+				else
+					if VCB_SAVE["WP_TIMER_enableborder"] then
+						button:SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["WP_TIMER_fontsize"], "OUTLINE")
+					else
+						button:SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["WP_TIMER_fontsize"])
+					end
+				end
+			end
+		end
+	end
+end
+
+function VCB_BF_TIMER_FRAME_EDITBOX_CUSTOMFONT_CHANGE(obj)
+	VCB_SAVE["Timer_customfont"] = obj:GetText()
+	if VCB_SAVE["Timer_usecfont"] then
+		for cat, template in pairs(VCB_BUTTONNAME) do
+			for i=VCB_MININDEX[cat], VCB_MAXINDEX[cat] do
+				local button = getglobal(template..i.."Duration")
+				if cat == "buff" then
+					if VCB_SAVE["BF_TIMER_enableborder"] then
+						button:SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["BF_TIMER_fontsize"], "OUTLINE")
+					else
+						button:SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["BF_TIMER_fontsize"])
+					end
+				elseif cat == "debuff" then
+					if VCB_SAVE["DBF_TIMER_enableborder"] then
+						button:SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["DBF_TIMER_fontsize"], "OUTLINE")
+					else
+						button:SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["DBF_TIMER_fontsize"])
+					end
+				else
+					if VCB_SAVE["WP_TIMER_enableborder"] then
+						button:SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["WP_TIMER_fontsize"], "OUTLINE")
+					else
+						button:SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["WP_TIMER_fontsize"])
+					end
+				end
 			end
 		end
 	end
@@ -1571,30 +1762,48 @@ end
 function VCB_BF_CF_FRAME_SizeSliderChange(obj)
 	VCB_SAVE["CF_icon_fontsize"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT_SIZE..": "..VCB_SAVE["CF_icon_fontsize"])
-	if VCB_SAVE["CF_icon_border"] then
-		VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"], "OUTLINE")
+	if VCB_SAVE["CF_icon_usecfont"] then
+		if VCB_SAVE["CF_icon_border"] then
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_customfont"], VCB_SAVE["CF_icon_fontsize"], "OUTLINE")
+		else
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_customfont"], VCB_SAVE["CF_icon_fontsize"])
+		end
 	else
-		VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
+		if VCB_SAVE["CF_icon_border"] then
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"], "OUTLINE")
+		else
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
+		end
 	end
 end
 
 function VCB_BF_CF_FRAME_FontSliderChange(obj)
 	VCB_SAVE["CF_icon_font"] = VCB_FONT_ARRAY[obj:GetValue()]
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT..": "..VCB_FONT_ARRAY[obj:GetValue()])
-	if VCB_SAVE["CF_icon_border"] then
-		VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"], "OUTLINE")
-	else
-		VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
+	if (not VCB_SAVE["CF_icon_usecfont"]) then
+		if VCB_SAVE["CF_icon_border"] then
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"], "OUTLINE")
+		else
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
+		end
 	end
 end
 
 function VCB_BF_CF_FRAME_CHECKBUTTON_BORDER_CLICK()
 	if VCB_SAVE["CF_icon_border"] then
 		VCB_SAVE["CF_icon_border"] = false
-		VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
+		if VCB_SAVE["CF_icon_usecfont"] then
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_customfont"], VCB_SAVE["CF_icon_fontsize"])
+		else
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
+		end
 	else
 		VCB_SAVE["CF_icon_border"] = true
-		VCB_BF_CONSOLIDATED_ICONCount:SetFont("Fonts\\"..VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"], "OUTLINE")
+		if VCB_SAVE["CF_icon_usecfont"] then
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_customfont"], VCB_SAVE["CF_icon_fontsize"], "OUTLINE")
+		else
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"], "OUTLINE")
+		end
 	end
 end
 
@@ -1850,14 +2059,22 @@ function VCB_BF_CF_FRAME2_TIMER_ENABLEBORDER()
 		VCB_SAVE["CF_TIMER_border"] = false
 		for i=0,31 do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"])
+				if VCB_SAVE["Timer_usecfont"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["CF_TIMER_fontsize"])
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"])
+				end
 			end
 		end
 	else
 		VCB_SAVE["CF_TIMER_border"] = true
 		for i=0,31 do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"], "OUTLINE")
+				if VCB_SAVE["Timer_usecfont"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["CF_TIMER_fontsize"], "OUTLINE")
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"], "OUTLINE")
+				end
 			end
 		end
 	end
@@ -1868,7 +2085,19 @@ function VCB_BF_CF_FRAME_AuraTimerFontSizeSliderChange(obj)
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT_SIZE..": "..VCB_SAVE["CF_TIMER_fontsize"])
 	for i=0,31 do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
-			getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"])
+			if VCB_SAVE["Timer_usecfont"] then
+				if VCB_SAVE["CF_TIMER_border"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["CF_TIMER_fontsize"], "OUTLINE")
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["CF_TIMER_fontsize"])
+				end
+			else
+				if VCB_SAVE["CF_TIMER_border"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"], "OUTLINE")
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["CF_TIMER_fontsize"])
+				end
+			end
 		end
 	end
 end
@@ -1888,14 +2117,22 @@ function VCB_BF_CF_FRAME2_G_ENABLE_BORDER()
 		VCB_SAVE["CF_AURA_enablefontborder"] = false
 		for i=0, 31 do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"])
+				if VCB_SAVE["CF_AURA_usecfont"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_customfont"], VCB_SAVE["CF_AURA_fontsize"])
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"])
+				end
 			end
 		end
 	else
 		VCB_SAVE["CF_AURA_enablefontborder"] = true
 		for i=0, 31 do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
+				if VCB_SAVE["CF_AURA_usecfont"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_customfont"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
+				end
 			end
 		end
 	end
@@ -1907,9 +2144,17 @@ function VCB_BF_CF_FRAME2_GFontSizeSliderChange(obj)
 	for i=0, 31 do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 			if VCB_SAVE["CF_AURA_enablefontborder"] then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
+				if VCB_SAVE["CF_AURA_usecfont"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_customfont"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
+				end
 			else
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"])
+				if VCB_SAVE["CF_AURA_usecfont"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"])
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"])
+				end
 			end
 		end
 	end
@@ -1940,12 +2185,14 @@ end
 function VCB_BF_CF_FRAME2_GFontSliderChange(obj)
 	VCB_SAVE["CF_AURA_font"] = VCB_FONT_ARRAY[obj:GetValue()]
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT..": "..VCB_SAVE["CF_AURA_font"])
-	for i=0, 31 do
-		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
-			if VCB_SAVE["CF_AURA_enablefontborder"] then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
-			else
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"])
+	if (not VCB_SAVE["CF_AURA_usecfont"]) then
+		for i=0, 31 do
+			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
+				if VCB_SAVE["CF_AURA_enablefontborder"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"])
+				end
 			end
 		end
 	end
@@ -2014,6 +2261,76 @@ function VCB_BF_CF_FRAME_CHECKBUTTON_ATTACH_CLICK()
 	end
 	VCB_BF_WEAPON_BUTTON_OnEvent(false)
 	VCB_BF_RepositioningAndResizing()
+end
+
+function VCB_BF_CF_FRAME_CHECKBUTTON_CUSTOMFONT_CLICK()
+	if VCB_SAVE["CF_icon_usecfont"] then
+		VCB_SAVE["CF_icon_usecfont"] = false
+		if VCB_SAVE["CF_icon_border"] then
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"], "OUTLINE")
+		else
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_font"], VCB_SAVE["CF_icon_fontsize"])
+		end
+	else
+		VCB_SAVE["CF_icon_usecfont"] = true
+		if VCB_SAVE["CF_icon_border"] then
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_customfont"], VCB_SAVE["CF_icon_fontsize"], "OUTLINE")
+		else
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_customfont"], VCB_SAVE["CF_icon_fontsize"])
+		end
+	end
+end
+
+function VCB_BF_CF_FRAME_EDITBOX_CUSTOMFONT_CHANGE(obj)
+	VCB_SAVE["CF_icon_customfont"] = obj:GetText()
+	if VCB_SAVE["CF_icon_usecfont"] then
+		if VCB_SAVE["CF_icon_border"] then
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_customfont"], VCB_SAVE["CF_icon_fontsize"], "OUTLINE")
+		else
+			VCB_BF_CONSOLIDATED_ICONCount:SetFont(VCB_SAVE["CF_icon_customfont"], VCB_SAVE["CF_icon_fontsize"])
+		end
+	end
+end
+
+function VCB_BF_CF_FRAME2_CHECKBUTTON_CUSTOMFONT_CLICK()
+	if VCB_SAVE["CF_AURA_usecfont"] then
+		VCB_SAVE["CF_AURA_usecfont"] = false
+		for i=0, 31 do
+			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
+				if VCB_SAVE["CF_AURA_enableborder"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"])
+				end
+			end
+		end
+	else
+		VCB_SAVE["CF_AURA_usecfont"] = true
+		for i=0, 31 do
+			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
+				if VCB_SAVE["CF_AURA_enableborder"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_customfont"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_customfont"], VCB_SAVE["CF_AURA_fontsize"])
+				end
+			end
+		end
+	end
+end
+
+function VCB_BF_CF_FRAME2_EDITBOX_CUSTOMFONT_CHANGE(obj)
+	VCB_SAVE["CF_AURA_customfont"] = obj:GetText()
+	if VCB_SAVE["CF_AURA_usecfont"] then
+		for i=0, 31 do
+			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
+				if VCB_SAVE["CF_AURA_enableborder"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_customfont"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_customfont"], VCB_SAVE["CF_AURA_fontsize"])
+				end
+			end
+		end
+	end
 end
 
 ---------------------------------------END CONSOLIDATED FRAME-----------------------------------------------------------------------------------------------------------------
@@ -2197,14 +2514,22 @@ function VCB_BF_BF_FRAME_TIMER_ENABLE_BORDER()
 		VCB_SAVE["BF_TIMER_border"] = false
 		for i=0,31 do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"])
+				if VCB_SAVE["Timer_usecfont"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["BF_TIMER_fontsize"])
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"])
+				end
 			end
 		end
 	else
 		VCB_SAVE["BF_TIMER_border"] = true
 		for i=0,31 do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"], "OUTLINE")
+				if VCB_SAVE["Timer_usecfont"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["BF_TIMER_fontsize"], "OUTLINE")
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"], "OUTLINE")
+				end
 			end
 		end
 	end
@@ -2216,9 +2541,17 @@ function VCB_BF_BF_FRAME_FontSizeChange(obj)
 	for i=0,31 do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 			if VCB_SAVE["BF_TIMER_border"] then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"], "OUTLINE")
+				if VCB_SAVE["Timer_usecfont"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["BF_TIMER_fontsize"], "OUTLINE")
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"], "OUTLINE")
+				end
 			else
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"])
+				if VCB_SAVE["Timer_usecfont"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["BF_TIMER_fontsize"])
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"])
+				end
 			end
 		end
 	end
@@ -2249,14 +2582,22 @@ function VCB_BF_BF_FRAME_G_ENABLE_BORDER()
 		VCB_SAVE["BF_GENERAL_enableborder"] = false
 		for i=0, 31 do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"])
+				if VCB_SAVE["BF_GENERAL_usecfont"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_customfont"], VCB_SAVE["BF_GENERAL_fontsize"])
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"])
+				end
 			end
 		end
 	else
 		VCB_SAVE["BF_GENERAL_enableborder"] = true
 		for i=0, 31 do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")
+				if VCB_SAVE["BF_GENERAL_usecfont"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_customfont"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")
+				end
 			end
 		end
 	end
@@ -2268,9 +2609,17 @@ function VCB_BF_BF_FRAME_GFontSizeSliderChange(obj)
 	for i=0, 31 do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 			if VCB_SAVE["BF_GENERAL_enableborder"] then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")
+				if VCB_SAVE["BF_GENERAL_usecfont"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_customfont"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")
+				end
 			else
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"])
+				if VCB_SAVE["BF_GENERAL_usecfont"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_customfont"], VCB_SAVE["BF_GENERAL_fontsize"])
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"])
+				end
 			end
 		end
 	end
@@ -2301,12 +2650,14 @@ end
 function VCB_BF_BF_FRAME_GFontSliderChange(obj)
 	VCB_SAVE["BF_GENERAL_font"] = VCB_FONT_ARRAY[obj:GetValue()]
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT..": "..VCB_SAVE["BF_GENERAL_font"])
-	for i=0, 31 do
-		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
-			if VCB_SAVE["BF_GENERAL_enableborder"] then
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")
-			else
-				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"])
+	if (not VCB_SAVE["BF_GENERAL_usecfont"]) then
+		for i=0, 31 do
+			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
+				if VCB_SAVE["BF_GENERAL_enableborder"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"])
+				end
 			end
 		end
 	end
@@ -2339,6 +2690,47 @@ function VCB_BF_BF_FRAME_INVERT_AURA_ORIENTATION()
 	end
 	VCB_BF_WEAPON_BUTTON_OnEvent(false)
 	VCB_BF_RepositioningAndResizing()
+end
+
+function VCB_BF_BF_FRAME_CHECKBUTTON_CUSTOMFONT_CLICK()
+	if VCB_SAVE["BF_GENERAL_usecfont"] then
+		VCB_SAVE["BF_GENERAL_usecfont"] = false
+		for i=0, 31 do
+			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
+				if VCB_SAVE["BF_GENERAL_enableborder"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"])
+				end
+			end
+		end
+	else
+		VCB_SAVE["BF_GENERAL_usecfont"] = true
+		for i=0, 31 do
+			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
+				if VCB_SAVE["BF_GENERAL_enableborder"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_customfont"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_customfont"], VCB_SAVE["BF_GENERAL_fontsize"])
+				end
+			end
+		end
+	end
+end
+
+function VCB_BF_BF_FRAME_EDITBOX_CUSTOMFONT_CHANGE(obj)
+	VCB_SAVE["BF_GENERAL_customfont"] = obj:GetText()
+	if VCB_SAVE["BF_GENERAL_usecfont"] then
+		for i=0, 31 do
+			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
+				if VCB_SAVE["BF_GENERAL_enableborder"] then
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_customfont"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")
+				else
+					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_customfont"], VCB_SAVE["BF_GENERAL_fontsize"])
+				end
+			end
+		end
+	end
 end
 
 ---------------------------------------END BUFF FRAME-----------------------------------------------------------------------------------------------------------------
@@ -2641,12 +3033,20 @@ function VCB_BF_DBF_FRAME_ENABLE_FONTBORDER()
 	if VCB_SAVE["DBF_TIMER_enableborder"] then
 		VCB_SAVE["DBF_TIMER_enableborder"] = false
 		for i=0,15 do
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"])
+			if VCB_SAVE["Timer_usecfont"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["DBF_TIMER_fontsize"])
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"])
+			end
 		end
 	else
 		VCB_SAVE["DBF_TIMER_enableborder"] = true
 		for i=0,15 do
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"], "OUTLINE")
+			if VCB_SAVE["Timer_usecfont"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["DBF_TIMER_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"], "OUTLINE")
+			end
 		end
 	end
 end
@@ -2656,9 +3056,17 @@ function VCB_BF_DBF_FRAME_FontSizeSliderChange(obj)
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT_SIZE..": "..VCB_SAVE["DBF_TIMER_fontsize"])
 	for i=0,15 do
 		if VCB_SAVE["DBF_TIMER_enableborder"] then
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"], "OUTLINE")
+			if VCB_SAVE["Timer_usecfont"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["DBF_TIMER_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"], "OUTLINE")
+			end
 		else
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"])
+			if VCB_SAVE["Timer_usecfont"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["DBF_TIMER_fontsize"])
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["DBF_TIMER_fontsize"])
+			end
 		end
 	end
 end
@@ -2693,12 +3101,20 @@ function VCB_BF_DBF_FRAME_G_ENABLE_BORDER()
 	if VCB_SAVE["DBF_GENERAL_enableborder"] then
 		VCB_SAVE["DBF_GENERAL_enableborder"] = false
 		for i=0, 15 do
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"])
+			if VCB_SAVE["DBF_GENERAL_usecfont"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_customfont"], VCB_SAVE["DBF_GENERAL_fontsize"])
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"])
+			end
 		end
 	else
 		VCB_SAVE["DBF_GENERAL_enableborder"] = true
 		for i=0, 15 do
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"], "OUTLINE")
+			if VCB_SAVE["DBF_GENERAL_usecfont"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_customfont"], VCB_SAVE["DBF_GENERAL_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"], "OUTLINE")
+			end
 		end
 	end
 end
@@ -2708,9 +3124,17 @@ function VCB_BF_DBF_FRAME_GFontSizeSliderChange(obj)
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT_SIZE..": "..VCB_SAVE["DBF_GENERAL_fontsize"])
 	for i=0, 15 do
 		if VCB_SAVE["DBF_GENERAL_enableborder"] then
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"], "OUTLINE")
+			if VCB_SAVE["DBF_GENERAL_usecfont"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_customfont"], VCB_SAVE["DBF_GENERAL_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"], "OUTLINE")
+			end
 		else
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"])
+			if VCB_SAVE["DBF_GENERAL_usecfont"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_customfont"], VCB_SAVE["DBF_GENERAL_fontsize"])
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"])
+			end
 		end
 	end
 end
@@ -2736,11 +3160,13 @@ end
 function VCB_BF_DBF_FRAME_GFontSliderChange(obj)
 	VCB_SAVE["DBF_GENERAL_font"] = VCB_FONT_ARRAY[obj:GetValue()]
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT..": "..VCB_SAVE["DBF_GENERAL_font"])
-	for i=0, 15 do
-		if VCB_SAVE["DBF_GENERAL_enableborder"] then
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"], "OUTLINE")
-		else
-			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"])
+	if (not VCB_SAVE["DBF_GENERAL_usecfont"]) then
+		for i=0, 15 do
+			if VCB_SAVE["DBF_GENERAL_enableborder"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"])
+			end
 		end
 	end
 end
@@ -2838,6 +3264,41 @@ function VCB_BF_DBF_FRAME_INVERT_AURA_ORIENTATION()
 	end
 end
 
+function VCB_BF_DBF_FRAME_CHECKBUTTON_CUSTOMFONT_CLICK()
+	if VCB_SAVE["DBF_GENERAL_usecfont"] then
+		VCB_SAVE["DBF_GENERAL_usecfont"] = false
+		for i=0, 15 do
+			if VCB_SAVE["DBF_GENERAL_enableborder"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_font"], VCB_SAVE["DBF_GENERAL_fontsize"])
+			end
+		end
+	else
+		VCB_SAVE["DBF_GENERAL_usecfont"] = true
+		for i=0, 15 do
+			if VCB_SAVE["DBF_GENERAL_enableborder"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_customfont"], VCB_SAVE["DBF_GENERAL_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_customfont"], VCB_SAVE["DBF_GENERAL_fontsize"])
+			end
+		end
+	end
+end
+
+function VCB_BF_DBF_FRAME_EDITBOX_CUSTOMFONT_CHANGE(obj)
+	VCB_SAVE["DBF_GENERAL_customfont"] = obj:GetText()
+	if VCB_SAVE["DBF_GENERAL_usecfont"] then
+		for i=0, 15 do
+			if VCB_SAVE["DBF_GENERAL_enableborder"] then
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_customfont"], VCB_SAVE["DBF_GENERAL_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["DBF_GENERAL_customfont"], VCB_SAVE["DBF_GENERAL_fontsize"])
+			end
+		end
+	end
+end
+
 ---------------------------------------END DEBUFF FRAME-----------------------------------------------------------------------------------------------------------------
 ---------------------------------------START WP FRAME-----------------------------------------------------------------------------------------------------------------
 function VCB_BF_WP_FRAME_VERTICAL_MODE()
@@ -2925,9 +3386,17 @@ function VCB_BF_WP_FRAME_FontSizeSliderChange(obj)
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT_SIZE..": "..VCB_SAVE["WP_GENERAL_fontsize"])
 	for i=0,1 do
 		if VCB_SAVE["WP_GENERAL_enableborder"] then
-			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"], "OUTLINE")
+			if VCB_SAVE["WP_GENERAL_usecfont"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_customfont"], VCB_SAVE["WP_GENERAL_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"], "OUTLINE")
+			end
 		else
-			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"])
+			if VCB_SAVE["WP_GENERAL_usecfont"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_customfont"], VCB_SAVE["WP_GENERAL_fontsize"])
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"])
+			end
 		end
 	end
 end
@@ -2951,11 +3420,13 @@ end
 function VCB_BF_WP_FRAME_FontSliderChange(obj)
 	VCB_SAVE["WP_GENERAL_font"] = VCB_FONT_ARRAY[obj:GetValue()]
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT..": "..VCB_SAVE["WP_GENERAL_font"])
-	for i=0,1 do
-		if VCB_SAVE["WP_GENERAL_enableborder"] then
-			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"], "OUTLINE")
-		else
-			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"])
+	if (not VCB_SAVE["WP_GENERAL_usecfont"]) then
+		for i=0,1 do
+			if VCB_SAVE["WP_GENERAL_enableborder"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"])
+			end
 		end
 	end
 end
@@ -3023,12 +3494,20 @@ function VCB_BF_WP_FRAME_TIMER_ENABLE_BORDER()
 	if VCB_SAVE["WP_TIMER_enableborder"] then
 		VCB_SAVE["WP_TIMER_enableborder"] = false
 		for i=0,1 do
-			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"])
+			if VCB_SAVE["Timer_usecfont"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["WP_TIMER_fontsize"])
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"])
+			end
 		end
 	else
 		VCB_SAVE["WP_TIMER_enableborder"] = true
 		for i=0,1 do
-			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"], "OUTLINE")
+			if VCB_SAVE["Timer_usecfont"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["WP_TIMER_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"], "OUTLINE")
+			end
 		end
 	end
 end
@@ -3038,9 +3517,17 @@ function VCB_BF_WP_FRAME_TIMER_FontSizeSliderChange(obj)
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT_SIZE..": "..VCB_SAVE["WP_TIMER_fontsize"])
 	for i=0,1 do
 		if VCB_SAVE["WP_TIMER_enableborder"] then
-			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"], "OUTLINE")
+			if VCB_SAVE["Timer_usecfont"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["WP_TIMER_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"], "OUTLINE")
+			end
 		else
-			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont("Fonts\\"..VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"])
+			if VCB_SAVE["Timer_usecfont"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["WP_TIMER_fontsize"])
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"])
+			end
 		end
 	end
 end
@@ -3094,12 +3581,20 @@ function VCB_BF_WP_FRAME_ENABLE_FONT_BORDER()
 	if VCB_SAVE["WP_GENERAL_enableborder"] then
 		VCB_SAVE["WP_GENERAL_enableborder"] = false
 		for i=0,1 do
-			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"])
+			if VCB_SAVE["WP_GENERAL_usecfont"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_customfont"], VCB_SAVE["WP_GENERAL_fontsize"])
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"])
+			end
 		end
 	else
 		VCB_SAVE["WP_GENERAL_enableborder"] = true
 		for i=0,1 do
-			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont("Fonts\\"..VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"], "OUTLINE")
+			if VCB_SAVE["WP_GENERAL_usecfont"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_customfont"], VCB_SAVE["WP_GENERAL_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"], "OUTLINE")
+			end
 		end
 	end
 end
@@ -3117,6 +3612,41 @@ function VCB_BF_WP_FRAME_OffsetYSliderChange(obj)
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT_OFFSET_Y..": "..VCB_SAVE["WP_GENERAL_offset_y"])
 	for i=0,1 do
 		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetPoint("BOTTOMRIGHT", VCB_SAVE["WP_GENERAL_offset_x"], VCB_SAVE["WP_GENERAL_offset_y"])
+	end
+end
+
+function VCB_BF_WP_FRAME_CHECKBUTTON_CUSTOMFONT_CLICK()
+	if VCB_SAVE["WP_GENERAL_usecfont"] then
+		VCB_SAVE["WP_GENERAL_usecfont"] = false
+		for i=0, 1 do
+			if VCB_SAVE["WP_GENERAL_enableborder"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_font"], VCB_SAVE["WP_GENERAL_fontsize"])
+			end
+		end
+	else
+		VCB_SAVE["WP_GENERAL_usecfont"] = true
+		for i=0, 1 do
+			if VCB_SAVE["WP_GENERAL_enableborder"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_customfont"], VCB_SAVE["WP_GENERAL_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_customfont"], VCB_SAVE["WP_GENERAL_fontsize"])
+			end
+		end
+	end
+end
+
+function VCB_BF_WP_FRAME_EDITBOX_CUSTOMFONT_CHANGE(obj)
+	VCB_SAVE["WP_GENERAL_customfont"] = obj:GetText()
+	if VCB_SAVE["WP_GENERAL_usecfont"] then
+		for i=0, 1 do
+			if VCB_SAVE["WP_GENERAL_enableborder"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_customfont"], VCB_SAVE["WP_GENERAL_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Count"):SetFont(VCB_SAVE["WP_GENERAL_customfont"], VCB_SAVE["WP_GENERAL_fontsize"])
+			end
+		end
 	end
 end
 
