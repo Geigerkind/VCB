@@ -8,7 +8,7 @@
 ## Author: Shino <Synced> - Kronos
 ## SavedVariables: VCB_Profile, VCB_Profile_Name
 ## SavedVariablesPerCharacter: Consolidated_Buffs, Banned_Buffs, VCB_BF_LOCKED, VCB_SAVE, VCB_CUR_PROFILE, VCB_WP_POSX, VCB_WP_POSY, VCB_WP_POINT, VCB_ICON_POINT, VCB_ICON_POSX, VCB_ICON_POSY, VCB_MM_ICON
-## Version: 2.7
+## Version: 2.8
 VCB.lua
 VCB_Buffframe.lua
 VCB.xml

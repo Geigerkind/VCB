@@ -719,10 +719,18 @@ function VCB_INITIALIZE()
 			end
 			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["WP_BORDER_bordercolor_r"],VCB_SAVE["WP_BORDER_bordercolor_g"],VCB_SAVE["WP_BORDER_bordercolor_b"],VCB_SAVE["WP_BORDER_borderopacity"])
 		end
-		if VCB_SAVE["WP_TIMER_enableborder"] then
-			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"], "OUTLINE")
+		if VCB_SAVE["Timer_usecfont"] then
+			if VCB_SAVE["WP_TIMER_enableborder"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["WP_TIMER_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["WP_TIMER_fontsize"])
+			end
 		else
-			getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"])
+			if VCB_SAVE["WP_TIMER_enableborder"] then
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"], "OUTLINE")
+			else
+				getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["WP_TIMER_fontsize"])
+			end
 		end
 		if VCB_SAVE["WP_GENERAL_usecfont"] then
 			if VCB_SAVE["WP_GENERAL_enableborder"] then
