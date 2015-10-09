@@ -128,7 +128,7 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 			for p = 1, VCB_tablelength(Banned_Buffs) do
 				if not Banned_Buffs[p] or name == nil then break end
 				if ( strfind(strlower(Banned_Buffs[p]), strlower(name)) ) then
-					CancelPlayerBuff(button:GetID())
+					CancelPlayerBuff(button.buffIndex)
 					VCB_SendMessage(name..VCB_HAS_BEEN_CANCELLED)
 					break
 				end
@@ -141,7 +141,7 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 		else
 			button:SetAlpha(1.0);
 			button:Show();
-			if ( SHOW_BUFF_DURATIONS == "1" and timeLeft > 0) then
+			if ( SHOW_BUFF_DURATIONS == "1" and timeLeft > 0) then -- SHOW_BUFF_DURATIONS ??
 				buffDuration:Show();
 			else
 				buffDuration:Hide();
@@ -666,7 +666,7 @@ function VCB_BF_ResizeConsolidatedFrame(i)
 	if p >= VCB_SAVE["CF_BF_numperrow"] then p = VCB_SAVE["CF_BF_numperrow"] end
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetWidth(16+2*VCB_SAVE["CF_AURA_padding_h"]+(p*(32+VCB_SAVE["CF_AURA_padding_h"])))
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetHeight(10+2*VCB_SAVE["CF_AURA_padding_v"]+(ceil(i/VCB_SAVE["CF_BF_numperrow"])*(44+VCB_SAVE["CF_AURA_padding_v"])))
-
+	
 	if i == 0 then 
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetWidth(0)
 		VCB_BF_CONSOLIDATED_BUFFFRAME:SetHeight(0)
@@ -748,7 +748,7 @@ end
 
 function VCB_BF_BUFF_BUTTON_OnClick(button)
 	if button.cat == "buff" then
-		CancelPlayerBuff(GetPlayerBuff(button.buffIndex, "HELPFUL"))
+		CancelPlayerBuff(button.buffIndex)
 	end
 end
 

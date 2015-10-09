@@ -188,16 +188,13 @@
 				VCB_BF_BUFF_BUTTON_OnClick(this)
 			</OnClick>
 			<OnEnter>
+				GameTooltip:SetOwner(this, "ANCHOR_BOTTOMLEFT")
+				GameTooltip:SetPlayerBuff(this.buffIndex)
 				if this:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME and (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) and (VCB_BF_LOCKED) then
 					VCB_BF_CONSOLIDATED_BUFFFRAME:Show()
 				end
-				GameTooltip:SetOwner(this, "ANCHOR_BOTTOMLEFT")
-				GameTooltip:SetPlayerBuff(this.buffIndex)
 			</OnEnter>
 			<OnLeave>
-				if this:GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME and (not VCB_BF_CF_FRAME:IsVisible()) and (not VCB_BF_CF_FRAME2:IsVisible()) then
-					VCB_BF_CONSOLIDATED_BUFFFRAME:Hide()
-				end
 				GameTooltip:Hide()
 			</OnLeave>
 		</Scripts>
