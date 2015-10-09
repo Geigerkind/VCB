@@ -675,6 +675,47 @@ function VCB_BF_ResizeConsolidatedFrame(i)
 end
 
 function VCB_BF_BUFF_BUTTON_OnUpdate(elapsed, button)
+	local buffIndex, timeLeft;
+	
+	if VCB_SAVE["Timer_flash"] then -- Implements Blizzlike flashing
+		if ( BuffFrameUpdateTime > 0 ) then
+			BuffFrameUpdateTime = BuffFrameUpdateTime - elapsed;
+		else
+			BuffFrameUpdateTime = BuffFrameUpdateTime + TOOLTIP_UPDATE_TIME;
+		end
+	 
+		BuffFrameFlashTime = BuffFrameFlashTime - elapsed;
+		if ( BuffFrameFlashTime < 0 ) then
+			local overtime = -BuffFrameFlashTime;
+			if ( BuffFrameFlashState == 0 ) then
+				BuffFrameFlashState = 1;
+				BuffFrameFlashTime = BUFF_FLASH_TIME_ON;
+			else
+				BuffFrameFlashState = 0;
+				BuffFrameFlashTime = BUFF_FLASH_TIME_OFF;
+			end
+			if ( overtime < BuffFrameFlashTime ) then
+				BuffFrameFlashTime = BuffFrameFlashTime - overtime;
+			end
+		end
+		if ( BuffFrameFlashState == 1 ) then
+			BUFF_ALPHA_VALUE = (BUFF_FLASH_TIME_ON - BuffFrameFlashTime) / BUFF_FLASH_TIME_ON;
+		else
+			BUFF_ALPHA_VALUE = BuffFrameFlashTime / BUFF_FLASH_TIME_ON;
+		end
+		BUFF_ALPHA_VALUE = (BUFF_ALPHA_VALUE * (1 - BUFF_MIN_ALPHA)) + BUFF_MIN_ALPHA;
+	
+		buffIndex = button.buffIndex;
+		timeLeft = GetPlayerBuffTimeLeft(buffIndex);
+		if timeLeft < 30 then
+			button:SetAlpha(BUFF_ALPHA_VALUE);
+		else
+			button:SetAlpha(VCB_BF_GETBUTTONALPHA(button))
+		end
+	else
+		button:SetAlpha(VCB_BF_GETBUTTONALPHA(button))
+	end
+	
 	button.timeSinceLastUpdate = button.timeSinceLastUpdate + elapsed
 	if(button.timeSinceLastUpdate > UPDATETIME) then
 		local buffDuration = getglobal(button:GetName().."Duration");
@@ -682,15 +723,12 @@ function VCB_BF_BUFF_BUTTON_OnUpdate(elapsed, button)
 			buffDuration:Hide();
 			return;
 		end
-	
-		local buffIndex = button.buffIndex;
-		local timeLeft = GetPlayerBuffTimeLeft(buffIndex);
-		if timeLeft > 0 and VCB_SAVE["Timer_flash"] then
-			VCB_BF_CUSTOM_FLASH(button,timeLeft)
-		else
-			button:SetAlpha(VCB_BF_GETBUTTONALPHA(button))
+		
+		if (not VCB_SAVE["Timer_flash"]) then
+			buffIndex = button.buffIndex;
+			timeLeft = GetPlayerBuffTimeLeft(buffIndex);
 		end
-	
+		
 		-- Update duration
 		if (timeLeft>0 or VCB_BF_DUMMY_MODE) then
 			if VCB_BF_DUMMY_MODE then
@@ -732,18 +770,6 @@ function VCB_BF_GETBUTTONALPHA(button)
 		end
 	end
 	return a
-end
-
-function VCB_BF_CUSTOM_FLASH(button, timeLeft) -- Workaround because the UIFrameFlash function causes problems
-	local a = VCB_BF_GETBUTTONALPHA(button)
-	if timeLeft <= 30 then
-		if button.flashIndex == nil then button.flashIndex = 0 end
-		button:SetAlpha(a*((math.cos(button.flashIndex)+1)*0.5))
-		button.flashIndex = button.flashIndex + random(0.2,1.5) -- Sets the speed of flashing || random -> make it more flashy?
-	else
-		button.flashIndex = 0
-		button:SetAlpha(a)
-	end
 end
 
 function VCB_BF_BUFF_BUTTON_OnClick(button)
