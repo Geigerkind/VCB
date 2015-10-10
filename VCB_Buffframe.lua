@@ -707,7 +707,7 @@ function VCB_BF_BUFF_BUTTON_OnUpdate(elapsed, button)
 	
 		buffIndex = button.buffIndex;
 		timeLeft = GetPlayerBuffTimeLeft(buffIndex);
-		if timeLeft < 30 then
+		if timeLeft < 30 and timeLeft ~= 0 then
 			button:SetAlpha(BUFF_ALPHA_VALUE);
 		else
 			button:SetAlpha(VCB_BF_GETBUTTONALPHA(button))
