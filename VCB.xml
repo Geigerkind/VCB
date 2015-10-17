@@ -12,11 +12,11 @@
 	---------------------------------GENERAL FRAMES----------------------------------------------------------------
 	
 	<GameTooltip name="VCB_Tooltip" frameStrata="TOOLTIP" hidden="false" parent="UIParent" inherits="GameTooltipTemplate">
-		<Anchors>
-			<Anchor point="BOTTOM" relativePoint="TOP">
-				<Offset><AbsDimension x="0" y="100"/></Offset>
-			</Anchor>
-		</Anchors>
+		<Scripts>
+			<Onload>
+				this:SetOwner(WorldFrame, "ANCHOR_NONE")
+			</Onload>
+	   </Scripts>
 	</GameTooltip>
 	
 	<CheckButton name="VCB_BF_CheckTemplate" inherits="OptionsCheckButtonTemplate" virtual="true">

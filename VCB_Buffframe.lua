@@ -107,10 +107,10 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 		local buffDuration = getglobal(button:GetName().."Duration");
 		buffDuration:SetText(VCB_BF_GetDuration(timeLeft))
 		
-		GameTooltip:ClearLines()
-		GameTooltip:SetOwner(button)
-		GameTooltip:SetPlayerBuff(buffIndex)
-		local name = GameTooltipTextLeft1:GetText()
+		VCB_Tooltip:ClearLines()
+		VCB_Tooltip:SetOwner(button)
+		VCB_Tooltip:SetPlayerBuff(buffIndex)
+		local name = VCB_TooltipTextLeft1:GetText()
 		
 		if button.cat == "buff" then button:SetParent(VCB_BF_BUFF_FRAME) end
 		if Consolidated_Buffs ~= nil and button:GetParent() ~= VCB_BF_DEBUFF_FRAME and (not VCB_SAVE["MISC_disable_CF"]) then
@@ -454,10 +454,10 @@ function VCB_BF_ADD_GRAYEDOUTICONS(x)
 	
 	-- Fill buffs array
 	for _,child in pairs(children) do
-		GameTooltip:SetOwner(UIParent)
-		GameTooltip:SetPlayerBuff(GetPlayerBuff(child.buffIndex, "HELPFUL"))
-		local name = GameTooltipTextLeft1:GetText()
-		GameTooltip:Hide()
+		VCB_Tooltip:SetOwner(UIParent)
+		VCB_Tooltip:SetPlayerBuff(GetPlayerBuff(child.buffIndex, "HELPFUL"))
+		local name = VCB_TooltipTextLeft1:GetText()
+		VCB_Tooltip:Hide()
 		if (name) then
 			table.insert(buffs, strlower(name))
 		end
@@ -751,8 +751,8 @@ function VCB_BF_BUFF_BUTTON_OnUpdate(elapsed, button)
 		if ( BuffFrameUpdateTime > 0 ) then
 			return;
 		end
-		if ( GameTooltip:IsOwned(button) ) then
-			GameTooltip:SetPlayerBuff(buffIndex);
+		if ( VCB_Tooltip:IsOwned(button) ) then
+			VCB_Tooltip:SetPlayerBuff(buffIndex);
 		end
 		button.timeSinceLastUpdate = 0
 	end
