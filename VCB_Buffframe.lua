@@ -1,7 +1,7 @@
 --Global Variables
 VCB_BUTTONNAME = {buff="VCB_BF_BUFF_BUTTON", debuff="VCB_BF_DEBUFF_BUTTON", weapon = "VCB_BF_WEAPON_BUTTON"}
 VCB_MININDEX = {buff=0, debuff=0, weapon=0}
-VCB_MAXINDEX = {buff=31, debuff=15, weapon=1}
+VCB_MAXINDEX = {buff=41, debuff=15, weapon=1}
 
 -- Local Variables
 local BUTTON_TEMPLATE_NAME = {buff="VCB_BF_BUFF_BUTTON", debuff="VCB_BF_DEBUFF_BUTTON", weapon = "VCB_BF_WEAPON_BUTTON"}
@@ -196,7 +196,7 @@ end
 function VCB_BF_RepositioningAndResizing()
 	local a = 1
 	local b = 1
-	for i=0, 31 do
+	for i=0, VCB_MAXINDEX.buff do
 		local button = getglobal("VCB_BF_BUFF_BUTTON"..i)
 		local parent = button:GetParent()
 		local buttonDuration = getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration")
@@ -205,7 +205,7 @@ function VCB_BF_RepositioningAndResizing()
 		local buttonCount = getglobal("VCB_BF_BUFF_BUTTON"..i.."Count")
 		
 		if VCB_SAVE["BF_GENERAL_invert"] then
-			local j = 31-i
+			local j = VCB_MAXINDEX.buff-i
 			button = getglobal("VCB_BF_BUFF_BUTTON"..j)
 			parent = button:GetParent()
 			buttonDuration = getglobal("VCB_BF_BUFF_BUTTON"..j.."Duration")
@@ -319,7 +319,7 @@ function VCB_BF_RepositioningAndResizing()
 		end
 		
 		if VCB_SAVE["CF_BF_invert"] then
-			local j = 31-i
+			local j = VCB_MAXINDEX.buff-i
 			button = getglobal("VCB_BF_BUFF_BUTTON"..j)
 			parent = button:GetParent()
 			buttonDuration = getglobal("VCB_BF_BUFF_BUTTON"..j.."Duration")
@@ -1137,7 +1137,7 @@ function VCB_BF_DummyConfigMode_Disable()
 end
 
 function VCB_BF_updateBuffs()
-	for i=0,31 do
+	for i=0,VCB_MAXINDEX.buff do
 		VCB_BF_BUFF_BUTTON_Update(getglobal("VCB_BF_BUFF_BUTTON"..i))
 	end
 end
