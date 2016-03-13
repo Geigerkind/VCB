@@ -107,8 +107,8 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 		local buffDuration = getglobal(button:GetName().."Duration");
 		buffDuration:SetText(VCB_BF_GetDuration(timeLeft))
 		
-		VCB_Tooltip:ClearLines()
 		VCB_Tooltip:SetOwner(button)
+		VCB_Tooltip:ClearLines()
 		VCB_Tooltip:SetPlayerBuff(buffIndex)
 		local name = VCB_TooltipTextLeft1:GetText()
 		
