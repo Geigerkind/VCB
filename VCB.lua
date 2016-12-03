@@ -3,7 +3,7 @@
 
 -- Global variables
 VCB_NAME = "Vanilla Consolidate Buffs"
-VCB_VERSION = "3.0"
+VCB_VERSION = "3.1"
 VCB_IS_LOADED = false
 VCB_BF_DUMMY_MODE = false
 VCB_FONT_ARRAY = {}
@@ -1221,37 +1221,37 @@ function VCB_BF_OptionsFrame_SetColor()
 	elseif VCB_BF_COLOR_TYPE=="border" then
 		getglobal(VCB_BF_COLOR_TAR):SetBackdropBorderColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opacity"])
 	elseif VCB_BF_COLOR_TYPE=="buffsborder" then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
 		end
 	elseif VCB_BF_COLOR_TYPE=="buffsbg" then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if VCB_SAVE[VCB_BF_COLOR_TAR] and getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
 		end
 	elseif VCB_BF_COLOR_TYPE=="buffsfont" then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
 		end
 	elseif VCB_BF_COLOR_TYPE=="BFbg" then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if VCB_SAVE[VCB_BF_COLOR_TAR] and getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
 		end
 	elseif VCB_BF_COLOR_TYPE=="BFborder" then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME and VCB_SAVE[VCB_BF_COLOR_TAR] then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
 		end
 	elseif VCB_BF_COLOR_TYPE=="BFfont" then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
@@ -1271,13 +1271,13 @@ function VCB_BF_OptionsFrame_SetColor()
 			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 		end
 	elseif VCB_BF_COLOR_TYPE=="BuffGFont" then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
 		end
 	elseif VCB_BF_COLOR_TYPE=="CFGFont" then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
@@ -1340,37 +1340,37 @@ function VCB_BF_OptionsFrame_CancelColor()
 	elseif VCB_BF_COLOR_TYPE=="border" then
 		getglobal(VCB_BF_COLOR_TAR):SetBackdropBorderColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opacity"])
 	elseif VCB_BF_COLOR_TYPE=="buffsborder" then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
 		end
 	elseif VCB_BF_COLOR_TYPE=="buffsbg" then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if VCB_SAVE[VCB_BF_COLOR_TAR] and getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
 		end
 	elseif VCB_BF_COLOR_TYPE=="buffsfont" then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
 		end
 	elseif VCB_BF_COLOR_TYPE=="BFbg" then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if VCB_SAVE[VCB_BF_COLOR_TAR] and getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
 		end
 	elseif VCB_BF_COLOR_TYPE=="BFborder" then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME and VCB_SAVE[VCB_BF_COLOR_TAR] then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetVertexColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
 		end
 	elseif VCB_BF_COLOR_TYPE=="BFfont" then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
@@ -1390,13 +1390,13 @@ function VCB_BF_OptionsFrame_CancelColor()
 			getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Count"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 		end
 	elseif VCB_BF_COLOR_TYPE=="BuffGFont" then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
 		end
 	elseif VCB_BF_COLOR_TYPE=="CFGFont" then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetTextColor(r,g,b,VCB_SAVE[VCB_BF_COLOR_VAR.."opactiy"])
 			end
@@ -1963,7 +1963,7 @@ end
 function VCB_BF_CF_FRAME2_ENABLEBORDER()
 	if VCB_SAVE["CF_AURA_enableborder"] then
 		VCB_SAVE["CF_AURA_enableborder"] = false
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetVertexColor(VCB_SAVE["CF_AURA_bordercolor_r"],VCB_SAVE["CF_AURA_bordercolor_g"],VCB_SAVE["CF_AURA_bordercolor_b"],VCB_SAVE["CF_AURA_borderopactiy"])
@@ -1971,7 +1971,7 @@ function VCB_BF_CF_FRAME2_ENABLEBORDER()
 		end
 	else
 		VCB_SAVE["CF_AURA_enableborder"] = true
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				if VCB_SAVE["CF_AURA_customborder"] then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_SAVE["CF_AURA_customborderpath"])
@@ -2000,7 +2000,7 @@ function VCB_BF_CF_FRAME_AuraBorderSliderChange(obj)
 	VCB_SAVE["CF_AURA_border"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_BORDER..": "..VCB_SAVE["CF_AURA_border"])
 	if VCB_SAVE["CF_AURA_customborder"] == false and VCB_SAVE["CF_AURA_enableborder"] then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then	
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["CF_AURA_border"]])
@@ -2014,7 +2014,7 @@ function VCB_BF_CF_FRAME2_USE_CUSTOMBORDER()
 	if VCB_SAVE["CF_AURA_enableborder"] then
 		if VCB_SAVE["CF_AURA_customborder"] then
 			VCB_SAVE["CF_AURA_customborder"] = false
-			for i=0,31 do
+			for i=0, VCB_MAXINDEX["buff"] do
 				if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["CF_AURA_border"]])
@@ -2022,7 +2022,7 @@ function VCB_BF_CF_FRAME2_USE_CUSTOMBORDER()
 			end
 		else
 			VCB_SAVE["CF_AURA_customborder"] = true
-			for i=0,31 do
+			for i=0, VCB_MAXINDEX["buff"] do
 				if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_SAVE["CF_AURA_customborderpath"])
@@ -2035,7 +2035,7 @@ end
 function VCB_BF_CF_FRAME2_EDITBOX_BORDER_CHANGE(obj)
 	VCB_SAVE["CF_AURA_customborderpath"] = obj:GetText()
 	if VCB_SAVE["CF_AURA_enableborder"] and VCB_SAVE["CF_AURA_customborder"] then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_SAVE["CF_AURA_customborderpath"])
@@ -2047,14 +2047,14 @@ end
 function VCB_BF_CF_FRAME2_ENABLEBGCOLOR()
 	if VCB_SAVE["CF_AURA_enablebgcolor"] then
 		VCB_SAVE["CF_AURA_enablebgcolor"] = false
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon"):SetVertexColor(1,1,1)
 			end
 		end
 	else
 		VCB_SAVE["CF_AURA_enablebgcolor"] = true
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon"):SetVertexColor(VCB_SAVE["CF_AURA_bgcolor_r"],VCB_SAVE["CF_AURA_bgcolor_g"],VCB_SAVE["CF_AURA_bgcolor_b"])
 			end
@@ -2065,7 +2065,7 @@ end
 function VCB_BF_CF_FRAME2_TIMER_ENABLEBORDER()
 	if VCB_SAVE["CF_TIMER_border"] then
 		VCB_SAVE["CF_TIMER_border"] = false
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				if VCB_SAVE["Timer_usecfont"] then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["CF_TIMER_fontsize"])
@@ -2076,7 +2076,7 @@ function VCB_BF_CF_FRAME2_TIMER_ENABLEBORDER()
 		end
 	else
 		VCB_SAVE["CF_TIMER_border"] = true
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				if VCB_SAVE["Timer_usecfont"] then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["CF_TIMER_fontsize"], "OUTLINE")
@@ -2091,7 +2091,7 @@ end
 function VCB_BF_CF_FRAME_AuraTimerFontSizeSliderChange(obj)
 	VCB_SAVE["CF_TIMER_fontsize"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT_SIZE..": "..VCB_SAVE["CF_TIMER_fontsize"])
-	for i=0,31 do
+	for i=0, VCB_MAXINDEX["buff"] do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 			if VCB_SAVE["Timer_usecfont"] then
 				if VCB_SAVE["CF_TIMER_border"] then
@@ -2113,7 +2113,7 @@ end
 function VCB_BF_CF_FRAME_AuraTimerOpacitySliderChange(obj)
 	VCB_SAVE["CF_TIMER_fontopacity"] = string.format("%.1f", obj:GetValue())
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT_OPACITY..": "..VCB_SAVE["CF_TIMER_fontopacity"])
-	for i=0,31 do
+	for i=0, VCB_MAXINDEX["buff"] do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 			getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetAlpha(VCB_SAVE["CF_TIMER_fontopacity"])
 		end
@@ -2123,7 +2123,7 @@ end
 function VCB_BF_CF_FRAME2_G_ENABLE_BORDER()
 	if VCB_SAVE["CF_AURA_enablefontborder"] then
 		VCB_SAVE["CF_AURA_enablefontborder"] = false
-		for i=0, 31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				if VCB_SAVE["CF_AURA_usecfont"] then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_customfont"], VCB_SAVE["CF_AURA_fontsize"])
@@ -2134,7 +2134,7 @@ function VCB_BF_CF_FRAME2_G_ENABLE_BORDER()
 		end
 	else
 		VCB_SAVE["CF_AURA_enablefontborder"] = true
-		for i=0, 31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				if VCB_SAVE["CF_AURA_usecfont"] then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_customfont"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
@@ -2149,7 +2149,7 @@ end
 function VCB_BF_CF_FRAME2_GFontSizeSliderChange(obj)
 	VCB_SAVE["CF_AURA_fontsize"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT_SIZE..": "..VCB_SAVE["CF_AURA_fontsize"])
-	for i=0, 31 do
+	for i=0, VCB_MAXINDEX["buff"] do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 			if VCB_SAVE["CF_AURA_enablefontborder"] then
 				if VCB_SAVE["CF_AURA_usecfont"] then
@@ -2171,7 +2171,7 @@ end
 function VCB_BF_CF_FRAME2_GFontOffsetXSliderChange(obj)
 	VCB_SAVE["CF_AURA_fontoffset_x"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT_OFFSET_X..": "..VCB_SAVE["CF_AURA_fontoffset_x"])
-	for i=0, 31 do
+	for i=0, VCB_MAXINDEX["buff"] do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 			getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):ClearAllPoints()
 			getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetPoint("BOTTOMRIGHT", VCB_SAVE["CF_AURA_fontoffset_x"],VCB_SAVE["CF_AURA_fontoffset_y"])
@@ -2182,7 +2182,7 @@ end
 function VCB_BF_CF_FRAME2_GFontOffsetYSliderChange(obj)
 	VCB_SAVE["CF_AURA_fontoffset_y"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT_OFFSET_Y..": "..VCB_SAVE["CF_AURA_fontoffset_y"])
-	for i=0, 31 do
+	for i=0, VCB_MAXINDEX["buff"] do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 			getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):ClearAllPoints()
 			getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetPoint("BOTTOMRIGHT", VCB_SAVE["CF_AURA_fontoffset_x"],VCB_SAVE["CF_AURA_fontoffset_y"])
@@ -2194,7 +2194,7 @@ function VCB_BF_CF_FRAME2_GFontSliderChange(obj)
 	VCB_SAVE["CF_AURA_font"] = VCB_FONT_ARRAY[obj:GetValue()]
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT..": "..VCB_SAVE["CF_AURA_font"])
 	if (not VCB_SAVE["CF_AURA_usecfont"]) then
-		for i=0, 31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				if VCB_SAVE["CF_AURA_enablefontborder"] then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
@@ -2209,7 +2209,7 @@ end
 function VCB_BF_CF_FRAME2_GFontOpacitySliderChange(obj)
 	VCB_SAVE["CF_AURA_fontopacity"] = string.format("%.1f", obj:GetValue())
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT_OPACITY..": "..VCB_SAVE["CF_AURA_fontopacity"])
-	for i=0, 31 do
+	for i=0, VCB_MAXINDEX["buff"] do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 			getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetAlpha(VCB_SAVE["CF_AURA_fontopacity"])
 		end
@@ -2237,7 +2237,7 @@ end
 function VCB_BF_CF_FRAME2_GBGOpacitySliderChange(obj)
 	VCB_SAVE["CF_AURA_bgopacity"] = string.format("%.1f", obj:GetValue())
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_BACKGROUND_OPACITY..": "..VCB_SAVE["CF_AURA_bgopacity"])
-	for i=0,31 do
+	for i=0, VCB_MAXINDEX["buff"] do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 			getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon"):SetAlpha(VCB_SAVE["CF_AURA_bgopacity"])
 		end
@@ -2303,7 +2303,7 @@ end
 function VCB_BF_CF_FRAME2_CHECKBUTTON_CUSTOMFONT_CLICK()
 	if VCB_SAVE["CF_AURA_usecfont"] then
 		VCB_SAVE["CF_AURA_usecfont"] = false
-		for i=0, 31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				if VCB_SAVE["CF_AURA_enableborder"] then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_font"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
@@ -2314,7 +2314,7 @@ function VCB_BF_CF_FRAME2_CHECKBUTTON_CUSTOMFONT_CLICK()
 		end
 	else
 		VCB_SAVE["CF_AURA_usecfont"] = true
-		for i=0, 31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				if VCB_SAVE["CF_AURA_enableborder"] then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_customfont"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
@@ -2329,7 +2329,7 @@ end
 function VCB_BF_CF_FRAME2_EDITBOX_CUSTOMFONT_CHANGE(obj)
 	VCB_SAVE["CF_AURA_customfont"] = obj:GetText()
 	if VCB_SAVE["CF_AURA_usecfont"] then
-		for i=0, 31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_CONSOLIDATED_BUFFFRAME then
 				if VCB_SAVE["CF_AURA_enableborder"] then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["CF_AURA_customfont"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
@@ -2407,7 +2407,7 @@ end
 function VCB_BF_BF_FRAME_BGOpaSliderChange(obj)
 	VCB_SAVE["BF_GENERAL_bgopacity"] = string.format("%.1f", obj:GetValue())
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_BACKGROUND_OPACITY..": "..VCB_SAVE["BF_GENERAL_bgopacity"])
-	for i=0,31 do
+	for i=0, VCB_MAXINDEX["buff"] do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 			getglobal("VCB_BF_BUFF_BUTTON"..i):SetAlpha(VCB_SAVE["BF_GENERAL_bgopacity"])
 		end
@@ -2417,14 +2417,14 @@ end
 function VCB_BF_BF_FRAME_ENABLE_BGCOLOR()
 	if VCB_SAVE["BF_GENERAL_enablebgcolor"] then
 		VCB_SAVE["BF_GENERAL_enablebgcolor"] = false
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon"):SetVertexColor(1,1,1,VCB_SAVE["BF_GENERAL_bgopacity"])
 			end
 		end
 	else
 		VCB_SAVE["BF_GENERAL_enablebgcolor"] = true
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon"):SetVertexColor(VCB_SAVE["BF_GENERAL_bgcolor_r"],VCB_SAVE["BF_GENERAL_bgcolor_g"],VCB_SAVE["BF_GENERAL_bgcolor_b"],VCB_SAVE["BF_GENERAL_bgopacity"])
 			end
@@ -2435,14 +2435,14 @@ end
 function VCB_BF_BF_FRAME_ENABLE_BORDER()
 	if VCB_SAVE["BF_BORDER_enableborder"] then
 		VCB_SAVE["BF_BORDER_enableborder"] = false
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
 			end
 		end
 	else
 		VCB_SAVE["BF_BORDER_enableborder"] = true
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["BF_BORDER_border"]])
@@ -2456,7 +2456,7 @@ function VCB_BF_BF_FRAME_BorderOpacityChange(obj)
 	VCB_SAVE["BF_BORDER_borderopacity"] = string.format("%.1f", obj:GetValue())
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_BACKGROUND_OPACITY..": "..VCB_SAVE["BF_BORDER_borderopacity"])
 	if VCB_SAVE["BF_BORDER_enableborder"] then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetAlpha(VCB_SAVE["BF_BORDER_borderopacity"])
 			end
@@ -2468,7 +2468,7 @@ function VCB_BF_BF_FRAME_BorderChange(obj)
 	VCB_SAVE["BF_BORDER_border"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_BORDER..": "..VCB_SAVE["BF_BORDER_border"])
 	if VCB_SAVE["BF_BORDER_enableborder"] then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_AURABORDER_ARRAY[VCB_SAVE["BF_BORDER_border"]])
@@ -2481,7 +2481,7 @@ end
 function VCB_BF_BF_FRAME_USE_CUSTOM_BORDER()
 	if VCB_SAVE["BF_BORDER_usecustomborder"] then
 		VCB_SAVE["BF_BORDER_usecustomborder"] = false
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
 				if VCB_SAVE["BF_BORDER_enableborder"] then
@@ -2493,7 +2493,7 @@ function VCB_BF_BF_FRAME_USE_CUSTOM_BORDER()
 	else
 		VCB_SAVE["BF_BORDER_usecustomborder"] = true
 		if VCB_SAVE["BF_BORDER_enableborder"] then
-			for i=0,31 do
+			for i=0, VCB_MAXINDEX["buff"] do
 				if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_SAVE["BF_BORDER_customborderpath"])
@@ -2507,7 +2507,7 @@ end
 function VCB_BF_BF_FRAME_EDITBOX_BORDERCHANGE(obj)
 	VCB_SAVE["BF_BORDER_customborderpath"] = obj:GetText()
 	if VCB_SAVE["BF_BORDER_enableborder"] then
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(nil)
 				getglobal("VCB_BF_BUFF_BUTTON"..i.."Border"):SetTexture(VCB_SAVE["BF_BORDER_customborderpath"])
@@ -2520,7 +2520,7 @@ end
 function VCB_BF_BF_FRAME_TIMER_ENABLE_BORDER()
 	if VCB_SAVE["BF_TIMER_border"] then
 		VCB_SAVE["BF_TIMER_border"] = false
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				if VCB_SAVE["Timer_usecfont"] then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["BF_TIMER_fontsize"])
@@ -2531,7 +2531,7 @@ function VCB_BF_BF_FRAME_TIMER_ENABLE_BORDER()
 		end
 	else
 		VCB_SAVE["BF_TIMER_border"] = true
-		for i=0,31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				if VCB_SAVE["Timer_usecfont"] then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetFont(VCB_SAVE["Timer_customfont"], VCB_SAVE["BF_TIMER_fontsize"], "OUTLINE")
@@ -2546,7 +2546,7 @@ end
 function VCB_BF_BF_FRAME_FontSizeChange(obj)
 	VCB_SAVE["BF_TIMER_fontsize"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT_SIZE..": "..VCB_SAVE["BF_TIMER_fontsize"])
-	for i=0,31 do
+	for i=0, VCB_MAXINDEX["buff"] do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 			if VCB_SAVE["BF_TIMER_border"] then
 				if VCB_SAVE["Timer_usecfont"] then
@@ -2568,7 +2568,7 @@ end
 function VCB_BF_BF_FRAME_FontOpacityChange(obj)
 	VCB_SAVE["BF_TIMER_fontopacity"] = string.format("%.1f", obj:GetValue())
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT_OPACITY..": "..VCB_SAVE["BF_TIMER_fontopacity"])
-	for i=0,31 do
+	for i=0, VCB_MAXINDEX["buff"] do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 			getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetAlpha(VCB_SAVE["BF_TIMER_fontopacity"])
 		end
@@ -2588,7 +2588,7 @@ end
 function VCB_BF_BF_FRAME_G_ENABLE_BORDER()
 	if VCB_SAVE["BF_GENERAL_enableborder"] then
 		VCB_SAVE["BF_GENERAL_enableborder"] = false
-		for i=0, 31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				if VCB_SAVE["BF_GENERAL_usecfont"] then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_customfont"], VCB_SAVE["BF_GENERAL_fontsize"])
@@ -2599,7 +2599,7 @@ function VCB_BF_BF_FRAME_G_ENABLE_BORDER()
 		end
 	else
 		VCB_SAVE["BF_GENERAL_enableborder"] = true
-		for i=0, 31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				if VCB_SAVE["BF_GENERAL_usecfont"] then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_customfont"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")
@@ -2614,7 +2614,7 @@ end
 function VCB_BF_BF_FRAME_GFontSizeSliderChange(obj)
 	VCB_SAVE["BF_GENERAL_fontsize"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT_SIZE..": "..VCB_SAVE["BF_GENERAL_fontsize"])
-	for i=0, 31 do
+	for i=0, VCB_MAXINDEX["buff"] do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 			if VCB_SAVE["BF_GENERAL_enableborder"] then
 				if VCB_SAVE["BF_GENERAL_usecfont"] then
@@ -2636,7 +2636,7 @@ end
 function VCB_BF_BF_FRAME_GFontOffsetXSliderChange(obj)
 	VCB_SAVE["BF_GENERAL_fontoffset_x"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT_OFFSET_X..": "..VCB_SAVE["BF_GENERAL_fontoffset_x"])
-	for i=0, 31 do
+	for i=0, VCB_MAXINDEX["buff"] do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 			getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):ClearAllPoints()
 			getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetPoint("BOTTOMRIGHT", VCB_SAVE["BF_GENERAL_fontoffset_x"],VCB_SAVE["BF_GENERAL_fontoffset_y"])
@@ -2647,7 +2647,7 @@ end
 function VCB_BF_BF_FRAME_GFontOffsetYSliderChange(obj)
 	VCB_SAVE["BF_GENERAL_fontoffset_y"] = obj:GetValue()
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT_OFFSET_Y..": "..VCB_SAVE["BF_GENERAL_fontoffset_y"])
-	for i=0, 31 do
+	for i=0, VCB_MAXINDEX["buff"] do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 			getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):ClearAllPoints()
 			getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetPoint("BOTTOMRIGHT", VCB_SAVE["BF_GENERAL_fontoffset_x"],VCB_SAVE["BF_GENERAL_fontoffset_y"])
@@ -2659,7 +2659,7 @@ function VCB_BF_BF_FRAME_GFontSliderChange(obj)
 	VCB_SAVE["BF_GENERAL_font"] = VCB_FONT_ARRAY[obj:GetValue()]
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT..": "..VCB_SAVE["BF_GENERAL_font"])
 	if (not VCB_SAVE["BF_GENERAL_usecfont"]) then
-		for i=0, 31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				if VCB_SAVE["BF_GENERAL_enableborder"] then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")
@@ -2674,7 +2674,7 @@ end
 function VCB_BF_BF_FRAME_GFontOpacitySliderChange(obj)
 	VCB_SAVE["BF_GENERAL_fontopacity"] = string.format("%.1f", obj:GetValue())
 	getglobal(obj:GetName().."Text"):SetText(VCB_COMMON_SLIDER_FONT_OPACITY..": "..VCB_SAVE["BF_GENERAL_fontopacity"])
-	for i=0, 31 do
+	for i=0, VCB_MAXINDEX["buff"] do
 		if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 			getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetAlpha(VCB_SAVE["BF_GENERAL_fontopacity"])
 		end
@@ -2703,7 +2703,7 @@ end
 function VCB_BF_BF_FRAME_CHECKBUTTON_CUSTOMFONT_CLICK()
 	if VCB_SAVE["BF_GENERAL_usecfont"] then
 		VCB_SAVE["BF_GENERAL_usecfont"] = false
-		for i=0, 31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				if VCB_SAVE["BF_GENERAL_enableborder"] then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_font"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")
@@ -2714,7 +2714,7 @@ function VCB_BF_BF_FRAME_CHECKBUTTON_CUSTOMFONT_CLICK()
 		end
 	else
 		VCB_SAVE["BF_GENERAL_usecfont"] = true
-		for i=0, 31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				if VCB_SAVE["BF_GENERAL_enableborder"] then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_customfont"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")
@@ -2729,7 +2729,7 @@ end
 function VCB_BF_BF_FRAME_EDITBOX_CUSTOMFONT_CHANGE(obj)
 	VCB_SAVE["BF_GENERAL_customfont"] = obj:GetText()
 	if VCB_SAVE["BF_GENERAL_usecfont"] then
-		for i=0, 31 do
+		for i=0, VCB_MAXINDEX["buff"] do
 			if getglobal("VCB_BF_BUFF_BUTTON"..i):GetParent() == VCB_BF_BUFF_FRAME then
 				if VCB_SAVE["BF_GENERAL_enableborder"] then
 					getglobal("VCB_BF_BUFF_BUTTON"..i.."Count"):SetFont(VCB_SAVE["BF_GENERAL_customfont"], VCB_SAVE["BF_GENERAL_fontsize"], "OUTLINE")

@@ -676,7 +676,7 @@ end
 
 function VCB_BF_BUFF_BUTTON_OnUpdate(elapsed, button)
 	local buffIndex, timeLeft;
-	
+	elapsed = elapsed * 0.5; -- Slowing down flashing
 	if VCB_SAVE["Timer_flash"] then -- Implements Blizzlike flashing
 		if ( BuffFrameUpdateTime > 0 ) then
 			BuffFrameUpdateTime = BuffFrameUpdateTime - elapsed;
@@ -927,29 +927,29 @@ function VCB_BF_GetDuration(timeLeft)
 				if VCB_SAVE["Timer_hours_convert"] then
 					if VCB_SAVE["Timer_minutes_convert"] then
 						if VCB_SAVE["Timer_round"] then
-							return floor(timeLeft/3600)..":"..ceil(timeLeft)-3600*ceil(timeLeft/3600)..":"..ceil(timeLeft)-60*ceil(timeLeft/60).."h"
+							return floor(timeLeft/3600)..":"..ceil(timeLeft)-3600*ceil(timeLeft/3600)..":"..ceil(timeLeft)-60*ceil(timeLeft/60).." h"
 						else
-							return floor(timeLeft/3600)..":"..floor(timeLeft)-3600*floor(timeLeft/3600)..":"..floor(timeLeft)-60*floor(timeLeft/60).."h"
+							return floor(timeLeft/3600)..":"..floor(timeLeft)-3600*floor(timeLeft/3600)..":"..floor(timeLeft)-60*floor(timeLeft/60).." h"
 						end
 					else
 						if VCB_SAVE["Timer_round"] then
-							return floor(timeLeft/3600)..":"..ceil(timeLeft)-3600*ceil(timeLeft/3600).."h"
+							return floor(timeLeft/3600)..":"..ceil(timeLeft)-3600*ceil(timeLeft/3600).." h"
 						else
-							return floor(timeLeft/3600)..":"..floor(timeLeft)-3600*floor(timeLeft/3600).."h"
+							return floor(timeLeft/3600)..":"..floor(timeLeft)-3600*floor(timeLeft/3600).." h"
 						end
 					end
 				else
 					if VCB_SAVE["Timer_minutes_convert"] then
 						if VCB_SAVE["Timer_round"] then
-							return floor(timeLeft/60)..":"..ceil(timeLeft)-60*ceil(timeLeft/60).."h"
+							return floor(timeLeft/60)..":"..ceil(timeLeft)-60*ceil(timeLeft/60).." h"
 						else
-							return floor(timeLeft/60)..":"..floor(timeLeft)-60*floor(timeLeft/60).."h"
+							return floor(timeLeft/60)..":"..floor(timeLeft)-60*floor(timeLeft/60).." h"
 						end
 					else
 						if VCB_SAVE["Timer_round"] then
-							return ceil(timeLeft/3600).."h"
+							return ceil(timeLeft/3600).." h"
 						else
-							return floor(timeLeft/3600).."h"
+							return floor(timeLeft/3600).." h"
 						end
 					end
 				end
@@ -957,29 +957,29 @@ function VCB_BF_GetDuration(timeLeft)
 				if VCB_SAVE["Timer_minutes_convert"] then
 					if VCB_SAVE["Timer_hours_convert"] then
 						if VCB_SAVE["Timer_round"] then
-							return "0:"..ceil(timeLeft/60)..":"..ceil(timeLeft)-60*ceil(timeLeft/60).."h"
+							return "0:"..ceil(timeLeft/60)..":"..ceil(timeLeft)-60*ceil(timeLeft/60).." h"
 						else
-							return "0:"..floor(timeLeft/60)..":"..floor(timeLeft)-60*floor(timeLeft/60).."h"
+							return "0:"..floor(timeLeft/60)..":"..floor(timeLeft)-60*floor(timeLeft/60).." h"
 						end
 					else
 						if VCB_SAVE["Timer_round"] then
-							return ceil(timeLeft/60)..":"..ceil(timeLeft)-60*ceil(timeLeft/60).."m"
+							return ceil(timeLeft/60)..":"..ceil(timeLeft)-60*ceil(timeLeft/60).." m"
 						else
-							return floor(timeLeft/60)..":"..floor(timeLeft)-60*floor(timeLeft/60).."m"
+							return floor(timeLeft/60)..":"..floor(timeLeft)-60*floor(timeLeft/60).." m"
 						end
 					end
 				else
 					if VCB_SAVE["Timer_hours_convert"] then
 						if VCB_SAVE["Timer_round"] then
-							return "0:"..ceil(timeLeft/60).."h"
+							return "0:"..ceil(timeLeft/60).." h"
 						else
-							return "0:"..floor(timeLeft/60).."h"
+							return "0:"..floor(timeLeft/60).." h"
 						end
 					else
 						if VCB_SAVE["Timer_round"] then
-							return ceil(timeLeft/60).."m"
+							return ceil(timeLeft/60).." m"
 						else
-							return floor(timeLeft/60).."m"
+							return floor(timeLeft/60).." m"
 						end
 					end
 				end
@@ -989,53 +989,53 @@ function VCB_BF_GetDuration(timeLeft)
 				if timeLeft >=10 then
 					if VCB_SAVE["Timer_tenth"] then
 						if VCB_SAVE["Timer_round"] then
-							return "0:"..ceil(timeLeft)..":"..100*timeLeft-100*floor(timeLeft).."m"
+							return "0:"..ceil(timeLeft)..":"..100*timeLeft-100*floor(timeLeft).." m"
 						else
-							return "0:"..floor(timeLeft)..":"..100*timeLeft-100*floor(timeLeft).."m"
+							return "0:"..floor(timeLeft)..":"..100*timeLeft-100*floor(timeLeft).." m"
 						end
 					else
 						if VCB_SAVE["Timer_round"] then
-							return "0:"..ceil(timeLeft).."m"
+							return "0:"..ceil(timeLeft).." m"
 						else
-							return "0:"..floor(timeLeft).."m"
+							return "0:"..floor(timeLeft).." m"
 						end
 					end
 				else
 					if VCB_SAVE["Timer_tenth"] then
 						if VCB_SAVE["Timer_round"] then
-							return "0:0"..ceil(timeLeft)..":"..ceil(100*timeLeft-100*floor(timeLeft)).."m"
+							return "0:0"..ceil(timeLeft)..":"..ceil(100*timeLeft-100*floor(timeLeft)).." m"
 						else
-							return "0:0"..floor(timeLeft)..":"..floor(100*timeLeft-100*floor(timeLeft)).."m"
+							return "0:0"..floor(timeLeft)..":"..floor(100*timeLeft-100*floor(timeLeft)).." m"
 						end
 					else
 						if VCB_SAVE["Timer_round"] then
-							return "0:0"..ceil(timeLeft).."m"
+							return "0:0"..ceil(timeLeft).." m"
 						else
-							return "0:0"..floor(timeLeft).."m"
+							return "0:0"..floor(timeLeft).." m"
 						end
 					end
 				end
 			else
 				if VCB_SAVE["Timer_tenth"] then
 					if VCB_SAVE["Timer_round"] then
-						return ceil(timeLeft)..":"..ceil(100*timeLeft-100*floor(timeLeft)).."s"
+						return ceil(timeLeft)..":"..ceil(100*timeLeft-100*floor(timeLeft)).." s"
 					else
-						return floor(timeLeft)..":"..floor(100*timeLeft-100*floor(timeLeft)).."s"
+						return floor(timeLeft)..":"..floor(100*timeLeft-100*floor(timeLeft)).." s"
 					end
 				else
 					if VCB_SAVE["Timer_round"] then
-						return ceil(timeLeft).."s"
+						return ceil(timeLeft).." s"
 					else
-						return floor(timeLeft).."s"
+						return floor(timeLeft).." s"
 					end
 				end
 			end
 		end
 	else
 		if timeLeft > 60 then
-			return floor(timeLeft/60).."m"
+			return floor(timeLeft/60).." m"
 		else
-			return floor(timeLeft).."s"
+			return floor(timeLeft).." s"
 		end
 	end
 end
