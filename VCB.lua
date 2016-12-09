@@ -1456,6 +1456,8 @@ function VCB_BF_OpenColorPicker(obj, var, tar, type)
 	ColorPickerFrame.cancelFunc = VCB_BF_OptionsFrame_CancelColor
 
 	ColorPickerFrame:SetPoint("TOPLEFT", obj, "TOPRIGHT", 0, 0)
+	
+	ColorPickerFrame:SetFrameStrata("TOOLTIP")
 
 	ColorPickerFrame:Show();
 end

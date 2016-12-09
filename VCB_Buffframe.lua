@@ -93,6 +93,13 @@ function VCB_BF_CreateBuffButtons()
 			button:RegisterForClicks("RightButtonUp")
 			getglobal(button:GetName().."_Ghost_Label"):SetText(ghostButtonLabel)
 			getglobal(button:GetName().."_Ghost_Texture"):SetTexture(GHOST_COLOR[cat].r, GHOST_COLOR[cat].g, GHOST_COLOR[cat].b, GHOST_COLOR.alpha)
+			
+			button.BuffFrameUpdateTime = 0
+			button.BuffFrameFlashState = 0
+			button.BuffFrameFlashTime = 0
+			button.BUFF_ALPHA_VALUE = 1
+			
+			
 			VCB_BF_BUFF_BUTTON_Update(button)
 		end
 	end
@@ -141,7 +148,7 @@ function VCB_BF_BUFF_BUTTON_Update(button)
 		else
 			button:SetAlpha(1.0);
 			button:Show();
-			if ( SHOW_BUFF_DURATIONS == "1" and timeLeft > 0) then -- SHOW_BUFF_DURATIONS ??
+			if (timeLeft > 0) then -- SHOW_BUFF_DURATIONS ??
 				buffDuration:Show();
 			else
 				buffDuration:Hide();
@@ -203,6 +210,7 @@ function VCB_BF_RepositioningAndResizing()
 		local buttonBorder = getglobal("VCB_BF_BUFF_BUTTON"..i.."Border")
 		local buttonIcon = getglobal("VCB_BF_BUFF_BUTTON"..i.."Icon")
 		local buttonCount = getglobal("VCB_BF_BUFF_BUTTON"..i.."Count")
+		local timeLeft = GetPlayerBuffTimeLeft(button.buffIndex or 1);
 		
 		if VCB_SAVE["BF_GENERAL_invert"] then
 			local j = VCB_MAXINDEX.buff-i
@@ -282,7 +290,11 @@ function VCB_BF_RepositioningAndResizing()
 					buttonDuration:SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["BF_TIMER_fontsize"])
 				end
 			end
-			buttonDuration:SetTextColor(VCB_SAVE["BF_TIMER_fontcolor_r"],VCB_SAVE["BF_TIMER_fontcolor_g"],VCB_SAVE["BF_TIMER_fontcolor_b"],VCB_SAVE["BF_TIMER_fontopacity"])
+			if VCB_SAVE["Timer_below_60"] and timeLeft < 60 then
+				buttonDuration:SetTextColor(VCB_SAVE["Timer_below_60_color_r"],VCB_SAVE["Timer_below_60_color_g"],VCB_SAVE["Timer_below_60_color_b"])
+			else
+				buttonDuration:SetTextColor(VCB_SAVE["BF_TIMER_fontcolor_r"],VCB_SAVE["BF_TIMER_fontcolor_g"],VCB_SAVE["BF_TIMER_fontcolor_b"],VCB_SAVE["BF_TIMER_fontopacity"])
+			end
 			if VCB_SAVE["BF_GENERAL_enablebgcolor"] then
 				buttonIcon:SetVertexColor(VCB_SAVE["BF_GENERAL_bgcolor_r"],VCB_SAVE["BF_GENERAL_bgcolor_g"],VCB_SAVE["BF_GENERAL_bgcolor_b"],VCB_SAVE["BF_GENERAL_bgopacity"])
 			else
@@ -380,7 +392,11 @@ function VCB_BF_RepositioningAndResizing()
 					buttonDuration:SetFont(VCB_SAVE["Timer_font"], VCB_SAVE["CF_BF_scale"]*VCB_SAVE["CF_TIMER_fontsize"])
 				end
 			end
-			buttonDuration:SetTextColor(VCB_SAVE["CF_TIMER_fontcolor_r"],VCB_SAVE["CF_TIMER_fontcolor_g"],VCB_SAVE["CF_TIMER_fontcolor_b"],VCB_SAVE["CF_TIMER_fontopacity"])
+			if VCB_SAVE["Timer_below_60"] and timeLeft < 60 then
+				buttonDuration:SetTextColor(VCB_SAVE["Timer_below_60_color_r"],VCB_SAVE["Timer_below_60_color_g"],VCB_SAVE["Timer_below_60_color_b"])
+			else
+				buttonDuration:SetTextColor(VCB_SAVE["CF_TIMER_fontcolor_r"],VCB_SAVE["CF_TIMER_fontcolor_g"],VCB_SAVE["CF_TIMER_fontcolor_b"],VCB_SAVE["CF_TIMER_fontopacity"])
+			end
 			if VCB_SAVE["CF_AURA_usecfont"] then
 				if VCB_SAVE["CF_AURA_enablefontborder"] then
 					buttonCount:SetFont(VCB_SAVE["CF_AURA_customfont"], VCB_SAVE["CF_AURA_fontsize"], "OUTLINE")
@@ -677,37 +693,37 @@ end
 function VCB_BF_BUFF_BUTTON_OnUpdate(elapsed, button)
 	local buffIndex, timeLeft;
 	if VCB_SAVE["Timer_flash"] then -- Implements Blizzlike flashing
-		if ( BuffFrameUpdateTime > 0 ) then
-			BuffFrameUpdateTime = BuffFrameUpdateTime - 0.5*elapsed;
+		if ( button.BuffFrameUpdateTime > 0 ) then
+			button.BuffFrameUpdateTime = button.BuffFrameUpdateTime - elapsed;
 		else
-			BuffFrameUpdateTime = BuffFrameUpdateTime + TOOLTIP_UPDATE_TIME;
+			button.BuffFrameUpdateTime = button.BuffFrameUpdateTime + TOOLTIP_UPDATE_TIME;
 		end
 	 
-		BuffFrameFlashTime = BuffFrameFlashTime - elapsed;
-		if ( BuffFrameFlashTime < 0 ) then
-			local overtime = -BuffFrameFlashTime;
-			if ( BuffFrameFlashState == 0 ) then
-				BuffFrameFlashState = 1;
-				BuffFrameFlashTime = BUFF_FLASH_TIME_ON;
+		button.BuffFrameFlashTime = button.BuffFrameFlashTime - 0.85*elapsed;
+		if ( button.BuffFrameFlashTime < 0 ) then
+			local overtime = -button.BuffFrameFlashTime;
+			if ( button.BuffFrameFlashState == 0 ) then
+				button.BuffFrameFlashState = 1;
+				button.BuffFrameFlashTime = BUFF_FLASH_TIME_ON;
 			else
-				BuffFrameFlashState = 0;
-				BuffFrameFlashTime = BUFF_FLASH_TIME_OFF;
+				button.BuffFrameFlashState = 0;
+				button.BuffFrameFlashTime = BUFF_FLASH_TIME_OFF;
 			end
-			if ( overtime < BuffFrameFlashTime ) then
-				BuffFrameFlashTime = BuffFrameFlashTime - overtime;
+			if ( overtime < button.BuffFrameFlashTime ) then
+				button.BuffFrameFlashTime = button.BuffFrameFlashTime - overtime;
 			end
 		end
-		if ( BuffFrameFlashState == 1 ) then
-			BUFF_ALPHA_VALUE = (BUFF_FLASH_TIME_ON - BuffFrameFlashTime) / BUFF_FLASH_TIME_ON;
+		if ( button.BuffFrameFlashState == 1 ) then
+			button.BUFF_ALPHA_VALUE = (BUFF_FLASH_TIME_ON - button.BuffFrameFlashTime) / BUFF_FLASH_TIME_ON;
 		else
-			BUFF_ALPHA_VALUE = BuffFrameFlashTime / BUFF_FLASH_TIME_ON;
+			button.BUFF_ALPHA_VALUE = button.BuffFrameFlashTime / BUFF_FLASH_TIME_ON;
 		end
-		BUFF_ALPHA_VALUE = (BUFF_ALPHA_VALUE * (1 - BUFF_MIN_ALPHA)) + BUFF_MIN_ALPHA;
+		button.BUFF_ALPHA_VALUE = (button.BUFF_ALPHA_VALUE * (1 - BUFF_MIN_ALPHA)) + BUFF_MIN_ALPHA;
 	
 		buffIndex = button.buffIndex;
 		timeLeft = GetPlayerBuffTimeLeft(buffIndex);
 		if timeLeft < 30 and timeLeft ~= 0 then
-			button:SetAlpha(BUFF_ALPHA_VALUE);
+			button:SetAlpha(button.BUFF_ALPHA_VALUE);
 		else
 			button:SetAlpha(VCB_BF_GETBUTTONALPHA(button))
 		end
