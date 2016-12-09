@@ -676,10 +676,9 @@ end
 
 function VCB_BF_BUFF_BUTTON_OnUpdate(elapsed, button)
 	local buffIndex, timeLeft;
-	elapsed = elapsed * 0.5; -- Slowing down flashing
 	if VCB_SAVE["Timer_flash"] then -- Implements Blizzlike flashing
 		if ( BuffFrameUpdateTime > 0 ) then
-			BuffFrameUpdateTime = BuffFrameUpdateTime - elapsed;
+			BuffFrameUpdateTime = BuffFrameUpdateTime - 0.5*elapsed;
 		else
 			BuffFrameUpdateTime = BuffFrameUpdateTime + TOOLTIP_UPDATE_TIME;
 		end
