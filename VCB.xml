@@ -2308,6 +2308,27 @@
 									</OnClick>
 								</Scripts>
 							</CheckButton>
+							<CheckButton name="VCB_BF_TIMER_FRAME_CHECKBUTTON_DISABLE" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="LEFT" relativeTo="VCB_BF_TIMER_FRAME_CHECKBUTTON_CUSTOMFONT" relativePoint="RIGHT">
+										<Offset>
+											<AbsDimension x="80" y="0"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = VCB_TIMER_FRAME_SHOW_DISABLEUNIT_TOOLTIP
+										getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON_DISABLEText"):SetText(VCB_TIMER_FRAME_SHOW_DISABLEUNIT)
+									</OnLoad>
+									<OnClick>
+										VCB_BF_CHECKBUTTON_TIMER_DISABLEUNIT()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
 							<Slider name="VCB_BF_TIMER_FRAME_FontSlider" inherits="VCB_BF_SliderTemplate">
 								<Size>
 									<AbsDimension x="180" y="16"/>

@@ -219,6 +219,8 @@ if (GetLocale() == "enGB") then
 	VCB_ABILITY_LOWER_SCRIPT_19 = "prayer of spirit"
 	VCB_ABILITY_LOWER_SCRIPT_20 = "shadow protection"
 	VCB_ABILITY_LOWER_SCRIPT_21 = "prayer of shadow protection"
+	VCB_TIMER_FRAME_SHOW_DISABLEUNIT_TOOLTIP = "Check this to remove the unit of the timer. (i.e. m/s/h)."
+	VCB_TIMER_FRAME_SHOW_DISABLEUNIT = "Remove unit"
 	
 	VCB_LOCKED_FRAMES = "Locked the frames!"
 	VCB_UNLOCKED_FRAMES = "Unlocked the frames!"

@@ -219,6 +219,8 @@ if (GetLocale() == "deDE") then
 	VCB_ABILITY_LOWER_SCRIPT_19 = "gebet der willenskraft"
 	VCB_ABILITY_LOWER_SCRIPT_20 = "schattenschutz"
 	VCB_ABILITY_LOWER_SCRIPT_21 = "gebet des schattenschutzes"
+	VCB_TIMER_FRAME_SHOW_DISABLEUNIT_TOOLTIP = "Kreuze das an, um die Einheit zu deaktivieren. (z.B. m/s/h)."
+	VCB_TIMER_FRAME_SHOW_DISABLEUNIT = "Einheit entfernen"
 	
 	VCB_LOCKED_FRAMES = "Die Fenster wurden fixiert!"
 	VCB_UNLOCKED_FRAMES = "Die Fenster sind nun bewegbar!"

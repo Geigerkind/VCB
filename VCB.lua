@@ -3,7 +3,7 @@
 
 -- Global variables
 VCB_NAME = "Vanilla Consolidate Buffs"
-VCB_VERSION = "3.2"
+VCB_VERSION = "3.3"
 VCB_IS_LOADED = false
 VCB_BF_DUMMY_MODE = false
 VCB_FONT_ARRAY = {}
@@ -48,6 +48,7 @@ VCB_THEME_NAME = {}
 VCB_THEME_NAME[1] = "Default"
 VCB_THEME = {}
 VCB_THEME[1] = {
+	Timer_disableUnit = false,
 	Timer_hours = false,
 	Timer_hours_convert = false,
 	Timer_minutes = true,
@@ -277,6 +278,7 @@ function VCB_OnEvent(event)
 		if VCB_SAVE == nil then
 			VCB_SAVE = {}
 			VCB_SAVE = {
+				Timer_disableUnit = false,
 				Timer_hours = false,
 				Timer_hours_convert = false,
 				Timer_minutes = true,
@@ -877,6 +879,7 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON3"):SetChecked(VCB_SAVE["Timer_minutes"])
 		getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON4"):SetChecked(VCB_SAVE["Timer_minutes_convert"])
 		getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON5"):SetChecked(VCB_SAVE["Timer_tenth"])
+		getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON_DISABLE"):SetChecked(VCB_SAVE["Timer_disableUnit"])
 		if VCB_SAVE["Timer_round"] then
 			getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON6"):SetChecked(false)
 			getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON7"):SetChecked(true)
@@ -1550,6 +1553,16 @@ function VCB_BF_CHECKBUTTON_TIMER_HOURS()
 		VCB_SAVE["Timer_hours"] = false
 		VCB_BF_TIMER_FRAME_CHECKBUTTON2:SetChecked(false)
 		VCB_SAVE["Timer_hours_convert"] = false
+	end
+end
+
+function VCB_BF_CHECKBUTTON_TIMER_DISABLEUNIT()
+	if not VCB_SAVE["Timer_disableUnit"] then
+		VCB_SAVE["Timer_disableUnit"] = true
+		VCB_BF_TIMER_FRAME_CHECKBUTTON_DISABLE:SetChecked(true)
+	else
+		VCB_SAVE["Timer_disableUnit"] = false
+		VCB_BF_TIMER_FRAME_CHECKBUTTON_DISABLE:SetChecked(false)
 	end
 end
 
