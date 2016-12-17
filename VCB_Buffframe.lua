@@ -262,11 +262,13 @@ function VCB_BF_RepositioningAndResizing()
 			if VCB_SAVE["BF_GENERAL_verticalmode"] then
 				if VCB_SAVE["BF_GENERAL_invertorientation"] then
 					if VCB_SAVE["CF_icon_attach"] then
+						VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
 						VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPLEFT", VCB_BF_BUFF_FRAME, "BOTTOMLEFT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*(u-1)) -- WHY -1 ?!
 					end
 					button:SetPoint("TOPLEFT", VCB_BF_BUFF_FRAME, "BOTTOMLEFT", (36+VCB_SAVE["BF_GENERAL_padding_h"])*floor((a+u-o)/(VCB_SAVE["BF_GENERAL_numperrow"])),-(44+VCB_SAVE["BF_GENERAL_padding_v"])*(a+u) + floor((a+u)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(44+VCB_SAVE["BF_GENERAL_padding_v"]) + 50)
 				else
 					if VCB_SAVE["CF_icon_attach"] then
+						VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
 						VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "BOTTOMRIGHT", 0, -(44+VCB_SAVE["BF_GENERAL_padding_v"])*(u-1))
 					end
 					button:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "BOTTOMRIGHT", -(36+VCB_SAVE["BF_GENERAL_padding_h"])*floor((a+u-o)/(VCB_SAVE["BF_GENERAL_numperrow"])),-(44+VCB_SAVE["BF_GENERAL_padding_v"])*(a+u) + floor((a+u)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(44+VCB_SAVE["BF_GENERAL_padding_v"]) + 50)
@@ -274,11 +276,13 @@ function VCB_BF_RepositioningAndResizing()
 			else
 				if VCB_SAVE["BF_GENERAL_invertorientation"] then
 					if VCB_SAVE["CF_icon_attach"] then
+						VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
 						VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPLEFT", (32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
 					end
 					button:SetPoint("TOPLEFT", VCB_BF_BUFF_FRAME, "TOPLEFT", (32+VCB_SAVE["BF_GENERAL_padding_h"])*(a+u) - floor((a+u-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(32+VCB_SAVE["BF_GENERAL_padding_h"]) - (32+VCB_SAVE["BF_GENERAL_padding_h"])*CF,-(44+VCB_SAVE["BF_GENERAL_padding_v"])*floor((a+u-o-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]-o)))
 				else
 					if VCB_SAVE["CF_icon_attach"] then
+						VCB_BF_CONSOLIDATED_ICON:ClearAllPoints()
 						VCB_BF_CONSOLIDATED_ICON:SetPoint("TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*u, 0)
 					end
 					button:SetPoint("TOPRIGHT", VCB_BF_BUFF_FRAME, "TOPRIGHT", -(32+VCB_SAVE["BF_GENERAL_padding_h"])*(a+u) + floor((a+u-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]))*(VCB_SAVE["BF_GENERAL_numperrow"])*(32+VCB_SAVE["BF_GENERAL_padding_h"]) + (32+VCB_SAVE["BF_GENERAL_padding_h"])*CF,-(44+VCB_SAVE["BF_GENERAL_padding_v"])*floor((a+u-o-CF)/(VCB_SAVE["BF_GENERAL_numperrow"]-o)))
