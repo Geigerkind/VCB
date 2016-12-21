@@ -107,6 +107,11 @@
 						VCB_ICON_POSY = yOfs
 					else
 						VCB_BF_BUFF_FRAME:StopMovingOrSizing()
+						local point, _, _, xOfs, yOfs = VCB_BF_BUFF_FRAME:GetPoint()
+						VCB_SAVE["BF_POS"] = {}
+						VCB_SAVE["BF_POS"][1] = point;
+						VCB_SAVE["BF_POS"][2] = xOfs;
+						VCB_SAVE["BF_POS"][3] = yOfs;
 					end
 				end
 			</OnMouseUp>
@@ -274,6 +279,11 @@
 			<OnMouseUp>
 				if (not VCB_BF_LOCKED) then
 					VCB_BF_BUFF_FRAME:StopMovingOrSizing()
+					local point, _, _, xOfs, yOfs = VCB_BF_BUFF_FRAME:GetPoint()
+					VCB_SAVE["BF_POS"] = {}
+					VCB_SAVE["BF_POS"][1] = point;
+					VCB_SAVE["BF_POS"][2] = xOfs;
+					VCB_SAVE["BF_POS"][3] = yOfs;
 				end
 			</OnMouseUp>
 		</Scripts>
@@ -332,6 +342,11 @@
 			<OnMouseUp>
 				if (not VCB_BF_LOCKED) then
 					VCB_BF_DEBUFF_FRAME:StopMovingOrSizing()
+					local point, _, _, xOfs, yOfs = VCB_BF_DEBUFF_FRAME:GetPoint()
+					VCB_SAVE["DBF_POS"] = {}
+					VCB_SAVE["DBF_POS"][1] = point;
+					VCB_SAVE["DBF_POS"][2] = xOfs;
+					VCB_SAVE["DBF_POS"][3] = yOfs;
 				end
 			</OnMouseUp>
 		</Scripts>

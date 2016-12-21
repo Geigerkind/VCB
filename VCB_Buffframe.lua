@@ -303,7 +303,7 @@ function VCB_BF_RepositioningAndResizing()
 				end
 			end
 			if VCB_SAVE["Timer_below_60"] and timeLeft < 60 then
-				buttonDuration:SetTextColor(VCB_SAVE["Timer_below_60_color_r"],VCB_SAVE["Timer_below_60_color_g"],VCB_SAVE["Timer_below_60_color_b"])
+				buttonDuration:SetTextColor(VCB_SAVE["Timer_below_60_color_r"],VCB_SAVE["Timer_below_60_color_g"],VCB_SAVE["Timer_below_60_color_b"],VCB_SAVE["BF_TIMER_fontopacity"])
 			else
 				buttonDuration:SetTextColor(VCB_SAVE["BF_TIMER_fontcolor_r"],VCB_SAVE["BF_TIMER_fontcolor_g"],VCB_SAVE["BF_TIMER_fontcolor_b"],VCB_SAVE["BF_TIMER_fontopacity"])
 			end
@@ -405,7 +405,7 @@ function VCB_BF_RepositioningAndResizing()
 				end
 			end
 			if VCB_SAVE["Timer_below_60"] and timeLeft < 60 then
-				buttonDuration:SetTextColor(VCB_SAVE["Timer_below_60_color_r"],VCB_SAVE["Timer_below_60_color_g"],VCB_SAVE["Timer_below_60_color_b"])
+				buttonDuration:SetTextColor(VCB_SAVE["Timer_below_60_color_r"],VCB_SAVE["Timer_below_60_color_g"],VCB_SAVE["Timer_below_60_color_b"],VCB_SAVE["CF_TIMER_fontopacity"])
 			else
 				buttonDuration:SetTextColor(VCB_SAVE["CF_TIMER_fontcolor_r"],VCB_SAVE["CF_TIMER_fontcolor_g"],VCB_SAVE["CF_TIMER_fontcolor_b"],VCB_SAVE["CF_TIMER_fontopacity"])
 			end
@@ -760,12 +760,16 @@ function VCB_BF_BUFF_BUTTON_OnUpdate(elapsed, button)
 				timeLeft = random(1,150)+(random(1,99)/100)
 			end
 			if VCB_SAVE["Timer_below_60"] and timeLeft < 60 then
-				buffDuration:SetTextColor(VCB_SAVE["Timer_below_60_color_r"],VCB_SAVE["Timer_below_60_color_g"],VCB_SAVE["Timer_below_60_color_b"])
+				if button.cat == "buff" then
+					buffDuration:SetTextColor(VCB_SAVE["Timer_below_60_color_r"],VCB_SAVE["Timer_below_60_color_g"],VCB_SAVE["Timer_below_60_color_b"],VCB_SAVE["BF_TIMER_fontopacity"])
+				elseif button.cat == "debuff" then
+					buffDuration:SetTextColor(VCB_SAVE["Timer_below_60_color_r"],VCB_SAVE["Timer_below_60_color_g"],VCB_SAVE["Timer_below_60_color_b"],VCB_SAVE["CF_TIMER_fontopacity"])
+				end
 			else
 				if button.cat == "buff" then
-					buffDuration:SetTextColor(VCB_SAVE["BF_TIMER_fontcolor_r"],VCB_SAVE["BF_TIMER_fontcolor_g"],VCB_SAVE["BF_TIMER_fontcolor_b"])
+					buffDuration:SetTextColor(VCB_SAVE["BF_TIMER_fontcolor_r"],VCB_SAVE["BF_TIMER_fontcolor_g"],VCB_SAVE["BF_TIMER_fontcolor_b"],VCB_SAVE["BF_TIMER_fontopacity"])
 				elseif button.cat == "debuff" then
-					buffDuration:SetTextColor(VCB_SAVE["DBF_TIMER_fontcolor_r"],VCB_SAVE["DBF_TIMER_fontcolor_g"],VCB_SAVE["DBF_TIMER_fontcolor_b"])
+					buffDuration:SetTextColor(VCB_SAVE["DBF_TIMER_fontcolor_r"],VCB_SAVE["DBF_TIMER_fontcolor_g"],VCB_SAVE["DBF_TIMER_fontcolor_b"],VCB_SAVE["CF_TIMER_fontopacity"])
 				end
 			end
 			buffDuration:SetText(VCB_BF_GetDuration(timeLeft))

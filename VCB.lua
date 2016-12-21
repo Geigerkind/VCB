@@ -3,7 +3,7 @@
 
 -- Global variables
 VCB_NAME = "Vanilla Consolidate Buffs"
-VCB_VERSION = "3.3"
+VCB_VERSION = "3.4"
 VCB_IS_LOADED = false
 VCB_BF_DUMMY_MODE = false
 VCB_FONT_ARRAY = {}
@@ -249,6 +249,16 @@ VCB_THEME[1] = {
 	WP_TIMER_fontsize = 10,
 	MISC_disable_CF = false,
 	MISC_disable_BB = false,
+	BF_POS = {
+		[1] = "CENTER",
+		[2] = 0,
+		[3] = 0,
+	},
+	DBF_POS = {
+		[1] = "CENTER",
+		[2] = 0,
+		[3] = 0,
+	},
 }
 
 --[[
@@ -261,6 +271,7 @@ function VCB_OnLoad()
 	this:RegisterEvent("PARTY_MEMBERS_CHANGED")
 	this:RegisterEvent("RAID_ROSTER_UPDATE")
 	this:RegisterEvent("PLAYER_ENTERING_WORLD")
+	this:RegisterEvent("PLAYER_LOGOUT")
 
 	SLASH_VCB1 = "/VanillaConsolidateBuffs"
 	SLASH_VCB2 = "/vanillaconsolidatebuffs"
@@ -478,6 +489,16 @@ function VCB_OnEvent(event)
 				WP_TIMER_fontsize = 10,
 				MISC_disable_CF = false,
 				MISC_disable_BB = false,
+				BF_POS = {
+					[1] = "CENTER",
+					[2] = 0,
+					[3] = 0,
+				},
+				DBF_POS = {
+					[1] = "CENTER",
+					[2] = 0,
+					[3] = 0,
+				},
 			}
 		end
 		if VCB_BF_LOCKED == nil then
@@ -579,6 +600,25 @@ function VCB_OnEvent(event)
 		end
 	elseif (event == "PLAYER_ENTERING_WORLD") then
 		VCB_BF_WEAPON_BUTTON_OnEvent(false)
+		if (VCB_SAVE["BF_POS"] and VCB_SAVE["BF_POS"][1]) then
+			VCB_BF_BUFF_FRAME:ClearAllPoints()
+			VCB_BF_BUFF_FRAME:SetPoint(VCB_SAVE["BF_POS"][1], UIParent, VCB_SAVE["BF_POS"][1], VCB_SAVE["BF_POS"][2], VCB_SAVE["BF_POS"][3])
+		end
+		if (VCB_SAVE["DBF_POS"] and VCB_SAVE["DBF_POS"][1]) then
+			VCB_BF_DEBUFF_FRAME:ClearAllPoints()
+			VCB_BF_DEBUFF_FRAME:SetPoint(VCB_SAVE["DBF_POS"][1], UIParent, VCB_SAVE["DBF_POS"][1], VCB_SAVE["DBF_POS"][2], VCB_SAVE["DBF_POS"][3])
+		end
+	elseif (event == "PLAYER_LOGOUT") then
+		local point, _, _, xOfs, yOfs = VCB_BF_BUFF_FRAME:GetPoint()
+		VCB_SAVE["BF_POS"] = {}
+		VCB_SAVE["BF_POS"][1] = point;
+		VCB_SAVE["BF_POS"][2] = xOfs;
+		VCB_SAVE["BF_POS"][3] = yOfs;
+		local point, _, _, xOfs, yOfs = VCB_BF_DEBUFF_FRAME:GetPoint()
+		VCB_SAVE["DBF_POS"] = {}
+		VCB_SAVE["DBF_POS"][1] = point;
+		VCB_SAVE["DBF_POS"][2] = xOfs;
+		VCB_SAVE["DBF_POS"][3] = yOfs;
 	end	
 end
 
