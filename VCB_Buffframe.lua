@@ -240,6 +240,11 @@ function VCB_BF_RepositioningAndResizing()
 		
 		if parent == VCB_BF_BUFF_FRAME and (button.buffIndex >= 0 or VCB_BF_DUMMY_MODE or (not VCB_BF_LOCKED)) then
 			button:ClearAllPoints()
+			
+			buttonDuration:ClearAllPoints()
+			buttonDuration:SetPoint("TOPLEFT", button, "BOTTOMLEFT", -2, VCB_SAVE["Timer_yoffset"])
+			buttonDuration:SetPoint("TOPRIGHT", button, "BOTTOMRIGHT", 2, VCB_SAVE["Timer_yoffset"])
+			
 			local u = 0
 			local o = 0
 			if VCB_SAVE["WP_GENERAL_attach"] then

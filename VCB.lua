@@ -3,7 +3,7 @@
 
 -- Global variables
 VCB_NAME = "Vanilla Consolidate Buffs"
-VCB_VERSION = "3.4"
+VCB_VERSION = "3.5"
 VCB_IS_LOADED = false
 VCB_BF_DUMMY_MODE = false
 VCB_FONT_ARRAY = {}
@@ -48,6 +48,7 @@ VCB_THEME_NAME = {}
 VCB_THEME_NAME[1] = "Default"
 VCB_THEME = {}
 VCB_THEME[1] = {
+	Timer_yoffset = 0,
 	Timer_disableUnit = false,
 	Timer_hours = false,
 	Timer_hours_convert = false,
@@ -289,6 +290,7 @@ function VCB_OnEvent(event)
 		if VCB_SAVE == nil then
 			VCB_SAVE = {}
 			VCB_SAVE = {
+				Timer_yoffset = 0,
 				Timer_disableUnit = false,
 				Timer_hours = false,
 				Timer_hours_convert = false,
@@ -562,6 +564,9 @@ function VCB_OnEvent(event)
 		if VCB_ICON_POINT == nil then
 			VCB_ICON_POINT = "CENTER"
 		end
+		if not VCB_SAVE["Timer_yoffset"] then
+			VCB_SAVE["Timer_yoffset"] = 0
+		end
 		
 		-- New variables since v2.5:
 		if VCB_SAVE["Timer_below_60"] == nil then VCB_SAVE["Timer_below_60"] = false end
@@ -660,6 +665,11 @@ function VCB_INITIALIZE()
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropColor(VCB_SAVE["CF_BF_bgcolor_r"],VCB_SAVE["CF_BF_bgcolor_g"],VCB_SAVE["CF_BF_bgcolor_b"],VCB_SAVE["CF_BF_bgopacity"])
 	VCB_BF_CONSOLIDATED_BUFFFRAME:SetBackdropBorderColor(VCB_SAVE["CF_BF_bordercolor_r"],VCB_SAVE["CF_BF_bordercolor_g"],VCB_SAVE["CF_BF_bordercolor_b"],VCB_SAVE["CF_BF_borderopacity"])
 	for i=0,15 do
+		
+		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):ClearAllPoints()
+		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetPoint("TOPLEFT", getglobal("VCB_BF_DEBUFF_BUTTON"..i), "BOTTOMLEFT", -2, VCB_SAVE["Timer_yoffset"])
+		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetPoint("TOPRIGHT", getglobal("VCB_BF_DEBUFF_BUTTON"..i), "BOTTOMRIGHT", 2, VCB_SAVE["Timer_yoffset"])
+	
 		if VCB_SAVE["DBF_GENERAL_invertorientation"] then
 			if VCB_SAVE["DBF_GENERAL_invert"] then
 				local j = 15-i
@@ -741,6 +751,10 @@ function VCB_INITIALIZE()
 		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetTextColor(VCB_SAVE["DBF_TIMER_fontcolor_r"],VCB_SAVE["DBF_TIMER_fontcolor_g"],VCB_SAVE["DBF_TIMER_fontcolor_b"],VCB_SAVE["DBF_TIMER_fontopacity"])
 	end
 	for i=0,1 do
+		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):ClearAllPoints()
+		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetPoint("TOPLEFT", getglobal("VCB_BF_WEAPON_BUTTON"..i), "BOTTOMLEFT", -2, VCB_SAVE["Timer_yoffset"])
+		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetPoint("TOPRIGHT", getglobal("VCB_BF_WEAPON_BUTTON"..i), "BOTTOMRIGHT", 2, VCB_SAVE["Timer_yoffset"])
+		
 		getglobal("VCB_BF_WEAPON_BUTTON"..i):ClearAllPoints()
 		if VCB_SAVE["WP_GENERAL_verticalmode"] then
 			getglobal("VCB_BF_WEAPON_BUTTON"..i):SetPoint("TOPRIGHT", VCB_BF_WEAPON_FRAME, "TOPRIGHT", 0, -(44+VCB_SAVE["WP_GENERAL_padding_v"])*i)
@@ -928,6 +942,7 @@ function VCB_PAGEINIT(frame)
 			getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON7"):SetChecked(false)
 		end
 		getglobal("VCB_BF_TIMER_FRAME_FontSlider"):SetValue(VCB_Table_GetKeys(VCB_FONT_ARRAY, VCB_SAVE["Timer_font"]))
+		getglobal("VCB_BF_TIMER_FRAME_YOffset"):SetValue(tonumber(VCB_SAVE["Timer_yoffset"]) or 0)
 		getglobal("VCB_BF_TIMER_FRAME_FontSliderText"):SetText(VCB_COMMON_SLIDER_FONT..": "..VCB_SAVE["Timer_font"])
 		getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON8"):SetChecked(VCB_SAVE["Timer_flash"])
 		getglobal("VCB_BF_TIMER_FRAME_CHECKBUTTON9"):SetChecked(VCB_SAVE["Timer_below_60"])

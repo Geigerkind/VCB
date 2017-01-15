@@ -2408,6 +2408,49 @@
 								</Scripts>
 								<FontString inherits="ChatFontNormal" />
 							</EditBox>
+							<Slider name="VCB_BF_TIMER_FRAME_YOffset" inherits="VCB_BF_SliderTemplate">
+								<Size>
+									<AbsDimension x="180" y="16"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_TIMER_FRAME_EDITBOX_CUSTOMFONT" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="-10" />
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.aide = "Move this to change the y offset of the timer"
+										this:SetMinMaxValues(0,50)
+										this:SetValue(0)
+										this:SetValueStep(1)
+										getglobal("VCB_BF_TIMER_FRAME_YOffsetText"):SetText("Y Offset")
+										getglobal("VCB_BF_TIMER_FRAME_YOffsetLow"):SetText("0")
+										getglobal("VCB_BF_TIMER_FRAME_YOffsetHigh"):SetText("50")
+									</OnLoad>
+									<OnValueChanged>
+										if VCB_IS_LOADED then
+											VCB_SAVE["Timer_yoffset"] = tonumber(this:GetValue()) or 0
+											for i=0,41 do
+												getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):ClearAllPoints()
+												getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetPoint("TOPLEFT", getglobal("VCB_BF_BUFF_BUTTON"..i), "BOTTOMLEFT", -2, VCB_SAVE["Timer_yoffset"])
+												getglobal("VCB_BF_BUFF_BUTTON"..i.."Duration"):SetPoint("TOPRIGHT", getglobal("VCB_BF_BUFF_BUTTON"..i), "BOTTOMRIGHT", 2, VCB_SAVE["Timer_yoffset"])
+											end
+											for i=0,15 do
+												getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):ClearAllPoints()
+												getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetPoint("TOPLEFT", getglobal("VCB_BF_DEBUFF_BUTTON"..i), "BOTTOMLEFT", -2, VCB_SAVE["Timer_yoffset"])
+												getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetPoint("TOPRIGHT", getglobal("VCB_BF_DEBUFF_BUTTON"..i), "BOTTOMRIGHT", 2, VCB_SAVE["Timer_yoffset"])
+											end
+											for i=0,1 do
+												getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):ClearAllPoints()
+												getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetPoint("TOPLEFT", getglobal("VCB_BF_WEAPON_BUTTON"..i), "BOTTOMLEFT", -2, VCB_SAVE["Timer_yoffset"])
+												getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetPoint("TOPRIGHT", getglobal("VCB_BF_WEAPON_BUTTON"..i), "BOTTOMRIGHT", 2, VCB_SAVE["Timer_yoffset"])
+											end
+										end
+									</OnValueChanged>
+								</Scripts>
+							</Slider>
 						</Frames>
 					</Frame>
 				</Frames>
