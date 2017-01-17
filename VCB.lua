@@ -3,7 +3,7 @@
 
 -- Global variables
 VCB_NAME = "Vanilla Consolidate Buffs"
-VCB_VERSION = "3.5"
+VCB_VERSION = "3.6"
 VCB_IS_LOADED = false
 VCB_BF_DUMMY_MODE = false
 VCB_FONT_ARRAY = {}
@@ -626,20 +626,32 @@ function VCB_OnEvent(event)
 	end	
 end
 
--- Hooking logout function to prevent crash from saving
-local logoutOld = Logout
-Logout = function()
-	-- Saving values
+function VCB_SAVEFRAMEPOS()
 	local point, _, _, xOfs, yOfs = VCB_BF_BUFF_FRAME:GetPoint()
 	VCB_SAVE["BF_POS"] = {}
 	VCB_SAVE["BF_POS"][1] = point;
 	VCB_SAVE["BF_POS"][2] = xOfs;
 	VCB_SAVE["BF_POS"][3] = yOfs;
-	local point, _, _, xOfs, yOfs = VCB_BF_DEBUFF_FRAME:GetPoint()
+	point, _, _, xOfs, yOfs = VCB_BF_DEBUFF_FRAME:GetPoint()
 	VCB_SAVE["DBF_POS"] = {}
 	VCB_SAVE["DBF_POS"][1] = point;
 	VCB_SAVE["DBF_POS"][2] = xOfs;
 	VCB_SAVE["DBF_POS"][3] = yOfs;
+	point, _, _, xOfs, yOfs = VCB_BF_CONSOLIDATED_ICON:GetPoint()
+	VCB_ICON_POINT = point
+	VCB_ICON_POSX = xOfs
+	VCB_ICON_POSY = yOfs
+	point, _, _, xOfs, yOfs = VCB_BF_WEAPON_FRAME:GetPoint()
+	VCB_WP_POINT = point
+	VCB_WP_POSX = xOfs
+	VCB_WP_POSY = yOfs
+end
+
+-- Hooking logout function to prevent crash from saving
+local logoutOld = Logout
+Logout = function()
+	-- Saving values
+	VCB_SAVEFRAMEPOS()
 	logoutOld()
 end
 

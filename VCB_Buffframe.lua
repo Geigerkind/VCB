@@ -1104,6 +1104,7 @@ function VCB_BF_Lock(lock)
 			if (lock) then
 				getglobal(templateName..i.."_Ghost_Label"):Hide()
 				getglobal(templateName..i.."_Ghost_Texture"):Hide()
+				VCB_SAVEFRAMEPOS()
 			else
 				getglobal(templateName..i):Show()
 				getglobal(templateName..i.."_Ghost_Label"):Show()
