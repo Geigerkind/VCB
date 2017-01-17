@@ -607,7 +607,6 @@ function VCB_OnEvent(event)
 			VCB_BF_DEBUFF_FRAME:ClearAllPoints()
 			VCB_BF_DEBUFF_FRAME:SetPoint(VCB_SAVE["DBF_POS"][1], UIParent, VCB_SAVE["DBF_POS"][1], VCB_SAVE["DBF_POS"][2], VCB_SAVE["DBF_POS"][3])
 		end
-		
 		VCB_IS_LOADED = true
 	elseif (event == "PARTY_MEMBERS_CHANGED" or event == "RAID_ROSTER_UPDATE") then
 		if VCB_SAVE["CF_icon_possiblebuffs"] then
@@ -637,14 +636,18 @@ function VCB_SAVEFRAMEPOS()
 	VCB_SAVE["DBF_POS"][1] = point;
 	VCB_SAVE["DBF_POS"][2] = xOfs;
 	VCB_SAVE["DBF_POS"][3] = yOfs;
-	point, _, _, xOfs, yOfs = VCB_BF_CONSOLIDATED_ICON:GetPoint()
-	VCB_ICON_POINT = point
-	VCB_ICON_POSX = xOfs
-	VCB_ICON_POSY = yOfs
-	point, _, _, xOfs, yOfs = VCB_BF_WEAPON_FRAME:GetPoint()
-	VCB_WP_POINT = point
-	VCB_WP_POSX = xOfs
-	VCB_WP_POSY = yOfs
+	if not VCB_SAVE["CF_icon_attach"] then
+		point, _, _, xOfs, yOfs = VCB_BF_CONSOLIDATED_ICON:GetPoint()
+		VCB_ICON_POINT = point
+		VCB_ICON_POSX = xOfs
+		VCB_ICON_POSY = yOfs
+	end
+	if not VCB_SAVE["WP_GENERAL_attach"] then
+		point, _, _, xOfs, yOfs = VCB_BF_WEAPON_FRAME:GetPoint()
+		VCB_WP_POINT = point
+		VCB_WP_POSX = xOfs
+		VCB_WP_POSY = yOfs
+	end
 end
 
 -- Hooking logout function to prevent crash from saving

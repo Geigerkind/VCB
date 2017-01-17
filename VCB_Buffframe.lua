@@ -1091,7 +1091,9 @@ function VCB_BF_ToggleLock()
 		VCB_BF_LOCKED = true
 		VCB_BF_Lock(true)
 		VCB_SendMessage(VCB_LOCKED_FRAMES)
+		VCB_SAVEFRAMEPOS()
 	else
+		VCB_SAVEFRAMEPOS()
 		VCB_BF_LOCKED = false
 		VCB_BF_Lock(false)
 		VCB_SendMessage(VCB_UNLOCKED_FRAMES)
@@ -1104,7 +1106,6 @@ function VCB_BF_Lock(lock)
 			if (lock) then
 				getglobal(templateName..i.."_Ghost_Label"):Hide()
 				getglobal(templateName..i.."_Ghost_Texture"):Hide()
-				VCB_SAVEFRAMEPOS()
 			else
 				getglobal(templateName..i):Show()
 				getglobal(templateName..i.."_Ghost_Label"):Show()
