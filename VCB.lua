@@ -650,14 +650,6 @@ function VCB_SAVEFRAMEPOS()
 	end
 end
 
--- Hooking logout function to prevent crash from saving
-local logoutOld = Logout
-Logout = function()
-	-- Saving values
-	VCB_SAVEFRAMEPOS()
-	logoutOld()
-end
-
 function VCB_INITIALIZE()
 	VCB_BF_CONSOLIDATED_BUFFFRAME:ClearAllPoints()
 	if VCB_SAVE["CF_BF_anchor"] == 1 then
