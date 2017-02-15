@@ -242,8 +242,8 @@ function VCB_BF_RepositioningAndResizing()
 			button:ClearAllPoints()
 			
 			buttonDuration:ClearAllPoints()
-			buttonDuration:SetPoint("TOPLEFT", button, "BOTTOMLEFT", -2, VCB_SAVE["Timer_yoffset"])
-			buttonDuration:SetPoint("TOPRIGHT", button, "BOTTOMRIGHT", 2, VCB_SAVE["Timer_yoffset"])
+			buttonDuration:SetPoint("TOPLEFT", button, "BOTTOMLEFT", -20, VCB_SAVE["Timer_yoffset"])
+			buttonDuration:SetPoint("TOPRIGHT", button, "BOTTOMRIGHT", 20, VCB_SAVE["Timer_yoffset"])
 			
 			local u = 0
 			local o = 0
@@ -1078,10 +1078,12 @@ function VCB_BF_GetDuration(timeLeft)
 			end
 		end
 	else
-		if timeLeft > 60 then
-			return floor(timeLeft/60)..suffix[2]
-		else
-			return floor(timeLeft)..suffix[1]
+		if suffix then
+			if timeLeft > 60 then
+				return floor(timeLeft/60)..suffix[2]
+			else
+				return floor(timeLeft)..suffix[1]
+			end
 		end
 	end
 end

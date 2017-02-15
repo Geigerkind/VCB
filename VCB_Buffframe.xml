@@ -209,18 +209,16 @@
 			</Layer>
 			<Layer level="ARTWORK">
 				<FontString name="$parentDuration" inherits="GameFontNormalSmall">
-					<Size>
-						<AbsDimension x="0" y="10"/>
-					</Size>
+					<Size x="0" y="10" />
 					<Anchors>
 						<Anchor point = "TOPLEFT" relativePoint="BOTTOMLEFT">
 							<Offset>
-								<AbsDimension x="-2" y="0"/>
+								<AbsDimension x="-20" y="0"/>
 							</Offset>
 						</Anchor>
 						<Anchor point = "TOPRIGHT" relativePoint="BOTTOMRIGHT">
 							<Offset>
-								<AbsDimension x="2" y="0"/>
+								<AbsDimension x="20" y="0"/>
 							</Offset>
 						</Anchor>
 					</Anchors>
@@ -313,8 +311,18 @@
 			</Layer>
 			<Layer level="ARTWORK">
 				<FontString name="$parentDuration" inherits="GameFontNormalSmall">
+					<Size x="0" y="10" />
 					<Anchors>
-						<Anchor point="TOP" relativePoint="BOTTOM"/>
+						<Anchor point = "TOPLEFT" relativePoint="BOTTOMLEFT">
+							<Offset>
+								<AbsDimension x="-20" y="0"/>
+							</Offset>
+						</Anchor>
+						<Anchor point = "TOPRIGHT" relativePoint="BOTTOMRIGHT">
+							<Offset>
+								<AbsDimension x="20" y="0"/>
+							</Offset>
+						</Anchor>
 					</Anchors>
 				</FontString>
 			</Layer>
