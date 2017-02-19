@@ -3,7 +3,7 @@
 
 -- Global variables
 VCB_NAME = "Vanilla Consolidate Buffs"
-VCB_VERSION = "3.7"
+VCB_VERSION = "3.8"
 VCB_IS_LOADED = false
 VCB_BF_DUMMY_MODE = false
 VCB_FONT_ARRAY = {}
@@ -690,8 +690,8 @@ function VCB_INITIALIZE()
 	for i=0,15 do
 		
 		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):ClearAllPoints()
-		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetPoint("TOPLEFT", getglobal("VCB_BF_DEBUFF_BUTTON"..i), "BOTTOMLEFT", -2, VCB_SAVE["Timer_yoffset"])
-		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetPoint("TOPRIGHT", getglobal("VCB_BF_DEBUFF_BUTTON"..i), "BOTTOMRIGHT", 2, VCB_SAVE["Timer_yoffset"])
+		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetPoint("TOPLEFT", getglobal("VCB_BF_DEBUFF_BUTTON"..i), "BOTTOMLEFT", -20, VCB_SAVE["Timer_yoffset"])
+		getglobal("VCB_BF_DEBUFF_BUTTON"..i.."Duration"):SetPoint("TOPRIGHT", getglobal("VCB_BF_DEBUFF_BUTTON"..i), "BOTTOMRIGHT", 20, VCB_SAVE["Timer_yoffset"])
 	
 		if VCB_SAVE["DBF_GENERAL_invertorientation"] then
 			if VCB_SAVE["DBF_GENERAL_invert"] then
@@ -775,8 +775,8 @@ function VCB_INITIALIZE()
 	end
 	for i=0,1 do
 		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):ClearAllPoints()
-		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetPoint("TOPLEFT", getglobal("VCB_BF_WEAPON_BUTTON"..i), "BOTTOMLEFT", -2, VCB_SAVE["Timer_yoffset"])
-		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetPoint("TOPRIGHT", getglobal("VCB_BF_WEAPON_BUTTON"..i), "BOTTOMRIGHT", 2, VCB_SAVE["Timer_yoffset"])
+		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetPoint("TOPLEFT", getglobal("VCB_BF_WEAPON_BUTTON"..i), "BOTTOMLEFT", -20, VCB_SAVE["Timer_yoffset"])
+		getglobal("VCB_BF_WEAPON_BUTTON"..i.."Duration"):SetPoint("TOPRIGHT", getglobal("VCB_BF_WEAPON_BUTTON"..i), "BOTTOMRIGHT", 20, VCB_SAVE["Timer_yoffset"])
 		
 		getglobal("VCB_BF_WEAPON_BUTTON"..i):ClearAllPoints()
 		if VCB_SAVE["WP_GENERAL_verticalmode"] then
