@@ -7360,7 +7360,7 @@
 				<Frames>
 					<Frame name="VCB_BF_WP_FRAME_GENERAL">
 						<Size>
-							<AbsDimension x="580" y="240"/>
+							<AbsDimension x="580" y="245"/>
 						</Size>
 						<Anchors>
 							<Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
@@ -7880,6 +7880,28 @@
 									</OnLoad>
 									<OnClick>
 										VCB_BF_WP_FRAME_CHECKBUTTON_CUSTOMFONT_CLICK()
+									</OnClick>
+								</Scripts>
+							</CheckButton>
+							<CheckButton name="VCB_BF_WP_FRAME_CHECKBUTTON_INVERTORDER" inherits="VCB_BF_CheckTemplate">
+								<Size>
+									<AbsDimension x="30" y="30"/>
+								</Size>
+								<Anchors>
+									<Anchor point="TOP" relativeTo="VCB_BF_WP_FRAME_CHECKBUTTON_CUSTOMFONT" relativePoint="BOTTOM">
+										<Offset>
+											<AbsDimension x="0" y="4"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+								<Scripts>
+									<OnLoad>
+										this.tooltipText = VCB_COMMON_BUTTON_INVERT_ORDER_TOOLTIP
+										getglobal("VCB_BF_WP_FRAME_CHECKBUTTON_INVERTORDERText"):SetText(VCB_COMMON_BUTTON_INVERT_ORDER)
+									</OnLoad>
+									<OnClick>
+										VCB_SAVE["WP_GENERAL_invert"] = not VCB_SAVE["WP_GENERAL_invert"]
+										VCB_BF_WEAPON_BUTTON_OnEvent(false)
 									</OnClick>
 								</Scripts>
 							</CheckButton>

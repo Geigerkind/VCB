@@ -3,7 +3,7 @@
 
 -- Global variables
 VCB_NAME = "Vanilla Consolidate Buffs"
-VCB_VERSION = "3.8"
+VCB_VERSION = "3.9"
 VCB_IS_LOADED = false
 VCB_BF_DUMMY_MODE = false
 VCB_FONT_ARRAY = {}
@@ -213,6 +213,7 @@ VCB_THEME[1] = {
 	DBF_TIMER_fontcolor_b = 0,
 	DBF_TIMER_fontsize = 10,
 	DBF_TIMER_fontopacity = 1,
+	WP_GENERAL_invert = false,
 	WP_GENERAL_verticalmode = false,
 	WP_GENERAL_enablebgcolor = false,
 	WP_GENERAL_enableborder = true,
@@ -453,6 +454,7 @@ function VCB_OnEvent(event)
 				DBF_TIMER_fontcolor_b = 0,
 				DBF_TIMER_fontsize = 10,
 				DBF_TIMER_fontopacity = 1,
+				WP_GENERAL_invert = false,
 				WP_GENERAL_verticalmode = false,
 				WP_GENERAL_enablebgcolor = false,
 				WP_GENERAL_enableborder = true,
@@ -1231,6 +1233,7 @@ function VCB_PAGEINIT(frame)
 		getglobal("VCB_BF_WP_FRAME_OffsetYSliderText"):SetText(VCB_COMMON_SLIDER_FONT_OFFSET_Y..": "..VCB_SAVE["WP_GENERAL_offset_y"])
 		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON8"):SetChecked(VCB_SAVE["WP_GENERAL_enableborder"])
 		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON_CUSTOMFONT"):SetChecked(VCB_SAVE["WP_GENERAL_usecfont"])
+		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON_INVERTORDER"):SetChecked(VCB_SAVE["WP_GENERAL_invert"])
 		getglobal("VCB_BF_WP_FRAME_EDITBOX_CUSTOMFONT"):SetText(VCB_SAVE["WP_GENERAL_customfont"])
 	elseif frame == "VCB_BF_WP_FRAME2" then
 		getglobal("VCB_BF_WP_FRAME_CHECKBUTTON5"):SetChecked(VCB_SAVE["WP_BORDER_enableborder"])
