@@ -1,6 +1,6 @@
 if (GetLocale() == "deDE") then
 	VCB_MAIN_NAME = "Vanilla Consolidate Buff-Frames"
-	VCB_MAIN_VERSION = "v3.9"
+	VCB_MAIN_VERSION = "v4.0"
 	VCB_MINIMAP_TOOLTIP_NAME = "Vanilla Consolidate Buff-Frames"
 	VCB_MINIMAP_TOOLTIP_LEFTCLICK = "Linksklick: Zeige/ Verstecke das Menü"
 	VCB_MINIMAP_TOOLTIP_RIGHTCLICK = "Rechtsklick: (Un)/fixiere die Fenster"
